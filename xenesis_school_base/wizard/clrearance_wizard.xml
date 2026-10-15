@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="clearance_form_wizard" model="ir.ui.view">
+        <field name="name">xe.clearance.form.wizard.form</field>
+        <field name="model">xe.clearance.form.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Clearance Form Generation">
+                <group>
+                    <group>
+                        <field name="index_no" required="1"/>
+                        <field name="student_id" invisible="1"/>
+                        <field name="parent_id" domain="[('student_ids','in',[student_id])]"
+                               options="{'no_create': True, 'no_open': True}" required="1"/>
+                    </group>
+                    <group>
+                        <field name="clearance_date" required="1"/>
+                    </group>
+<!--                    <field name="attribute_lines_ids" widget="one2many">-->
+                    <field name="new_attribute_lines">
+                        <list editable="bottom">
+                            <field name="attribute_id"/>
+                            <field name="section"/>
+                            <field name="value"/>
+                        </list>
+                    </field>
+                </group>
+                <footer>
+                    <button name="action_generation_clearance" string="Generate Clearance Form" type="object"
+                            default_focus="1"
+                            class="oe_highlight"/>
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="clearance_form_server_act">
+        <field name="name">Generate Clearance Form</field>
+        <field name="model_id" ref="model_xe_student"/>
+<!--        <field name="groups_id"-->
+<!--               eval="[(4, ref('xenesis_school_base.group_xe_admin')),(4, ref('xenesis_school_base.group_xe_staff'))]"/>-->
+        <field name="binding_model_id" ref="model_xe_student"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.action_clearance_form()
+        </field>
+    </record>
+</odoo>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

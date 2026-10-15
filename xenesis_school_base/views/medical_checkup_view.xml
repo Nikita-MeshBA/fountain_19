@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_medical_checkup_tree" model="ir.ui.view">
+        <field name="name">xe.medicalcheckup.tree</field>
+        <field name="model">xe.medicalcheckup</field>
+        <field name="arch" type="xml">
+            <tree string="Medical Checkup">
+                <field name="name" required="1" string="Number"/>
+                <field name="partner_id" string="Name"/>
+                <field name="checkup_date" required="1"/>
+                <field name="next_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_medical_checkup_form" model="ir.ui.view">
+        <field name="name">xe.medicalcheckup.form</field>
+        <field name="model">xe.medicalcheckup</field>
+        <field name="arch" type="xml">
+            <form string="Health Details">
+                <sheet>
+                    <div class="oe_title">
+                        <h1 class="d-flex">
+                            <field name="name" required="1" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" required="True" string="Student/Teacher"/>
+                            <field name="next_date"/>
+                        </group>
+                        <group>
+                            <field name="checkup_date" required="1"/>
+                            <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="ENT">
+                        <group>
+                            <field name="discharge_from_ears"/>
+                            <field name="any_disease_of_eyes"/>
+                        </group>
+                        <group>
+                            <field name="hearing_difficulties"/>
+                        </group>
+                    </group>
+                    <group string="Cardiovascular">
+                        <group>
+                            <field name="breathlessness"/>
+                            <field name="palpitations"/>
+                        </group>
+                        <group>
+                            <field name="pain_in_chest"/>
+                            <field name="any_disease_of_heart"/>
+                        </group>
+                    </group>
+                    <group string="Respiratory">
+                        <group>
+                            <field name="persistant_cough"/>
+                            <field name="any_disease_of_chest"/>
+                        </group>
+                        <group>
+                            <field name="asthma"/>
+                        </group>
+                    </group>
+                    <group string="Gestrointestinal">
+                        <group>
+                            <field name="worms"/>
+                            <field name="chronic_diarrhoea"/>
+                        </group>
+                        <group>
+                            <field name="blood_in_stool"/>
+                        </group>
+                    </group>
+                    <group string="Genitourinary">
+                        <group>
+                            <field name="blood_in_urine"/>
+                        </group>
+                        <group>
+                            <field name="enuresis"/>
+                        </group>
+                    </group>
+                    <group string="Musculoskeletal">
+                        <group>
+                            <field name="state_of_feet_legs"/>
+                            <field name="posture_defect"/>
+                        </group>
+                        <group>
+                            <field name="spinal_deformity"/>
+                        </group>
+                    </group>
+                    <group string="Skin">
+                        <group>
+                            <field name="scabies"/>
+                            <field name="eruptions"/>
+                        </group>
+                        <group>
+                            <field name="eczema"/>
+                            <field name="hair_lice"/>
+                        </group>
+                    </group>
+                    <group string="Neuropsychiatric">
+                        <group>
+                            <field name="disorders_of_speech"/>
+                            <field name="mental_illness"/>
+                            <field name="personality_disorder"/>
+                            <field name="allergy_or_reaction"/>
+                        </group>
+                        <group>
+                            <field name="fits"/>
+                            <field name="mental_subnormality"/>
+                            <field name="any_hereditary_disease"/>
+                        </group>
+                    </group>
+                    <group string="Physical Examination">
+                        <group>
+                            <field name="weight"/>
+                            <field name="skin"/>
+                        </group>
+                        <group>
+                            <field name="height"/>
+                            <field name="general_appearance"/>
+                        </group>
+                    </group>
+                    <group string="Eyes">
+                        <group>
+                            <field name="pupils_right"/>
+                            <field name="far_right"/>
+                            <field name="near_right"/>
+                            <field name="color_vision"/>
+                        </group>
+                        <group>
+                            <field name="pupils_left"/>
+                            <field name="far_left"/>
+                            <field name="near_left"/>
+                        </group>
+                    </group>
+                    <group string="Ears">
+                        <group>
+                            <field name="canals_right"/>
+                            <field name="drums_right"/>
+                            <field name="hearing_right"/>
+                        </group>
+                        <group>
+                            <field name="canals_left"/>
+                            <field name="drums_left"/>
+                            <field name="hearing_left"/>
+                        </group>
+                    </group>
+                    <group string="Nose">
+                        <group>
+                            <field name="nose_septum"/>
+                        </group>
+                        <group>
+                            <field name="nose_musoca"/>
+                        </group>
+                    </group>
+                    <group string="Throat">
+                        <group>
+                            <field name="throat_tonsils"/>
+                        </group>
+                        <group>
+                            <field name="throat_musoca"/>
+                        </group>
+                    </group>
+                    <group string="Mouth">
+                        <group>
+                            <field name="teeth"/>
+                            <field name="musoca"/>
+                        </group>
+                        <group>
+                            <field name="tongue"/>
+                        </group>
+                    </group>
+                    <group string="Lymph Glands">
+                        <group>
+                            <field name="cardio_vascular"/>
+                            <field name="lungs"/>
+                            <field name="liver"/>
+                            <field name="pulse_right"/>
+                            <field name="gastrointestinal"/>
+                            <field name="spleen"/>
+                        </group>
+                        <group>
+                            <field name="heart_sound"/>
+                            <field name="contours"/>
+                            <field name="hernia"/>
+                            <field name="repspiratory"/>
+                            <field name="masses"/>
+                            <field name="genitourinary"/>
+                        </group>
+                    </group>
+                    <group string="Musculoskeletal">
+                        <group>
+                            <field name="back"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <group string="Muscular Development">
+                        <group>
+                            <field name="posture"/>
+                            <field name="extremities"/>
+                        </group>
+                        <group>
+                            <field name="deformity"/>
+                        </group>
+                    </group>
+                    <group string="Neurological">
+                        <group>
+                            <field name="motor_system"/>
+                            <field name="s_g"/>
+                            <field name="microscopic"/>
+                            <field name="eggs_cysts"/>
+                            <field name="urine_appearance"/>
+                            <field name="deposits"/>
+                            <field name="worms_n"/>
+                            <field name="hbp"/>
+                            <field name="summary_of_positive_findings"/>
+                        </group>
+                        <group>
+                            <field name="sensory_system"/>
+                            <field name="albumin"/>
+                            <field name="blood"/>
+                            <field name="reflexes"/>
+                            <field name="sugar"/>
+                            <field name="stool"/>
+                            <field name="blood_level"/>
+                            <field name="lbp"/>
+                            <field name="remarks"/>
+                        </group>
+                    </group>
+                    <group string="Family Doctor">
+                        <group>
+                            <field name="doctor_name"/>
+                            <field name="cell_no"/>
+
+                        </group>
+                        <group>
+                            <field name="contact_no"/>
+                            <field name="particular_note"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_medical_checkup_search" model="ir.ui.view">
+        <field name="name">xe.medicalcheckup.search</field>
+        <field name="model">xe.medicalcheckup</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Medical Checkup">
+                <field name="next_date"/>
+                <field name="name" required="1" readonly="1" invisible="1"/>
+                <field name="checkup_date" required="1"/>
+                <filter name="teachers" string="Teachers" domain="[('type_record', '=', 't')]"/>
+                <filter name="students" string="Students" domain="[('type_record', '=', 's')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="User Type" name="type" domain="[]" context="{'group_by': 'type_record'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="act_medical_checkup" model="ir.actions.act_window">
+        <field name="name">Health Details</field>
+        <field name="res_model">xe.medicalcheckup</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_medical_checkup_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add Health Details Details Here
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+            id="menu_health_details"
+            name="Health Details"
+            action="act_medical_checkup"
+            parent="xenesis_school_base.menu_administration_root"
+            groups="xenesis_school_base.group_xe_health_details"
+            sequence="4"/>
+</odoo>

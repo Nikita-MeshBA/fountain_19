@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_migration_history_tree" model="ir.ui.view">
+        <field name="name">xe.migration.history.tree</field>
+        <field name="model">xe.migration.history</field>
+        <field name="arch" type="xml">
+            <tree string="Migration History" create="false">
+                <field name="date"/>
+                <field name="from_company_id" groups="base.group_multi_company"/>
+                <field name="to_company_id" groups="base.group_multi_company"/>
+                <field name="from_course_id"/>
+                <field name="to_course_id"/>
+                <field name="from_term_id" invisible="1"/>
+                <field name="to_term_id" invisible="1"/>
+                <field name="from_classroom_id" domain="[('course_id','=',from_course_id)]"/>
+                <field name="to_classroom_id" domain="[('course_id','=',to_course_id)]"/>
+                <field name="user_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_migration_history_form" model="ir.ui.view">
+        <field name="name">xe.migration.history.form</field>
+        <field name="model">xe.migration.history</field>
+        <field name="arch" type="xml">
+            <form string="Migration History" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="from_company_id" options="{'no_create':True}"
+                                   groups="base.group_multi_company"/>
+                            <field name="from_academic_yr_id" required="1"/>
+                            <field name="from_course_id" required="1"/>
+                            <field name="from_classroom_id" domain="[('course_id','=',from_course_id)]"/>
+                            <field name="date"/>
+                            <field name="remarks"/>
+
+                        </group>
+                        <group>
+                            <field name="to_company_id" options="{'no_create':True}"
+                                   groups="base.group_multi_company"/>
+                            <field name="to_academic_yr_id" required="1"/>
+                            <field name="to_course_id" required="1"/>
+                            <field name="to_classroom_id" domain="[('course_id','=',to_course_id)]"/>
+                            <field name="user_id"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_migration_history" model="ir.actions.act_window">
+        <field name="name">Migration History</field>
+        <field name="res_model">xe.migration.history</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add Migration Details Here
+            </p>
+        </field>
+    </record>
+</odoo>

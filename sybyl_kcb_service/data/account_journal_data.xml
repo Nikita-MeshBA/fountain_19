@@ -1,0 +1,43 @@
+<odoo noupdate="1">
+    <record id="kcb_journal" model="account.journal">
+        <field name="name">KCB UNISOL bank</field>
+        <field name="code">KCB</field>
+        <field name="type">bank</field>
+        <field name="is_kcb_journal" eval="True"/>
+    </record>
+
+    <!--        <record id="kcb_payment_transaction_cron" model="ir.cron">-->
+    <!--            <field name="name">KCB Payment Transaction: Generate invoice payment entries</field>-->
+    <!--            <field name="model_id" ref="model_kcb_transaction"/>-->
+    <!--            <field name="state">code</field>-->
+    <!--            <field name="code">model._cron_generate_invoice_payment_entries()</field>-->
+    <!--            <field name="interval_number">1</field>-->
+    <!--            <field name="interval_type">days</field>-->
+    <!--            <field name="numbercall">-1</field>-->
+    <!--            <field name="doall" eval="False"/>-->
+    <!--        </record>-->
+    <record id="kcb_match_invoice_record_cron" model="ir.cron">
+        <field name="name">KCB Payment Transaction: Auto Reconcile</field>
+        <field name="model_id" ref="model_kcb_transaction"/>
+        <field name="state">code</field>
+        <field name="code">model.validate_move_payment_new_cron()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">months</field>
+<!--        <field name="numbercall">-1</field>-->
+<!--        <field name="doall" eval="False"/>-->
+        <!-- <field name="active" eval="False"/>-->
+    </record>
+
+ <record id="kcb_payment_creation_cron" model="ir.cron">
+        <field name="name">KCB Automatic Payment Creation Cron</field>
+        <field name="model_id" ref="account.model_account_payment"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_kcb_payment_creation()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+<!--        <field name="numbercall">-1</field>-->
+<!--        <field name="doall" eval="False"/>-->
+        <field name="active" eval="True"/>
+    </record>
+
+</odoo>

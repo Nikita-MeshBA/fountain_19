@@ -1,0 +1,163 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sh_notice_board
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.1alpha1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-10-08 13:37+0000\n"
+"PO-Revision-Date: 2020-10-08 13:37+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "10"
+msgstr "10"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "11"
+msgstr "11"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "12"
+msgstr "12"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "13"
+msgstr "13"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "14"
+msgstr "14"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "15"
+msgstr "15"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_horizontal_tmpl_1
+msgid "<span id=\"sh_nbs_heading\">Latest News</span>"
+msgstr "<span id=\"sh_nbs_heading\">最新消息</span>"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_horizontal_tmpl_3
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_vertical_tmpl_2
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_vertical_tmpl_3
+msgid "<span>Breaking News</span>"
+msgstr "<span>爆炸新闻</span>"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_vertical_tmpl_1
+msgid "<span>Latest News</span>"
+msgstr "<span>最新消息</span>"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__active
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_search_view
+msgid "Active"
+msgstr "积极的"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_horizontal_tmpl_2
+msgid "Breaking News"
+msgstr "爆炸新闻"
+
+#. module: sh_notice_board
+#: model_terms:ir.actions.act_window,help:sh_notice_board.sh_nb_notice_board_action
+msgid "Create a new notice here"
+msgstr "在此处创建新通知"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__create_uid
+msgid "Created by"
+msgstr "由...制作"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__create_date
+msgid "Created on"
+msgstr "创建于"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__desc
+msgid "Description"
+msgstr "描述"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__id
+msgid "ID"
+msgstr "ID"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_search_view
+msgid "Inactive"
+msgstr "不活跃"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board____last_update
+msgid "Last Modified on"
+msgstr "最后修改时间"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间："
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "News Direction"
+msgstr "新闻方向"
+
+#. module: sh_notice_board
+#: model:ir.actions.act_window,name:sh_notice_board.sh_nb_notice_board_action
+#: model:ir.ui.menu,name:sh_notice_board.sh_nb_notice_board_menu
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_form_view
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_search_view
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_tree_view
+msgid "Notice Board"
+msgstr "公告栏"
+
+#. module: sh_notice_board
+#: model:ir.model,name:sh_notice_board.model_sh_nb_notice_board
+msgid "Notice board for display news on website"
+msgstr "在网站上显示新闻的公告板"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "Number of News"
+msgstr "新闻数量"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__name
+msgid "Title"
+msgstr "标题"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "left"
+msgstr "剩下"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "right"
+msgstr "正确的"

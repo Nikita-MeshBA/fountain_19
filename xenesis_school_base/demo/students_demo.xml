@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE odoo [
+        <!ELEMENT odoo (data)*>
+        <!ELEMENT data (record)*>
+        <!ATTLIST data
+                noupdate CDATA #REQUIRED>
+        <!ELEMENT record (field)*>
+        <!ATTLIST record
+                id CDATA #REQUIRED
+                model CDATA #REQUIRED>
+        <!ELEMENT field (#PCDATA)>
+        <!ATTLIST field
+                eval CDATA #IMPLIED
+                name CDATA #REQUIRED
+                ref CDATA #IMPLIED>
+        ]>
+<odoo>
+    <data noupdate="1">
+        <!-- Subject Data Loading -->
+        <record id="student_course_1" model="xe.student.course">
+            <field name="course_id" ref="xenesis_school_base.course_1"/>
+            <field name="term_id" ref="xenesis_school_base.grade1_term_1"/>
+        </record>
+        <record id="student_course_2" model="xe.student.course">
+            <field name="course_id" ref="xenesis_school_base.course_1"/>
+            <field name="term_id" ref="xenesis_school_base.grade1_term_1"/>
+        </record>
+        <record id="student_course_3" model="xe.student.course">
+            <field name="course_id" ref="xenesis_school_base.course_1"/>
+            <field name="term_id" ref="xenesis_school_base.grade1_term_1"/>
+        </record>
+        <record id="student_course_4" model="xe.student.course">
+            <field name="course_id" ref="xenesis_school_base.course_1"/>
+            <field name="term_id" ref="xenesis_school_base.grade1_term_1"/>
+        </record>
+        <record id="student_course_5" model="xe.student.course">
+            <field name="course_id" ref="xenesis_school_base.course_1"/>
+            <field name="term_id" ref="xenesis_school_base.grade1_term_1"/>
+        </record>
+        <record id="student_course_6" model="xe.student.course">
+            <field name="course_id" ref="xenesis_school_base.course_1"/>
+            <field name="term_id" ref="xenesis_school_base.grade1_term_1"/>
+        </record>
+        <record id="student_course_7" model="xe.student.course">
+            <field name="course_id" ref="xenesis_school_base.course_1"/>
+            <field name="term_id" ref="xenesis_school_base.grade1_term_1"/>
+        </record>
+        <record id="student_course_8" model="xe.student.course">
+            <field name="course_id" ref="xenesis_school_base.course_1"/>
+            <field name="term_id" ref="xenesis_school_base.grade1_term_1"/>
+        </record>
+        <record id="student_course_9" model="xe.student.course">
+            <field name="course_id" ref="xenesis_school_base.course_1"/>
+            <field name="term_id" ref="xenesis_school_base.grade1_term_1"/>
+        </record>
+        <record id="student_course_10" model="xe.student.course">
+            <field name="course_id" ref="xenesis_school_base.course_1"/>
+            <field name="term_id" ref="xenesis_school_base.grade1_term_1"/>
+        </record>
+        <record id="student_course_11" model="xe.student.course">
+            <field name="course_id" ref="xenesis_school_base.course_1"/>
+            <field name="term_id" ref="xenesis_school_base.grade1_term_1"/>
+        </record>
+        <record id="student_course_12" model="xe.student.course">
+            <field name="course_id" ref="xenesis_school_base.course_1"/>
+            <field name="term_id" ref="xenesis_school_base.grade1_term_1"/>
+        </record>
+        <record id="student_course_13" model="xe.student.course">
+            <field name="course_id" ref="xenesis_school_base.course_1"/>
+            <field name="term_id" ref="xenesis_school_base.grade1_term_1"/>
+        </record>
+        <record id="student_course_14" model="xe.student.course">
+            <field name="course_id" ref="xenesis_school_base.course_1"/>
+            <field name="term_id" ref="xenesis_school_base.grade1_term_1"/>
+        </record>
+        <record id="student_course_15" model="xe.student.course">
+            <field name="course_id" ref="xenesis_school_base.course_1"/>
+            <field name="term_id" ref="xenesis_school_base.grade1_term_1"/>
+        </record>
+        <record id="student_course_16" model="xe.student.course">
+            <field name="course_id" ref="xenesis_school_base.course_1"/>
+            <field name="term_id" ref="xenesis_school_base.grade1_term_1"/>
+        </record>
+
+        <!--    Student Data    -->
+        <record id="student_1" model="xe.student">
+            <field name="name">Juanita Adoyo Lemaron</field>
+            <field name="roll_number">01</field>
+            <field name="mobile">711119910</field>
+            <field name="email">juanita@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('17/03/2008', '%d/%m/%Y')"/>
+            <field name="course_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_course_1')])]"/>
+        </record>
+        <record id="student_2" model="xe.student">
+            <field name="name">Amanda Nduku Njeri</field>
+            <field name="roll_number">02</field>
+            <field name="mobile">711119999</field>
+            <field name="email">amanda@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('06/08/2007', '%d/%m/%Y')"/>
+            <field name="course_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_course_2')])]"/>
+        </record>
+        <record id="student_3" model="xe.student">
+            <field name="name">Hannah Kemunto Nyaboke</field>
+            <field name="roll_number">03</field>
+            <field name="mobile">711119998</field>
+            <field name="email">hannah@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('28/07/2008', '%d/%m/%Y')"/>
+            <field name="course_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_course_3')])]"/>
+        </record>
+        <record id="student_4" model="xe.student">
+            <field name="name">Haddasa Moraa Machuki</field>
+            <field name="roll_number">04</field>
+            <field name="mobile">711119997</field>
+            <field name="email">Haddasa@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('02/10/2007', '%d/%m/%Y')"/>
+            <field name="course_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_course_4')])]"/>
+        </record>
+        <record id="student_5" model="xe.student">
+            <field name="name">Adriel Maina Ngaira</field>
+            <field name="roll_number">05</field>
+            <field name="mobile">711119996</field>
+            <field name="email">adriel@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('17/03/2009', '%d/%m/%Y')"/>
+            <field name="course_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_course_5')])]"/>
+        </record>
+        <record id="student_6" model="xe.student">
+            <field name="name">Kenneth Mugabi Njiru</field>
+            <field name="roll_number">06</field>
+            <field name="mobile">711119995</field>
+            <field name="email">kenneth@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('06/08/2008', '%d/%m/%Y')"/>
+            <field name="course_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_course_6')])]"/>
+        </record>
+        <record id="student_7" model="xe.student">
+            <field name="name">Leo Mike Igane</field>
+            <field name="roll_number">07</field>
+            <field name="mobile">711119994</field>
+            <field name="email">leo@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('28/07/2009', '%d/%m/%Y')"/>
+            <field name="course_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_course_7')])]"/>
+        </record>
+        <record id="student_8" model="xe.student">
+            <field name="name">Richard Jayden Mugo</field>
+            <field name="roll_number">08</field>
+            <field name="mobile">711119993</field>
+            <field name="email">richard@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('02/10/2008', '%d/%m/%Y')"/>
+            <field name="course_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_course_8')])]"/>
+        </record>
+        <record id="student_9" model="xe.student">
+            <field name="name">Toney Johne Webala</field>
+            <field name="roll_number">09</field>
+            <field name="mobile">711119992</field>
+            <field name="email">toney@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('17/03/2010', '%d/%m/%Y')"/>
+            <field name="course_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_course_9')])]"/>
+        </record>
+        <record id="student_10" model="xe.student">
+            <field name="name">Karen Waich Njoroge</field>
+            <field name="roll_number">10</field>
+            <field name="mobile">711119991</field>
+            <field name="email">karen@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('5/4/2012', '%d/%m/%Y')"/>
+            <field name="course_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_course_10')])]"/>
+        </record>
+        <record id="student_11" model="xe.student">
+            <field name="name">Melisa saida Owiti</field>
+            <field name="roll_number">11</field>
+            <field name="mobile">7111199911</field>
+            <field name="email">melisa@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('06/08/2008', '%d/%m/%Y')"/>
+            <field name="course_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_course_11')])]"/>
+        </record>
+        <record id="student_12" model="xe.student">
+            <field name="name">Beryl Odongo Nyawacha</field>
+            <field name="roll_number">12</field>
+            <field name="mobile">7111199912</field>
+            <field name="email">beryl@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('28/07/2009', '%d/%m/%Y')"/>
+            <field name="course_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_course_12')])]"/>
+        </record>
+        <record id="student_13" model="xe.student">
+            <field name="name">Zephy Bondi Maria</field>
+            <field name="roll_number">13</field>
+            <field name="mobile">7111199913</field>
+            <field name="email">zephy@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('02/10/2008', '%d/%m/%Y')"/>
+            <field name="course_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_course_13')])]"/>
+        </record>
+        <record id="student_14" model="xe.student">
+            <field name="name">Jembe Kisho Mwamini</field>
+            <field name="roll_number">14</field>
+            <field name="mobile">7111199914</field>
+            <field name="email">jembe@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('17/03/2010', '%d/%m/%Y')"/>
+            <field name="course_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_course_14')])]"/>
+        </record>
+        <record id="student_15" model="xe.student">
+            <field name="name">Dennis Jana Okari</field>
+            <field name="roll_number">15</field>
+            <field name="mobile">7111199915</field>
+            <field name="email">dennis@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('06/08/2009', '%d/%m/%Y')"/>
+            <field name="course_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_course_15')])]"/>
+        </record>
+        <record id="student_16" model="xe.student">
+            <field name="name">Lary Mike Odongo</field>
+            <field name="roll_number">16</field>
+            <field name="mobile">7111199916</field>
+            <field name="email">lary@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('28/07/2010', '%d/%m/%Y')"/>
+            <field name="course_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_course_16')])]"/>
+        </record>
+    </data>
+</odoo>

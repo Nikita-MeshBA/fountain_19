@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="student_information_report_form" model="ir.ui.view">
+        <field name="name">xe.student.information.report.wizard.form</field>
+        <field name="model">xe.student.information.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Student Information Report">
+                <group>
+                    <group>
+                        <field name="fees_filter" string="Options"/>
+                        <field name="course_condition" invisible="fees_filter != 'course'"
+                               required="fees_filter == 'course'"/>
+                        <field name="term_condition" string="Class Room" invisible="fees_filter != 'classroom'"
+                               required="fees_filter == 'classroom'"/>
+                    </group>
+                    <group>
+                        <field name="course_ids" widget="many2many_tags"
+                               invisible="course_condition == 'all'" required="course_condition == 'course_wise'"/>
+                        <field name="class_room_ids" widget="many2many_tags"
+                               invisible="term_condition == 'all'" required="term_condition == 'term_wise'"
+                        />
+                    </group>
+                </group>
+                <footer>
+                    <button name="check_report" string="Print" type="object" default_focus="1" class="oe_highlight"
+                            invisible="1"/>
+                    <button name="check_report_xls" type="object" string="Print XLSX"
+                            class="oe_highlight"/>
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_student_information_report" model="ir.actions.act_window">
+        <field name="name">Student Information</field>
+        <field name="res_model">xe.student.information.report.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="student_information_report_form"/>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+            id="menu_base_report"
+            name="Reports"
+            parent="menu_administration_root"
+            groups="xenesis_school_base.group_xe_staff"/>
+
+    <menuitem
+            id="menu_student_information_report"
+            name="Student Information"
+            action="action_student_information_report"
+            parent="menu_base_report"
+            sequence="75"
+            groups="xenesis_school_base.group_xe_staff"/>
+</odoo>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="xe_academic_year_tree_view" model="ir.ui.view">
+        <field name="name">xe.academic.year.tree</field>
+        <field name="model">xe.academic.year</field>
+        <field name="arch" type="xml">
+            <tree string="Academic Year" editable="bottom">
+                <field name="name" string="Name" required="1"/>
+                <field name="code"/>
+                <field name="start_date" required="1"/>
+                <field name="end_date" required="1"/>
+                <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_xe_academic_year_search" model="ir.ui.view">
+        <field name="name">xe.academic.year.tree</field>
+        <field name="model">xe.academic.year</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Academic Year">
+                <field name="name"/>
+                <field name="code"/>
+                <newline/>
+            </search>
+        </field>
+    </record>
+    <record id="act_academic_year" model="ir.actions.act_window">
+        <field name="name">Academic Year</field>
+        <field name="res_model">xe.academic.year</field>
+        <field name="view_id" ref="xe_academic_year_tree_view"/>
+        <field name="search_view_id" ref="view_xe_academic_year_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add a new Academic year</p>
+        </field>
+    </record>
+
+    <!-- Academic Terms-->
+    <record id="view_xe_academic_year_tree" model="ir.ui.view">
+        <field name="name">xe.academic.terms.tree</field>
+        <field name="model">xe.academic.terms</field>
+        <field name="arch" type="xml">
+            <tree string="Academic Year Terms">
+                <field name="academic_year_id"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="start_date" required="1"/>
+                <field name="end_date" required="1"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_xe_academic_year_terms_search" model="ir.ui.view">
+        <field name="name">xe.academic.terms.tree</field>
+        <field name="model">xe.academic.terms</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Academic Year Term">
+                <field name="academic_year_id"/>
+                <field name="name"/>
+                <field name="code"/>
+                <newline/>
+            </search>
+        </field>
+    </record>
+    <record id="view_xe_academic_year_term_form" model="ir.ui.view">
+        <field name="name">xe.academic.terms.form</field>
+        <field name="model">xe.academic.terms</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Academic Year Terms">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="academic_year_id"/>
+                            <field name="code"/>
+                            <field name="no_of_students" string="Maximum Number of Student"/>
+                            <field name="exam_type" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="start_date" required="1"/>
+                            <field name="end_date" required="1"/>
+                            <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_academic_year_terms" model="ir.actions.act_window">
+        <field name="name">Academic Year Terms</field>
+        <field name="res_model">xe.academic.terms</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_xe_academic_year_terms_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add a new Academic Year Terms</p>
+        </field>
+    </record>
+
+</odoo>

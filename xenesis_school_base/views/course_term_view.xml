@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_course_tree" model="ir.ui.view">
+        <field name="name">xe.course.tree</field>
+        <field name="model">xe.course</field>
+        <field name="arch" type="xml">
+            <list string="Class">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="section"/>
+                <field name="attendance"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_course_search" model="ir.ui.view">
+        <field name="name">course.search</field>
+        <field name="model">xe.course</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Class">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="section"/>
+                <newline/>
+            </search>
+        </field>
+    </record>
+    <record id="view_course_form" model="ir.ui.view">
+        <field name="name">xe.course.form</field>
+        <field name="model">xe.course</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Class">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_terms" invisible="1"
+                                type="object"
+                                string="Term Details"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o">
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="section" required="0"/>
+                            <field name="is_sequence" invisible="1"/>
+                            <field name="classroom_seq_id" string="Admission Sequence" invisible="not is_sequence"/>
+                        </group>
+                        <group>
+                            <field name="code" required="1"/>
+                            <field name="attendance"/>
+                            <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                        </group>
+                        <field name="description" placeholder="Insert Description" required="0"/>
+                        <separator string="Class Subject Details"/>
+                        <field name="course_subject_line_ids" readonly="1">
+                            <list edit="false" create="false">
+                                <field name="name" readonly="1" required="1"/>
+                                <field name="code" readonly="1"/>
+                                <!-- <field name="subject_type" readonly="1"/> -->
+                                <field name="subject_mode" readonly="1"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="act_course" model="ir.actions.act_window">
+        <field name="name">Class</field>
+        <field name="res_model">xe.course</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_course_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new Class
+            </p>
+        </field>
+    </record>
+
+    <record id="view_term_tree" model="ir.ui.view">
+        <field name="name">xe.term.tree</field>
+        <field name="model">xe.term</field>
+        <field name="arch" type="xml">
+            <list string="Term">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="course_id"/>
+                <field name="max_student"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_term_tree1" model="ir.ui.view">
+        <field name="name">xe.term.tree</field>
+        <field name="model">xe.term</field>
+        <field name="arch" type="xml">
+            <list string="Term">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="max_student"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_term_search" model="ir.ui.view">
+        <field name="name">term.search</field>
+        <field name="model">xe.term</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Term">
+                <field name="name"/>
+                <field name="code"/>
+                <newline/>
+            </search>
+        </field>
+    </record>
+    <record id="view_term_form" model="ir.ui.view">
+        <field name="name">xe.term.form</field>
+        <field name="model">xe.term</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Term">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="start_date" required="1"/>
+                            <field name="course_id" required="1"/>
+                        </group>
+                        <group>
+                            <field name="code" required="1"/>
+                            <field name="end_date" required="1"/>
+                            <field name="max_student" required="0"/>
+                        </group>
+                        <separator string="Term Subject Details"/>
+                        <field name="term_subject_line_ids">
+                            <list editable="top" create="false">
+                                <field name="name" readonly="1" required="1"/>
+                                <field name="code" readonly="1" required="1"/>
+                                <field name="subject_type" readonly="1" required="1"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="act_term" model="ir.actions.act_window">
+        <field name="name">Term</field>
+        <field name="res_model">xe.term</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_term_search"/>
+        <field name="help" type="html">
+            <field name="view_id" ref="view_term_tree"/>
+            <p class="o_view_nocontent_smiling_face">
+                Add a new Term
+            </p>
+        </field>
+    </record>
+
+    <record id="act_term1" model="ir.actions.act_window">
+        <field name="name">Term</field>
+        <field name="res_model">xe.term</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_term_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new Term
+            </p>
+        </field>
+    </record>
+
+    <record id="act_term_smart_button_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_term_tree1"/>
+        <field name="act_window_id" ref="act_term1"/>
+    </record>
+
+    <record id="view_cta_tree" model="ir.ui.view">
+        <field name="name">xe.cta.tree</field>
+        <field name="model">xe.cta</field>
+        <field name="arch" type="xml">
+            <list string="Class Teacher Allocation">
+                <field name="course_id"/>
+                <field name="term_id"/>
+                <field name="teacher_id"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="view_cta_search" model="ir.ui.view">
+        <field name="name">cta.search</field>
+        <field name="model">xe.cta</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Class Teacher Allocation">
+                <field name="course_id"/>
+                <field name="term_id"/>
+                <field name="teacher_id"/>
+                <newline/>
+            </search>
+        </field>
+    </record>
+    <record id="view_cta_form" model="ir.ui.view">
+        <field name="name">xe.cta.form</field>
+        <field name="model">xe.cta</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Class Teacher Allocation">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="course_id" required="1"/>
+                            <field name="term_id" required="1"/>
+                        </group>
+                        <group>
+                            <field name="teacher_id" required="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="act_cta" model="ir.actions.act_window">
+        <field name="name">Class Teacher Allocation</field>
+        <field name="res_model">xe.cta</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_cta_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new Class Teacher Allocation
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_administration_root"
+              name="Administration" groups="xenesis_school_base.group_xe_staff" sequence="4"/>
+
+    <menuitem
+            id="menu_course_term"
+            name="Class"
+            parent="xenesis_school_base.menu_administration_root"
+            />
+
+    <menuitem
+            id="menu_course"
+            name="Class"
+            action="act_course"
+            parent="menu_course_term"
+            groups="xenesis_school_base.group_xe_staff"
+            sequence="1"/>
+</odoo>

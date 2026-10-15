@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_xe_product_request_admin,xe.product.request.admin,model_xe_product_request,stock.group_stock_manager,1,1,1,1
+access_xe_product_request_user,xe.product.request.user,model_xe_product_request,stock.group_stock_user,1,1,1,0
+access_xe_product_request_staff,xe.product.request.staff,model_xe_product_request,group_stock_school_staff,1,1,1,0
+
+access_xe_product_request_line_admin,xe.product.request.line.admin,model_xe_product_request_line,stock.group_stock_manager,1,1,1,1
+access_xe_product_request_line_user,xe.product.request.line.user,model_xe_product_request_line,stock.group_stock_user,1,1,1,1
+access_xe_product_request_line_staff,xe.product.request.line.staff,model_xe_product_request_line,group_stock_school_staff,1,1,1,1
+access_stock_move_staff,stock.move.staff,stock.model_stock_move,group_stock_school_staff,1,1,1,0
+

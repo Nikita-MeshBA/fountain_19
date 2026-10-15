@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Subject Data Loading -->
+        <record id="student_parent_1" model="xe.student.parent">
+            <field name="student_id" ref="xenesis_school_base.student_1"/>
+        </record>
+        <record id="student_parent_2" model="xe.student.parent">
+            <field name="student_id" ref="xenesis_school_base.student_2"/>
+        </record>
+        <record id="student_parent_3" model="xe.student.parent">
+            <field name="student_id" ref="xenesis_school_base.student_3"/>
+        </record>
+        <record id="student_parent_4" model="xe.student.parent">
+            <field name="student_id" ref="xenesis_school_base.student_4"/>
+        </record>
+        <record id="student_parent_5" model="xe.student.parent">
+            <field name="student_id" ref="xenesis_school_base.student_5"/>
+        </record>
+        <record id="student_parent_6" model="xe.student.parent">
+            <field name="student_id" ref="xenesis_school_base.student_6"/>
+        </record>
+        <record id="student_parent_7" model="xe.student.parent">
+            <field name="student_id" ref="xenesis_school_base.student_7"/>
+        </record>
+        <record id="student_parent_8" model="xe.student.parent">
+            <field name="student_id" ref="xenesis_school_base.student_8"/>
+        </record>
+        <record id="student_parent_9" model="xe.student.parent">
+            <field name="student_id" ref="xenesis_school_base.student_9"/>
+        </record>
+        <record id="student_parent_10" model="xe.student.parent">
+            <field name="student_id" ref="xenesis_school_base.student_10"/>
+        </record>
+        <record id="student_parent_11" model="xe.student.parent">
+            <field name="student_id" ref="xenesis_school_base.student_11"/>
+        </record>
+        <record id="student_parent_12" model="xe.student.parent">
+            <field name="student_id" ref="xenesis_school_base.student_12"/>
+        </record>
+        <record id="student_parent_13" model="xe.student.parent">
+            <field name="student_id" ref="xenesis_school_base.student_13"/>
+        </record>
+        <record id="student_parent_14" model="xe.student.parent">
+            <field name="student_id" ref="xenesis_school_base.student_14"/>
+        </record>
+        <record id="student_parent_15" model="xe.student.parent">
+            <field name="student_id" ref="xenesis_school_base.student_15"/>
+        </record>
+        <record id="student_parent_16" model="xe.student.parent">
+            <field name="student_id" ref="xenesis_school_base.student_16"/>
+        </record>
+
+        <!--   Parent Details   -->
+        <record id="parent_1" model="xe.parent">
+            <field name="name">Brian Otilo</field>
+            <field name="mobile">0725654353</field>
+            <field name="email">brian@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="dob" eval="datetime.strptime('29/10/1980', '%d/%m/%Y')"/>
+            <field name="student_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_parent_1')])]"/>
+        </record>
+        <record id="parent_2" model="xe.parent">
+            <field name="name">Zendy Osyoyo</field>
+            <field name="mobile">0725654354</field>
+            <field name="email">zendy@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="dob" eval="datetime.strptime('29/10/1990', '%d/%m/%Y')"/>
+            <field name="student_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_parent_2')])]"/>
+        </record>
+        <record id="parent_3" model="xe.parent">
+            <field name="name">Natash Marie</field>
+            <field name="mobile">0725654355</field>
+            <field name="email">natash@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="dob" eval="datetime.strptime('1/10/1980', '%d/%m/%Y')"/>
+            <field name="student_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_parent_3')])]"/>
+        </record>
+        <record id="parent_4" model="xe.parent">
+            <field name="name">Michael Achieng</field>
+            <field name="mobile">0725654356</field>
+            <field name="email">michael@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="dob" eval="datetime.strptime('3/07/1987', '%d/%m/%Y')"/>
+            <field name="student_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_parent_4')])]"/>
+        </record>
+        <record id="parent_5" model="xe.parent">
+            <field name="name">Celstine Odour</field>
+            <field name="mobile">0725654357</field>
+            <field name="email">celestine@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="dob" eval="datetime.strptime('1/10/1984', '%d/%m/%Y')"/>
+            <field name="student_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_parent_5')])]"/>
+        </record>
+        <record id="parent_6" model="xe.parent">
+            <field name="name">Lavender Cheni</field>
+            <field name="mobile">0725654358</field>
+            <field name="email">lavendar@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="dob" eval="datetime.strptime('29/10/1989', '%d/%m/%Y')"/>
+            <field name="student_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_parent_6')])]"/>
+        </record>
+        <record id="parent_7" model="xe.parent">
+            <field name="name">Mary Muthoi</field>
+            <field name="mobile">0725654359</field>
+            <field name="email">marymuthoi@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="dob" eval="datetime.strptime('29/2/1980', '%d/%m/%Y')"/>
+            <field name="student_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_parent_7')])]"/>
+        </record>
+        <record id="parent_8" model="xe.parent">
+            <field name="name">Kesha Wazipa</field>
+            <field name="mobile">0725654358</field>
+            <field name="email">kesha@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="dob" eval="datetime.strptime('29/2/1980', '%d/%m/%Y')"/>
+            <field name="student_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_parent_8')])]"/>
+        </record>
+        <record id="parent_9" model="xe.parent">
+            <field name="name">Sifa warimi</field>
+            <field name="mobile">0725654357</field>
+            <field name="email">sifa@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="dob" eval="datetime.strptime('29/2/1980', '%d/%m/%Y')"/>
+            <field name="student_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_parent_9')])]"/>
+        </record>
+        <record id="parent_10" model="xe.parent">
+            <field name="name">Nyakabi Mihungu</field>
+            <field name="mobile">0725654356</field>
+            <field name="email">nyakabi@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="dob" eval="datetime.strptime('29/2/1980', '%d/%m/%Y')"/>
+            <field name="student_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_parent_10')])]"/>
+        </record>
+        <record id="parent_11" model="xe.parent">
+            <field name="name">Misheni Nashipai</field>
+            <field name="mobile">0725654355</field>
+            <field name="email">misheni@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="dob" eval="datetime.strptime('29/2/1980', '%d/%m/%Y')"/>
+            <field name="student_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_parent_11')])]"/>
+        </record>
+        <record id="parent_12" model="xe.parent">
+            <field name="name">Dee Kentai</field>
+            <field name="mobile">0725654354</field>
+            <field name="email">deekentai@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="dob" eval="datetime.strptime('29/2/1980', '%d/%m/%Y')"/>
+            <field name="student_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_parent_12')])]"/>
+        </record>
+        <record id="parent_13" model="xe.parent">
+            <field name="name">Chris Aoko</field>
+            <field name="mobile">0725654353</field>
+            <field name="email">chris@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="dob" eval="datetime.strptime('29/2/1980', '%d/%m/%Y')"/>
+            <field name="student_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_parent_13')])]"/>
+        </record>
+        <record id="parent_14" model="xe.parent">
+            <field name="name">Mururi Kenneth</field>
+            <field name="mobile">0725654352</field>
+            <field name="email">mururi@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="dob" eval="datetime.strptime('29/2/1980', '%d/%m/%Y')"/>
+            <field name="student_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_parent_14')])]"/>
+        </record>
+        <record id="parent_15" model="xe.parent">
+            <field name="name">Amina Wahani</field>
+            <field name="mobile">0725654351</field>
+            <field name="email">amina@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="dob" eval="datetime.strptime('29/2/1980', '%d/%m/%Y')"/>
+            <field name="student_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_parent_15')])]"/>
+        </record>
+        <record id="parent_16" model="xe.parent">
+            <field name="name">Andrea Fami</field>
+            <field name="mobile">0725654350</field>
+            <field name="email">andrea@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="dob" eval="datetime.strptime('29/2/1980', '%d/%m/%Y')"/>
+            <field name="student_detail_ids" eval="[(6, 0, [ref('xenesis_school_base.student_parent_16')])]"/>
+        </record>
+
+    </data>
+</odoo>

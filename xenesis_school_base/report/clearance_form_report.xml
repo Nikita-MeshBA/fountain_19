@@ -1,0 +1,467 @@
+<odoo>
+    <template id="report_clearance_form">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="xenesis_school_base.clearance_external_layout_standard">
+                    <div class="page">
+                        <t t-if="not company">
+                            <!-- Multicompany -->
+                            <t t-if="company_id">
+                                <t t-set="company" t-value="company_id"/>
+                            </t>
+                            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                                <t t-set="company" t-value="o.company_id.sudo()"/>
+                            </t>
+                            <t t-else="else">
+                                <t t-set="company" t-value="res_company"/>
+                            </t>
+                        </t>
+                        <div t-att-style="report_header_style" style="padding-bottom:10px;">
+                            <div class="row">
+                                <div class="col-3 mb4">
+                                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                                         style="max-height: 45px;" alt="Logo"/>
+                                </div>
+                                <div class="col-6" name="company_address">
+                                    <center>
+                                        <span t-if="company.company_details" t-field="company.company_details"/>
+                                    </center>
+
+                                </div>
+                                <div class="col-3 text-right" style="margin-top:22px;" t-field="company.report_header"
+                                     name="moto"/>
+                            </div>
+                            <div t-if="company.logo or company.report_header" class="row zero_min_height">
+                                <div class="col-12">
+                                    <div style="border-bottom: 1px solid black;"/>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <center>
+                            <h5 style="text-decoration: underline;">APPLICATION FOR CLEARANCE CERTIFICATE</h5>
+                        </center>
+                        <br/>
+                        <div class="row">
+                            <h6 style="text-decoration: underline;">
+                                <strong>SECTION A: FOR PARENT/GUARDIAN</strong>
+                            </h6>
+                            <br/>
+                        </div>
+                        <div class="col-md-12 col-sm-12" style="width:100%;" name="section_a_data">
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+                                    <td style="width:35%;">
+                                        <strong>Pupils Name:</strong>
+                                        <span t-esc="o.name"/>
+                                    </td>
+                                    <td style="width:30%;">
+                                        <strong>Class:</strong>
+                                        <span t-esc="o.course_id.name"/>
+                                    </td>
+                                    <td style="width:35%;">
+                                        <strong>Year:</strong>
+                                        <span t-esc="o.current_academic_year_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Date of Birth:</strong>
+                                        <span t-esc="o.dob"/>
+                                    </td>
+                                    <td colspan="2">
+                                        <strong>Index Number:</strong>
+                                        <span t-esc="data['index_no']"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <strong>Parent/Guardian Name:</strong>
+                                        <span t-esc="parent.name"/>
+                                    </td>
+                                    <td>
+                                        <strong>Relation:</strong>
+                                        <span t-esc="dict(parent.fields_get(allfields=['relation'])['relation']['selection'])[parent.relation]"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <strong>Postal Address:</strong>
+                                        <t t-if="parent.partner_id.street">
+                                            <span t-esc="parent.partner_id.street"/>,
+                                        </t>
+
+                                        <t t-if="parent.partner_id.city">
+                                            <span t-esc="parent.partner_id.city"/>,
+                                        </t>
+                                        <t t-if="parent.partner_id.state_id">
+                                            <span t-esc="parent.partner_id.state_id.name"/>,
+                                        </t>
+                                        <t t-if="parent.partner_id.zip">
+                                            <span t-esc="parent.partner_id.zip"/>,
+                                        </t>
+
+                                        <t t-if="parent.partner_id.country_id">
+                                            <span t-esc="parent.partner_id.country_id.name"/>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <strong>Tel No:</strong>
+                                        <span t-esc="parent.mobile"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <strong>Residential Estate:</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Date:</strong>
+                                        <span t-esc="data['clearance_date']"/>
+                                    </td>
+                                    <td colspan="2">
+                                        <strong>Parent/Guardian’s Signature:</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row col-md-12 col-sm-12" style="display:inline;">
+                            <h6 style="text-decoration: underline;">
+                                <strong>SECTION B: (CLASS TEACHER)</strong>
+                            </h6>
+                            <br/>
+                        </div>
+                        <div class="col-md-12 col-sm-12" style="width:100%;" name="section_b_data">
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+                                    <td style="width:35%;">
+                                        <strong>Admission No:</strong>
+                                        <span t-esc="o.roll_number"/>
+                                    </td>
+                                    <td style="width:30%;">
+                                        <strong>Year Admitted:</strong>
+                                        <span t-esc="o.academic_year_id.name"/>
+                                    </td>
+                                    <td style="width:35%;">
+                                        <strong>Class:</strong>
+                                        <span t-esc="o.course_id.name"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row col-md-12 col-sm-12" t-if="part_a_lines" style="display:inline;">
+                            <h6 style="text-decoration: underline;">
+                                <strong>PART A</strong>
+                            </h6>
+                            <br/>
+                        </div>
+                        <div class="col-md-12 col-sm-12" style="width:100%;" name="part_a_data" t-if="part_a_lines">
+                            <table class="table table-condensed table-bordered">
+                                <tr t-foreach="part_a_lines" t-as="line">
+                                    <td style="width:40%;">
+                                        <strong style="text-decoration: underline;">
+                                            <span t-esc="line.attribute_id.name"/>
+                                        </strong>
+                                    </td>
+                                    <td style="width:60%;">
+                                        <span t-esc="line.value" style="padding-left:5px;"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row col-md-12 col-sm-12" t-if="part_b_lines" style="display:inline;">
+                            <h6 style="text-decoration: underline;">
+                                <strong>PART B</strong>
+                            </h6>
+                            <br/>
+                        </div>
+                        <div class="col-md-12 col-sm-12" style="width:100%;" name="part_b_data" t-if="part_b_lines">
+                            <table class="table table-condensed table-bordered">
+                                <tr t-foreach="part_b_lines" t-as="line">
+                                    <td style="width:40%;">
+                                        <strong style="text-decoration: underline;">
+                                            <span t-esc="line.attribute_id.name"/>
+                                        </strong>
+                                    </td>
+                                    <td style="width:60%;">
+                                        <span t-esc="line.value" style="padding-left:5px;"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <p>Have all books/school property been returned? YES/NO</p>
+                        <p>If No, Kindly fill in PART C</p>
+                        <div class="row col-md-12 col-sm-12" t-if="part_b_lines" style="display:inline;">
+                            <h6>
+                                <strong style="text-decoration: underline;">PART C: LOSSES INCCURRED:</strong>
+                                <span style="padding-left:5px;">The student has not returned the following books and
+                                    equipment;
+                                </span>
+                            </h6>
+                            <br/>
+                        </div>
+                        <div class="row col-md-12 col-sm-12" t-if="part_b_lines" style="display:inline;">
+                            <h6 style="text-decoration: underline;">
+                                <strong>TEXTBOOKS and CLASS</strong>
+                            </h6>
+                            <br/>
+                        </div>
+                        <div class="col-md-12 col-sm-12" style="width:100%;" name="section_b_data">
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+                                    <td style="width:35%;">
+                                        <strong>1</strong>
+                                    </td>
+                                    <td style="width:30%;">
+                                        <strong>2</strong>
+                                    </td>
+                                    <td style="width:35%;">
+                                        <strong>3</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:35%;">
+                                        <strong>4</strong>
+                                    </td>
+                                    <td style="width:30%;">
+                                        <strong>5</strong>
+                                    </td>
+                                    <td style="width:35%;">
+                                        <strong>6</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:35%;">
+                                        <strong>7</strong>
+                                    </td>
+                                    <td style="width:30%;">
+                                        <strong>8</strong>
+                                    </td>
+                                    <td style="width:35%;">
+                                        <strong>9</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <strong>10</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <p>(Delete as necessary)</p>
+                        <p>(A)The student`s owes the school nothing and is cleared</p>
+                        <p>(B)The student`s owes the school (P.T.O) and is not cleared.</p>
+                        <div class="col-md-12 col-sm-12" style="width:100%;" name="section_bb_data">
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+                                    <td style="width:35%;">
+                                        Year Left School
+                                    </td>
+                                    <td colspan="2">
+                                        Class
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        Teacher`s
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="width:35%;">
+                                        <strong>NAME</strong>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                    </td>
+                                    <td style="width:30%;">
+                                        <strong>SIGNATURE</strong>
+                                    </td>
+                                    <td style="width:35%;">
+                                        <strong>DATE</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row col-md-12 col-sm-12" style="display:inline;">
+                            <h6 style="text-decoration: underline;">
+                                <strong>SECTION C: LIBRARY BOOKS</strong>
+                            </h6>
+                            <br/>
+                        </div>
+                        <div class="col-md-12 col-sm-12" style="width:100%;" name="section_c_data">
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+                                    <td style="width:35%;">
+                                        <strong>1</strong>
+                                    </td>
+                                    <td style="width:30%;">
+                                        <strong>2</strong>
+                                    </td>
+                                    <td style="width:35%;">
+                                        <strong>3</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:35%;">
+                                        <strong>4</strong>
+                                    </td>
+                                    <td style="width:30%;">
+                                        <strong>5</strong>
+                                    </td>
+                                    <td style="width:35%;">
+                                        <strong>6</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:35%;">
+                                        <strong>LIBRARIAN</strong>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                    </td>
+                                    <td style="width:30%;">
+                                        <strong>SIGNATURE</strong>
+                                    </td>
+                                    <td style="width:35%;">
+                                        <strong>DATE</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row col-md-12 col-sm-12" style="display:inline;">
+                            <h6 style="text-decoration: underline;">
+                                <strong>SECTION D: ACCOUNTS OFFICE</strong>
+                            </h6>
+                            <br/>
+                        </div>
+                        <div class="col-md-12 col-sm-12" style="width:100%;" name="section_d_data">
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+                                    <td colspan="3">
+                                        According to our records the school is owed/not owed
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        The Leaving certificate may be/not be issued..
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="width:35%;">
+                                        <strong>ADMINISTRATOR`S NAME</strong>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                    </td>
+                                    <td style="width:30%;">
+                                        <strong>DATE</strong>
+                                    </td>
+                                    <td style="width:35%;">
+                                        <strong>SIGNATURE</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row col-md-12 col-sm-12" style="display:inline;">
+                            <h6 style="text-decoration: underline;">
+                                <strong>SECTION E: DEPUTY PRINCIPAL</strong>
+                            </h6>
+                            <br/>
+                        </div>
+                        <div class="col-md-12 col-sm-12" style="width:100%;" name="deputy_principal_data">
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+                                    <td colspan="3">
+                                        Remarks
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        Certified correct on books returned by:
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:35%;">
+                                        <strong>DEPUTY PRINCIPAL’S NAME:</strong>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                    </td>
+                                    <td style="width:30%;">
+                                        <strong>DATE</strong>
+                                    </td>
+                                    <td style="width:35%;">
+                                        <strong>SIGNATURE</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row col-md-12 col-sm-12" style="display:inline;">
+                            <h6 style="text-decoration: underline;">
+                                <strong>SECTION E: PRINCIPAL</strong>
+                            </h6>
+                            <br/>
+                        </div>
+                        <div class="col-md-12 col-sm-12" style="width:100%;" name="section_principal_data">
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+                                    <td colspan="3">
+                                        Remarks
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        Certified correct by:
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td style="width:35%;">
+                                        <strong>PRINCIPAL’S NAME:</strong>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                    </td>
+                                    <td style="width:30%;">
+                                        <strong>DATE</strong>
+                                    </td>
+                                    <td style="width:35%;">
+                                        <strong>SIGNATURE</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    <record id="clearance_paperformat" model="report.paperformat">
+        <field name="name">Clearance Letter</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">8</field>
+        <field name="margin_bottom">8</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">5</field>
+        <field name="dpi">90</field>
+    </record>
+    <record id="action_clearance_form_report" model="ir.actions.report">
+        <field name="name">Clearance Form</field>
+        <field name="model">xe.student</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xenesis_school_base.report_clearance_form</field>
+        <field name="report_file">xenesis_school_base.clearance_form_report</field>
+        <field name="print_report_name">’Clearance form - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="clearance_paperformat"/>
+    </record>
+
+</odoo>

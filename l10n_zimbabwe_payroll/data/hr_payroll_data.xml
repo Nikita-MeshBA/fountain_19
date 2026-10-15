@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+    <record id="BS" model="hr.salary.rule.category">
+        <field name="name">Bonus</field>
+        <field name="code">BS</field>
+    </record>
+
+    <record id="Advance_deduction" model="hr.salary.rule.category">
+        <field name="name">Advance Deduction</field>
+        <field name="code">ADVDED</field>
+    </record>
+
+    <record id="hr_rule_longtermadvance_ded" model="hr.salary.rule">
+        <field name="name">Advance Deduction</field>
+        <field name="sequence" eval="100"/>
+        <field name="code">ADV DED</field>
+        <field name="category_id" ref="Advance_deduction"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">fix</field>
+    </record>
+
+    <record id="hr_rule_communication_zimbabwe" model="hr.salary.rule">
+        <field name="name">Communication</field>
+        <field name="sequence" eval="173"/>
+        <field name="code">COMMUNICATION</field>
+        <field name="category_id" ref="hr_payroll_community.ALW"/>
+         <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.communication</field>
+    </record>
+
+    <record id="hr_rule_loan_benefit_zimbabwe" model="hr.salary.rule">
+        <field name="name">Loan Benefit</field>
+        <field name="sequence" eval="173"/>
+        <field name="code">LOAN BENEFIT</field>
+        <field name="category_id" ref="hr_payroll_community.ALW"/>
+         <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = 0.15 * contract.loan</field>
+    </record>
+
+    <record id="hr_rule_tax_credit_zimbabwe" model="hr.salary.rule">
+        <field name="name">Tax Credit</field>
+        <field name="sequence" eval="173"/>
+        <field name="code">TAX CREDIT</field>
+        <field name="category_id" ref="hr_payroll_community.ALW"/>
+         <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">tax_credit = 0.5 * contract.medical_aid
+if contract.age >= 55:
+    tax_credit = tax_credit + 75
+result = tax_credit</field>
+    </record>
+
+    <record id="hr_rule_wcif_zimbabwe" model="hr.salary.rule">
+        <field name="name">W.C.I.F</field>
+        <field name="sequence" eval="9"/>
+        <field name="code">WCIF</field>
+        <field name="category_id" ref="hr_payroll_community.DED"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = .0115 * contract.wage</field>
+    </record>
+
+    <record id="hr_rule_medical_aid_zimbabwe" model="hr.salary.rule">
+        <field name="name">Medical Aid</field>
+        <field name="sequence" eval="9"/>
+        <field name="code">MEDICAL AID</field>
+        <field name="category_id" ref="hr_payroll_community.DED"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.medical_aid</field>
+    </record>
+
+    <record id="hr_rule_nsa_zimbabwe" model="hr.salary.rule">
+        <field name="name">NSSA</field>
+        <field name="sequence" eval="9"/>
+        <field name="code">NSSA</field>
+        <field name="category_id" ref="hr_payroll_community.DED"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.nsa</field>
+    </record>
+
+    <record id="hr_rule_aids_levy_zimbabwe" model="hr.salary.rule">
+        <field name="name">Aids Levy</field>
+        <field name="sequence" eval="9"/>
+        <field name="code">AL</field>
+        <field name="category_id" ref="hr_payroll_community.DED"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">TI = int(categories.GROSS - (contract.nsa + (0.05 * contract.wage)))
+TAX = 0
+range_list = [{'range':range(0,71),'constant':0,'percentage':0},{'range':range(71,301),'constant':14,'percentage':0.20},{'range':range(301,1001),'constant':29,'percentage':0.25},{'range':range(1001,2001),'constant':79,'percentage':0.30},{'range':range(2001,3001),'constant':179,'percentage':0.35}]
+for item in range_list:
+    if TI in item['range']:
+        TAX = (TI * item['percentage']) - item['constant']
+    elif TI not in item['range'] and TI > 3001:
+        TAX = (TI * 0.40) - 329
+tax_credit = 0.5 * contract.medical_aid
+if contract.age >= 55:
+    tax_credit = tax_credit + 75
+PAYE = TAX - tax_credit
+result = 0.03 * PAYE</field>
+    </record>
+
+
+
+    <record id="hr_rule_pension_old_mutual_zimbabwe" model="hr.salary.rule">
+        <field name="name">Pension Old Mutual</field>
+        <field name="sequence" eval="9"/>
+        <field name="code">POM</field>
+        <field name="category_id" ref="hr_payroll_community.DED"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = 0.05 * contract.wage</field>
+    </record>
+
+
+    <record id="hr_rule_deduction_amount_zimbabwe" model="hr.salary.rule">
+        <field name="name">Deduction-amount</field>
+        <field name="sequence" eval="9"/>
+        <field name="code">DA</field>
+        <field name="category_id" ref="hr_payroll_community.DED"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.schoolfees_deduction</field>
+    </record>
+
+    <record id="hr_payroll_community.hr_rule_taxable" model="hr.salary.rule">
+        <field name="amount_python_compute">result = contract.house_allowance + contract.transport_allowance + contract.communication + contract.wage + contract.bonus
+
+        </field>
+        <field name="sequence" eval="4"/>
+    </record>
+
+    <record id="hr_rule_loan_zimbabwe" model="hr.salary.rule">
+        <field name="name">Loan</field>
+        <field name="sequence" eval="9"/>
+        <field name="code">LOAN</field>
+        <field name="category_id" ref="hr_payroll_community.DED"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.loan</field>
+    </record> 
+
+
+    <record id="hr_rule_loan_bonus" model="hr.salary.rule">
+        <field name="name">Bonus</field>
+        <field name="sequence" eval="9"/>
+        <field name="code">Bonus</field>
+        <field name="category_id" ref="BS"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.bonus</field>
+    </record> 
+
+    <record id="hr_payroll_community.hr_rule_net" model="hr.salary.rule">
+        <field name="amount_python_compute">TI = int(categories.GROSS - (contract.nsa + (0.05 * contract.wage)))
+TAX = 0
+range_list = [{'range':range(0,71),'constant':0,'percentage':0},{'range':range(71,301),'constant':14,'percentage':0.20},{'range':range(301,1001),'constant':29,'percentage':0.25},{'range':range(1001,2001),'constant':79,'percentage':0.30},{'range':range(2001,3001),'constant':179,'percentage':0.35}]
+for item in range_list:
+    if TI in item['range']:
+        TAX = (TI * item['percentage']) - item['constant']
+    elif TI not in item['range'] and TI > 3001:
+        TAX = (TI * 0.40) - 329
+tax_credit = 0.5 * contract.medical_aid
+if contract.age >= 55:
+    tax_credit = tax_credit + 75
+PAYE = TAX - tax_credit
+net_value = categories.GROSS - categories.DED - PAYE
+result = net_value </field>
+        <field name="sequence" eval="200"/>
+    </record>
+
+    <record id="hr_payroll_community.hr_rule_basic" model="hr.salary.rule">
+        <field name="amount_python_compute">result = contract.wage / 1.15</field>
+        <field name="sequence" eval="1"/>
+    </record>
+
+    <record id="hr_payroll_community.hr_rule_basic" model="hr.salary.rule">
+        <field name="amount_python_compute">result = contract.wage</field>
+        <field name="sequence" eval="1"/>
+    </record>
+
+
+    <record id="structure_generic" model="hr.payroll.structure">
+        <field name="code">GENERIC</field>
+        <field name="name">Generic Salary Structure</field>
+        <field name="rule_ids"
+		eval="[(6, 0, [ref('hr_payroll_community.hr_rule_basic'),
+ref('hr_payroll_community.hr_rule_net'),
+ref('hr_rule_loan_zimbabwe'),
+ref('hr_rule_pension_old_mutual_zimbabwe'),
+ref('hr_rule_aids_levy_zimbabwe'),
+ref('hr_rule_nsa_zimbabwe'),
+ref('hr_rule_medical_aid_zimbabwe'),
+ref('hr_rule_wcif_zimbabwe'),
+ref('hr_rule_tax_credit_zimbabwe'),
+ref('hr_rule_loan_benefit_zimbabwe'),
+ref('hr_payroll_community.hr_rule_taxable'),
+ref('hr_rule_deduction_amount_zimbabwe'),
+ref('hr_rule_loan_bonus'),
+ref('hr_rule_communication_zimbabwe')])]"
+	/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="parent_id" ref="hr_payroll_community.structure_base"/>
+    </record>
+
+
+
+   
+
+    </data>
+</odoo>

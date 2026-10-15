@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="kanban_view_parent" model="ir.ui.view">
+        <field name="name">Parent Kanban</field>
+        <field name="model">xe.parent</field>
+        <field name="arch" type="xml">
+            <kanban class="o_res_partner_kanban">
+                <field name="id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_hr_kanban_record">
+                            <field name="image_128" widget="image" class="o_kanban_image_fill_left"
+                                   options="{'zoom': true, 'zoom_delay': 1000, 'background': true, 'preventClicks': false}"/>
+                            <div class="oe_kanban_details">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name" placeholder="Parent's Name"/>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <ul>
+                                    <li id="last_login"/>
+                                    <li t-if="record.email.raw_value" class="o_text_overflow">
+                                        <field name="email"/>
+                                    </li>
+                                    <li t-if="record.phone.raw_value" class="o_force_ltr">
+                                        <field name="phone"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_parent_tree" model="ir.ui.view">
+        <field name="name">xe.parent.tree</field>
+        <field name="model">xe.parent</field>
+        <field name="arch" type="xml">
+            <tree string="Parents">
+                <field name="name" string="Parent Name"/>
+                <field name="mobile" string="Mobile" required="1"/>
+                <field name="phone" string="Phone"/>
+                <field name="email" string="Email"/>
+                <field name="student_user_ids" widget="many2many_tags" optional="hide" invisible="1"/>
+                <field name="user_id"/>
+                <field name="education" invisible="1" optional="hide"/>
+                <field name="relation"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_parent_search" model="ir.ui.view">
+        <field name="name">parent.search</field>
+        <field name="model">xe.parent</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Parent">
+                <field name="name"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="mobile"/>
+                <newline/>
+            </search>
+        </field>
+    </record>
+    <record id="view_parent_form" model="ir.ui.view">
+        <field name="name">xe.parent.form</field>
+        <field name="model">xe.parent</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Parents">
+                <header>
+                    <button name="action_create_user"
+                            string="Create User"
+                            type="object" invisible="user_id != False"
+                    />
+                </header>
+                <sheet>
+                    <field name="image_1920" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h1 class="d-flex">
+                            <field name="name" placeholder="Parents's Full Name" required="True"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="email"/>
+                            <field name="relation"/>
+                            <field name="yearly_income"/>
+                        </group>
+                        <group>
+                            <field name="phone" required="0"/>
+                            <field name="mobile" required="1"/>
+                            <field name="education"/>
+                            <field name="student_user_ids" widget="many2many_tags" invisible="1"/>
+                            <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="general_information"
+                              string="General Information">
+                            <group col="4" colspan="4" name="general_detail">
+                                <field name="gender"/>
+                                <field name="dob"/>
+                                <field name="nationality_id"/>
+                                <field name="visa_info"/>
+                                <field name="blood_group"/>
+                                <field name="user_id" options="{'no_create_edit': True}"
+                                       invisible="user_id == False"
+                                />
+                            </group>
+                            <group string="Address Detail" name="address">
+                                <label for="street" string="Address"/>
+                                <div name="div_address">
+                                    <field name="street" placeholder="Street..."/>
+                                    <field name="street2" placeholder="Street2"/>
+                                    <div class="address_format">
+                                        <field name="city" placeholder="City" style="width: 40%"/>
+                                        <field name="state_id" class="oe_no_button" placeholder="State"
+                                               style="width: 37%" options="{&quot;no_open&quot;: True}"/>
+                                        <field name="zip" placeholder="ZIP" style="width: 20%"/>
+                                    </div>
+                                    <field name="country_id" placeholder="Country" class="oe_no_button"
+                                           options="{&quot;no_open&quot;: True}"/>
+                                </div>
+                            </group>
+                        </page>
+                        <page name="student_information" string="Students">
+                            <field name="student_ids" delete="0">
+                                <tree delete="0">
+                                    <field name="roll_number" readonly="1"/>
+                                    <field name="name"/>
+                                    <field name="course_id"/>
+                                    <field name="classroom_id"
+                                           domain="[('course_id','=',course_id)]"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="roll_number" readonly="1"/>
+                                            <field name="name"/>
+                                            <field name="course_id"/>
+                                            <field name="classroom_id"
+                                                   domain="[('course_id','=',course_id)]"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- <record id="view_parent_form_inherit_parent" model="ir.ui.view">
+        <field name="name">xe.parent.form.parent</field>
+        <field name="model">xe.parent</field>
+        <field name="inherit_id" ref="xenesis_school_base.view_parent_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='student_ids']" position="attributes">
+                <t groups="xenesis_school_base.group_popup_disable">
+                    <attribute name="readonly">1</attribute>
+                </t>
+            </xpath>
+        </field>
+    </record> -->
+
+    <record id="act_parent" model="ir.actions.act_window">
+        <field name="name">Parents</field>
+        <field name="res_model">xe.parent</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="view_parent_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new Parent
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_parent_root" name="Parents" groups="xenesis_school_base.group_xe_parent"
+              web_icon="xenesis_school_base,static/description/parent_icon.png" sequence="7"/>
+
+    <menuitem parent="menu_parent_root" name="Parents" id="parent_profile_menu_id" action="act_parent"
+              groups="xenesis_school_base.group_xe_parent"/>
+
+</odoo>

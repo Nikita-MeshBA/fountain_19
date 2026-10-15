@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="clearance_form_tree" model="ir.ui.view">
+        <field name="name">clearance.form.attributes.tree</field>
+        <field name="model">clearance.form.attributes</field>
+        <field name="arch" type="xml">
+            <tree string="Clearance form Attributes" editable="bottom">
+                <field name="name" required="1"/>
+                <field name="section"/>
+            </tree>
+        </field>
+    </record>
+    <record id="act_clearance_form" model="ir.actions.act_window">
+        <field name="name">Clearance Attributes</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">clearance.form.attributes</field>
+        <field name="view_id" ref="clearance_form_tree"/>
+    </record>
+
+</odoo>

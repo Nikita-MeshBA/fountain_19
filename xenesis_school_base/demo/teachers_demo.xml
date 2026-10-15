@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Academic year Demo Data Loading -->
+        <record id="academic_1" model="xe.academic.year">
+            <field name="name">22-23</field>
+            <field name="code">APRIL-MARCH</field>
+            <field name="start_date" eval="datetime.strptime('01/04/2022', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('31/03/2023', '%d/%m/%Y')"/>
+        </record>
+        <record id="academic_2" model="xe.academic.year">
+            <field name="name">21-22</field>
+            <field name="code">APRIL-MARCH</field>
+            <field name="start_date" eval="datetime.strptime('01/04/2021', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('31/03/2022', '%d/%m/%Y')"/>
+        </record>
+        <record id="academic_3" model="xe.academic.year">
+            <field name="name">21-20</field>
+            <field name="code">APRIL-MARCH</field>
+            <field name="start_date" eval="datetime.strptime('01/04/2020', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('31/03/2021', '%d/%m/%Y')"/>
+        </record>
+
+        <record id="teacher_1" model="xe.staff">
+            <field name="name">Jackiline Odour</field>
+            <field name="mobile">711119990</field>
+            <field name="email">jackiline@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('7/4/1987', '%d/%m/%Y')"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('xenesis_school_base.subject_3')])]"/>
+        </record>
+        <record id="teacher_2" model="xe.staff">
+            <field name="name">Mica Mulanu</field>
+            <field name="mobile">717719990</field>
+            <field name="email">mica@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('10/2/1988', '%d/%m/%Y')"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('xenesis_school_base.subject_2')])]"/>
+        </record>
+        <record id="teacher_3" model="xe.staff">
+            <field name="name">Amos Wasike</field>
+            <field name="mobile">711229990</field>
+            <field name="email">amos@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('15/09/1986', '%d/%m/%Y')"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('xenesis_school_base.subject_4')])]"/>
+        </record>
+        <record id="teacher_4" model="xe.staff">
+            <field name="name">Nahum Ndunge</field>
+            <field name="mobile">711119990</field>
+            <field name="email">nahum@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('8/5/1992', '%d/%m/%Y')"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('xenesis_school_base.subject_5')])]"/>
+        </record>
+        <record id="teacher_5" model="xe.staff">
+            <field name="name">Stephan Moeche</field>
+            <field name="mobile">711000990</field>
+            <field name="email">stephen@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('19/01/1991', '%d/%m/%Y')"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('xenesis_school_base.subject_2')])]"/>
+        </record>
+        <record id="teacher_6" model="xe.staff">
+            <field name="name">Clara Ndunge</field>
+            <field name="mobile">733319990</field>
+            <field name="email">clara@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('19/03/1993', '%d/%m/%Y')"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('xenesis_school_base.subject_6')])]"/>
+        </record>
+        <record id="teacher_7" model="xe.staff">
+            <field name="name">Annstaciah Odour</field>
+            <field name="mobile">7250211233</field>
+            <field name="email">annstaciah@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('1/1/1990', '%d/%m/%Y')"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('xenesis_school_base.subject_3')])]"/>
+        </record>
+        <record id="teacher_8" model="xe.staff">
+            <field name="name">Ken Mwit</field>
+            <field name="mobile">727616637</field>
+            <field name="email">kenmwith@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('4/2/1991', '%d/%m/%Y')"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('xenesis_school_base.subject_2')])]"/>
+        </record>
+        <record id="teacher_9" model="xe.staff">
+            <field name="name">John Wafula</field>
+            <field name="mobile">7302121519</field>
+            <field name="email">john@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('15/09/1987', '%d/%m/%Y')"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('xenesis_school_base.subject_4')])]"/>
+        </record>
+        <record id="teacher_10" model="xe.staff">
+            <field name="name">Angie Wachi</field>
+            <field name="mobile">7333199903</field>
+            <field name="email">angie@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('8/6/1992', '%d/%m/%Y')"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('xenesis_school_base.subject_5')])]"/>
+        </record>
+        <record id="teacher_11" model="xe.staff">
+            <field name="name">Stella Mwende</field>
+            <field name="mobile">7354031805</field>
+            <field name="email">stella@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('19/01/1992', '%d/%m/%Y')"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('xenesis_school_base.subject_2')])]"/>
+        </record>
+        <record id="teacher_12" model="xe.staff">
+            <field name="name">Caro Wairimu</field>
+            <field name="mobile">7379986948</field>
+            <field name="email">caro@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('19/03/1994', '%d/%m/%Y')"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('xenesis_school_base.subject_6')])]"/>
+        </record>
+        <record id="teacher_13" model="xe.staff">
+            <field name="name">Janet Weby</field>
+            <field name="mobile">740594209</field>
+            <field name="email">janet@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('7/1/1992', '%d/%m/%Y')"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('xenesis_school_base.subject_3')])]"/>
+        </record>
+        <record id="teacher_14" model="xe.staff">
+            <field name="name">Mindel Mzungu</field>
+            <field name="mobile">7431897233</field>
+            <field name="email">mindel@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('30/09/1993', '%d/%m/%Y')"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('xenesis_school_base.subject_2')])]"/>
+        </record>
+        <record id="teacher_15" model="xe.staff">
+            <field name="name">Wizer Wafula</field>
+            <field name="mobile">7457852376</field>
+            <field name="email">wizer@demoschool.com</field>
+            <field name="gender">male</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('15/09/1988', '%d/%m/%Y')"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('xenesis_school_base.subject_4')])]"/>
+        </record>
+        <record id="teacher_16" model="xe.staff">
+            <field name="name">Natalie Ceci</field>
+            <field name="mobile">7483807519</field>
+            <field name="email">natalie@demoschool.com</field>
+            <field name="gender">female</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="nationality_id" ref="base.ke"/>
+            <field name="dob" eval="datetime.strptime('8/7/1992', '%d/%m/%Y')"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('xenesis_school_base.subject_5')])]"/>
+        </record>
+    </data>
+</odoo>

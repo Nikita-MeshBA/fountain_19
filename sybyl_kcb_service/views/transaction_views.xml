@@ -1,0 +1,119 @@
+<odoo>
+    <record id="from_kcb_transaction_view" model="ir.ui.view">
+        <field name="name">from.kcb.transaction.view</field>
+        <field name="model">kcb.transaction</field>
+        <field name="arch" type="xml">
+            <form string="KCBBANK Transaction" create="false" edit="false">
+                <header>
+<!--                    <button name="validate_move_payment_new" type="object" string="Reconcile" class="oe_highlight"-->
+<!--                            invisible="'state', 'in', ('done', 'cancel')"/>-->
+                                    <button name="validate_move_payment_new"
+                        type="object"
+                        string="Reconcile"
+                        class="oe_highlight"
+                        invisible="state in ['done', 'cancel']"/>
+                    <button name="state_cancel" type="object" string="Cancel" class="oe_highlight"
+                            invisible="'state', 'in', ('cancel', 'done')"/>
+                    <button name="state_draft" type="object" string="Set to Draft"
+                            invisible="'state', 'in', ('draft', 'done')"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title mw-100 pr-0">
+                        <h1 class="flex-fill d-flex flex-row">
+                            <field name="name" class="text-truncate w-100"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="bill_ref_no" readonly="1"/>
+                            <field name="strTransNo" readonly="1"/>
+                            <field name="move_name" readonly="1" invisible="1"/>
+                            <field name="payment_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="dblAmount" readonly="1"/>
+                            <field name="dtTransDate" readonly="1"/>
+                            <field name="move_id" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="kcb_transaction_list" model="ir.ui.view">
+        <field name="name">tree.kcb.transaction</field>
+        <field name="model">kcb.transaction</field>
+        <field name="arch" type="xml">
+            <list string="KCBBANK Transaction" create="false" edit="false" decoration-info="state == 'draft'"
+                  decoration-success="state == 'done'" decoration-muted="state == 'cancel'">
+                <field name="state" invisible="1"/>
+                <field name="name"/>
+                <field name="bill_ref_no"/>
+                <field name="strTransNo"/>
+                <!--                <field name="student_id"/>-->
+                <field name="dtTransDate"/>
+                <field name="dblAmount"/>
+<!--                <button name="validate_move_payment_new" string="Reconcile" type="object"-->
+<!--                        invisible="'state', 'in', ('done', 'cancel')"/>-->
+<!--                <button name="state_cancel" string="Cancel" type="object"-->
+<!--                        invisible="'state', 'in', ('done', 'cancel')"/>-->
+                <button name="validate_move_payment_new"
+                    string="Reconcile"
+                    type="object"
+                    invisible="state in ['done', 'cancel']"/>
+
+                <button name="state_cancel"
+                        string="Cancel"
+                        type="object"
+                        invisible="state in ['done', 'cancel']"/>
+            </list>
+        </field>
+    </record>
+
+<!--    <record id="view_kcb_transaction_search" model="ir.ui.view">-->
+<!--        <field name="name">kcb.transaction.search</field>-->
+<!--        <field name="model">kcb.transaction</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <search string="KCBBANK Transaction">-->
+<!--                <field name="bill_ref_no"/>-->
+<!--                <field name="dblAmount" string="Amount"/>-->
+<!--                <field name="strTransNo" string="Transaction Number"/>-->
+<!--                <field name="dtTransDate" string="Transaction Date"/>-->
+<!--                <field name="state" string="State"/>-->
+<!--                <separator/>-->
+<!--                <filter domain="[('state', '=', 'draft')]" name="draft" string="New"/>-->
+<!--                <separator/>-->
+<!--                <group expand="0" string="Group By">-->
+<!--                    <filter context="{'group_by':'bill_ref_no'}" domain="[]" name="group_strRegNo"-->
+<!--                            string="Reference Number"/>-->
+<!--                    <filter context="{'group_by':'state'}" domain="[]" name="group_state" string="Status"/>-->
+<!--                    <filter context="{'group_by':'dtTransDate'}" domain="[]" name="group_dtTransDate"-->
+<!--                            string="Transaction Date"/>-->
+<!--                </group>-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="action_kcb_transaction" model="ir.actions.act_window">
+        <field name="name">Transaction</field>
+        <field name="res_model">kcb.transaction</field>
+        <field name="view_mode">list,form</field>
+<!--        <field name="search_view_id" ref="view_kcb_transaction_search"/>-->
+        <field name="view_id" ref="kcb_transaction_list"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Trasaction is not found
+            </p>
+            <p>
+            </p>
+        </field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem id="menu_kcb_transaction" name="KCB-BANK Transaction" action="action_kcb_transaction"
+              groups="account.group_account_user,account.group_account_manager" sequence="30"
+              parent="account.menu_finance_receivables"/>
+
+</odoo>

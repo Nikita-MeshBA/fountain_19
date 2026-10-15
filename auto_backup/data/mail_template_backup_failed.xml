@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="email_template_backup_failed" model="mail.template">
+        <field name="name">Auto Backup: Backup Failed Notification</field>
+        <field name="model_id" ref="auto_backup.model_db_backup" />
+        <field name="subject">Backup failed: {{ object.name }}</field>
+        <field name="email_to">{{ object.email_to_notify }}</field>
+        <field name="use_default_to" eval="False" />
+        <field name="auto_delete" eval="True" />
+        <field
+            name="description"
+        >Sent to the configured address when a database backup fails.</field>
+        <field name="body_html" type="html">
+            <div style="margin:0px;padding:0px;font-size:13px;">
+                <p>Hello,</p>
+                <p>
+                    A database backup <strong>failed</strong> for the following
+                    configuration:
+                </p>
+                <ul>
+                    <li>Backup: <t t-out="object.name or ''" /></li>
+                    <li>Folder: <t t-out="object.folder or ''" /></li>
+                    <li>Method: <t t-out="object.method or ''" /></li>
+                </ul>
+                <p>Error details:</p>
+                <pre
+                    style="white-space:pre-wrap;background:#f5f5f5;padding:8px;"
+                ><t t-out="ctx.get('backup_error') or 'No details available.'" /></pre>
+                <p>
+                    Please check the server and the backup configuration.
+                </p>
+            </div>
+        </field>
+    </record>
+</odoo>

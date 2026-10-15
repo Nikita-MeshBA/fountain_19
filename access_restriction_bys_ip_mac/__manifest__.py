@@ -1,0 +1,20 @@
+{
+    "name": "Access Restriction By IP and MAC",
+    "summary": "User Can Access His Account Only From Specified IP Address AND MAC, Xenesis",
+    "version": "19.0.0.0.0",
+    "live_test_url": "https://youtu.be/t4jwndbdAMc",
+    "author": "Sybyl",
+    "website": "www.sybyl.com, www.sybylcloud.com",
+    "license": "LGPL-3",
+    "category": "Tools",
+    "depends": ["base", "mail"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/allowed_ips_view.xml",
+    ],
+    "images": ["static/description/banner.png", "static/description/icon.png"],
+    "installable": True,
+    "auto_install": False,
+    "price": "200",
+    "currency": "USD",
+}

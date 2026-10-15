@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_zimbabwe_hr_long_term_advance,access_zimbabwe_hr_long_term_advance,model_zimbabwe_hr_long_term_advance,base.group_user,1,1,1,1
+access_zimbabwe_hr_long_term_advance_line,access_zimbabwe_hr_long_term_advance_line,model_zimbabwe_hr_long_term_advance_line,base.group_user,1,1,1,1

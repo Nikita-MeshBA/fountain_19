@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="leaving_certificate_tree" model="ir.ui.view">
+        <field name="name">leave.certificate.attribute.tree</field>
+        <field name="model">leave.certificate.attribute</field>
+        <field name="arch" type="xml">
+            <tree string="Activity Type" editable="bottom">
+                <field name="name" required="1"/>
+            </tree>
+        </field>
+    </record>
+    <record id="act_leaving_certificate_atts" model="ir.actions.act_window">
+        <field name="name">Leaving Certificate Attributes</field>
+        <field name="res_model">leave.certificate.attribute</field>
+        <field name="view_id" ref="leaving_certificate_tree"/>
+    </record>
+</odoo>

@@ -1,0 +1,127 @@
+<odoo>
+    <record model="ir.ui.menu" id="mail.menu_root_discuss">
+        <field name="sequence">2</field>
+    </record>
+
+    <record model="ir.ui.menu" id="calendar.mail_menu_calendar">
+        <field name="sequence">3</field>
+    </record>
+
+    <!-- <record model="ir.ui.menu" id="xenesis_school_base.menu_administration_root">
+        <field name="sequence">4</field>
+    </record> -->
+
+   <!--  <record model="ir.ui.menu" id="xe_admission_management.menu_admission_root">
+        <field name="sequence">5</field>
+    </record> -->
+
+    <!-- <record model="ir.ui.menu" id="xenesis_school_base.menu_student_root">
+        <field name="sequence">6</field>
+    </record> -->
+
+    <!-- <record model="ir.ui.menu" id="xenesis_school_base.menu_parent_root">
+        <field name="sequence">7</field>
+    </record> -->
+
+    <!-- <record model="ir.ui.menu" id="xe_lesson_planner.menu_lesson_planner_root">
+        <field name="sequence">8</field>
+    </record> -->
+
+   <!--  <record model="ir.ui.menu" id="xe_timetable_management.timetable_menu_root">
+        <field name="sequence">9</field>
+    </record> -->
+
+  <!--   <record model="ir.ui.menu" id="xe_assignment_management.xe_assignment_menu_root">
+        <field name="sequence">10</field>
+    </record> -->
+
+    <!-- <record model="ir.ui.menu" id="xe_attendance_management.xe_attendance_menu_root">
+        <field name="sequence">11</field>
+    </record> -->
+
+    <!-- <record model="ir.ui.menu" id="xe_exam_management.menu_xe_exam_root">
+        <field name="sequence">12</field>
+    </record> -->
+
+   <!--  <record model="ir.ui.menu" id="xe_library_management.menu_xe_library_root">
+        <field name="sequence">13</field>
+    </record> -->
+
+   <!--  <record model="ir.ui.menu" id="xe_hostel_management.hostel_root_menu">
+        <field name="sequence">14</field>
+    </record> -->
+
+    <record model="ir.ui.menu" id="sale.sale_menu_root">
+        <field name="sequence">15</field>
+    </record>
+
+    <record model="ir.ui.menu" id="purchase.menu_purchase_root">
+        <field name="sequence">16</field>
+    </record>
+
+    <record model="ir.ui.menu" id="stock.menu_stock_root">
+        <field name="sequence">17</field>
+    </record>
+
+    <record model="ir.ui.menu" id="account.menu_finance">
+        <field name="sequence">18</field>
+    </record>
+
+    <record model="ir.ui.menu" id="hr.menu_hr_root">
+        <field name="sequence">19</field>
+    </record>
+
+    <record model="ir.ui.menu" id="hr_attendance.menu_hr_attendance_root">
+        <field name="sequence">20</field>
+    </record>
+
+    <record model="ir.ui.menu" id="hr_holidays.menu_hr_holidays_root">
+        <field name="sequence">21</field>
+    </record>
+
+    <record model="ir.ui.menu" id="hr_payroll_community.menu_hr_payroll_community_root">
+        <field name="sequence">22</field>
+        <field name="groups_id" eval="[(4, ref('hr_holidays.group_hr_holidays_responsible')), (4, ref('hr_holidays.group_hr_holidays_user')), (4, ref('hr_holidays.group_hr_holidays_manager'))]"></field>
+    </record>
+
+    <record model="ir.ui.menu" id="hr.menu_config_recruitment">
+        <field name="sequence">23</field>
+    </record>
+
+    <record model="ir.ui.menu" id="fleet.menu_root">
+        <field name="sequence">24</field>
+    </record>
+
+    <record model="ir.ui.menu" id="website.menu_website_configuration">
+        <field name="sequence">25</field>
+    </record>
+
+    <record model="ir.ui.menu" id="event.event_main_menu">
+        <field name="sequence">26</field>
+    </record>
+
+    <record model="ir.ui.menu" id="mass_mailing.mass_mailing_menu_root">
+        <field name="sequence">27</field>
+    </record>
+
+   <!--  <record model="ir.ui.menu" id="sybyl_bulk_sms.sybyl_bulk_sms_parent_menu">
+        <field name="sequence">28</field>
+    </record>
+ -->
+    <record model="ir.ui.menu" id="contacts.menu_contacts">
+        <field name="sequence">29</field>
+    </record>
+
+    <record model="ir.ui.menu" id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root">
+        <field name="groups_id" eval="[(4, ref('spreadsheet_dashboard.group_dashboard_manager'))]"></field>
+    </record>
+
+   <!--  <record model="ir.ui.menu" id="ks_dashboard_ninja.board_menu_root">
+        <field name="groups_id" eval="[(4, ref('ks_dashboard_ninja.ks_dashboard_ninja_group_manager'))]"></field>
+    </record> -->
+
+    <record model="ir.ui.menu" id="base.menu_management">
+        <field name="groups_id" eval="[(4, ref('base.group_system'))]"></field>
+    </record>
+
+</odoo>

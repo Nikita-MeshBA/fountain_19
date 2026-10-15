@@ -1,0 +1,91 @@
+<odoo>
+    <record model="ir.ui.view" id="xe_product_request_list">
+        <field name="name">product.request.list</field>
+        <field name="model">xe.product.request</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="r_date"/>
+                <field name="user_id"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="xe_product_request_form">
+        <field name="name">product.request.form</field>
+        <field name="model">xe.product.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_request" invisible="state != 'draft'" string="Request" type="object"
+                            class="oe_highlight"/>
+                    <button name="accept_request" invisible="state != 'request'" string="Accept Request" type="object"
+                            class="oe_highlight" groups="stock.group_stock_manager,xenesis_school_base.group_xe_admin"/>
+                    <button name="action_issue" invisible="state != 'accept_by_manager'" string="Issue" type="object"
+                            class="oe_highlight" groups="stock.group_stock_manager,xenesis_school_base.group_xe_admin"/>
+                    <button name="action_return" invisible="state != 'issue'" type="object" class="oe_highlight"
+                            groups="stock.group_stock_manager,xenesis_school_base.group_xe_admin" string="Return"/>
+                    <button name="action_cancel" invisible="state != 'request'" type="object" class="oe_highlight"
+                            string="Cancel"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,request,issue"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <field name="name" readonly="1"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="r_date" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="user_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="product_reqst_line" string="Request Lines">
+                            <field name="request_lines_ids">
+                                <list editable="bottom" width="100%;">
+                                    <field name="pdt_request_id" invisible="1"/>
+                                    <field name="product_id" readonly="state != 'draft'" width="25%;"/>
+                                    <field name="qty_available" readonly="1" force_save="1" width="25%;"
+                                           groups="stock.group_stock_manager,xenesis_school_base.group_xe_admin"/>
+                                    <field name="request_qty" readonly="state != 'draft'" width="25%;"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="issued_qty" readonly="state != 'accept_by_manager'" width="25%;"
+                                           force_save="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="product_request_act">
+        <field name="name">Product Request</field>
+        <field name="res_model">xe.product.request</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="sequence_product_request" model="ir.sequence">
+        <field name="name">Product Request</field>
+        <field name="code">xe.product.req.seq</field>
+        <field name="active">TRUE</field>
+        <field name="prefix">PRQ/</field>
+        <field name="padding">3</field>
+    </record>
+    <menuitem name="Inventory" id="stock.menu_stock_root" sequence="30"
+              groups="stock.group_stock_manager,stock.group_stock_user,xe_internal_product_request.group_stock_school_staff"
+              web_icon="stock,static/description/icon.png"/>
+    <menuitem action="stock.stock_picking_type_action"
+              id="stock.stock_picking_type_menu"
+              parent="stock.menu_stock_root" sequence="0"
+              groups="stock.group_stock_manager,stock.group_stock_user"
+              name="Overview"/>
+    <menuitem name="Product Request" id="xe_internal_product_request" parent="stock.menu_stock_root"
+              action="product_request_act" sequence="1"/>
+</odoo>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_kcb_payment_manual_reconcile" model="ir.ui.view">
+        <field name="name">kcb.payment.manual.reconcile.form.view</field>
+        <field name="model">kcb.payment.manual.reconcile</field>
+        <field name="arch" type="xml">
+            <form string="KCB Payment Manual Reconcile">
+                <group>
+                    <!-- <field name="invoice_id" required="1" domain="[('state', '=', 'open'), ('type', '=', 'out_invoice')]"/> -->
+                    <field name="reconcile_method" widget="radio"/>
+                    <field name="trans_amount" invisible="1"/>
+                    <field name="student_id" invisible="1"/>
+                    <field name="journal_id" invisible="1"/>
+                    <field name="invoice_ids" class="oe_inline" domain="[('move_type','=','out_invoice')]"
+                           invisible="'reconcile_method','!=', 'invoice'">
+                        <list>
+                            <field name="name" readonly="1"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="amount_total_signed" readonly="1"/>
+                            <field name="amount_residual_signed" readonly="1"/>
+                            <field name="state" readonly="1"/>
+                        </list>
+                    </field>
+                    <field name="payment_ids" class="oe_inline"
+                           domain="[('state', '=', 'draft'),('payment_type','=','inbound')]"
+                           invisible="'reconcile_method','!=', 'payment'" context="{'default_amount':trans_amount,'default_payment_type':'inbound',
+'default_partner_id': student_id,'default_journal_id': journal_id}">
+                        <list>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="amount" readonly="1"/>
+                            <field name="journal_id" readonly="1"/>
+                            <field name="state" readonly="1"/>
+                        </list>
+                    </field>
+                </group>
+                <footer>
+                    <button name="make_payment_reconcile" string="Reconcile" type="object"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_manual_reconcile" model="ir.actions.act_window">
+        <field name="name">Manual Reconcile</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">kcb.payment.manual.reconcile</field>
+        <!-- <field name="view_type">form</field>-->
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="sybyl_kcb_service.model_kcb_transaction"/>
+    </record>
+</odoo>

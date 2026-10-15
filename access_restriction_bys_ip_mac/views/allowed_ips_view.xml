@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="res_users_allowed_ips">
+        <field name="name">res.users</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+<!--            <xpath expr="//field[@name='action_id']" position="after">-->
+<!--                <field name="current_mac_system"/>-->
+<!--            </xpath>-->
+            <xpath expr="//field[@name='login']" position="after">
+                <field name="current_mac_system"/>
+            </xpath>
+            <xpath expr="//page[1]" position='after'>
+                <page string="Allowed IP">
+                    <field name="allowed_ips">
+                        <list editable="bottom" delete="1">
+                            <field name="ip_address"/>
+                        </list>
+                    </field>
+                </page>
+                <page string="Allowed MAC">
+                    <field name="allowed_macs">
+                        <list editable="bottom" delete="1">
+                            <field name="macs_address"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

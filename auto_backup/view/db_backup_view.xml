@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_backup_conf_form" model="ir.ui.view">
+        <field name="model">db.backup</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        name="action_backup"
+                        type="object"
+                        string="Execute backup"
+                        class="oe_highlight"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="e.g. Nightly Production Backup" />
+                        </h1>
+                    </div>
+                    <group string="Basic backup configuration">
+                        <field name="folder" />
+                        <field name="days_to_keep" />
+                        <field name="method" />
+                        <field name="backup_format" />
+                    </group>
+                    <group string="Last Backup">
+                        <field name="last_backup_date" />
+                        <field
+                            name="last_backup_status"
+                            widget="badge"
+                            decoration-success="last_backup_status == 'success'"
+                            decoration-danger="last_backup_status == 'failed'"
+                        />
+                        <field name="last_backup_filename" />
+                        <field name="last_backup_size" />
+                    </group>
+                    <group string="Failure Notification">
+                        <field name="email_notify" />
+                        <field
+                            name="email_to_notify"
+                            invisible="not email_notify"
+                            required="email_notify"
+                            placeholder="admin@example.com"
+                        />
+                    </group>
+                    <div invisible="method != 'sftp'">
+                        <div class="bg-warning">
+                            <h3>Warning:</h3>
+                            Use SFTP with caution! This writes files to external servers under the path you specify.
+                        </div>
+                        <group string="SFTP Settings">
+                            <field name="sftp_host" placeholder="sftp.example.com" />
+                            <field name="sftp_port" />
+                            <field name="sftp_user" placeholder="john" />
+                            <field name="sftp_password_set" invisible="1" />
+                            <label for="sftp_password_edit" string="SFTP Password" />
+                            <div class="o_row">
+                                <span
+                                    invisible="sftp_password_edit or not sftp_password_set"
+                                    class="text-muted me-2"
+                                >
+                                    <i class="fa fa-lock" /> Password is set
+                                </span>
+                                <span
+                                    invisible="sftp_password_edit or sftp_password_set"
+                                    class="text-muted me-2"
+                                >
+                                    No password set
+                                </span>
+                                <field name="sftp_password_edit" nolabel="1" />
+                                <label
+                                    for="sftp_password_edit"
+                                    string="Change password"
+                                    class="me-2"
+                                />
+                                <field
+                                    name="sftp_password_input"
+                                    password="True"
+                                    invisible="not sftp_password_edit"
+                                    placeholder="Enter new password"
+                                    nolabel="1"
+                                />
+                            </div>
+                            <field
+                                name="sftp_private_key"
+                                placeholder="/home/odoo/.ssh/id_rsa"
+                            />
+                            <button
+                                name="action_sftp_test_connection"
+                                type="object"
+                                string="Test SFTP Connection"
+                                icon="fa-television"
+                            />
+                        </group>
+                    </div>
+                    <group
+                        string="Public Download"
+                        invisible="method != 'local'"
+                    >
+                        <field name="download_enable" />
+                        <div
+                            invisible="not download_enable"
+                            class="bg-danger text-white p-2 mb-2"
+                            colspan="2"
+                        >
+                            <strong>Warning:</strong> this exposes full database
+                            backups for download over HTTP. Anyone with the link
+                            AND the username/password below can download your
+                            database. Only use this over HTTPS.
+                        </div>
+                        <field
+                            name="download_user"
+                            invisible="not download_enable"
+                            required="download_enable"
+                            placeholder="download-user"
+                        />
+                        <field
+                            name="download_password"
+                            invisible="not download_enable"
+                            required="download_enable"
+                            password="True"
+                        />
+                        <field
+                            name="download_url"
+                            invisible="not download_enable"
+                        />
+                        <button
+                            name="action_reset_download_token"
+                            type="object"
+                            string="Regenerate link"
+                            icon="fa-refresh"
+                            invisible="not download_enable"
+                            help="Generate a new link, invalidating the old one."
+                        />
+                    </group>
+                    <separator string="Help" colspan="2" />
+                    <div>
+                        Automatic backups of the database can be scheduled as follows:
+                        <ol>
+                        <li
+                        >Go to Settings / Technical / Automation / Scheduled Actions.</li>
+                        <li>Search the action named 'Backup scheduler'.</li>
+                        <li
+                        >Set the scheduler to active and fill in how often you want backups generated.</li>
+                    </ol>
+                    </div>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="view_backup_conf_list" model="ir.ui.view">
+        <field name="model">db.backup</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="folder" />
+                <field name="days_to_keep" />
+                <field name="last_backup_date" />
+                <field
+                    name="last_backup_status"
+                    widget="badge"
+                    decoration-success="last_backup_status == 'success'"
+                    decoration-danger="last_backup_status == 'failed'"
+                />
+            </list>
+        </field>
+    </record>
+    <record id="view_backup_conf_search" model="ir.ui.view">
+        <field name="model">db.backup</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="folder" />
+                <field name="sftp_host" />
+            </search>
+        </field>
+    </record>
+    <record id="action_backup_conf_form" model="ir.actions.act_window">
+        <field name="name">Automated Backups</field>
+        <field name="res_model">db.backup</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem
+        parent="base.next_id_9"
+        action="action_backup_conf_form"
+        id="backup_conf_menu"
+    />
+    <!-- Execute backup from "More" menu -->
+    <record id="action_server_backup" model="ir.actions.server">
+        <field name="name">Execute backup(s)</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_db_backup" />
+        <field name="binding_model_id" ref="model_db_backup" />
+        <field name="state">code</field>
+        <field name="code">records.action_backup()</field>
+    </record>
+</odoo>

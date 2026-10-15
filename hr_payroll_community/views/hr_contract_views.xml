@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Root Menus -->
+    <menuitem id="menu_hr_payroll_community_root" name="Payroll" sequence="45"
+              web_icon="hr_payroll_community,static/description/icon.png"/>
+    <menuitem id="menu_hr_payroll_community_configuration" name="Configuration"
+              parent="menu_hr_payroll_community_root"
+              sequence="100"
+              groups="hr_payroll_community.group_hr_payroll_community_manager"/>
+
+    <!-- Contract View (contract fields are on the employee form since Odoo 19) -->
+    <record id="hr_contract_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.view.form.inherit.payroll.contract</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='contract']/field[@name='structure_type_id']"
+                   position="after">
+                <field name="struct_id"/>
+            </xpath>
+            <xpath expr="//group[@name='contract']/field[@name='resource_calendar_id']"
+                   position="after">
+                <field name="schedule_pay"/>
+            </xpath>
+            <xpath expr="//group[@name='contract']" position="after">
+                <group string="Monthly Advantages in Cash" name='allowances'>
+                    <label for="hra"/>
+                    <div class="o_row">
+                        <field name="hra" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="da"/>
+                    <div class="o_row">
+                        <field name="da" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="travel_allowance"/>
+                    <div class="o_row">
+                        <field name="travel_allowance" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="other_allowance"/>
+                    <div class="o_row">
+                        <field name="other_allowance" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

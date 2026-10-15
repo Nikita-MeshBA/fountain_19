@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="student_id_print" model="ir.actions.report">
+        <field name="name">Print Student ID</field>
+        <field name="model">xe.student</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_hr_employee_id.print_student_id</field>
+        <field name="report_file">xe_hr_employee_id.print_student_id</field>
+        <field name="binding_model_id" ref="xenesis_school_base.model_xe_student"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="stud_front_side_report">
+        <div class="col-md-6">
+            <table
+                    style="width:243pt; height:153pt; border: 1pt solid black; border-collapse:separate; border-radius:8pt; margin:5pt">
+                <tr>
+                    <td style="width:35%;background-color:#a52a2a;" valign="center">
+                        <table style="height:50pt">
+                            <tr style="height:25%">
+                                <td align="center" colspan="3">
+                                    <img t-if="stud.company_id.logo"
+                                         t-att-src="image_data_uri(stud.company_id.logo)"
+                                         style="max-height:45pt;max-width:90%" alt="Company Logo"/>
+                                </td>
+                                <td align="center" colspan="9" style="font-size:10pt;margin-bottom:5pt;">
+                                    <span t-esc="stud.company_id.street"></span>
+                                    <br/>
+                                    <span t-esc="stud.company_id.city"></span>
+                                    <span t-esc="stud.company_id.state_id.name"></span>
+                                    <span t-esc="stud.company_id.zip"></span>
+                                    <br/>
+                                    <span t-esc="stud.company_id.country_id.name"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:60%" valign="center">
+                        <table style="height:75pt">
+                            <tr>
+                                <td style="width:30%;">
+                                    <img t-att-src="image_data_uri(stud.image_1920)"
+                                         style="max-height:85pt;max-width:90%" alt="Employee Image"/>
+                                </td>
+
+                                <td style="width:70%">
+                                    <div class="row">
+                                        <div align="left"
+                                             style="font-size:12px;margin-bottom:5pt;margin-left:5pt;">
+                                            <span>Student Name :</span>
+                                            <br/>
+                                            <span>Class/Section :</span>
+                                            <br/>
+                                            <span>Principal Signature :</span>
+                                        </div>
+                                        <div align="left"
+                                             style="font-size:12px;margin-bottom:5pt;margin-left:5pt;">
+                                            <span>
+                                                <t t-esc="stud.name"/>
+                                            </span>
+                                            <br/>
+                                            <span>
+                                                <t t-esc="stud.classroom_id"/>
+                                            </span>
+                                            <br/>
+                                            <span>
+                                                <t t-esc="stud.company_id.signature"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <t t-if="stud.roll_number">
+                                        <div t-field="stud.roll_number"
+                                             t-options="{'widget': 'barcode', 'width': 600, 'height': 120, 'img_style': 'max-height:50pt;max-width:100%;', 'img_align': 'center'}"/>
+                                    </t>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height:8%;background-color:#a52a2a;" valign="center">
+                        <table style="width:155pt; height:10pt">
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </template>
+
+    <template id="stud_back_side_report">
+        <div class="col-md-6">
+            <table
+                    style="width:243pt; height:153pt; border: 1pt solid black; border-collapse:separate; border-radius:8pt; margin:5pt">
+                <tr>
+                    <td style="width:35%;background-color:#a52a2a;" valign="center">
+                        <table style="height:50pt">
+                            <tr style="height:25%">
+                                <td align="center" colspan="3">
+                                    <img t-if="stud.company_id.logo"
+                                         t-att-src="image_data_uri(stud.company_id.logo)"
+                                         style="max-height:45pt;max-width:90%" alt="Company Logo"/>
+                                </td>
+                                <td align="center" colspan="9" style="font-size:10pt;margin-bottom:5pt;">
+                                    <span t-esc="stud.company_id.street"></span>
+                                    <br/>
+                                    <span t-esc="stud.company_id.city"></span>
+                                    <span t-esc="stud.company_id.state_id.name"></span>
+                                    <span t-esc="stud.company_id.zip"></span>
+                                    <br/>
+                                    <span t-esc="stud.company_id.country_id.name"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:60%" valign="center">
+                        <table style="height:75pt">
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-5" align="Left" style="font-size:10pt;">
+                                            <b>Resident Address:</b>
+                                        </div>
+                                        <div class="col-7" align="left" style="font-size:10pt;">
+                                            <span>
+                                                <t t-esc="stud.street"/>
+                                            </span>
+                                            <br/>
+                                            <span>
+                                                <t t-esc="stud.city"/>
+                                                ,
+                                            </span>
+                                            <span>
+                                                <t t-esc="stud.state_id.name"/>
+                                                ,
+                                            </span>
+                                            <span>
+                                                <t t-esc="stud.zip"/>
+                                            </span>
+                                            <br/>
+                                            <span>
+                                                <t t-esc="stud.country_id.name"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="font-size:10pt; margin-bottom:0pt;margin-top:0pt;"
+                                         align="center">
+                                        <span>
+                                            <b>Contact Information</b>
+                                        </span>
+                                        <br/>
+                                        <span>
+                                            Emergency:
+                                            <t t-esc="stud.phone"/>
+                                        </span>
+                                        <br/>
+                                        <span>
+                                            Official:
+                                            <t t-esc="stud.work_phone"/>
+                                        </span>
+                                        <br/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height:8%;background-color:#a52a2a;" valign="center">
+                        <table style="width:155pt; height:10pt">
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </template>
+
+    <template id="print_student_id">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <t t-foreach="docs" t-as="stud">
+                    <t t-if="stud.company_id.type_select == 'both'">
+                        <t t-call="xe_hr_employee_id.stud_front_side_report"/>
+                        <t t-call="xe_hr_employee_id.stud_back_side_report"/>
+                    </t>
+                    <t t-elif="stud.company_id.type_select == 'front'">
+                        <t t-call="xe_hr_employee_id.stud_front_side_report"/>
+                    </t>
+                    <t t-elif="stud.company_id.type_select == 'back'">
+                        <t t-call="xe_hr_employee_id.stud_back_side_report"/>
+                    </t>
+                </t>
+            </div>
+        </t>
+    </template>
+
+</odoo>

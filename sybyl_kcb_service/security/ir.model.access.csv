@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_kcb_transaction_user,kcb.transaction.user,sybyl_kcb_service.model_kcb_transaction,account.group_account_user,1,0,0,0
+access_kcb_transaction_manager,kcb.transaction.manager,sybyl_kcb_service.model_kcb_transaction,account.group_account_manager,1,1,1,0
+access_kcb_transaction_back_office,kcb.transaction.back_office,sybyl_kcb_service.model_kcb_transaction,,1,0,1,0
+access_kcb_payment_manual_reconcile,kcb.payment.manual.reconcile.all,sybyl_kcb_service.model_kcb_payment_manual_reconcile,,1,1,1,1

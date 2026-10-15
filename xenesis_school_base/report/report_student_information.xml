@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_studentinformation">
+        <style>.font{
+            font-size:14px;
+            font-family:"Helvetica"
+            }
+            @page{
+            margin-top:1%;
+            size: A4;
+            }
+        </style>
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="font">
+                    <center>
+                        <h2>Student Information</h2>
+                    </center>
+                    <br/>
+                    <div>
+                        <div>
+                            <strong>Date:</strong>
+                            <strong>
+                                <span t-esc="date"/>
+                            </strong>
+                            <br/>
+                            <br/>
+                        </div>
+                    </div>
+                    <t t-foreach="get_details" t-as="detail">
+                        <table width="100%;">
+                            <tbody>
+                                <tr>
+                                    <td style="padding-bottom:4%;" width="10%;">
+                                        Class:
+                                    </td>
+                                    <td style="padding-bottom:4%;" width="40%;">
+                                        <span t-esc="detail['course_name']"/>
+                                    </td>
+                                    <td style="padding-bottom:4%;" width="10%;">
+                                        Term:
+                                    </td>
+                                    <td style="padding-bottom:4%;" width="40%;">
+                                        <span t-esc="detail['term_name']"/>
+                                    </td>
+
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Admission Number</th>
+                                                <th>
+                                                    <span>Student Name</span>
+                                                </th>
+                                                <th>
+                                                    <span>Class</span>
+                                                </th>
+                                                <th>
+                                                    <span>Class Room</span>
+                                                </th>
+                                                <th>
+                                                    <span>Date Of Birth</span>
+                                                </th>
+                                                <th>
+                                                    <span>Email</span>
+                                                </th>
+                                                <th>
+                                                    <span>Gender</span>
+                                                </th>
+                                                <th>
+                                                    <span>Parent</span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="detail['line_ids']" t-as="line">
+                                                <td width="10%">
+                                                    <span t-esc="line['roll_no']"/>
+                                                </td>
+                                                <td width="10%">
+                                                    <span t-esc="line['student_name']"/>
+                                                </td>
+                                                <td width="10%">
+                                                    <span t-esc="line['course_name']"/>
+                                                </td>
+                                                <td width="10%">
+                                                    <span t-esc="line['class_room_name']"/>
+                                                </td>
+                                                <td width="10%">
+                                                    <span t-esc="line['dob']"/>
+                                                </td>
+                                                <td width="10%">
+                                                    <span t-esc="line['email']"/>
+                                                </td>
+                                                <td width="10%">
+                                                    <span t-esc="line['gender']"/>
+                                                </td>
+                                                <td width="10%">
+                                                    <span t-esc="line['parent_name']"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="page-break-after: always;"/>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
+
+

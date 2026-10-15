@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!--        Classroom Data Loading-->
+        <record id="classroom_1" model="xe.classroom">
+            <field name="name">C001</field>
+            <field name="code">C001</field>
+            <field name="capacity">50</field>
+            <field name="course_id" ref="xenesis_school_base.course_1"/>
+        </record>
+        <record id="classroom_2" model="xe.classroom">
+            <field name="name">C002</field>
+            <field name="code">C002</field>
+            <field name="capacity">40</field>
+            <field name="course_id" ref="xenesis_school_base.course_2"/>
+        </record>
+        <record id="classroom_3" model="xe.classroom">
+            <field name="name">C003</field>
+            <field name="code">C003</field>
+            <field name="capacity">45</field>
+            <field name="course_id" ref="xenesis_school_base.course_3"/>
+        </record>
+        <record id="classroom_4" model="xe.classroom">
+            <field name="name">C004</field>
+            <field name="code">C004</field>
+            <field name="capacity">60</field>
+            <field name="course_id" ref="xenesis_school_base.course_4"/>
+        </record>
+        <record id="classroom_5" model="xe.classroom">
+            <field name="name">C005</field>
+            <field name="code">C005</field>
+            <field name="capacity">50</field>
+            <field name="course_id" ref="xenesis_school_base.course_5"/>
+        </record>
+    </data>
+</odoo>

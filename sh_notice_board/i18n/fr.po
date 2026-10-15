@@ -1,0 +1,163 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sh_notice_board
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.1alpha1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-10-08 13:37+0000\n"
+"PO-Revision-Date: 2020-10-08 13:37+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "10"
+msgstr "10"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "11"
+msgstr "11"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "12"
+msgstr "12"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "13"
+msgstr "13"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "14"
+msgstr "14"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "15"
+msgstr "15"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_horizontal_tmpl_1
+msgid "<span id=\"sh_nbs_heading\">Latest News</span>"
+msgstr "<span id=\"sh_nbs_heading\">Dernières nouvelles</span>"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_horizontal_tmpl_3
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_vertical_tmpl_2
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_vertical_tmpl_3
+msgid "<span>Breaking News</span>"
+msgstr "<span>dernières nouvelles</span>"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_vertical_tmpl_1
+msgid "<span>Latest News</span>"
+msgstr "<span>Dernières nouvelles</span>"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__active
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_search_view
+msgid "Active"
+msgstr "Active"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_horizontal_tmpl_2
+msgid "Breaking News"
+msgstr "dernières nouvelles"
+
+#. module: sh_notice_board
+#: model_terms:ir.actions.act_window,help:sh_notice_board.sh_nb_notice_board_action
+msgid "Create a new notice here"
+msgstr "Créez un nouvel avis ici"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__create_date
+msgid "Created on"
+msgstr "Créé sur"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__desc
+msgid "Description"
+msgstr "Description"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__display_name
+msgid "Display Name"
+msgstr "Afficher un nom"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__id
+msgid "ID"
+msgstr "identifiant"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_search_view
+msgid "Inactive"
+msgstr "Inactive"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "News Direction"
+msgstr "Direction des nouvelles"
+
+#. module: sh_notice_board
+#: model:ir.actions.act_window,name:sh_notice_board.sh_nb_notice_board_action
+#: model:ir.ui.menu,name:sh_notice_board.sh_nb_notice_board_menu
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_form_view
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_search_view
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_tree_view
+msgid "Notice Board"
+msgstr "Tableau d'affichage"
+
+#. module: sh_notice_board
+#: model:ir.model,name:sh_notice_board.model_sh_nb_notice_board
+msgid "Notice board for display news on website"
+msgstr "Panneau d'affichage pour afficher les nouvelles sur le site Web"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "Number of News"
+msgstr "Nombre de nouvelles"
+
+#. module: sh_notice_board
+#: model:ir.model.fields,field_description:sh_notice_board.field_sh_nb_notice_board__name
+msgid "Title"
+msgstr "Titre"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "left"
+msgstr "gauche"
+
+#. module: sh_notice_board
+#: model_terms:ir.ui.view,arch_db:sh_notice_board.sh_nb_notice_board_snippet_options
+msgid "right"
+msgstr "droite"

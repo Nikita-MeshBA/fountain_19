@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="teacher_user_create_view_form" model="ir.ui.view">
+        <field name="name">xe.teacher.user.form</field>
+        <field name="model">xe.teacher.user</field>
+        <field name="arch" type="xml">
+            <form string="Create Employee Profile For Teachers">
+                <p class="oe_grey">
+                    Create Employee ID for selected Teacher(s)
+                </p>
+                <separator string="Teachers"/>
+                <group col="4" colspan="4" name="teacher_information">
+                    <field name="teacher_line_ids" nolabel="1">
+                        <tree string="Teacher Details" editable="top">
+                            <field name="create_user" String="User Create"/>
+                            <field name="teacher_id"/>
+                            <field name="email"/>
+                            <field name="mobile"/>
+                            <field name="nationality_id" invisible="0"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button string="Create" name="create_user" type="object"
+                            default_focus="1" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_create_teacher_users" model="ir.actions.act_window">
+        <field name="name">Create Employee</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">xe.teacher.user</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <!-- TODO: check if we need this -->
+        <field name="binding_model_id" ref="xenesis_school_base.model_xe_staff"/>
+        <field name="binding_view_types">list</field>
+    </record>
+</odoo>
+
+
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Assign Subject   -->
+        <record id="assign_sub_1" model="xe.assignsubject">
+            <field name="course_id" ref="course_3"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('subject_1')])]"/>
+        </record>
+        <record id="assign_sub_2" model="xe.assignsubject">
+            <field name="course_id" ref="course_4"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('subject_2')])]"/>
+        </record>
+        <record id="assign_sub_3" model="xe.assignsubject">
+            <field name="course_id" ref="course_5"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('subject_3')])]"/>
+        </record>
+        <record id="assign_sub_4" model="xe.assignsubject">
+            <field name="course_id" ref="course_6"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('subject_4')])]"/>
+        </record>
+        <record id="assign_sub_5" model="xe.assignsubject">
+            <field name="course_id" ref="course_7"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('subject_5')])]"/>
+        </record>
+        <record id="assign_sub_6" model="xe.assignsubject">
+            <field name="course_id" ref="course_8"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('subject_6')])]"/>
+        </record>
+        <record id="assign_sub_7" model="xe.assignsubject">
+            <field name="course_id" ref="course_9"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('subject_7')])]"/>
+        </record>
+        <record id="assign_sub_8" model="xe.assignsubject">
+            <field name="course_id" ref="course_10"/>
+            <field name="subject_ids" eval="[(6, 0, [ref('subject_8')])]"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dtb_transaction_user,dtb.transaction.user,sybyl_dtb_service.model_dtb_transaction,account.group_account_user,1,0,0,0
+access_dtb_transaction_manager,dtb.transaction.manager,sybyl_dtb_service.model_dtb_transaction,account.group_account_manager,1,1,1,0
+access_dtb_transaction_back_office,dtb.transaction.back_office,sybyl_dtb_service.model_dtb_transaction,,1,0,1,0
+access_dtb_payment_manual_reconcile,dtb.payment.manual.reconcile.all,sybyl_dtb_service.model_dtb_payment_manual_reconcile,,1,1,1,1

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="xe_partner_inherit_base" model="ir.ui.view">
+        <field name="name">res.partner.inherit.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <h1 position="after">
+                <field name="user_type" placeholder="Tags" invisible="1"/>
+                <field name="roll_number" invisible="1"/>
+                <field name="total_balance_partner" invisible="1"/>
+            </h1>
+        </field>
+    </record>
+
+    <record id="xe_res_partner_view_search" model="ir.ui.view">
+        <field name="name">xe.res.partner.search.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='inactive']" position="before">
+                <filter string="Students" name="student" domain="[('category_id.name','=', 'Student')]"/>
+                <filter string="Teachers" name="teacher" domain="[('category_id.name','=', 'Teacher')]"/>
+                <filter string="Parents" name="parent" domain="[('category_id.name','=', 'Parent')]"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_res_partner_filter_inherit" model="ir.ui.view">
+        <field name="name">res.partner.select.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='group_company']" position="replace">
+                <filter name="group_company" string="Parent Company" context="{'group_by': 'parent_id'}"/>
+            </xpath>
+            <xpath expr="//filter[@name='group_company']" position="after">
+                <filter name="group_company_id" string="Company" context="{'group_by': 'company_id'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

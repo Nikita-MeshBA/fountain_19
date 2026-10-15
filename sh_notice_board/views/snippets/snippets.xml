@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Horizontal News Template 1 -->
+    <template id="sh_nb_notice_board_horizontal_tmpl_1" name="Latest News 1">
+        <section id="sh_nb_notice_board_main_horizontal_section_1" style="background: rgb(0, 160, 157);">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-2 col-sm-3 col-4 left_box">
+                        <span id="sh_nbs_heading">Latest News</span>
+                    </div>
+                    <div class="col-md-10 col-sm-9 col-8 right_box">
+                        <marquee class="sh_nb_notice_board_main_horizontal_marquee_cls_1" direction="left" onmouseover="this.stop();" onmouseout="this.start();"></marquee>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- Horizontal News Template 2 -->
+    <template id="sh_nb_notice_board_horizontal_tmpl_2" name="Latest News 2">
+        <section id="sh_nb_notice_board_main_horizontal_section_2" class="animation-bg bg-primary">
+            <div class="container-fluid" style="padding: 0;">
+                <div class="row">
+                    <div class="col-4 col-sm-3 col-md-3 col-lg-2" style="margin-top: -5px; padding: 0; background-color: rgb(0, 112, 109);">
+                        <a type="submit" class="btn btn-default btn-sm btn-secret">Breaking News</a>
+                    </div>
+                    <div class="col-8 col-sm-9 col-md-9 col-lg-10" style="margin-top: -5px; padding-top: 5px;">
+                        <marquee class="sh_nb_notice_board_main_horizontal_marquee_cls_1" direction="left" onmouseover="this.stop();" onmouseout="this.start();"></marquee>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- Horizontal News Template 3 -->
+    <template id="sh_nb_notice_board_horizontal_tmpl_3" name="Latest News 3">
+        <section id="sh_nb_notice_board_main_horizontal_section_3" class="bg-primary">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-4" style="padding: 0;">
+                        <div class="news_bg">
+                            <span>Breaking News</span>
+                        </div>
+                    </div>
+                    <div class="col-md-9 col-sm-9 col-8" style="padding-left: 2%;">
+                        <marquee class="sh_nb_notice_board_main_horizontal_marquee_cls_1" direction="left" onmouseover="this.stop();" onmouseout="this.start();"></marquee>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- Vertical News Template 1 -->
+    <template id="sh_nb_notice_board_vertical_tmpl_1" name="Latest News 4">
+        <section id="sh_nb_notice_board_main_vertical_section_1" class="bg-primary" data-item_template="sh_notice_board.sh_nb_notice_board_vertical_tmpl_1">
+            <div class="container-fluid" style="padding: 0;">
+                <div class="sh_vertical_main row" style="margin: 0;">
+                    <div class="sh_vertical_title col-lg-12" style="background: rgb(78, 52, 46);">
+                        <span>Latest News</span>
+                    </div>
+                    <marquee class="sh_nb_notice_board_main_vertical_marquee_cls_1 sh_vertical_marquee col-lg-12" direction="left" onmouseover="this.stop();" onmouseout="this.start();"></marquee>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- Vertical News Template 2 -->
+    <template id="sh_nb_notice_board_vertical_tmpl_2" name="Latest News 5">
+        <section id="sh_nb_notice_board_main_vertical_section_2" class="bg-beta">
+            <div class="sh_vertical_div_js_cls container-fluid row" style="margin: 0;">
+                <div class="sh_vertical_news_title col-lg-12">
+                    <span>Breaking News</span>
+                </div>
+                <marquee class="sh_nb_notice_board_main_vertical_marquee_cls_1 sh_vertical_marquee col-lg-12" direction="left" onmouseover="this.stop();" onmouseout="this.start();"></marquee>
+            </div>
+        </section>
+    </template>
+
+    <!-- Vertical News Template 3 -->
+    <template id="sh_nb_notice_board_vertical_tmpl_3" name="Latest News 6">
+        <section id="sh_nb_notice_board_main_vertical_section_3" class="bg-primary">
+            <div class="sh_vertical_div_js_cls container-fluid row" style="padding: 0; margin: 0;">
+                <div class="sh_vertical_news_title col-lg-12" style="background: rgb(0, 84, 82);">
+                    <span>Breaking News</span>
+                </div>
+                <marquee class="sh_nb_notice_board_main_vertical_marquee_cls_1 sh_vertical_marquee col-lg-12" direction="left" onmouseover="this.stop();" onmouseout="this.start();"></marquee>
+            </div>
+        </section>
+    </template>
+
+
+    <template id="sh_nb_notice_board_vertical_tmpl_4" name="Latest News 7">
+        <section id="sh_nb_notice_board_main_vertical_section_4" class="bg-primary">
+            <div class="sh_vertical_div_js_cls_tmpl_4 news red">
+                <span class="blog_name">Latest News</span>
+                <ul class="js_cls_ul js_cls_sh_nb_notice_board_vertical_tmpl_4_render_dynamic_area"></ul>
+            </div>
+        </section>
+    </template>
+
+
+    <!-- Snippets left panel -->
+    <template id="sh_nb_notice_board_website_snippets" inherit_id="website.snippets" name="Latest News">
+<!--        <xpath expr="//div[@id='snippet_structure']/div[hasclass('o_panel_body')]" position="inside">-->
+              <xpath expr="//snippets[@id='snippet_structure']" position="inside">
+            <!-- Horizontal -->
+            <t t-snippet="sh_notice_board.sh_nb_notice_board_horizontal_tmpl_1" t-thumbnail="/sh_notice_board/static/src/img/block/sh_notice_board_block_1.svg" />
+            <t t-snippet="sh_notice_board.sh_nb_notice_board_horizontal_tmpl_2" t-thumbnail="/sh_notice_board/static/src/img/block/sh_notice_board_block_2.svg" />
+            <t t-snippet="sh_notice_board.sh_nb_notice_board_horizontal_tmpl_3" t-thumbnail="/sh_notice_board/static/src/img/block/sh_notice_board_block_3.svg" />
+            <!-- Vertical -->
+            <t t-snippet="sh_notice_board.sh_nb_notice_board_vertical_tmpl_1" t-thumbnail="/sh_notice_board/static/src/img/block/sh_notice_board_block_4.svg" />
+            <t t-snippet="sh_notice_board.sh_nb_notice_board_vertical_tmpl_2" t-thumbnail="/sh_notice_board/static/src/img/block/sh_notice_board_block_5.svg" />
+            <t t-snippet="sh_notice_board.sh_nb_notice_board_vertical_tmpl_3" t-thumbnail="/sh_notice_board/static/src/img/block/sh_notice_board_block_6.svg" />
+            <t t-snippet="sh_notice_board.sh_nb_notice_board_vertical_tmpl_4" t-thumbnail="/sh_notice_board/static/src/img/block/sh_notice_board_block_7.svg" />
+        </xpath>
+    </template>
+</odoo>

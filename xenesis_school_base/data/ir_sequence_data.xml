@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Sequences for xe.medicalcheckup -->
+        <record id="seq_xe_medicalcheckup" model="ir.sequence">
+            <field name="name">Medical Checkupr</field>
+            <field name="code">xe.medicalcheckup</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequences for Admission number -->
+        <record id="seq_xe_student" model="ir.sequence">
+            <field name="name">Student</field>
+            <field name="code">xe.student</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="res_partner_cat_student" model="res.partner.category">
+            <field name="name">Student</field>
+        </record>
+        <record id="res_partner_cat_parent" model="res.partner.category">
+            <field name="name">Parent</field>
+        </record>
+        <record id="res_partner_cat_teacher" model="res.partner.category">
+            <field name="name">Teacher</field>
+        </record>
+
+    </data>
+</odoo>

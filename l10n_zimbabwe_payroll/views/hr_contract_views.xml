@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_contract_view_form_trcs" model="ir.ui.view">
+        <field name="name">hr.version.form.zimbabwe.payroll</field>
+        <field name="model">hr.version</field>
+        <field name="inherit_id" ref="hr.hr_contract_template_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//group[@name='salary_info']" position="after">
+                <group string="Zimbabwe Payroll" name="zimbabwe_payroll">
+                    <group string="Monthly Reliefs in Cash"
+                           name="salary_and_relief_zimbabwe">
+                        <field name="age" readonly="1"/>
+                        <field name="communication"/>
+                        <field name="house_allowance"/>
+                        <field name="transport_allowance"/>
+                        <field name="bonus"/>
+                    </group>
+
+                    <group string="Monthly Deductions in Cash"
+                           name="salary_and_deductions_zimbabwe">
+                        <field name="medical_aid"/>
+                        <field name="nsa"/>
+                        <field name="loan"/>
+                        <field name="schoolfees_deduction"/>
+                    </group>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<odoo>-->
+<!--   <record id="hr_contract_view_form_trcs" model="ir.ui.view">-->
+<!--      <field name="name">hr.contract.form</field>-->
+<!--      <field name="model">hr.version</field>-->
+<!--      <field name="inherit_id" ref="hr_contract_view_form" />-->
+<!--      <field name="arch" type="xml">-->
+<!--         <field name="hr_responsible_id" position="after">-->
+<!--           <field name="age" readonly="1"/>-->
+<!--         </field>-->
+<!--         <group name="salary_info" position="after">-->
+<!--            <group>-->
+<!--               <group name="salary_and_relief_zimbabwe" string="Monthly Reliefs in Cash">-->
+<!--                  <label for="communication" />-->
+<!--                  <div class="o_row" name="communication">-->
+<!--                     <field name="communication" nolabel="1" required="1" />-->
+<!--                     <span>/ month</span>-->
+<!--                  </div>-->
+<!--                  <label for="house_allowance" />-->
+<!--                  <div class="o_row" name="house_allowance">-->
+<!--                     <field name="house_allowance" nolabel="1" required="1" />-->
+<!--                     <span>/ month</span>-->
+<!--                  </div>-->
+<!--                  <label for="transport_allowance" />-->
+<!--                  <div class="o_row" name="transport_allowance">-->
+<!--                      <field name="transport_allowance" nolabel="1" required="1"/>-->
+<!--                      <span>/ month</span>-->
+<!--                  </div>-->
+<!--                  <label for="bonus" />-->
+<!--                  <div class="o_row" name="bonus">-->
+<!--                     <field name="bonus" nolabel="1" required="1" />-->
+<!--                     <span>/ month</span>-->
+<!--                  </div>-->
+<!--               </group>-->
+<!--            </group>-->
+<!--            <group>-->
+<!--               <group name="salary_and_deductions_zimbabwe" string="Monthly Deductions in Cash">-->
+<!--                  <label for="medical_aid" />-->
+<!--                  <div class="o_row" name="medical_aid">-->
+<!--                     <field name="medical_aid" nolabel="1" required="1" />-->
+<!--                     <span>/ month</span>-->
+<!--                  </div>-->
+<!--                  <label for="nsa" />-->
+<!--                  <div class="o_row" name="nsa">-->
+<!--                     <field name="nsa" nolabel="1" required="1" />-->
+<!--                     <span>/ month</span>-->
+<!--                  </div>-->
+<!--                  <label for="loan" />-->
+<!--                  <div class="o_row" name="loan">-->
+<!--                     <field name="loan" nolabel="1" required="1" />-->
+<!--                     <span>/ month</span>-->
+<!--                  </div>-->
+<!--                  <label for="schoolfees_deduction" />-->
+<!--                  <div class="o_row" name="schoolfees_deduction">-->
+<!--                     <field name="schoolfees_deduction" nolabel="1" required="1" />-->
+<!--                     <span>/ month</span>-->
+<!--                  </div>-->
+<!--               </group>-->
+<!--            </group>-->
+<!--         </group>-->
+<!--      </field>-->
+<!--   </record>-->
+<!--</odoo>-->

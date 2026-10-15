@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="student_migration_form" model="ir.ui.view">
+        <field name="name">xe.student.migration.wizard.form</field>
+        <field name="model">xe.student.migration.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Student Migration">
+                <group>
+                    <group>
+                        <field name="from_company_id" invisible="1"/>
+                        <field name="from_company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                        <field name="from_academic_yr_id" required="1" domain="[('company_id','=',from_company_id)]"/>
+                        <field name="from_course_id" domain="[('company_id','=',from_company_id)]"/>
+                        <field name="from_classroom_id" domain="[('course_id','=',from_course_id)]"/>
+                        <field name="date"/>
+                    </group>
+                    <group>
+                        <field name="to_company_id" invisible="1"/>
+                        <field name="to_company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                        <field name="to_academic_yr_id" required="1" domain="[('company_id','=',to_company_id)]"/>
+                        <field name="to_course_id" domain="[('company_id','=',to_company_id)]"/>
+                        <field name="to_classroom_id" domain="[('course_id','=',to_course_id)]"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Students">
+                        <field name="student_ids" nolabel="1">
+                            <tree editable="top">
+                                <field name="name"/>
+                                <field name="roll_number"/>
+                                <field name="remarks"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+                <footer>
+                    <button name="action_forward" string="Migrate" type="object" default_focus="1" class="oe_highlight"/>
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_student_migration" model="ir.actions.act_window">
+        <field name="name">Student Migration</field>
+        <field name="res_model">xe.student.migration.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="student_migration_form"/>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+            id="menu_student_migration"
+            name="Student Migration"
+            action="action_student_migration"
+            parent="menu_administration_root"
+            sequence="5"
+            groups="xenesis_school_base.group_xe_admin"/>
+</odoo>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_dtb_payment_manual_reconcile" model="ir.ui.view">
+        <field name="name">dtb.payment.manual.reconcile.form.view</field>
+        <field name="model">dtb.payment.manual.reconcile</field>
+        <field name="arch" type="xml">
+            <form string="dtb Payment Manual Reconcile">
+                <group>
+                    <!-- <field name="invoice_id" required="1" domain="[('state', '=', 'open'), ('type', '=', 'out_invoice')]"/> -->
+                    <field name="payment_type" widget="radio" invisible="1"/>
+                    <field name="reconcile_method" widget="radio"/>
+                    <field name="transaction_id" invisible="1"/>
+                    <field name="trans_amount" invisible="1"/>
+                    <field name="student_id" invisible="1"/>
+                    <field name="journal_id" invisible="1"/>
+                    <field name="invoice_ids" class="oe_inline" domain="[('move_type','=','out_invoice')]"
+                           invisible="('reconcile_method','!=', 'invoice') or ('payment_type','!=', 'receivable')"
+                           context="{'default_move_type': 'out_invoice'}">
+                        <list editable="bottom">
+                            <field name="name" readonly="1"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="amount_total_signed" readonly="1"/>
+                            <field name="amount_residual_signed" readonly="1"/>
+                            <field name="state" readonly="1"/>
+                            <field name="reg_payment"/>
+                        </list>
+                    </field>
+                    <field name="bill_ids" class="oe_inline" domain="[('move_type','=','in_invoice')]"
+                           invisible="('reconcile_method','!=', 'invoice') or ('payment_type','!=', 'payable')"
+                           context="{'default_move_type': 'in_invoice'}">
+                        <list editable="bottom">
+                            <field name="name" readonly="1"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="amount_total_signed" readonly="1"/>
+                            <field name="amount_residual_signed" readonly="1"/>
+                            <field name="state" readonly="1"/>
+                            <field name="reg_payment"/>
+                        </list>
+                    </field>
+                    <field name="payment_ids" class="oe_inline"
+                           domain="[('state', '=', 'draft'),('payment_type','=','inbound')]"
+                           invisible="('reconcile_method','!=', 'payment') or ('payment_type','!=', 'receivable')"
+                           context="{'default_amount':trans_amount,'default_payment_type':'inbound',
+'default_partner_id': student_id,'default_journal_id': journal_id}">
+                        <list>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="amount" readonly="1"/>
+                            <field name="journal_id" readonly="1"/>
+                            <field name="state" readonly="1"/>
+                        </list>
+                    </field>
+                    <field name="payment_voucher_ids" class="oe_inline"
+                           domain="[('state', '=', 'draft'),('payment_type','=','outbound')]"
+                           invisible="('reconcile_method','!=', 'payment') or ('payment_type','!=', 'payable')"
+                           context="{'default_amount':trans_amount,'default_payment_type':'outbound',
+'default_partner_id': student_id,'default_journal_id': journal_id}">
+                        <list>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="amount" readonly="1"/>
+                            <field name="journal_id" readonly="1"/>
+                            <field name="state" readonly="1"/>
+                        </list>
+                    </field>
+                </group>
+                <footer>
+                    <button name="make_payment_reconcile" string="Reconcile" type="object"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_manual_reconcile" model="ir.actions.act_window">
+        <field name="name">Manual Reconcile</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dtb.payment.manual.reconcile</field>
+        <!--            <field name="view_type">form</field>-->
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="sybyl_dtb_service.model_dtb_transaction"/>
+    </record>
+</odoo>

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!--        Subject Data Loading-->
+        <record id="subject_1" model="xe.subject">
+            <field name="name">E 1ST Lang</field>
+            <field name="code">E1-LANG</field>
+            <field name="description">E 1ST Lang</field>
+        </record>
+        <record id="subject_2" model="xe.subject">
+            <field name="name">Kiswahili</field>
+            <field name="code">Kiswa</field>
+            <field name="description">Kiswahili</field>
+        </record>
+        <record id="subject_3" model="xe.subject">
+            <field name="name">Mathematics</field>
+            <field name="code">MATH</field>
+            <field name="description">Mathematics</field>
+        </record>
+        <record id="subject_4" model="xe.subject">
+            <field name="name">Social studies</field>
+            <field name="code">SS</field>
+            <field name="description">Social studies</field>
+        </record>
+        <record id="subject_5" model="xe.subject">
+            <field name="name">Hygiene and Nutrition</field>
+            <field name="code">HN</field>
+            <field name="description">Hygiene and Nutrition</field>
+        </record>
+        <record id="subject_6" model="xe.subject">
+            <field name="name">Music</field>
+            <field name="code">Music</field>
+            <field name="description">Music</field>
+        </record>
+        <record id="subject_7" model="xe.subject">
+            <field name="name">Art and Craft</field>
+            <field name="code">AC</field>
+            <field name="description">Art and Craft</field>
+        </record>
+        <record id="subject_8" model="xe.subject">
+            <field name="name">FRENCH</field>
+            <field name="code">Fre</field>
+            <field name="description">FRENCH</field>
+        </record>
+
+        <!--        Class Data-->
+        <record id="course_1" model="xe.course">
+            <field name="name">Grade 1</field>
+            <field name="code">Grade 1</field>
+            <field name="section">A</field>
+            <field name="attendance">70</field>
+            <field name="description">Grade 1</field>
+        </record>
+        <record id="course_2" model="xe.course">
+            <field name="name">Grade 2</field>
+            <field name="code">Grade 2</field>
+            <field name="section">A</field>
+            <field name="attendance">70</field>
+            <field name="description">Grade 1</field>
+        </record>
+        <record id="course_3" model="xe.course">
+            <field name="name">Grade 3</field>
+            <field name="code">Grade 3</field>
+            <field name="section">A</field>
+            <field name="attendance">70</field>
+            <field name="description">Grade 3</field>
+        </record>
+        <record id="course_4" model="xe.course">
+            <field name="name">Grade 4</field>
+            <field name="code">Grade 4</field>
+            <field name="section">A</field>
+            <field name="attendance">70</field>
+            <field name="description">Grade 4</field>
+        </record>
+        <record id="course_5" model="xe.course">
+            <field name="name">Grade 5</field>
+            <field name="code">Grade 5</field>
+            <field name="section">A</field>
+            <field name="attendance">70</field>
+            <field name="description">Grade 5</field>
+        </record>
+        <record id="course_6" model="xe.course">
+            <field name="name">Grade 6</field>
+            <field name="code">Grade 6</field>
+            <field name="section">A</field>
+            <field name="attendance">70</field>
+            <field name="description">Grade 6</field>
+        </record>
+        <record id="course_7" model="xe.course">
+            <field name="name">Grade 7</field>
+            <field name="code">Grade 7</field>
+            <field name="section">A</field>
+            <field name="attendance">70</field>
+            <field name="description">Grade 7</field>
+        </record>
+        <record id="course_8" model="xe.course">
+            <field name="name">Grade 8</field>
+            <field name="code">Grade 8</field>
+            <field name="section">A</field>
+            <field name="attendance">70</field>
+            <field name="description">Grade 8</field>
+        </record>
+        <record id="course_9" model="xe.course">
+            <field name="name">Grade 9</field>
+            <field name="code">Grade 9</field>
+            <field name="section">A</field>
+            <field name="attendance">70</field>
+            <field name="description">Grade 9</field>
+        </record>
+        <record id="course_10" model="xe.course">
+            <field name="name">Grade 10</field>
+            <field name="code">Grade 10</field>
+            <field name="section">A</field>
+            <field name="attendance">70</field>
+            <field name="description">Grade 10</field>
+        </record>
+
+
+        <!--   Term Data     -->
+        <record id="grade1_term_1" model="xe.term">
+            <field name="name">Grade 1 Term 1</field>
+            <field name="code">Grade1-Term1</field>
+            <field name="start_date" eval="datetime.strptime('1/2/2020', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('29/3/2020', '%d/%m/%Y')"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="max_student">50</field>
+        </record>
+        <record id="grade1_term_2" model="xe.term">
+            <field name="name">Grade 1 Term 2</field>
+            <field name="code">Grade1-Term2</field>
+            <field name="start_date" eval="datetime.strptime('3/5/2020', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('29/7/2020', '%d/%m/%Y')"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="max_student">50</field>
+        </record>
+        <record id="grade1_term_3" model="xe.term">
+            <field name="name">Grade 1 Term 3</field>
+            <field name="code">Grade1-Term3</field>
+            <field name="start_date" eval="datetime.strptime('4/9/2020', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('29/11/2020', '%d/%m/%Y')"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="max_student">50</field>
+        </record>
+
+        <record id="grade2_term1" model="xe.term">
+            <field name="name">Grade 2 Term 1</field>
+            <field name="code">Grade2-Term1</field>
+            <field name="start_date" eval="datetime.strptime('1/2/2020', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('29/3/2020', '%d/%m/%Y')"/>
+            <field name="course_id" ref="course_2"/>
+            <field name="max_student">50</field>
+        </record>
+        <record id="grade2_term2" model="xe.term">
+            <field name="name">Grade 2 Term 2</field>
+            <field name="code">Grade2-Term2</field>
+            <field name="start_date" eval="datetime.strptime('3/5/2020', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('29/7/2020', '%d/%m/%Y')"/>
+            <field name="course_id" ref="course_2"/>
+            <field name="max_student">50</field>
+        </record>
+        <record id="grade2_term3" model="xe.term">
+            <field name="name">Grade 2 Term 3</field>
+            <field name="code">Grade2-Term3</field>
+            <field name="start_date" eval="datetime.strptime('4/9/2020', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('29/11/2020', '%d/%m/%Y')"/>
+            <field name="course_id" ref="course_2"/>
+            <field name="max_student">50</field>
+        </record>
+
+        <record id="grade3_term1" model="xe.term">
+            <field name="name">Grade 3 Term 1</field>
+            <field name="code">Grade3-Term1</field>
+            <field name="start_date" eval="datetime.strptime('1/1/2020', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('29/3/2020', '%d/%m/%Y')"/>
+            <field name="course_id" ref="course_3"/>
+            <field name="max_student">50</field>
+        </record>
+        <record id="grade3_term2" model="xe.term">
+            <field name="name">Grade 3 Term 2</field>
+            <field name="code">Grade3-Term2</field>
+            <field name="start_date" eval="datetime.strptime('3/5/2020', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('29/7/2020', '%d/%m/%Y')"/>
+            <field name="course_id" ref="course_3"/>
+            <field name="max_student">50</field>
+        </record>
+        <record id="grade3_term3" model="xe.term">
+            <field name="name">Grade 3 Term 3</field>
+            <field name="code">Grade3-Term3</field>
+            <field name="start_date" eval="datetime.strptime('4/9/2020', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('29/11/2020', '%d/%m/%Y')"/>
+            <field name="course_id" ref="course_3"/>
+            <field name="max_student">50</field>
+        </record>
+        <record id="grade4_term1" model="xe.term">
+            <field name="name">Grade 4 Term 1</field>
+            <field name="code">Grade4-Term1</field>
+            <field name="start_date" eval="datetime.strptime('1/1/2020', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('29/3/2020', '%d/%m/%Y')"/>
+            <field name="course_id" ref="course_4"/>
+            <field name="max_student">50</field>
+        </record>
+        <record id="grade4_term2" model="xe.term">
+            <field name="name">Grade 4 Term 2</field>
+            <field name="code">Grade4-Term2</field>
+            <field name="start_date" eval="datetime.strptime('3/5/2020', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('29/7/2020', '%d/%m/%Y')"/>
+            <field name="course_id" ref="course_4"/>
+            <field name="max_student">50</field>
+        </record>
+        <record id="grade4_term3" model="xe.term">
+            <field name="name">Grade 4 Term 3</field>
+            <field name="code">Grade4-Term3</field>
+            <field name="start_date" eval="datetime.strptime('4/9/2020', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('29/11/2020', '%d/%m/%Y')"/>
+            <field name="course_id" ref="course_4"/>
+            <field name="max_student">50</field>
+        </record>
+        <record id="grade5_term1" model="xe.term">
+            <field name="name">Grade 5 Term 1</field>
+            <field name="code">Grade5-Term1</field>
+            <field name="start_date" eval="datetime.strptime('1/1/2020', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('29/3/2020', '%d/%m/%Y')"/>
+            <field name="course_id" ref="course_5"/>
+            <field name="max_student">50</field>
+        </record>
+        <record id="grade5_term2" model="xe.term">
+            <field name="name">Grade 5 Term 2</field>
+            <field name="code">Grade5-Term2</field>
+            <field name="start_date" eval="datetime.strptime('3/5/2020', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('29/7/2020', '%d/%m/%Y')"/>
+            <field name="course_id" ref="course_5"/>
+            <field name="max_student">50</field>
+        </record>
+        <record id="grade5_term3" model="xe.term">
+            <field name="name">Grade 5 Term 3</field>
+            <field name="code">Grade5-Term3</field>
+            <field name="start_date" eval="datetime.strptime('4/9/2020', '%d/%m/%Y')"/>
+            <field name="end_date" eval="datetime.strptime('29/11/2020', '%d/%m/%Y')"/>
+            <field name="course_id" ref="course_5"/>
+            <field name="max_student">50</field>
+        </record>
+
+
+    </data>
+</odoo>

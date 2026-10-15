@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="student_paper_format" model="report.paperformat">
+            <field name="name">Student Information Paper Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">45</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_report_student_information" model="ir.actions.report">
+            <field name="name">Student Information PDF</field>
+            <field name="model">xe.student</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">xenesis_school_base.report_studentinformation</field>
+            <field name="report_file">xenesis_school_base.report_studentinformation</field>
+            <field name="paperformat_id" ref="student_paper_format"/>
+        </record>
+
+        <record id="student_information_xlsx_report" model="ir.actions.report">
+            <field name="name">Student Information XLSX</field>
+            <field name="model">xe.student</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">xenesis_school_base.report_student_information_xlsx</field>
+            <field name="report_file">xenesis_school_base.student_information_xlsx_report</field>
+            <field name="binding_type">report</field>
+        </record>
+
+
+        <record id="action_report_student_migration" model="ir.actions.report">
+            <field name="name">Student Migration Details</field>
+            <field name="model">xe.student</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">xenesis_school_base.report_studentmigration</field>
+            <field name="report_file">xenesis_school_base.report_studentmigration</field>
+        </record>
+
+
+    </data>
+</odoo>

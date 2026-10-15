@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <record id="from_loc" model="stock.location">
+        <field name="name">Store Location</field>
+        <field name="usage">internal</field>
+    </record>
+    <record id="to_loc" model="stock.location">
+        <field name="name">Internal Location</field>
+        <field name="usage">internal</field>
+    </record>
+</odoo>

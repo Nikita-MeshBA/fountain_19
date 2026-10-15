@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="external_layout_standard_header_inherit" inherit_id="web.external_layout_standard">
+            <xpath expr="//div/div[hasclass('row')][3]" position="replace">
+            </xpath>
+        </template>
+        <template id="invoice_inherit_core_xenesis" inherit_id="account.report_invoice_document">
+            <xpath expr="//div[@class='page mb-4']/div[1]" position="after">
+                <div style="position:absolute;opacity:0.25;z-index:1000;transform:rotate(300deg);-webkit-transform:rotate(300deg);width:150%;"
+                     t-if="o.state == 'draft'">
+                    <p style="font-size:150px;">Draft Invoice</p>
+                </div>
+            </xpath>
+            <xpath expr="//div[@class='page mb-4']/div[@id='informations']" position="inside">
+                <div class="col-auto col-3 mw-100 mb-2" t-if="o.course_id" name="course_id">
+                    <strong>Class:</strong>
+                    <p class="m-0" t-field="o.course_id.name"/>
+                </div>
+                <div class="col-auto col-3 mw-100 mb-2" t-if="o.class_room_id" name="class_room_id">
+                    <strong>Classroom:</strong>
+                    <p class="m-0" t-field="o.class_room_id.name"/>
+                </div>
+                <div class="col-auto col-3 mw-100 mb-2" t-if="o.terms" name="terms">
+                    <strong>Term:</strong>
+                    <p class="m-0" t-field="o.terms"/>
+                </div>
+                <div class="col-auto col-3 mw-100 mb-2" t-if="o.roll_number" name="roll_number">
+                    <strong>Admission Number:</strong>
+                    <p class="m-0" t-field="o.roll_number"/>
+                </div>
+            </xpath>
+
+            <xpath expr="//table[@name='invoice_line_table']" position="replace">
+                <table class="table table-condensed" name="invoice_line_table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th class="hidden">Source Document</th>
+                            <th class="text-right">Quantity</th>
+                            <th class="text-right">Unit Price</th>
+                            <th class="text-right">Taxes</th>
+                            <th class="text-right">Amount</th>
+                            <th class="text-right" t-if="o.move_type == 'out_invoice'">Paid Amount</th>
+                            <th class="text-right" t-if="o.move_type == 'out_invoice'">Balance</th>
+                        </tr>
+                    </thead>
+                    <t t-if="o.state not in ['draft','cancel']" t-set="total_paid_amount"
+                       t-value="o.amount_total - o.amount_residual"/>
+                    <t t-if="o.state in ['draft','cancel']" t-set="total_paid_amount" t-value="0"/>
+                    <t t-set="line_ids" t-value="o._get_line_ids()"/>
+                    <tbody class="invoice_tbody">
+                        <tr t-foreach="line_ids" t-as="l">
+                            <td>
+                                <span t-esc="l['name']"/>
+                            </td>
+                            <td>
+
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="l['quantity']"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="l['price_unit']"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="l['taxes']"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="l['amount']"
+                                      t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="l['paidamount']"
+                                      t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="l['balance']"
+                                      t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </xpath>
+            <xpath expr="//t[@t-if='print_with_payments']" position="after">
+                <t t-if="o.display_on_invoice">
+                    <tr class="border-black">
+                        <td>
+                            <strong>Balance:</strong>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="o.total_balance_partner"/>
+                        </td>
+                    </tr>
+                    <tr class="border-black">
+                        <td>
+                            <strong>Grand Total:</strong>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="o.grand_total_amount"/>
+                        </td>
+                    </tr>
+                </t>
+            </xpath>
+            <xpath expr="//div[@class='clearfix']" position="after">
+                <t t-if="o.display_on_invoice and o.pending_invoice_ids">
+                    <div class="row">
+                        <div class="col-6">
+                            <table class="table table-sm" style="page-break-inside: avoid;">
+                                <tr class="text-center">
+                                    <td colspan="3">
+                                        <b>Pending Invoices</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Invoice Number</b>
+                                    </td>
+                                    <td>
+                                        <b>Total Amount</b>
+                                    </td>
+                                    <td>
+                                        <b>Amount Due</b>
+                                    </td>
+                                </tr>
+                                <t t-foreach="o.pending_invoice_ids" t-as="pending_invoice">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="pending_invoice.name"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="pending_invoice.amount_total"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="pending_invoice.amount_residual"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</odoo>
+
+

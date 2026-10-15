@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="sub_menu_admin" name="Configuration"
+              parent="xenesis_school_base.menu_administration_root" sequence="101"/>
+
+    <!--    Course Details Menu-->
+    <menuitem id="menu_conf1" name="Class Details" parent="sub_menu_admin" groups="xenesis_school_base.group_xe_admin"
+              sequence="1"/>
+
+    <menuitem id="menu_academic_year" name="Academic Year" action="xenesis_school_base.act_academic_year"
+              parent="xenesis_school_base.menu_conf1" groups="xenesis_school_base.group_xe_admin" sequence="1"/>
+
+    <menuitem id="menu_academic_year_terms" name="Terms" action="xenesis_school_base.act_academic_year_terms"
+              parent="xenesis_school_base.menu_conf1" groups="xenesis_school_base.group_xe_admin" sequence="2"/>
+
+    <!-- <menuitem id="menu_stream" name="Streams" action="xenesis_school_base.act_stream"
+              parent="xenesis_school_base.menu_conf1" groups="xenesis_school_base.group_xe_admin" sequence="3"/> -->
+
+    <menuitem id="menu_course" name="Class" action="xenesis_school_base.act_course"
+              parent="xenesis_school_base.menu_conf1"
+              groups="xenesis_school_base.group_xe_admin,xenesis_school_base.group_xe_staff" sequence="4"/>
+
+    <menuitem id="menu_classroom" name="Classroom" action="xenesis_school_base.act_classroom"
+              parent="xenesis_school_base.menu_conf1"
+              groups="xenesis_school_base.group_xe_admin,xenesis_school_base.group_xe_staff" sequence="5"/>
+
+    <menuitem id="menu_subject" name="Subjects" action="act_subject" parent="xenesis_school_base.menu_conf1"
+              groups="xenesis_school_base.group_xe_staff" sequence="6"/>
+
+    <!--    Report Configuration Menu-->
+    <menuitem id="sub_menu_admin3" name="Report Configurations" parent="sub_menu_admin"
+              groups="xenesis_school_base.group_xe_admin" sequence="3"/>
+
+    <menuitem id="menu_clearance_property" name="Clearance Attributes" action="xenesis_school_base.act_clearance_form"
+              parent="xenesis_school_base.sub_menu_admin3" groups="xenesis_school_base.group_xe_admin" sequence="1"/>
+
+    <menuitem id="menu_leave_cert" name="Leaving Certificate Attributes"
+              action="xenesis_school_base.act_leaving_certificate_atts"
+              parent="xenesis_school_base.sub_menu_admin3" groups="xenesis_school_base.group_xe_admin" sequence="2"/>
+
+    <!-- Hide Email Marketing Menu -->
+    <menuitem name="Email Marketing" id="mass_mailing.mass_mailing_menu_root" sequence="115"
+              web_icon="mass_mailing,static/description/icon.png"
+              groups="xenesis_school_base.group_xe_admin,xenesis_school_base.group_xe_staff"/>
+
+
+</odoo>

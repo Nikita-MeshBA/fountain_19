@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="student_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company student rule</field>
+        <field name="model_id" ref="model_xe_student"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="class_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company class rule</field>
+        <field name="model_id" ref="model_xe_course"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="term_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company term rule</field>
+        <field name="model_id" ref="model_xe_term"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="stream_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company stream rule</field>
+        <field name="model_id" ref="model_xe_stream"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="classroom_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company classroom rule</field>
+        <field name="model_id" ref="model_xe_classroom"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="subject_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company subject rule</field>
+        <field name="model_id" ref="model_xe_subject"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="academic_yr_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company academic year rule</field>
+        <field name="model_id" ref="model_xe_academic_year"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="academic_terms_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company academic term rule</field>
+        <field name="model_id" ref="model_xe_academic_terms"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="medical_ckeckup_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company medical checkup rule</field>
+        <field name="model_id" ref="model_xe_medicalcheckup"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="migration_history_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company migration history rule</field>
+        <field name="model_id" ref="model_xe_migration_history"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="parent_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company parent rule</field>
+        <field name="model_id" ref="model_xe_parent"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="staff_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company staff rule</field>
+        <field name="model_id" ref="model_xe_staff"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record model="ir.rule" id="base.res_partner_rule">
+        <field name="active">False</field>
+    </record>
+
+</odoo>
