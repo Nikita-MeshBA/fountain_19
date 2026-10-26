@@ -1,0 +1,1040 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="report.paperformat" id="paperformat_marksheet_register">
+        <field name="name">paperformat.marksheet.register.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_right">7</field>
+        <field name="margin_bottom">30</field>
+        <field name="margin_left">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">35</field>
+        <field name="dpi">90</field>
+    </record>
+    <template id="report_marksheet_view">
+        <style>.font{
+            font-size:14px;
+            font-family:"Helvetica"
+            }
+            @page{
+            margin-top:1%;
+            size: A4;
+            }
+        </style>
+        <t t-call="xe_exam_management.exam_external_layout_marksheet">
+            <div class="font">
+                <div class="page">
+                    <t t-if="class_system == '8-4-4'">
+                        <t t-foreach="get_objects(o)" t-as="objs">
+                            <t t-foreach="objs" t-as="obj">
+                                <t t-foreach="get_lines(obj,marksheet_line_id)" t-as="lines">
+                                    <h4 align="left">
+                                        <u>
+                                            <strong>STD 6-8 average</strong>
+                                        </u>
+                                    </h4>
+                                    <br/>
+                                    <h5 align="center">
+                                        <span t-esc="lines['header']"/>
+                                    </h5>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="25%">
+                                                        Date :
+                                                        <b>
+                                                            <span t-esc="lines['date']"/>
+                                                        </b>
+                                                    </td>
+                                                    <td width="25%">
+                                                        Term :
+                                                        <b>
+                                                            <span t-esc="lines['term_name']"/>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        Pupils Name :
+                                                        <b>
+                                                            <span t-esc="lines['student']"/>
+                                                        </b>
+                                                    </td>
+                                                    <td width="30%">
+                                                        Adm No :
+                                                        <b>
+                                                            <span t-esc="lines['gr_no']"/>
+                                                        </b>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td width="50%">
+                                                        Standard :
+                                                        <b>
+                                                            <span t-esc="lines['grade']"/>
+                                                        </b>
+                                                    </td>
+                                                    <td width="25%">
+                                                        Class Position :
+                                                        <b>
+                                                            <span t-esc="lines['class_post_str']"/>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="25%">
+                                                        Overall Position :
+                                                        <b>
+                                                            <span t-esc="lines['overall_post_str']"/>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <table class="table">
+                                        <thead>
+                                            <th class="text-center">Subject</th>
+                                            <th class="text-center">Opener</th>
+                                            <th class="text-center">Out Of</th>
+                                            <th class="text-center">Mid Term</th>
+                                            <th class="text-center">Out Of</th>
+                                            <th class="text-center">End Term</th>
+                                            <th class="text-center">Out Of</th>
+                                            <th class="text-center">Average</th>
+                                            <th class="text-center">Grade</th>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="lines['lines']" t-as="line">
+                                                <tr>
+                                                    <td class="text-left">
+                                                        <span t-esc="line['subject']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['open_term_marks']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['opener_outoff']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['mid_term_marks']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['midterm_outoff']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['end_term_marks']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['endterm_outoff']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['avg']"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-esc="line['grade']"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                        <tr>
+                                            <td class="text-left">
+                                                <b>Total</b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_openerterm_marks']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_opener_outoff']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_midterm_marks']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_midterm_outoff']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_endterm_marks']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_endterm_outoff']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_avg']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-center">
+                                                <b>
+                                                    <span t-esc="lines['total_avg_grade']"/>
+                                                </b>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Extra-Curricular Comments:</b>
+                                                        <span t-esc="lines['extra_comment']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Teachers General Comment:</b>
+                                                        <span t-esc="lines['general_comment']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Head Teacher's Comments:</b>
+                                                        <span t-esc="lines['head_teacher_comment']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Class Teachers Name</b>
+                                                        <br/>
+                                                        <span t-esc="lines['teacher_name']"/>
+                                                    </td>
+                                                    <td width="30%">
+                                                        <b>Signature</b>
+                                                        <br/>
+                                                        <img class="image"
+                                                             t-attf-src="data:image/png;base64,#{ lines['teacher_signature'] }"
+                                                             style="max-height:2.5cm; max-width:4cm; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Head Teachers Name</b>
+                                                        <br/>
+                                                        <span t-esc="lines['head_teacher_name']"/>
+                                                    </td>
+                                                    <td width="30%">
+                                                        <b>Signature</b>
+                                                        <br/>
+                                                        <t t-if="lines['head_teacher_signature']">
+                                                            <img class="image"
+                                                                 t-attf-src="data:image/png;base64,#{ lines['head_teacher_signature'] }"
+                                                                 style="max-height:2.5cm; max-width:4cm; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <!--<b>Term End Date:</b>
+                                                        <span t-esc="lines['term_end_date']" />-->
+                                                    </td>
+                                                    <td width="30%">
+                                                        <b>Next Term Start Date:</b>
+                                                        <span t-esc="lines['next_term_date']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <p style="page-break-after: always;"/>
+                                </t>
+                            </t>
+                        </t>
+                    </t>
+                    <t t-if="class_system == 'K-P-P'">
+                        <t t-foreach="get_objects(o)" t-as="objs">
+                            <t t-foreach="objs" t-as="obj">
+                                <t t-foreach="get_lines(obj,marksheet_line_id)" t-as="lines">
+                                    <br/>
+                                    <div name="third_row">
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="100%">
+                                                        <b>
+                                                            <span t-esc="lines['header1']"/>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="100%">
+                                                        <b>
+                                                            <span t-esc="lines['header2']"/>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <table class="table">
+                                        <thead>
+                                            <th class="text-center">Subject</th>
+                                            <th class="text-center">Teacher Comments</th>
+                                            <th class="text-center">Facilitator Name</th>
+                                            <th class="text-center">Rubrics</th>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="lines['lines']" t-as="line">
+                                                <tr>
+                                                    <td class="text-left">
+                                                        <span t-esc="line['subject']"/>
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <span t-esc="line['comment']"/>
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <span t-esc="line['teacher_name']"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-esc="line['rubrics']"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Extra-Curricular Comment:</b>
+                                                        <span t-esc="lines['extra_comment']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Grade Facilitator Comment:</b>
+                                                        <span t-esc="lines['general_comment']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Head Teacher's Comment:</b>
+                                                        <span t-esc="lines['head_teacher_comment']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Head Teachers Name</b>
+                                                        <br/>
+                                                        <span t-esc="lines['head_teacher_name']"/>
+                                                    </td>
+                                                    <td width="30%">
+                                                        <b>Signature</b>
+                                                        <br/>
+                                                        <t t-if="lines['head_teacher_signature']">
+                                                            <img class="image"
+                                                                 t-attf-src="data:image/png;base64,#{ lines['head_teacher_signature'] }"
+                                                                 style="max-height:2.5cm; max-width:4cm; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <!--<b>Term End Date:</b>
+                                                        <span t-esc="lines['term_end_date']" />-->
+                                                    </td>
+                                                    <td width="30%">
+                                                        <b>Next Term Start Date:</b>
+                                                        <span t-esc="lines['next_term_date']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <p style="page-break-after: always;"/>
+                                </t>
+                            </t>
+                        </t>
+                    </t>
+                    <t t-if="class_system == '4-5 CBC'">
+                        <t t-foreach="get_objects(o)" t-as="objs">
+                            <t t-foreach="objs" t-as="obj">
+                                <t t-foreach="get_lines(obj,marksheet_line_id)" t-as="lines">
+                                    <br/>
+                                    <div class="row text-left" name="fourth_row">
+                                        <h4>
+                                            <u>
+                                                <strong>Grade 4-5 Report and Average</strong>
+                                            </u>
+                                        </h4>
+                                    </div>
+                                    <div class="row text-center" name="fifth_row">
+                                        <h4>
+                                            <span t-esc="lines['header']"/>
+                                        </h4>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="25%">
+                                                        Date :
+                                                        <b>
+                                                            <span t-esc="lines['date']"/>
+                                                        </b>
+                                                    </td>
+                                                    <td width="25%">
+                                                        Term :
+                                                        <b>
+                                                            <span t-esc="lines['term_name']"/>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        Pupils Name :
+                                                        <b>
+                                                            <span t-esc="lines['student']"/>
+                                                        </b>
+                                                    </td>
+                                                    <td width="30%">
+                                                        Adm No :
+                                                        <b>
+                                                            <span t-esc="lines['gr_no']"/>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="50%">
+                                                        Grade :
+                                                        <b>
+                                                            <span t-esc="lines['grade']"/>
+                                                        </b>
+                                                    </td>
+                                                    <td width="25%">
+                                                        Class Position :
+                                                        <b>
+                                                            <span t-esc="lines['class_post_str']"/>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="25%">
+                                                        Overall Position :
+                                                        <b>
+                                                            <span t-esc="lines['overall_post_str']"/>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <table class="table">
+                                        <thead>
+                                            <th class="text-center">Learning Area</th>
+                                            <th class="text-center">Comment</th>
+                                            <th class="text-center">Opener</th>
+                                            <th class="text-center">Out Of</th>
+                                            <th class="text-center">Mid Term</th>
+                                            <th class="text-center">Out Of</th>
+                                            <th class="text-center">End Term</th>
+                                            <th class="text-center">Out Of</th>
+                                            <th class="text-center">Average</th>
+                                            <th class="text-center">Rubrics</th>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="lines['lines']" t-as="line">
+                                                <tr>
+                                                    <td class="text-left">
+                                                        <span t-esc="line['subject']"/>
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <span t-esc="line['result_comment']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['opener']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['opener_outoff']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['midterm']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['midterm_outoff']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['endterm']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['endterm_outoff']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['avg']"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-esc="line['rubrics']"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                        <tr>
+                                            <td class="text-left">
+                                                <b>Total</b>
+                                            </td>
+                                            <td/>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_opener']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_opener_outoff']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_mid']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_midterm_outoff']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_end']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_endterm_outoff']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_avg']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-center">
+                                                <b>
+                                                    <span t-esc="lines['total_avg_rubric']"/>
+                                                </b>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Extra-Curricular Comments:</b>
+                                                        <span t-esc="lines['extra_comment']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>General Class Teacher's Comment:</b>
+                                                        <span t-esc="lines['general_comment']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Head Teacher's Comment:</b>
+                                                        <span t-esc="lines['head_teacher_comment']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Class Teachers Name</b>
+                                                        <br/>
+                                                        <span t-esc="lines['teacher_name']"/>
+                                                    </td>
+                                                    <td width="30%">
+                                                        <b>Signature</b>
+                                                        <br/>
+                                                        <img class="image"
+                                                             t-attf-src="data:image/png;base64,#{ lines['teacher_signature'] }"
+                                                             style="max-height:2.5cm; max-width:4cm; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Head Teachers Name</b>
+                                                        <br/>
+                                                        <span t-esc="lines['head_teacher_name']"/>
+                                                    </td>
+                                                    <td width="30%">
+                                                        <b>Signature</b>
+                                                        <br/>
+                                                        <t t-if="lines['head_teacher_signature']">
+                                                            <img class="image"
+                                                                 t-attf-src="data:image/png;base64,#{ lines['head_teacher_signature'] }"
+                                                                 style="max-height:2.5cm; max-width:4cm; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                    </td>
+                                                    <td width="30%">
+                                                        <b>Next Term Start Date:</b>
+                                                        <span t-esc="lines['next_term_date']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <p style="page-break-after: always;"/>
+                                </t>
+                            </t>
+                        </t>
+                    </t>
+                    <t t-if="class_system == '1-3 CBC'">
+                        <t t-foreach="get_objects(o)" t-as="objs">
+                            <t t-foreach="objs" t-as="obj">
+                                <t t-foreach="get_lines(obj,marksheet_line_id)" t-as="lines">
+                                    <br/>
+                                    <div class="row text-left" name="sixth_row">
+                                        <h4>
+                                            <u>
+                                                <strong>Grade 1-3 Report and Average</strong>
+                                            </u>
+                                        </h4>
+                                    </div>
+                                    <div class="row text-center" name="seven_row">
+                                        <h4>
+                                            <span t-esc="lines['header']"/>
+                                        </h4>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="25%">
+                                                        Date :
+                                                        <b>
+                                                            <span t-esc="lines['date']"/>
+                                                        </b>
+                                                    </td>
+                                                    <td width="25%">
+                                                        Term :
+                                                        <b>
+                                                            <span t-esc="lines['term_name']"/>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        Pupils Name :
+                                                        <b>
+                                                            <span t-esc="lines['student']"/>
+                                                        </b>
+                                                    </td>
+                                                    <td width="30%">
+                                                        Adm No :
+                                                        <b>
+                                                            <span t-esc="lines['gr_no']"/>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="50%">
+                                                        Grade :
+                                                        <b>
+                                                            <span t-esc="lines['grade']"/>
+                                                        </b>
+                                                    </td>
+                                                    <td width="25%">
+                                                        Class Position :
+                                                        <b>
+                                                            <span t-esc="lines['class_post_str']"/>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="25%">
+                                                        Overall Position :
+                                                        <b>
+                                                            <span t-esc="lines['overall_post_str']"/>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <table class="table">
+                                        <thead>
+                                            <th class="text-center">Learning Area</th>
+                                            <th class="text-center">Comment</th>
+                                            <th class="text-center">Opener</th>
+                                            <th class="text-center">Out Of</th>
+                                            <th class="text-center">Mid Term</th>
+                                            <th class="text-center">Out Of</th>
+                                            <th class="text-center">End Term</th>
+                                            <th class="text-center">Out Of</th>
+                                            <th class="text-center">Average</th>
+                                            <th class="text-center">Rubrics</th>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="lines['lines']" t-as="line">
+                                                <tr>
+                                                    <td class="text-left">
+                                                        <span t-esc="line['subject']"/>
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <span t-esc="line['result_comment']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['open_term_marks']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['opener_outoff']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['mid_term_marks']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['midterm_outoff']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['end_term_marks']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['endterm_outoff']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="line['avg']"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-esc="line['rubrics']"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                        <tr>
+                                            <td class="text-left">
+                                                <b>Total</b>
+                                            </td>
+                                            <td/>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_openerterm_marks']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_opener_outoff']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_midterm_marks']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_midterm_outoff']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_endterm_marks']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_endterm_outoff']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>
+                                                    <span t-esc="lines['total_avg']"/>
+                                                </b>
+                                            </td>
+                                            <td class="text-center">
+                                                <b>
+                                                    <span t-esc="lines['total_avg_rubric']"/>
+                                                </b>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Extra-Curricular Comments:</b>
+                                                        <span t-esc="lines['extra_comment']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>General Class Teacher's Comment:</b>
+                                                        <span t-esc="lines['general_comment']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Head Teacher's Comment:</b>
+                                                        <span t-esc="lines['head_teacher_comment']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Class Teachers Name</b>
+                                                        <br/>
+                                                        <span t-esc="lines['teacher_name']"/>
+                                                    </td>
+                                                    <td width="30%">
+                                                        <b>Signature</b>
+                                                        <br/>
+                                                        <img class="image"
+                                                             t-attf-src="data:image/png;base64,#{ lines['teacher_signature'] }"
+                                                             style="max-height:2.5cm; max-width:4cm; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Head Teachers Name</b>
+                                                        <br/>
+                                                        <span t-esc="lines['head_teacher_name']"/>
+                                                    </td>
+                                                    <td width="30%">
+                                                        <b>Signature</b>
+                                                        <br/>
+                                                        <t t-if="lines['head_teacher_signature']">
+                                                            <img class="image"
+                                                                 t-attf-src="data:image/png;base64,#{ lines['head_teacher_signature'] }"
+                                                                 style="max-height:2.5cm; max-width:4cm; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%">
+                                                        <b>Term End Date:</b>
+                                                    </td>
+                                                    <td width="30%">
+                                                        <b>Next Term Start Date:</b>
+                                                        <span t-esc="lines['next_term_date']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <p style="page-break-after: always;"/>
+                                </t>
+                            </t>
+                        </t>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+    <!-- <template id="report_marksheet_report_new">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="xe_exam_management.report_marksheet_view" />
+            </t>
+        </t>
+    </template>
+    <record id="xe_exam_management.report_marksheet" model="ir.actions.report">
+        <field name="name">Student Report Card</field>
+        <field name="model">xe.marksheet.register</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_exam_management.report_marksheet_report_new</field>
+        <field name="report_file">xe_exam_management.report_marksheet_report_new</field>
+    </record>
+-->
+    <record id="exam_attendee_report_xlsx" model="ir.actions.report">
+        <field name="name">Exam Attendee Report</field>
+        <field name="model">exam.attendee.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">xe_exam_management.report_exam_attendee_xlsx</field>
+        <field name="report_file">xe_exam_management.exam_attendee_report_xlsx</field>
+    </record> 
+    <record id="exam_analysis_report_xlsx" model="ir.actions.report">
+        <field name="name">Exam Analysis Report</field>
+        <field name="model">exam.analysis.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">xe_exam_management.report_exam_analysis_xlsx</field>
+        <field name="report_file">xe_exam_management.exam_analysis_report_xlsx</field>
+    </record>
+</odoo>

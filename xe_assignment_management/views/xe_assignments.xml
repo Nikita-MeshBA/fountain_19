@@ -1,0 +1,293 @@
+<odoo>
+    <record model="ir.ui.view" id="xe_assignment_management_list">
+        <field name="name">xe.assignment.list</field>
+        <field name="model">xe.assignment</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="number"/>
+                <field name="name"/>
+                <field name="course_id"/>
+                <field name="classroom_id" string="Classroom" domain="[('course_id', '=', course_id)]"/>
+                <field name="subject_id"/>
+                <field name="create_teacher_id"/>
+                <field name="issue_date" string="Issue Date"/>
+                <field name="submit_date"/>
+                <field name="total_marks"/>
+                <field name="state" string="Status" decoration-info="state == 'draft'" decoration-warning="state == 'assigned'" decoration-success="state == 'done'" decoration-danger="state == 'cancel'" widget="badge"/>
+            </list>
+        </field>
+    </record>
+<!--    <record id="xe_assignment_search" model="ir.ui.view">-->
+<!--        <field name="name">xe.assignment.search</field>-->
+<!--        <field name="model">xe.assignment</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <search string="Assignment">-->
+<!--                <field name="course_id" string="Class"/>-->
+<!--                <field name="classroom_id" string="Class Room"/>-->
+<!--                <field name="teacher_id" string="Name"/>-->
+<!--                <field name="state" string="Status"/>-->
+<!--                <newline/>-->
+<!--                <separator />-->
+<!--				<group expand="0" string="Group By" colspan="4"-->
+<!--					name="enquiry_group">-->
+<!--                    <filter string="Assigned" name="assigned_state" domain="[('state', '=', 'assigned')]"/>-->
+<!--                    <filter string="Done" name="done_states" domain="[('state', '=', 'done')]"/>-->
+<!--					<filter string="Class" name="course_id"-->
+<!--						domain="[]" context="{'group_by':'course_id'}" />-->
+<!--                    <filter string="Class Room" name="classroom_id"-->
+<!--						domain="[]" context="{'group_by':'classroom_id'}" />-->
+<!--                    <filter string="Teacher" name="teacher_id"-->
+<!--						domain="[]" context="{'group_by':'teacher_id'}" />-->
+<!--				</group>-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
+        <record id="xe_assignment_search" model="ir.ui.view">
+        <field name="name">xe.assignment.search</field>
+        <field name="model">xe.assignment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="course_id"/>
+                <field name="state"/>
+            </search>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="xe_assignment_form">
+        <field name="name">xe.assignment.form</field>
+        <field name="model">xe.assignment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,assigned,done"/>
+                    <button name="assign" string="Assign" class="oe_highlight" type="object" invisible="state not in ['draft']"/>
+                    <button name="reset_to_draft" string="Reset to Draft" class="oe_highlight" type="object" invisible="state in ['draft', 'cancel']" groups="xe_assignment_management.group_assignment_manager,xe_assignment_management.group_assignment_user,xenesis_school_base.group_xe_admin,xenesis_school_base.group_xe_staff"/>
+                    <button name="assignment_as_done" string="Done" class="oe_highlight" type="object"
+                            groups="xe_assignment_management.group_assignment_manager,xe_assignment_management.group_assignment_user,xenesis_school_base.group_xe_admin,xenesis_school_base.group_xe_staff" invisible="state not in ['assigned']"/>
+                    <button name="submit_assignment" string="Submit Assignment" type="object" class="oe_highlight"
+                            invisible="state in ['draft', 'done', 'cancel']"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="view_submissions" type="object" class="oe_stat_button" string="Submissions"
+                                icon="fa-list"
+                                groups="xenesis_school_base.group_xe_admin,xenesis_school_base.group_xe_staff"/>
+                    </div>
+                    <div class="oe_title">
+                        <h3 class="d-flex">
+                            <field name="number" readonly="1" force_save="1"/>
+                        </h3>
+                        <h1 class="d-flex">
+                            <field name="name" placeholder="Assignment Name" required="True"
+                                   readonly="state not in ['draft']"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="domain_set_field" invisible="1"/>
+                            <field name="assignment_type_id" readonly="state not in ['draft']"
+                                   required="True"/>
+                            <field name="course_id"
+                                   required="True" readonly="state not in ['draft']"/>
+                            <field name="classroom_id" string="Classroom" domain="[('course_id', '=', course_id)]" readonly="state not in ['draft']"/>
+                            <field name="assigned_sub_ids" invisible="1"/>
+                            <field name="assigned_stud_ids" invisible="1"/>
+                            <field name="subject_id" domain="[('course_ids','in',course_id)]"
+                                   readonly="state not in ['draft']" required="True"/>
+                            <field name="teacher_id" readonly="state not in ['draft']"
+                                   invisible="1"/>
+                            <field name="create_teacher_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="issue_date" string="Issue Date" readonly="1"/>
+                            <field name="submit_date" readonly="state not in ['draft', 'assigned']"
+                                   required="True"/>
+                            <field name="total_marks" readonly="state not in ['draft']"
+                                   required="True"/>
+                            <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                        </group>
+                        <field name="description" placeholder="Enter description here..."
+                               readonly="state not in ['draft']" required="True"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="parent_xe_assignment_form_inherit" model="ir.ui.view">
+        <field name="name">xe.assignment.form.inherit</field>
+        <field name="model">xe.assignment</field>
+        <field name="inherit_id" ref="xe_assignment_management.xe_assignment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='assignment_type_id']" position="attributes">
+                <t groups="xenesis_school_base.group_xe_parent">
+                    <attribute name="options">{"no_open": True, "no_create": True, "no_edit": True}</attribute>
+                </t>
+            </xpath>
+            <xpath expr="//field[@name='course_id']" position="attributes">
+                <t groups="xenesis_school_base.group_xe_parent">
+                    <attribute name="options">{"no_open": True, "no_create": True, "no_edit": True}</attribute>
+                </t>
+            </xpath>
+            <xpath expr="//field[@name='subject_id']" position="attributes">
+                <t groups="xenesis_school_base.group_xe_parent">
+                    <attribute name="options">{"no_open": True, "no_create": True, "no_edit": True}</attribute>
+                </t>
+            </xpath>
+            <xpath expr="//field[@name='create_teacher_id']" position="attributes">
+                <t groups="xenesis_school_base.group_xe_parent">
+                    <attribute name="options">{"no_open": True, "no_create": True, "no_edit": True}</attribute>
+                </t>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_assignment_form_student" model="ir.ui.view">
+        <field name="name">xe.assignment.form.duplicate</field>
+        <field name="model">xe.assignment</field>
+        <field name="inherit_id" ref="xe_assignment_management.xe_assignment_form"/>
+        <field name="arch" type="xml">
+            <!-- <xpath expr="//button[@name='submit_assignment']" position="attributes">
+                <t groups="xenesis_school_base.group_xe_staff">
+                    <attribute name="invisible">1</attribute>
+                </t>
+                <t groups="xenesis_school_base.group_xe_parent,xenesis_school_base.group_xe_student">
+                    <attribute name="invisible">0</attribute>
+                </t>
+            </xpath> -->
+            <xpath expr="//group[1]" position="after">
+                <t groups="xenesis_school_base.group_xe_staff">
+                    <notebook>
+                        <page name="assignment_allocation" string="Assignment Allocation">
+                            <field name="student_ids" domain="[('id','in',assigned_stud_ids)]"
+                                   readonly="state not in ['draft']">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="roll_number"/>
+                                    <field name="email"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </t>
+            </xpath>
+        </field>
+    </record>
+    <record id="quick_create_assignment_form" model="ir.ui.view">
+        <field name="name">xe.assignment.form.quick_create</field>
+        <field name="model">xe.assignment</field>
+        <field name="priority">1000</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="course_id"/>
+                    <field name="subject_id"/>
+                    <field name="create_teacher_id" invisible="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="assignment_kanban_view_custom" model="ir.ui.view">
+        <field name="name">xe.assignment.view.custom</field>
+        <field name="model">xe.assignment</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column o_kanban_project_tasks"
+                    on_create="quick_create" quick_create_view="xe_assignment_management.quick_create_assignment_form">
+                <field name="state"/>
+                <field name="name"/>
+                <field name="course_id"/>
+                <field name="subject_id"/>
+                <field name="teacher_id"/>
+                <progressbar field="state"
+                             colors='{"done": "success","assigned": "info", "cancel": "danger", "draft": "muted"}'/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="o_kanban_card_content mw-100 oe_kanban_global_click">
+                            <div class="o_kanban_primary_left">
+                                <div class="o_primary">
+                                    <span class="o_text_overflow">
+                                        <strong>
+                                            <t t-esc="record.name.value"/>
+                                        </strong>
+                                    </span>
+                                </div>
+                                <div style="float:right;">
+                                    Class:
+                                    <t t-esc="record.course_id.value"/>
+                                    <br/>
+                                </div>
+                            </div>
+                            <div class="o_dropdown_kanban dropdown" t-if="!selection_mode" groups="base.group_user">
+                                <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown"
+                                   data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                    <span class="fa fa-ellipsis-v"/>
+                                </a>
+                                <div class="dropdown-menu" role="menu">
+                                    <a name="%(portal.portal_share_action)d" role="menuitem" type="action"
+                                       class="dropdown-item">Share
+                                    </a>
+                                    <a t-if="widget.editable" role="menuitem" type="edit" class="dropdown-item">
+                                        Edit
+                                    </a>
+                                    <a t-if="widget.deletable" role="menuitem" type="delete" class="dropdown-item">
+                                        Delete
+                                    </a>
+                                    <div role="separator" class="dropdown-divider"></div>
+                                    <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                </div>
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left">
+                                    Sub:
+                                    <t t-esc="record.subject_id.value"/>
+                                    <br/>
+                                </div>
+                                <div class="oe_kanban_bottom_right">
+                                    Teacher:
+                                    <t t-esc="record.teacher_id.value"/>
+                                    <br/>
+                                </div>
+                            </div>
+                            <div class="oe_clear"></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="sequence_assignment" model="ir.sequence">
+        <field name="name">Assignments</field>
+        <field name="code">xe.assignment.seq</field>
+        <field name="active">TRUE</field>
+        <field name="prefix">ASGMNT/%(year)s/</field>
+        <field name="padding">6</field>
+    </record>
+    <record model="ir.actions.act_window" id="xe_assignment_act">
+        <field name="name">Assignments</field>
+        <field name="res_model">xe.assignment</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="xe_assignment_search"/>
+    </record>
+    <record model="ir.actions.act_window" id="xe_assignment_stud_act">
+        <field name="name">Assignments</field>
+        <field name="res_model">xe.assignment</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="xe_assignment_search"/>
+    </record>
+
+    <menuitem name="Assignments" id="xe_assignment_menu_root" sequence="10" groups="xe_assignment_management.group_assignment_user,xe_assignment_management.group_assignment_manager,xenesis_school_base.group_xe_student,xenesis_school_base.group_xe_parent"
+              web_icon="xe_assignment_management,static/description/icon.png"/>
+    <menuitem name="Assignments" id="xe_assignment_sub_menu2" parent="xe_assignment_menu_root"
+              action="xe_assignment_stud_act" sequence="1" groups="xe_assignment_management.group_assignment_user,xe_assignment_management.group_assignment_manager,xenesis_school_base.group_xe_student,xenesis_school_base.group_xe_parent,xenesis_school_base.group_xe_staff"
+    />
+    <menuitem name="Configuration" id="xe_assignment_config_menu" parent="xe_assignment_menu_root" sequence="99"
+              groups="xenesis_school_base.group_xe_admin"/>
+    <menuitem name="Reporting" id="xe_assignment_report_menu" parent="xe_assignment_menu_root" sequence="90"
+              groups="xenesis_school_base.group_xe_admin"/>
+</odoo>

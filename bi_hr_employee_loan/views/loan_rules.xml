@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="hr_loan_installment_rule" model="hr.salary.rule">
+            <field name="name">Installment Loan</field>
+            <field name="sequence" eval="300"/>
+            <field name="code">INSTALLMENT</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -employee.get_installment_loan(employee.id,payslip.date_from,payslip.date_to)</field>
+        </record>
+
+
+
+        <record id="hr_loan_interest_rule" model="hr.salary.rule">
+            <field name="name">Interest Loan</field>
+            <field name="sequence" eval="400"/>
+            <field name="code">INTEREST</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -employee.get_interest_loan(employee.id,payslip.date_from,payslip.date_to)</field>
+        </record>
+        <record id="structure_003" model="hr.payroll.structure">
+            <field name="name">Loan Pay</field>
+            <field name="code">LoanPay</field>
+             <field name="rule_ids"
+                    eval="[(6, 0, [ref('hr_loan_installment_rule'),
+ref('hr_loan_interest_rule')])]"
+    />
+        </record>
+
+        <record id="email_template_apply_loan_request" model="mail.template">
+            <field name="name">Employee Applied Loan Request</field>
+            <field name="subject">{{object.name}} </field>
+            <field name="model_id" ref="bi_hr_employee_loan.model_loan_request" />
+            <field name="auto_delete" eval="True" />
+            <field name="body_html" type="html">
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p>Respected Sir/Madam,</p>
+                    <p><t t-out="object.employee_id.name or ''"/> Employee Applied for Loan.</p>
+                    <p> Loan Number : <t t-out="object.name or ''"/> </p>
+                    <p> Principal amount : <t t-out="object.principal_amount or ''"/></p>
+                    <p> Thank You</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="email_template_dept_approved_loan_request" model="mail.template">
+            <field name="name">Department Approved Loan Request</field>
+            <field name="subject">{{object.name}} </field>
+            <field name="model_id" ref="bi_hr_employee_loan.model_loan_request" />
+            <field name="auto_delete" eval="True" />
+            <field name="body_html" type="html">
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p>Respected Sir/Madam,</p>
+                    <p><t t-out="object.employee_id.name or ''"/> Employee approval for Loan.</p>
+                    <p>Department Head <t t-out="object.department_employee_id.name or ''"/> approved this loan.</p>
+                    <p> Loan Number : <t t-out="object.name or ''"/> </p>
+                    <p> Principal amount : <t t-out="object.principal_amount or ''"/> </p>
+                    <p> Thank You</p>
+                </div>
+            </field>
+        </record>
+
+
+        <record id="email_template_hr_approved_loan_request" model="mail.template">
+            <field name="name">HR Approved Loan Request</field>
+            <field name="subject">{{object.name}} </field>
+            <field name="model_id" ref="bi_hr_employee_loan.model_loan_request" />
+            <field name="auto_delete" eval="True" />
+            <field name="body_html" type="html">
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p>Respected Sir/Madam,</p>
+                    <p><t t-out="object.employee_id.name or ''"/> Employee approval for Loan.</p>
+                    <p>HR Head <t t-out="object.department_employee_id.name or ''"/> approved this loan.</p>
+                    <p> Loan Number : <t t-out="object.name or ''"/> </p>
+                    <p> Principal amount : <t t-out="object.principal_amount or ''"/> </p>
+                    <p> Thank You</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="email_template_accountant_approved_loan_request" model="mail.template">
+            <field name="name">accountant Approved Loan Request</field>
+            <field name="subject">{{object.name}} </field>
+            <field name="model_id" ref="bi_hr_employee_loan.model_loan_request" />
+            <field name="auto_delete" eval="True" />
+            <field name="body_html" type="html">
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p>Hello ,</p>
+                    <p><t t-out="object.employee_id.name or ''"/> Employee approval for Loan.</p>
+                    <p>Accountant Head <t t-out="object.department_employee_id.name or ''"/> approved this loan.</p>
+                    <p> Loan Number : <t t-out="object.name or ''"/> </p>
+                    <p> Principal amount : <t t-out="object.principal_amount or '' "/> </p>
+                    <p> Thank You</p>
+                </div>
+            </field>
+        </record>
+
+
+        <record id="email_template_cancel_loan_request" model="mail.template">
+            <field name="name">Cancel Loan Request</field>
+            <field name="subject">{{object.name}} </field>
+            <field name="model_id" ref="bi_hr_employee_loan.model_loan_request" />
+            <field name="auto_delete" eval="True" />
+            <field name="body_html" type="html">
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p>Hello ,</p>
+                    <p><t t-out="object.employee_id.name or ''"/> Employee approval for Loan.</p>
+                    <p><t t-out="object.department_employee_id.name or ''"/> Cancelled this loan.</p>
+                    <p> Loan Number : <t t-out="object.name or ''"/> </p>
+                    <p> Principal amount : <t t-out="object.principal_amount or ''"/> </p>
+                    <p> Thank You</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="email_template_disburse" model="mail.template">
+            <field name="name">Loan Disburse Notification</field>
+            <field name="subject">{{object.name}} </field>
+            <field name="model_id" ref="bi_hr_employee_loan.model_loan_request" />
+            <field name="auto_delete" eval="True" />
+            <field name="body_html" type="html">
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p>Hello ,</p>
+                    <p><t t-out="object.employee_id.name or ''"/> Employee your Loan is successfully paid.</p>
+                    <p> Loan Number : <t t-out="object.name or ''"/> </p>
+                    <p> Principal amount : <t t-out="object.principal_amount or ''"/> </p>
+                    <p> Thank You</p>
+                </div>
+            </field>
+        </record>
+</odoo>

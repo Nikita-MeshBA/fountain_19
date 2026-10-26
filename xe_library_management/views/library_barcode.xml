@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="library_barcode_action_main_view" model="ir.actions.client">
+        <field name="name">Barcode Interface</field>
+        <field name="tag">xe_library_barcode.scan_view</field>
+    </record>
+</odoo>

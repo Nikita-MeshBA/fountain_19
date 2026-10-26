@@ -4,9 +4,9 @@
         <field name="name">leave.certificate.attribute.tree</field>
         <field name="model">leave.certificate.attribute</field>
         <field name="arch" type="xml">
-            <tree string="Activity Type" editable="bottom">
+            <list string="Activity Type" editable="bottom">
                 <field name="name" required="1"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="act_leaving_certificate_atts" model="ir.actions.act_window">

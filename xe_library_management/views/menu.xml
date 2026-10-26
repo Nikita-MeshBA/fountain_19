@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_xe_library_root" name="Library"
+              sequence="13"
+              web_icon="xe_library_management/static/description/icon.png"
+              groups="xe_library_management.group_xe_library"/>
+
+    <menuitem id="menu_library_medias" name="All Media"
+              parent="menu_xe_library_root" sequence="20"/>
+
+    <menuitem id="menu_xe_sub_media_library" name="Media"
+              parent="menu_library_medias" sequence="10"
+              groups="group_xe_library,xenesis_school_base.group_xe_student"
+              action="act_open_xe_media_view"/>
+
+    <menuitem id="menu_xe_media_unit_library" name="Media Units"
+              parent="menu_library_medias" sequence="20"
+              action="act_open_media_unit_view"
+              groups="group_xe_library,xenesis_school_base.group_xe_admin"/>
+
+    <menuitem id="menu_xe_media_movement_library" name="Media Movements"
+              parent="menu_library_medias" sequence="30"
+              action="act_open_xe_media_movement_view"
+              groups="group_xe_library,xenesis_school_base.group_xe_admin"/>
+
+    <menuitem id="menu_xe_media_queue_request_library_sub"
+              name="Media Queue Requests" parent="menu_library_medias"
+              groups="group_xe_library,xenesis_school_base.group_xe_student"
+              sequence="40" action="act_open_xe_media_queue_view"/>
+
+    <menuitem id="menu_xe_media_request_library_sub" name="Media Purchase Requests"
+              parent="menu_library_medias" sequence="50"
+              groups="group_xe_library,xenesis_school_base.group_xe_student"
+              action="act_open_xe_purchase_view"/>
+
+
+    <menuitem id="menu_xe_school_library_config" name="Configuration"
+              parent="menu_xe_library_root" sequence="20"/>
+
+    <menuitem id="menu_xe_library_card_sub" name="Library Cards"
+              parent="menu_xe_school_library_config" sequence="10"
+              action="act_open_xe_library_card_view"
+              groups="group_xe_library,xenesis_school_base.group_xe_admin"/>
+    <menuitem id="menu_xe_publisher_sub" name="Publishers"
+              parent="menu_xe_school_library_config" sequence="20"
+              action="act_open_xe_publisher_view"
+              groups="group_xe_library,xenesis_school_base.group_xe_staff"/>
+    <menuitem id="menu_xe_author_sub" name="Authors"
+              parent="menu_xe_school_library_config" sequence="30"
+              action="act_open_xe_author_view"
+              groups="group_xe_library,xenesis_school_base.group_xe_staff"/>
+    <menuitem id="menu_xe_tag_sub" name="Tags"
+              parent="menu_xe_school_library_config" sequence="40"
+              action="act_open_xe_tag_view"
+              groups="group_xe_library,xenesis_school_base.group_xe_admin"/>
+    <menuitem id="menu_xe_tag_sub" name="Media Type"
+              parent="menu_xe_school_library_config" sequence="50"
+              action="act_open_xe_media_type_view"
+              groups="group_xe_library,xenesis_school_base.group_xe_admin"/>
+    <menuitem id="menu_xe_library_card_type_sub" name="Library Card Types"
+              parent="menu_xe_school_library_config" sequence="60"
+              action="act_open_xe_library_card_type_view"
+              groups="group_xe_library,xenesis_school_base.group_xe_admin"/>
+
+    <menuitem id="barcode_issue_media_menu" parent="xe_library_management.menu_xe_library_root"
+              sequence="15" name="Issue Media" action="barcode_issue_media_act"
+              groups="xe_library_management.group_xe_library"/>
+    <menuitem id="menu_xe_dashboard_librarian" name="Dashboard"
+              groups="xe_library_management.group_xe_library,xenesis_school_base.group_xe_admin,xenesis_school_base.group_xe_admin"
+              parent="xe_library_management.menu_xe_library_root" sequence="10"
+              action="open_library_dashboard_kanban"/>
+</odoo>

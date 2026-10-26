@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- Start Employee First Approval View -->
+    <record id="view_cbc_first_approval_tree" model="ir.ui.view">
+        <field name="name">hr.employee.approval.cbc.tree</field>
+        <field name="model">hr.employee.approval.cbc</field>
+        <field name="arch" type="xml">
+            <list string="Employee Approval">
+                <field name="type" decoration-info="type == 'scheme'" decoration-success="type == 'lesson_plan'" widget="badge"/>
+                <field name="first_approval" invisible="1"/>
+                <field name="first_approval_date" />
+                <field name="first_approval_user_id"/>
+                <field name="seq_name" string="Scheme Of Work" readonly="type == 'lesson_plan'"/>
+                <field name="cbc_scheme_of_work_id" string="Teacher"/>
+                <field name="seq_name_lp" string="Lesson Plan" readonly="type == 'scheme'"/>
+                <field name="cbc_lesson_plan_id" />
+                <field name="department_head_id" string="Department Head"/>
+                <field name="first_status" decoration-info="first_status == 'first_approval'" decoration-success="first_status == 'first_approval_confirmed'" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cbc_first_approval_search" model="ir.ui.view">
+        <field name="name">hr.employee.approval.search</field>
+        <field name="model">hr.employee.approval.cbc</field>
+        <field name="arch" type="xml">
+            <search string="Employee Approval">
+                <field name="first_approval_date" />
+                <field name="cbc_scheme_of_work_id" />
+                <field name="department_head_id" string="Department Head"/>
+            </search>
+        </field>
+    </record>
+    
+    <record id="view_cbc_first_approval_form" model="ir.ui.view">
+        <field name="name">hr.employee.approval.cbc.form</field>
+        <field name="model">hr.employee.approval.cbc</field>
+        <field name="arch" type="xml">
+            <form string="Employee Approval">
+                <header>
+                    <field name="first_approval" invisible="1"/>
+                    <field name="first_approval_confirm" invisible="1"/>
+                    <button name="first_approval_method" string="First Approval"
+                        type="object" invisible="first_approval_confirm"
+                        groups="xe_lesson_planner.group_lesson_plan_department_head"/>
+                    <field name="first_status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group col="2">
+                        <group>
+                            <field name="type" readonly="1"/>
+                            <field name="first_approval" invisible="1"/>
+                            <field name="first_approval_date" readonly="1"/>
+                            <field name="first_approval_user_id" readonly="1"/>
+                            <field name="seq_name" string="Scheme Of Work" readonly="1" invisible="type == 'lesson_plan'"/>
+                            <field name="cbc_scheme_of_work_id" string="Teacher" readonly="1" invisible="type == 'lesson_plan'"/>
+                            <field name="seq_name_lp" string="Lesson Plan" readonly="1" invisible="type == 'scheme'"/>
+                            <field name="cbc_lesson_plan_id" readonly="1" string="Teacher" invisible="type == 'scheme'"/>
+                            <field name="department_head_id" string="Department Head" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_cbc_employee_approval_first" model="ir.actions.act_window">
+        <field name="name">Department Head Approval CBC</field>
+        <field name="res_model">hr.employee.approval.cbc</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('view_cbc_first_approval_tree')}),
+            (0, 0, {'view_mode': 'kanban'}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_cbc_first_approval_form')})]"/>
+        <field name="search_view_id" ref="view_cbc_first_approval_search"/>
+        <field name="domain">[('first_approval','=',True)]</field>
+    </record>
+    <!-- End Employee First Approval View -->
+
+    <!-- End Employee Second Approval View -->
+    <record id="view_cbc_second_approval_tree" model="ir.ui.view">
+        <field name="name">hr.employee.approval.cbc.tree</field>
+        <field name="model">hr.employee.approval.cbc</field>
+        <field name="arch" type="xml">
+            <list string="Employee Approval">
+                <field name="type" readonly="1" decoration-info="type == 'scheme'" decoration-success="type == 'lesson_plan'" widget="badge"/>
+                <field name="second_approval" invisible="1"/>
+                <field name="seq_name"/>
+                <field name="cbc_scheme_of_work_id" string="Teacher"/>
+                <field name="cbc_lesson_plan_id" />
+                <field name="second_approval_date" />
+                <field name="second_approval_user_id"/>
+                <field name="head_teacher_id" string="Head Teacher"/>
+                <field name="second_status" decoration-info="second_status == 'second_approval'" decoration-success="second_status == 'second_approval_confirmed'" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cbc_second_approval_search" model="ir.ui.view">
+        <field name="name">hr.employee.approval.cbc.search</field>
+        <field name="model">hr.employee.approval.cbc</field>
+        <field name="arch" type="xml">
+            <search string="Employee Approval">
+                <field name="second_approval_date" />
+                <field name="head_teacher_id" />
+            </search>
+        </field>
+    </record>
+    
+    <record id="view_cbc_second_approval_form" model="ir.ui.view">
+        <field name="name">hr.employee.approval.cbc.form</field>
+        <field name="model">hr.employee.approval.cbc</field>
+        <field name="arch" type="xml">
+            <form string="Employee Approval">
+                <header>
+                    <field name="second_approval" invisible="1"/>
+                    <field name="second_approval_confirm" invisible="1"/>
+                    <button name="second_approval_method" string="Second Approval"
+                        type="object" invisible="second_approval_confirm"
+                        groups="xe_lesson_planner.group_lesson_plan_department_head" />
+                    <field name="second_status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group col="2">
+                        <group>
+                            <field name="type" readonly="1"/>
+                            <field name="second_approval" invisible="1"/>
+                            <field name="seq_name" string="Scheme Of Work" readonly="1" invisible="type == 'lesson_plan'"/>
+                            <field name="cbc_scheme_of_work_id" string="Teacher" readonly="1" invisible="type == 'lesson_plan'"/>
+                            <field name="seq_name_lp" string="Lesson Plan" readonly="1" invisible="type == 'scheme'"/>
+                            <field name="cbc_lesson_plan_id" readonly="1" string="Teacher" invisible="type == 'scheme'"/>
+                            <field name="second_approval_date" readonly="1"/>
+                            <field name="second_approval_user_id" readonly="1"/>
+                            <field name="head_teacher_id" string="Head Teacher" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_cbc_employee_approval_second" model="ir.actions.act_window">
+        <field name="name">Head Teacher Approval CBC</field>
+        <field name="res_model">hr.employee.approval.cbc</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('view_cbc_second_approval_tree')}),
+            (0, 0, {'view_mode': 'kanban'}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_cbc_second_approval_form')})]"/>
+        <field name="search_view_id" ref="view_cbc_second_approval_search"/>
+        <field name="domain">[('second_approval','=',True)]</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="ir.ui.view" id="lost_media_form">
+        <field name="name">lost.media.form</field>
+        <field name="model">lost.media</field>
+        <field name="arch" type="xml">
+            <form string="Lost Media">
+                <group>
+                    <field name="media_unit_id"/>
+                    <field name="reason"/>
+                </group>
+                <footer>
+                    <button name="lost_media_action" type="object" string="Proceed" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="lost_media_act">
+        <field name="name">Lost media</field>
+        <field name="res_model">lost.media</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="lost_media_form"/>
+        <field name="context">{'default_media_unit_id': active_id}</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

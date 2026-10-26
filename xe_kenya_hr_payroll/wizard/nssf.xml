@@ -1,0 +1,41 @@
+<odoo>
+    <record model="ir.ui.view" id="nssf_report_wizard">
+        <field name="name">NSSF Report</field>
+        <field name="model">nssf.report.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="NSSF Report">
+                <group>
+                    <group>
+                        <field name="date_start"/>
+                    </group>
+                    <group>
+                        <field name="date_end"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="get_report" string="Get Report" type="object" class="oe_highlight"/>
+                    <button name="get_xlsx_report" string="Get Excel Report" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_nssf_report_wizard" model="ir.actions.act_window">
+        <field name="name">NSSF Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">nssf.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="payroll_report" name="Reporting"
+              parent="hr_payroll_community.menu_hr_payroll_community_root"
+              groups="hr_payroll_community.group_hr_payroll_community_user" sequence="90"/>
+
+    <menuitem action="action_nssf_report_wizard"
+              id="menu_nssf_report_wizard"
+              parent="payroll_report"
+              groups="hr_payroll_community.group_hr_payroll_community_user" sequence="201"/>
+</odoo>

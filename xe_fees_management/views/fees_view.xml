@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_fees_term_tree" model="ir.ui.view">
+        <field name="name">xe.fees.term.tree</field>
+        <field name="model">xe.fees.term</field>
+        <field name="arch" type="xml">
+            <list string="FeesTerm">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_fees_term_search" model="ir.ui.view">
+        <field name="name">xe.fees.term.search</field>
+        <field name="model">xe.fees.term</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="FeesTerm">
+                <field name="name"/>
+                <newline/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_fees_term_form" model="ir.ui.view">
+        <field name="name">xe.fees.term.form</field>
+        <field name="model">xe.fees.term</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="FeesTerm">
+                <sheet>
+                    <group col="2">
+                        <group>
+                            <field name="name"/>
+                            <field name="course_id" invisible="transport_fees != False"
+                                   required="transport_fees == False"/>
+                        </group>
+                        <group>
+                            <field name="transport_fees"/>
+                            <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <field name="fees_line" invisible="transport_fees != False">
+                        <separator string="Fee Terms"/>
+                        <list string="Fees Term Line">
+                            <field name="description" required="1"/>
+                            <field name="product_id" required="1"/>
+                            <field name="fee_type" required="1"/>
+                            <field name="start_date" required="1"/>
+                            <field name="end_date" required="1"/>
+                            <field name="value" required="1"/>
+                        </list>
+                        <form string="Fees Term Line">
+                            <group colspan="4">
+                                <field name="description" required="1"/>
+                                <field name="product_id" required="1"/>
+                                <field name="fee_type" required="1"/>
+                                <field name="start_date" required="1"/>
+                                <field name="end_date" required="1"/>
+                                <field name="value" required="1"/>
+                            </group>
+                        </form>
+                    </field>
+                    <field name="route_line" invisible="transport_fees == False">
+                        <separator string="Transport Fee Terms"/>
+                        <list string="Fees Term Line">
+                            <field name="description" required="1"/>
+                            <field name="product_id" required="1"/>
+                            <field name="route" required="1"/>
+                            <field name="start_date" required="1"/>
+                            <field name="end_date" required="1"/>
+                            <field name="value" required="1"/>
+                        </list>
+                        <form string="Fees Term Line">
+                            <group>
+                                <field name="description" required="1"/>
+                                <field name="product_id" required="1"/>
+                                <field name="route" required="1"/>
+                                <field name="start_date" required="1"/>
+                                <field name="end_date" required="1"/>
+                                <field name="value" required="1"/>
+                            </group>
+                        </form>
+                    </field>
+                    <field name="note" placeholder="Notes..."/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_fees_term" model="ir.actions.act_window">
+        <field name="name">Fees Terms</field>
+        <field name="res_model">xe.fees.term</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_fees_term_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add a new Fees Term</p>
+        </field>
+    </record>
+</odoo>

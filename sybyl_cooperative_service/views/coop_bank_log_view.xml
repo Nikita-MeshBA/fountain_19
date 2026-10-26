@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="coop_bank_log_list_view" model="ir.ui.view">
+        <field name="name">COOP bank log list</field>
+        <field name="model">coop.bank.log</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="create_date"/>
+                <field name="name"/>
+                <field name="url_endpoint"/>
+                <field name="response" optional="hide"/>
+                <field name="coop_bank_transaction_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="coop_bank_log_form_view" model="ir.ui.view">
+        <field name="name">COOP bank log form</field>
+        <field name="model">coop.bank.log</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="response"/>
+                            <field name="url_endpoint"/>
+                        </group>
+                        <group>
+                            <field name="create_date"/>
+                            <field name="create_uid" options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="coop_bank_log_action" model="ir.actions.act_window">
+        <field name="name">COOP Bank Log</field>
+        <field name="res_model">coop.bank.log</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_coop_bank_log" parent="account.menu_finance_configuration"
+              action="coop_bank_log_action" sequence="100" groups="account.group_account_manager"/>
+</odoo>

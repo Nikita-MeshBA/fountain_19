@@ -1,0 +1,89 @@
+<odoo>
+    <record id="sms_send_log_from_view" model="ir.ui.view">
+        <field name="name">sms.send.log.from.view</field>
+        <field name="model">bulk.sms.send.log</field>
+        <field name="arch" type="xml">
+            <form string="SMS Log" edit="false" create="false">
+                <sheet>
+                    <group>
+                        <h2>
+                            <field name="name"/>
+                        </h2>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="to_number"/>
+                            <field name="sms_gateway_id" readonly='1'/>
+                            <field name="response_content"/>
+                            <field name="create_date"/>
+                        </group>
+                        <group>
+                            <field name="template_body"/>
+                            <field name="response_status"/>
+                            <field name="state"/>
+                            <field name="company_id" required="1" options="{'no_create': True}"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="sms_send_log_tree_view" model="ir.ui.view">
+        <field name="name">sms.send.log.tree.view</field>
+        <field name="model">bulk.sms.send.log</field>
+        <field name="arch" type="xml">
+            <list string="SMS LOG" edit="false" create="false">
+                <field name="name"/>
+                <field name="to_number"/>
+                <field name="response_content"/>
+                <field name="template_body"/>
+                <field name="create_date"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="sms_send_log_search" model="ir.ui.view">
+        <field name="name">bulk.sms.send.log.search</field>
+        <field name="model">bulk.sms.send.log</field>
+        <field name="arch" type="xml">
+            <search string="SMS Log">
+                <filter
+                        icon="terp-go-today"
+                        name="Today"
+                        domain="[('create_date','&lt;', time.strftime('%%Y-%%m-%%d 23:59:59')), ('create_date','&gt;=', time.strftime('%%Y-%%m-%%d 00:00:00'))]"
+                        help="Today"
+                />
+                <filter
+                        name="Failed"
+                        domain="[('state','=','failed')]"
+                        help="Failed"
+                />
+                <filter
+                        name="Success"
+                        domain="[('state','=','send')]"
+                        help="Sent"
+                />
+                <field name="template_body"/>
+                <field name="to_number"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="sms_send_log_action" model="ir.actions.act_window">
+        <field name="name">SMS Log</field>
+        <field name="res_model">bulk.sms.send.log</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="sybyl_bulk_sms_log_menu"
+              name="SMS Log"
+              parent="sybyl_bulk_sms_parent_menu"
+              action="sms_send_log_action"
+              sequence="1"/>
+</odoo>

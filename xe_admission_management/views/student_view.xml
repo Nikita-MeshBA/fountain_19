@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="student_form_inherit_admin" model="ir.ui.view">
+        <field name="name">xe.student.form</field>
+        <field name="model">xe.student</field>
+        <field name="inherit_id" ref="xenesis_school_base.view_student_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group/group[last()]" position="inside">
+                <field name="application_id" string="Admission Record" readonly="1"
+                       invisible="application_id == False"/>
+            </xpath>
+            <group name="address" position="after">
+                <group string="Transportation Zone" invisible="1">
+                    <group>
+                        <field name="transportation_term_id" domain="[('fees_term_id.transport_fees','=',True)]"/>
+                    </group>
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>

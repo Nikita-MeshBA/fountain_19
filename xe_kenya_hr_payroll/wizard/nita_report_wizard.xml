@@ -1,0 +1,33 @@
+<odoo>
+    <record model="ir.ui.view" id="nita_report_wizard">
+        <field name="name">NITA Report</field>
+        <field name="model">nita.report.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="NITA Report">
+                <group>
+                    <group>
+                        <field name="date_year" required="1"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="get_xlsx_report" string="Get Excel Report" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_nita_report_wizard" model="ir.actions.act_window">
+        <field name="name">NITA Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">nita.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem action="action_nita_report_wizard"
+              id="menu_nita_report_wizard"
+              parent="payroll_report"
+              sequence="202"/>
+</odoo>

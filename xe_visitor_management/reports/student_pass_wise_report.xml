@@ -1,0 +1,70 @@
+<odoo>
+    <data>
+    	<record id="student_pass_wise_report" model="ir.actions.report">
+			<field name="name">Student Wise</field>
+			<field name="model">student.pass.wise</field>
+			<field name="report_type">qweb-pdf</field>
+			<field name="report_name">xe_visitor_management.report_student_pass_wise</field>
+			<field name="report_file">xe_visitor_management.report_student_pass_wise</field>
+		</record>
+        <template id="report_student_pass_wise">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <br/>
+                        <div class="text-center">
+                            <h3>
+                                <strong>Student Wise Details</strong>
+                            </h3>
+                        </div>
+                        <br/>
+                        <div class="text-center">
+                            <strong>From Date : <span t-esc="get_data['from_date']" /> </strong>
+                            to
+                            <strong>To Date : <span t-esc="get_data['to_date']" /> </strong>
+                        </div>
+                        <br/><br/>
+                        <table width="100%" class="table table-bordered table-condensed">
+                            <thead>
+                                <th class="text-center">Admission No.</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Class</th>
+                                <th class="text-center">Batch</th>
+                                <th class="text-center">Approved By</th>
+                                <th class="text-center">Approved Time</th>
+                                <th class="text-center">Reason</th>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="get_object" t-as="obj">
+                                    <tr t-foreach="obj['record']" t-as="l">
+                                        <td class="text-center">
+                                            <t t-esc="l['application_number']" />
+                                        </td>
+                                        <td class="text-center">
+                                            <t t-esc="l['student_id']" />
+                                        </td>
+                                        <td class="text-center">
+                                            <t t-esc="l['course_id']" />
+                                        </td>
+                                        <td class="text-center">
+                                            <t t-esc="l['batch_id']" />
+                                        </td>
+                                        <td class="text-center">
+                                            <t t-esc="l['approved_by_id']" />
+                                        </td>
+                                        <td class="text-center">
+                                            <t t-esc="l['approved_time']" />
+                                        </td>
+                                        <td class="text-center">
+                                            <t t-esc="l['reason']" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

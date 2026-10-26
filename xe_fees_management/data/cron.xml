@@ -1,0 +1,28 @@
+<odoo>
+    <!-- Scheduler creating fees lines-->
+    <record forcecreate="True" id="ir_cron_create_invoice" model="ir.cron">
+        <field name="name">Generate Invoice</field>
+        <field name="model_id" ref="model_xe_fees_structure"/>
+        <field name="state">code</field>
+        <field name="code">model.generate_fees_lines1()</field>
+        <field eval="False" name="active"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+<!--        <field name="numbercall">-1</field>-->
+<!--        <field eval="False" name="doall"/>-->
+    </record>
+
+    <record forcecreate="True" id="ir_cron_create_invoice" model="ir.cron">
+        <field name="name">Create Draft Invoices for Fees lines</field>
+        <field name="model_id" ref="model_xe_student_fees_details"/>
+        <field name="state">code</field>
+        <field name="code">model.get_invoice_crone(validate_with_in=10,validate_type='before')</field>
+        <field eval="False" name="active"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+<!--        <field name="numbercall">-1</field>-->
+<!--        <field eval="False" name="doall"/>-->
+    </record>
+</odoo>

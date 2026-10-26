@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_op_receipt_tree" model="ir.ui.view">
+        <field name="name">fee.receipt.tree</field>
+        <field name="model">fee.receipt</field>
+        <field name="arch" type="xml">
+            <list string="Fee Receipt" editable="bottom">
+                <field name="name" required="1"/>
+                <field name="notes"/>
+                <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="act_fee_receipt" model="ir.actions.act_window">
+        <field name="name">Fees Receipt</field>
+        <field name="res_model">fee.receipt</field>
+        <field name="view_id" ref="view_op_receipt_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add a new Fees Receipt</p>
+        </field>
+    </record>
+</odoo>

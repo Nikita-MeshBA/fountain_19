@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="exam_view_student_form" model="ir.ui.view">
+        <field name="name">exam.xe.student.form</field>
+        <field name="model">xe.student</field>
+        <field name="inherit_id" ref="xenesis_school_base.view_student_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button name="action_view_exam_lines" type="object" string="Exams" class="oe_stat_button"
+                        icon="fa-list-ol"/>
+            </xpath>
+            <xpath expr="//page[@name='fee_details']" position="after">
+                <page name="faculty_details" string="Faculty Details">
+                    <group>
+                        <group string="Head Teacher">
+                            <field name="head_teacher_name" string="Name"/>
+                            <field name="head_teacher_mobile" string="Mobile"/>
+                            <field name="head_teacher_phone" string="Phone"/>
+                            <field name="head_teacher_email" string="Email"/>
+                        </group>
+                        <group string="Class Teacher">
+                            <field name="class_teacher_name" string="Name"/>
+                            <field name="class_teacher_mobile" string="Mobile"/>
+                            <field name="class_teacher_phone" string="Phone"/>
+                            <field name="class_teacher_email" string="Email"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_marksheetline_report">
+        <style>
+            .font{
+            font-size:14px;
+            font-family:"Helvetica"
+            }
+            @page{
+            size: A4;
+            }
+        </style>
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="font">
+                    <div class="page">
+                        <t t-if="get_lines['evaluation_type'] == 'normal'">
+                            <div class="row" style="margin-top: -40px; font-size: 16px;">
+                                <div class="col-6">
+                                    <b>Admission Number: </b><span t-out="'%s' % get_lines['admission_no']"/>
+                                </div>
+                                <div class="col-6" style="font-size: 16px;">
+                                    <b>Student Name: </b><span t-out="'%s' % get_lines['student']"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6" style="font-size: 16px;">
+                                    <b>Class: </b><span t-out="'%s' % get_lines['course']"/>
+                                </div>
+                                <div class="col-6" style="font-size: 16px;">
+                                    <b>Class Room: </b><span t-out="'%s' % get_lines['classroom_name']"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6" style="font-size: 16px;">
+                                    <b>Exam Name: </b><span t-out="'%s' % get_lines['exam_session']"/>
+                                </div>
+                            </div>
+                            <br></br>
+                            <table class="table table-bordered table-sm">
+                                <tr style="border: 1px solid black;">
+                                    <th style="border: 1px solid black;" class="text-center">Subject</th>
+                                    <th style="border: 1px solid black;" class="text-center">Obtained Marks</th>
+                                    <th style="border: 1px solid black;" class="text-center">Grade</th>
+                                </tr>
+                                <t t-foreach="get_lines['exam_details']" t-as="detail">
+                                    <tr style="border: 1px solid black;">
+                                        <td style="border: 1px solid black;" class="text-left">
+                                            <span t-att-style="'margin-left:15px !important;' if detail['is_child'] else 'margin-left:0px !important'"
+                                                  t-out="'%s' % detail['exam']"/>
+                                        </td>
+                                        <td style="border: 1px solid black;" class="text-center">
+                                            <span t-out="'%s' % detail['obtained_marks']"/>
+                                        </td>
+                                        <td style="border: 1px solid black;" class="text-center">
+                                            <span t-out="'%s' %  detail['grade']"
+                                                  t-att-style="'display:none;' if detail['hide_grade'] else ''"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <table class="table table-bordered table-sm">
+                                <tr style="border: 1px solid black;">
+                                    <th style="border: 1px solid black;" class="text-center">Month/Year of Passing</th>
+                                    <th style="border: 1px solid black;" class="text-center">Obtained Percentage/Total Percentage</th>
+                                    <th style="border: 1px solid black;" class="text-center">Percentage</th>
+                                    <th style="border: 1px solid black;" class="text-center">Average Grade</th>
+                                </tr>
+                                <tr style="border: 1px solid black;">
+                                    <td style="border: 1px solid black;" class="text-center">
+                                        <span t-out="'%s' % get_lines['date']"/>
+                                    </td>
+                                    <td style="border: 1px solid black;" class="text-center">
+                                        <span t-out="'%s' % get_lines['total_obtained_marks']"/>
+                                        /
+                                        <span t-out="'%s' % get_lines['total_marks']"/>
+                                    </td>
+                                    <td style="border: 1px solid black;" class="text-center">
+                                        <span t-out="'%s' % get_lines['total_percentage']"/>
+                                        %
+                                    </td>
+                                    <td style="border: 1px solid black;" class="text-center">
+                                        <span t-out="'%s' % get_lines['avg_grade']"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="container" style="page-break-before: auto;">
+                                <div class="row" style="display: inline;page-break-before: auto; font-size: 16px;">
+                                    <div style="text-decoration: underline;">Comments:</div>
+                                    <div>
+                                        <span t-out="get_lines['head_master_comment']"/>
+                                    </div>
+                                </div>
+                                <br></br>
+                            </div>
+                            <div class="container" style="page-break-before: auto;">
+                                <div class="row" style="page-break-before: auto;">
+                                    <div style="font-size: 16px;" class="col-4">Class Teacher Signature:
+                                        <br></br>
+                                        <t t-if="get_lines['teacher_signature']">
+                                            <img class="image"
+                                                 t-attf-src="data:image/png;base64,#{ get_lines['teacher_signature'] }"
+                                                 style="max-height: 250px; max-width: 250px; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                        </t>
+                                    </div>
+                                    <div style="font-size: 16px;" class="col-4">Head Teacher Signature:
+                                        <br></br>
+                                        <t t-if="get_lines['head_teacher_signature']">
+                                            <img class="image"
+                                                 t-attf-src="data:image/png;base64,#{ get_lines['head_teacher_signature'] }"
+                                                 style="max-height: 250px; max-width: 250px; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                        </t>
+                                    </div>
+                                    <div class="col-4">
+                                        <div style="font-size: 16px">Closing Date of Term:
+                                            <span t-out="get_lines['term_end_date']"/>
+                                        </div>
+                                        <div style="font-size: 16px">Opening Date of Term:
+                                            <span t-out="get_lines['opening_next_term_date']"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="get_lines['evaluation_type'] == 'grade'">
+                            <div class="row" style="margin-top: -40px; font-size: 16px;">
+                                <div class="col-6" style="font-size: 16px;">
+                                    <b>Student Name: </b><span t-out="'%s' % get_lines['student']"/>
+                                </div>
+                                <div class="col-6" style="font-size: 16px;">
+                                    <b>Class: </b><span t-out="'%s' % get_lines['course']"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6" style="font-size: 16px;">
+                                    <b>Exam Name: </b><span t-out="'%s' % get_lines['exam_session']"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <table class="table table-bordered table-sm">
+                                <tr style="border: 1px solid black;">
+                                    <th style="border: 1px solid black;" class="text-center">Subject</th>
+                                    <th style="border: 1px solid black;" class="text-center">Exam Type</th>
+                                    <th style="border: 1px solid black;" class="text-center">Grade</th>
+                                    <th style="border: 1px solid black;" class="text-center">Absent</th>
+                                </tr>
+                                <t t-foreach="get_lines['exam_details']" t-as="detail">
+                                    <tr style="border: 1px solid black;">
+                                        <td style="border: 1px solid black;" class="text-left">
+                                            <span t-out="'%s' % detail['exam']"/>
+                                        </td>
+                                        <td style="border: 1px solid black;" class="text-left">
+                                            <span t-out="'%s' % detail['exam_type']"/>
+                                        </td>
+                                        <td style="border: 1px solid black;" class="text-center">
+                                            <span t-out="'%s' % detail['grade']"/>
+                                        </td>
+                                        <td style="border: 1px solid black;" class="text-center">
+                                            <span t-out="'%s' % 'P' if detail['obtained_marks'] &gt; 0 else 'A'"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <table class="table table-bordered table-sm">
+                                <tr style="border: 1px solid black;">
+                                    <th style="border: 1px solid black;" class="text-center">Month/Year of Passing</th>
+                                    <th style="border: 1px solid black;" class="text-center">Obtained Grade</th>
+                                    <th style="border: 1px solid black;" class="text-center">Percentage</th>
+                                    <th style="border: 1px solid black;" class="text-center">Result</th>
+                                </tr>
+                                <tr style="border: 1px solid black;">
+                                    <td style="border: 1px solid black;" class="text-center">
+                                        <span t-out="'%s' % get_lines['date']"/>
+                                    </td>
+                                    <td style="border: 1px solid black;" class="text-center">
+                                        <span t-out="'%s' % get_lines['total_grade']"/>
+                                    </td>
+                                    <td style="border: 1px solid black;" class="text-center">
+                                        <span t-out="'%s' % get_lines['total_percentage']"/>
+                                        %
+                                    </td>
+                                    <td style="border: 1px solid black;" class="text-center">
+                                        <span t-out="'%s' % get_lines['total_status']"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="container" style="page-break-before: auto;">
+                                <div class="row" style="display: inline;page-break-before: auto; font-size: 16px;">
+                                    <div style="text-decoration: underline;">Comments:</div>
+                                    <div>
+                                        <span t-out="get_lines['head_master_comment']"/>
+                                    </div>
+                                </div>
+                                <br></br>
+                            </div>
+                            <div class="container" style="page-break-before: auto;">
+                                <div class="row" style="page-break-before: auto;">
+                                    <div style="font-size: 16px;" class="col-4">Class Teacher Signature:
+                                        <br></br>
+                                        <t t-if="get_lines['teacher_signature']">
+                                            <img class="image"
+                                                 t-attf-src="data:image/png;base64,#{ get_lines['teacher_signature'] }"
+                                                 style="max-height: 250px; max-width: 250px; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                        </t>
+                                    </div>
+                                    <div style="font-size: 16px;" class="col-4">Head Teacher Signature:
+                                        <br></br>
+                                        <t t-if="get_lines['head_teacher_signature']">
+                                            <img class="image"
+                                                 t-attf-src="data:image/png;base64,#{ get_lines['head_teacher_signature'] }"
+                                                 style="max-height: 250px; max-width: 250px; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                        </t>
+                                    </div>
+                                    <div class="col-4">
+                                        <div style="font-size: 16px">Closing Date of Term:
+                                            <span t-out="get_lines['term_end_date']"/>
+                                        </div>
+                                        <div style="font-size: 16px">Opening Date of Term:
+                                            <span t-out="get_lines['opening_next_term_date']"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="external_layout_standard_inherit" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[hasclass('row')][1]/div[1]" position="attributes">
+            <t t-if="doc_model=='xe.marksheet.line'">
+                <attribute name="class" remove="col-3 mb4" add="col-4 mb4" separator=" "/>
+            </t>
+        </xpath>
+        <xpath expr="//div[hasclass('row')][1]/div[1]" position="attributes">
+            <t t-if="doc_model=='xe.marksheet.line'">
+                <attribute name="t-attf-style" add="position:relative;" separator=" "/>
+            </t>
+        </xpath>
+        <xpath expr="//div[hasclass('row')][1]/div[1]/img" position="attributes">
+            <t t-if="doc_model=='xe.marksheet.line'">
+                <attribute name="t-attf-style" add="max-height: 110px;" separator=" "/>
+            </t>
+        </xpath>
+        <xpath expr="//div[hasclass('row')][1]/div[2]" position="replace">
+            <div class="col-4 text-center mb4" t-if="doc_model == 'xe.marksheet.line'">
+                <strong>
+                    <span style="position:absolute;bottom:0;margin-left:80px;">Student MarkSheet</span>
+                </strong>
+            </div>
+            <div t-else="" class="col-9 text-right" style="margin-top:22px;" t-field="company.report_header"
+                 name="moto"/>
+        </xpath>
+        <xpath expr="//div[hasclass('row')][1]" position="inside">
+            <div class="col-4 text-right mb4" style="padding-left: 110px;" t-if="doc_model == 'xe.marksheet.line'">
+                <b>
+                    <span style="font-size:small;text-align:left;" t-if="company.company_details"
+                          t-field="company.company_details"></span>
+                </b>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="report_combine_marksheetline_report">
+        <style>
+            .font{
+            font-size:14px;
+            font-family:"Helvetica"
+            }
+            @page{
+            size: A4;
+            }
+        </style>
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="font">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-6" style="font-size: 14px;">
+                                <b>Student Name:</b>
+                                <span t-out="'%s' % get_lines['student']"/>
+                            </div>
+                            <div class="col-6" style="font-size: 14px;">
+                                <b>Admission Number:</b>
+                                <span t-out="'%s' % get_lines['admission_no']"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6" style="font-size: 14px;">
+                                <b>Class:</b>
+                                <span t-out="'%s' % get_lines['course']"/>
+                            </div>
+                            <div class="col-6" style="font-size: 14px;">
+                                <b>Class Room:</b>
+                                <span t-out="'%s' % get_lines['classroom_name']"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6" style="font-size: 14px;">
+                                <b>Class Teacher:</b>
+                                <span t-out="'%s' % get_lines['classroom_teacher_name']"/>
+                            </div>
+                            <div class="col-6" style="font-size: 14px;">
+                                <b>Head Teacher:</b>
+                                <span t-out="'%s' % get_lines['class_teacher_name']"/>
+                            </div>
+                        </div>
+                        <br></br>
+                        <table class="table table-sm" style="font-size: 14px;">
+                            <tr style="border: 1px solid black;">
+                                <th rowspan="3" width="25%" class="text-center" style="border: 1px solid black;">Subject</th>
+                                <t t-foreach="get_lines['session_details']" t-as="session_dt">
+                                    <t t-set="term_name" t-value="list(session_dt.keys())"/>
+                                    <t t-set="term_length" t-value="2*len(session_dt[term_name[0]])"/>
+                                    <th class="text-center" t-att-colspan="term_length" style="border: 1px solid black;">
+                                        <t t-esc="term_name[0]"/>
+                                    </th>
+                                </t>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <t t-foreach="get_lines['session_details']" t-as="session_dt">
+                                    <t t-set="term_name" t-value="list(session_dt.keys())"/>
+                                    <t t-foreach="session_dt[term_name[0]]" t-as="exam_type">
+                                        <th class="text-center" t-att-colspan="2" style="border: 1px solid black;">
+                                            <t t-esc="exam_type"/>
+                                        </th>
+                                    </t>
+                                </t>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <t t-foreach="get_lines['session']" t-as="session">
+                                    <th class="text-center" style="border: 1px solid black;">Obtained Marks</th>
+                                    <th class="text-center" style="border: 1px solid black;">Grade</th>
+                                </t>
+                            </tr>
+                            <t t-foreach="get_lines['exam_details']" t-as="detail">
+                                <tr style="border: 1px solid black;">
+                                    <td class="text-left" style="border: 1px solid black;">
+                                        <span t-att-style="'margin-left:15px !important;' if detail['is_child'] else 'margin-left:0px !important'"
+                                              t-out="'%s' % detail['exam']"/>
+                                    </td>
+                                    <t t-foreach="get_lines['session']" t-as="session">
+                                        <td class="text-center" style="border: 1px solid black;">
+                                            <span t-out="'%s' % detail['obtained_marks_' + str(session)] if 'obtained_marks_' + str(session) in detail else ''"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;">
+                                            <span t-out="'%s' %  detail['grade_'+ str(session)] if 'grade_'+ str(session) in  detail else ''"
+                                                  t-att-style="'display:none;' if detail['hide_grade'] else ''"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </t>
+                            <tr style="border: 1px solid black;">
+                                <td width="25%" style="border: 1px solid black;">
+                                    <strong>
+                                        Total Marks
+                                    </strong>
+                                </td>
+                                <t t-foreach="get_lines['session']" t-as="session">
+                                    <td class="text-center" style="border: 1px solid black;">
+                                        <strong>
+                                            <t t-out="'%s'% get_lines['mlt_sessions_total'][session]['obtained_marks_' + str(session)]"/>
+                                        </strong>
+                                    </td>
+                                    <td/>
+                                </t>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td width="25%" style="border: 1px solid black;">
+                                    <strong>
+                                        Average
+                                    </strong>
+                                </td>
+                                <t t-foreach="get_lines['session']" t-as="session">
+                                    <td class="text-center" style="border: 1px solid black;">
+                                        <strong>
+                                            <t t-out="'%s'% get_lines['mlt_sessions_total'][session]['avg_marks_' + str(session)]"/>
+                                        </strong>
+                                    </td>
+                                    <td/>
+                                </t>
+                            </tr>
+                        </table>
+                        <div class="container" style="page-break-before: auto;">
+                            <div class="row" style="display: inline;page-break-before: auto; font-size: 14px;">
+                                <div style="text-decoration: underline;">Comments:</div>
+                                <div>
+                                    <span t-out="get_lines['session_details'][0]['teacher_comment']"/>
+                                </div>
+                            </div>
+                            <br></br>
+                        </div>
+                        <div class="container" style="page-break-before: auto;">
+                            <div class="row" style="page-break-before: auto;">
+                                <div style="font-size: 14px;" class="col-4">Class Teacher Signature:
+                                    <br></br>
+                                    <t t-if="get_lines['teacher_signature']">
+                                        <img class="image"
+                                             t-attf-src="data:image/png;base64,#{ get_lines['teacher_signature'] }"
+                                             style="max-height: 250px; max-width: 250px; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                    </t>
+                                </div>
+                                <div style="font-size: 14px;" class="col-4">Head Teacher Signature:
+                                    <br></br>
+                                    <t t-if="get_lines['head_teacher_signature']">
+                                        <img class="image"
+                                             t-attf-src="data:image/png;base64,#{ get_lines['head_teacher_signature'] }"
+                                             style="max-height: 250px; max-width: 250px; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                    </t>
+                                </div>
+                                <div class="col-4">
+                                    <div style="font-size: 14px">Closing Date of Term:
+                                        <span t-out="get_lines['term_end_date']"/>
+                                    </div>
+                                    <div style="font-size: 14px">Opening Date of Term:
+                                        <span t-out="get_lines['opening_next_term_date']"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

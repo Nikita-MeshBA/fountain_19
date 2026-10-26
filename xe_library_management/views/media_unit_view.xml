@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_media_unit_tree" model="ir.ui.view">
+        <field name="name">xe.media.unit.tree</field>
+        <field name="model">xe.media.unit</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <list string="Media Units">
+                <!-- <field name="name" />-->
+                <field name="media_id"/>
+                <field name="barcode"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_media_unit_form" model="ir.ui.view">
+        <field name="name">xe.media.unit.form</field>
+        <field name="model">xe.media.unit</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Media Units">
+                <header groups="base.group_user">
+                    <button name="%(issue_media_act)d" string="Issue Media"
+                            type="action"
+                            context="{'default_media_id': media_id, 'default_media_unit_id': id}"
+                            invisible="state != 'available'"
+                            class="oe_highlight" groups="xe_library_management.group_xe_library"/>
+                    <!-- attrs="{'invisible':[('state','!=','available')]}" -->
+                    <button name="%(return_media_act)d" string="Return Media"
+                            type="action"
+                            context="{'default_media_id': media_id, 'default_media_unit_id': id}"
+                            invisible="state != 'issue'"
+                            class="oe_highlight" groups="xe_library_management.group_xe_library"/>
+                    <!-- attrs="{'invisible':[('state','!=','issue')]}" -->
+                    <button name="renew_media_action" string="Renew Media"
+                            type="object"
+                            context="{'default_media_id': media_id, 'default_media_unit_id': id}"
+                            invisible="state != 'issue'"
+                            class="oe_highlight" groups="xe_library_management.group_xe_library"/>
+                    <!-- attrs="{'invisible':[('state','!=','issue')]}" -->
+                    <button name="%(lost_media_act)d" string="Lost Media"
+                            type="action"
+                            context="{'default_media_id': media_id, 'default_media_unit_id': id}"
+                            invisible="state == 'lost'"
+                            class="oe_highlight" groups="xe_library_management.group_xe_library"
+                    />
+                    <!-- attrs="{'invisible':[('state','=','lost')]}" -->
+                    <field name="state" widget="statusbar" statusbar_visible="available,issue,reserve"
+                           statusbar_colors='{"r":"red"}'/>
+                </header>
+                <sheet>
+                    <group col="4">
+                        <!-- <field name="name" />-->
+                        <field name="media_id"/>
+                        <field name="barcode" readonly="1" string="Media Code"/>
+                        <field name="media_isbn"/>
+                        <field name="media_internal_code"/>
+                        <field name="media_edition"/>
+                        <field name="media_author_ids" widget="many2many_tags"/>
+                        <field name="media_publisher_ids" widget="many2many_tags"/>
+                        <field name="media_tags_ids" widget="many2many_tags"/>
+                        <field name="media_type_id"/>
+                        <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                    </group>
+                    <notebook>
+                        <page name="movements" string="Movements">
+                            <field name="movement_lines_ids" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="view_media_unit_search" model="ir.ui.view">
+        <field name="name">xe.media.unit.search</field>
+        <field name="model">xe.media.unit</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="media Units">
+                <field name="name"/>
+                <field name="barcode"/>
+                <field name="media_id"/>
+                <filter string="Lost Media" name="lost_media" domain="[('state','=','lost')]"/>
+                <filter string="Active Media" name="active_media" domain="[('state','!=','lost')]"/>
+                <newline/>
+                <group>
+                    <filter string="Media" name="media_id" domain="[]" context="{'group_by':'media_id'}"/>
+                    <filter string="State" name="state" domain="[]" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="act_open_media_unit_view">
+        <field name="name">Media Units</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">xe.media.unit</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{'search_default_active_media': 1}</field>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_open_media_unit_view_form">
+        <field name="act_window_id" ref="act_open_media_unit_view"/>
+        <field name="sequence" eval="20"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_media_unit_form"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_open_media_unit_view_tree">
+        <field name="act_window_id" ref="act_open_media_unit_view"/>
+        <field name="sequence" eval="10"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_media_unit_tree"/>
+    </record>
+</odoo>

@@ -1,0 +1,49 @@
+<odoo>
+    <record id="fees_res_config_settings_view_inherit" model="ir.ui.view">
+        <field name="name">fees.res.config.settings.form.view.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="70"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='academic_block']" position="inside">
+                <block title="Fees Management" name="fees_settings_container">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="is_transport" force_save="1" class="o_light_label"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <!-- <label for="is_transport" string="Generate Transport along with academic fees"/> -->
+                            <label for="is_transport" string="During fee generation, generate transport fee in a separate invoice"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="is_activity" force_save="1" class="o_light_label"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <!-- <label for="is_activity" string="Generate Activities along with academic fees"/> -->
+                            <label for="is_activity" string="During fee generation, generate activity fee in a separate invoice"/>
+                        </div>
+                    </div>
+                    <!-- <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="is_boarding" force_save="1" class="o_light_label"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="is_boarding" string="Generate Boarding Fees along with academic fees"/>
+                        </div>
+                    </div> -->
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="is_optional" force_save="1" class="o_light_label"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <!-- <label for="is_optional" string="Generate Optional Fees along with Academic Fees"/> -->
+                            <label for="is_optional" string="During fee generation, generate optional fee in a separate invoice"/>
+                        </div>
+                    </div>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

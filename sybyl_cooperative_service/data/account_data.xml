@@ -1,0 +1,18 @@
+
+<!--<?xml version="1.0" encoding="utf-8" ?>-->
+<odoo>
+    <record id="reval_journal_coop" model="account.journal">
+        <field name="name">Cooperative Bank</field>
+        <field name="code">COOP</field>
+        <field name="type">bank</field>
+        <!-- <field name="company_id" ref="res_company_reval"/>-->
+    </record>
+
+    <!--    <record id="data_coop_bank" model="res.partner.bank">-->
+    <!--        <field name="acc_type">iban</field>-->
+    <!--        <field name="acc_number">BE71096123456769</field>-->
+    <!--        <field name="bank_id" ref="base.bank_bnp"/>-->
+    <!--        <field name="partner_id" ref="l10n_it.partner_demo_company_it"/>-->
+    <!--        <field name="company_id" ref="l10n_it.demo_company_it"/>-->
+    <!--    </record>-->
+</odoo>

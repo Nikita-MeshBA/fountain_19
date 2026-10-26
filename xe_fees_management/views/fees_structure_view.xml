@@ -1,0 +1,112 @@
+<odoo>
+    <record id="view_fees_structure_tree" model="ir.ui.view">
+        <field name="name">xe.fees.structure.tree</field>
+        <field name="model">xe.fees.structure</field>
+        <field name="arch" type="xml">
+            <list string="FeesTerm">
+                <field name="name" string="Name"/>
+                <!-- <field name="code" string="Code" invisible="1"/> -->
+                <field name="fee_structu_type" string="Type"/>
+                <field name="course_id" string="Class" widget="many2many_tags"/>
+                <field name="classroom_id" string="Class Room" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_fees_structure_search" model="ir.ui.view">
+        <field name="name">xe.fees.structure.search</field>
+        <field name="model">xe.fees.structure</field>
+        <field name="arch" type="xml">
+            <search string="Fee Type">
+                <field name="name" string="Name"/>
+                <field name="course_id" string="Class"/>
+                <field name="classroom_id" string="Class Room"/>
+                <newline/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_fees_structure_form" model="ir.ui.view">
+        <field name="name">xe.fees.structure.form</field>
+        <field name="model">xe.fees.structure</field>
+        <field name="arch" type="xml">
+            <form string="Fees Structure">
+                <header>
+                    <field name="invoice_id" invisible="1" string="Invoice"/>
+                </header>
+                <sheet>
+                    <group col="2">
+                        <group>
+                            <field name="academic_year_id" required="1"/>
+                            <field name="name" string="Name" required="1"/>
+                            <field name="fee_structu_type" string="Type"/>
+                            <field name="code" string="Code" invisible="1"/>
+                            <field name="term_id" required="1"/>
+                            <field name="invoice_date" required="1"/>
+                            <field name="invoice_ids" widget="many2many_tags" invisible="1" string="Invoice"/>
+                            <field name="company_id" options="{'no_create':True}"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="is_academic" invisible="1"/>
+                            <field name="is_transport_fees" invisible="1"/>
+                            <field name="is_activity" invisible="1"/>
+                            <field name="is_boarding" invisible="1"/>
+                            <field name="is_optional" invisible="1"/>
+                            <field name="course_id" string="Class" widget="many2many_tags"
+                                   invisible="fee_structu_type not in ['academic','boarding']"
+                                   required="fee_structu_type in ['academic','boarding']"/>
+                            <field name="classroom_id" string="Class Room" domain="[('course_id','in',course_id)]"
+                                   invisible="fee_structu_type not in ['academic','boarding']"
+                                   widget="many2many_tags"/>
+                            <field name="payment_term_id" required="1"/>
+                            <field name="due_days" invisible="1"/>
+                            <field name="is_include_transport_fees"/>
+                            <field name="is_include_optional_fees"/>
+                            <field name="is_include_activity_fees"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="fees_details" string="Fees Details">
+                            <field name="fee_details_ids">
+                                <list editable="bottom">
+                                    <field name="is_academic" column_invisible="True"/>
+                                    <field name="is_transport_fees" column_invisible="True"/>
+                                    <field name="is_activity" column_invisible="True"/>
+                                    <field name="is_boarding" column_invisible="True"/>
+                                    <field name="is_optional" column_invisible="True"/>
+                                    <field name="fee_type_id"/>
+                                    <!-- domain="[('is_transport_fees','=',parent.is_transport_fees),('is_academic','=',parent.is_academic),('is_activity','=',parent.is_activity),('is_boarding','=',parent.is_boarding),('is_optional','=',parent.is_optional)]" -->
+                                    <field name="term_id" domain="[('academic_year_id','=',parent.academic_year_id)]"
+                                           column_invisible="1"/>
+                                    <field name="invoice_date" column_invisible="1"/>
+                                    <field name="due_days" column_invisible="1"/>
+                                    <field name="due_date" column_invisible="1"/>
+                                    <field name="schedule_date" column_invisible="1"/>
+                                    <field name="receipt_name_id"/>
+                                    <field name="amount"/>
+                                    <field name="parent_state" readonly="1" force_save="1"/>
+                                    <field name="fee_structure_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_fees_structure" model="ir.actions.act_window">
+        <field name="name">Fees Structure</field>
+        <field name="res_model">xe.fees.structure</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_fees_structure_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add a new Fees Structure</p>
+        </field>
+    </record>
+</odoo>

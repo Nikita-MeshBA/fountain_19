@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_schme_of_work_pdf">
+        <style>.font{
+            font-size:14px;
+            font-family:"Helvetica"
+            }
+            @page{
+            margin-top:1%;
+            size: A4;
+            }
+        </style>
+        <t t-call="web.html_container">
+            <t t-call="xe_lesson_planner.lesson_planner_external_layout">
+                <div class="font">
+                    <center>
+                        <h2>Scheme of Work</h2>
+                    </center>
+                    <br/>
+                    <div>
+                        <div>
+                            <strong>Systeme Generated Report Date:</strong>
+                            <strong>
+                                <span t-esc="date"/>
+                            </strong>
+                            <br/>
+                            <br/>
+                        </div>
+                    </div>
+                    <table width="100%">
+                        <tbody>
+                            <tr t-if="'date_from' in data" style="padding:5px;">
+                                <th width="25%;">
+                                    <b>Start Date : </b> <span t-esc="data['date_from']"/>
+                                </th>
+                                <th width="25%;">
+                                    <b>End Date : </b><span t-esc="data['date_to']"/>
+                                </th>
+                                <td t-if="'course_name' in data" width="25%;">
+                                    <b>Class : </b> <span t-esc="data['course_name']"/>
+                                </td>
+                                <td t-if="'classroom_name' in data" width="25%;">
+                                    <b>Class Room : </b> <span t-esc="data['classroom_name']"/>
+                                </td>
+                                <td t-if="'employee' in data" width="25%;">
+                                    <b>Employee : </b> <span t-esc="data['employee']"/>
+                                </td>
+                                <td t-if="'department' in data" width="25%;">
+                                    <b>Deaprtment : </b> <span t-esc="data['department']"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <t t-foreach="get_details" t-as="detail">
+                        <table width="100%;">
+                            <tbody>
+                                <tr>
+									<td width="25%;"> 
+                                        <strong> Name: </strong><t t-esc="detail['name']"/>
+                                    </td>
+                                    <td width="25%;">
+                                        <strong> School:</strong> <t t-esc="detail['school']"/>
+                                    </td>
+                                    <td width="25%;">
+                                        <strong> Subjects: </strong><t t-esc="detail['subjects']"/>
+                                    </td>
+								</tr>
+								<tr>
+                                    <td width="25%;">
+                                        <strong>Period Per Week:</strong><t t-esc="detail['period_per_week']"/>
+                                    </td>
+                                    <td width="25%;">
+                                       <strong>Department Head:</strong><t t-esc="detail['department_head_id']"/>
+                                    </td>
+                                    <td width="25%;">
+                                       <strong>Head Teacher:</strong><t t-esc="detail['head_teacher_id']"/>
+                                    </td>
+								</tr>
+								<tr>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Week</th>
+                                                <th>
+                                                    <span>Lesson</span>
+                                                </th>
+                                                <th>
+                                                    <span>Strand</span>
+                                                </th>
+                                                <th>
+                                                    <span>Sub Strand</span>
+                                                </th>
+                                                <th>
+                                                    <span>Objectives</span>
+                                                </th>
+                                                <th>
+                                                    <span>Learning Activities</span>
+                                                </th>
+                                                <th>
+                                                    <span>Learning Resources</span>
+                                                </th>
+                                                <th>
+                                                    <span>Key Inquiry Questions</span>
+                                                </th>
+                                                <th>
+                                                    <span>Assesment Methods</span>
+                                                </th>
+                                                <th>
+                                                    <span>Remarks</span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="detail['line_ids']" t-as="line">
+                                                <td width="10%">
+                                                    <span t-esc="line.week"/>
+                                                </td>
+                                                <td width="10%">
+                                                    <span t-esc="line.lesson"/>
+                                                </td>
+                                                <td width="10%">
+                                                    <span t-esc="line.topic"/>
+                                                </td>
+                                                <td width="10%">
+                                                    <span t-esc="line.sub_topic"/>
+                                                </td>
+                                                <td width="10%">
+                                                    <span t-esc="line.objectives"/>
+                                                </td>
+                                                <td width="10%">
+                                                    <span t-esc="line.learning_activities"/>
+                                                </td>
+                                                <td width="10%">
+                                                    <span t-esc="line.learning_resources"/>
+                                                </td>
+                                                <td width="10%">
+                                                    <span t-esc="line.key_inquiry_questions"/>
+                                                </td>
+                                                <td width="10%">
+                                                    <span t-esc="line.assessment_methods"/>
+                                                </td>
+                                                <td width="10%">
+                                                    <span t-esc="line.remarks"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="page-break-after: always;"/>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
+
+

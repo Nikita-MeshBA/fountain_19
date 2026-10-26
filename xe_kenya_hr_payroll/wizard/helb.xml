@@ -1,0 +1,36 @@
+<odoo>
+    <record model="ir.ui.view" id="helb_report_wizard">
+        <field name="name">HELB Report</field>
+        <field name="model">helb.report.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="HELB Report">
+                <group>
+                    <group>
+                        <field name="date_start"/>
+                    </group>
+                    <group>
+                        <field name="date_end"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="get_report" string="Get Report" type="object" class="oe_highlight"/>
+                    <button name="get_xlsx_report" string="Get Excel Report" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_helb_report_wizard"
+                name="HELB Report"
+                res_model="helb.report.wizard"
+                view_mode="form"
+                target="new"
+    />
+
+    <menuitem action="action_helb_report_wizard"
+              id="menu_helb_report_wizard"
+              parent="hr_payroll.menu_hr_payroll_report"
+              groups="hr_payroll.group_hr_payroll_user" sequence="204"/>
+</odoo>

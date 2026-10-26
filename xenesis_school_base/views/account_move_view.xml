@@ -25,11 +25,11 @@
                 <xpath expr="//page[@id='invoice_tab']" position="after">
                     <page id="pending_invoices" string="Pending Invoices" invisible="display_on_invoice == False">
                         <field name="pending_invoice_ids">
-                            <tree>
+                            <list>
                                 <field name="name"/>
                                 <field name="amount_total" string="Total Amount"/>
                                 <field name="amount_residual" string="Amount Due"/>
-                            </tree>
+                            </list>
                         </field>
                     </page>
                 </xpath>

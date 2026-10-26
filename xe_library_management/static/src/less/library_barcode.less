@@ -1,0 +1,63 @@
+.o_xe_library_barcode_bg {
+    .o-flex-display();
+    .o-flex-flow(column, nowrap);
+    .o-justify-content(center);
+    .o-align-items(center);
+
+    @media (min-width: @screen-xs-max) {
+        background: url("/xe_library_barcode/static/src/img/application-switcher-bg.jpg") no-repeat center center fixed;
+        background-size: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+.o_xe_library_barcode_main {
+    font-family: 'Lato', sans-serif;
+    width: 100%;
+    text-align: center;
+    background-color: #fff;
+    padding: 2em;
+    img {
+        width: 200px;
+    }
+    input {
+        border: 1px solid #c4c4c4;
+        font-size: 19px;
+        padding: 4px;
+        border-radius: 4px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        box-shadow: 0px 0px 8px #d9d9d9;
+        -moz-box-shadow: 0px 0px 8px #d9d9d9;
+        -webkit-box-shadow: 0px 0px 8px #d9d9d9;
+    }
+    input:focus {
+        outline: none;
+        border: 1px solid #7bc1f7;
+        box-shadow: 0px 0px 8px #7bc1f7;
+        -moz-box-shadow: 0px 0px 8px #7bc1f7;
+        -webkit-box-shadow: 0px 0px 8px #7bc1f7;
+    }
+    @media (min-width: @screen-xs-max) {
+        flex: 0 0 auto;
+        width: 550px;
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        background-color: rgba(255,255,255,0.8);
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.6);
+        font-size: 1.2em;
+        padding: 3em;
+    }
+}
+
+@notification-success-bg-color: #5BC236;
+.o_notification_manager {
+    .o_library_success {
+        color: white;
+        background-color: @notification-success-bg-color;
+    }
+}

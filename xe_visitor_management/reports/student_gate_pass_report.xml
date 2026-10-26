@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="report_student_visitor_pass">
+            <t t-call="xe_visitor_management.visitor_management_external_layout">
+                <div class="page">
+                    <t t-foreach="docs" t-as="o">
+                        <div class="row text-center">
+                            <img class="image"
+                                 t-attf-src="data:image/gif;base64, #{o.student_id.image_1920}"
+                                 alt="Student Image" width="100px" height="80px"/>
+                        </div>
+                        <div class="text-center">
+                            <h5>
+                                <strong>
+                                    STUDENT GATE PASS
+                                </strong>
+                            </h5>
+                        </div>
+                        <div class="row">
+                            <table class="table table-bordered table-condensed"
+                                   width="100%">
+                                <tr>
+                                    <td>
+                                        <b>Name:</b>
+                                        <span t-field='o.student_id.name'/>
+                                    </td>
+                                    <td>
+                                        <b>Admission No:</b>
+                                        <span t-field='o.application_number'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Class:</b>
+                                        <span t-field='o.course_id'/>
+                                    </td>
+                                    <td>
+                                    	<b>Class Room:</b>
+                                        <span t-field='o.course_id'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Picked By:</b>
+                                        <span t-field='o.person_name'/>
+                                    </td>
+                                    <td>
+                                        <b>Identification Number:</b>
+                                        <span t-field='o.identification_no'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                	<td><b>Reason:</b>
+                                        <span t-field='o.reason'/></td>
+                                    <td>
+                                        <b>Relationship:</b>
+                                        <span t-field='o.relationship'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Consented/Approved By:</b>
+                                        <span t-field='o.approved_by_id.name'/>
+                                    </td>
+                                    <td>
+                                        <b>Approved Time:</b>
+                                        <span t-field='o.approved_time'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                	<td>
+                                        <b>Mobile:</b>
+                                        <span t-field='o.mobile'/>
+                                    </td>
+                                    <td>
+                                        <b>Signature:</b>
+                                        <img t-if="o.course_id.head_teacher_signature"
+										t-att-src="image_data_uri(o.course_id.head_teacher_signature)"
+										width="140" height="60" alt="Signature" />
+                                       
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_student_pass">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="o" t-value="o.with_context(lang=o.env.lang)"/>
+                    <t t-call="xe_visitor_management.report_student_visitor_pass"
+                       t-lang="o.env.lang"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

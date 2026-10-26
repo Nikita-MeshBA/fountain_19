@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_cbc_summative_rep">
+        <t t-call="web.html_container">
+            <t t-call="xe_exam_management.marksheet_report_external_layout">
+                <t t-foreach="get_objects(docs)" t-as="objs">
+                    <t t-foreach="objs" t-as="obj">
+                        <t t-foreach="get_lines(obj,marksheet_line_id)" t-as="lines">
+                            <div class="container">
+                                <div class="page">
+                                    <div class="text-center">
+                                        <center>
+                                            <h4 align="center">
+                                                <strong>
+                                                    SCHOOL TERM SUMMATIVE REPORT FOR EARLY YEARS EDUCATION
+                                                    <br/>
+                                                </strong>
+                                            </h4>
+                                        </center>
+                                    </div>
+                                    <table class="table table-bordered"
+                                           style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;text-align:left !important;">
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="16">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <strong>NAME OF LEARNER:
+                                                                <span t-esc="lines['student']"/>
+                                                            </strong>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="16">
+                                                    <div class="row"
+                                                         style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;text-align:left !important;">
+                                                        <div class="col-12">
+                                                            <strong>LEARNERS ADMISSION NO.
+                                                                <span t-esc="lines['gr_no']"></span>
+                                                            </strong>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <b>GRADE</b>
+                                                    <span t-esc="lines['grade']"/>
+                                                </td>
+                                                <td colspan="5">
+                                                    <b>GRADE ROOM:</b>
+                                                    <span t-esc="lines['grade_room_name']"/>
+                                                </td>
+                                                <td colspan="3">
+                                                    <b>TERM</b>
+                                                    <span t-esc="lines['term_name']"/>
+                                                </td>
+                                                <td colspan="5">
+                                                    <b>ACADEMIC YEAR:</b>
+                                                    <span t-esc="lines['term_year']"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="16">
+                                                    <div class="row"
+                                                         style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;text-align:left !important;">
+                                                        <div class="col-12">
+                                                            <strong>FACILITATOR’S NAME:
+                                                                <span t-esc="lines['head_teacher_name']"/>
+                                                            </strong>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table width="100%" class="table table-bordered"
+                                           style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;text-align:left !important;">
+                                        <thead>
+                                            <tr style="border: 1px solid black;padding: 8px;">
+                                                <td colspan="2" rowspan="3"
+                                                    style="border: 0px solid black;vertical-align: middle;width: 50%;height: 100px;padding: 40px;">
+                                                    LEARNING
+                                                    AREA/
+                                                    ACTIVITIES
+                                                </td>
+                                                <td colspan="12" align="center" style="border: 1px solid black;">Fill in
+                                                    appropriately with Levels: 4,3,2or 1
+                                                </td>
+                                            </tr>
+                                            <tr style="border: 1px solid black;padding: 8px;">
+                                                <td colspan="4" align="center" style="border: 1px solid black;">1st
+                                                    ASSESSMENT
+                                                </td>
+                                                <td colspan="4" align="center" style="border: 1px solid black;">2nd
+                                                    ASSESSMENT
+                                                </td>
+                                                <td colspan="4" align="center" style="border: 1px solid black;">3rd
+                                                    ASSESSMENT
+                                                </td>
+                                            </tr>
+                                            <tr style="border: 1px solid black;">
+                                                <td colspan="1" style="border: 1px solid black;"></td>
+                                                <td colspan="3" align="center" style="border: 1px solid black;">
+                                                    REFLECTION
+                                                </td>
+                                                <td colspan="1" style="border: 1px solid black;"></td>
+                                                <td colspan="3" align="center" style="border: 1px solid black;">
+                                                    REFLECTION
+                                                </td>
+                                                <td colspan="1" style="border: 1px solid black;"></td>
+                                                <td colspan="3" align="center" style="border: 1px solid black;">
+                                                    REFLECTION
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="lines['lines']" t-as="line">
+                                                <tr style="border: 1px solid black;">
+                                                    <td colspan="2" class="text-left" style="border: 1px solid black;"
+                                                        t-if="not line['parent_subject']">
+                                                        <span t-esc="line['subject']"/>
+                                                    </td>
+                                                    <td colspan="2" style="border: 1px solid black;"
+                                                        t-if="line['parent_subject']">
+                                                        <span style="padding-left:15px;" t-esc="line['subject']"/>
+                                                    </td>
+
+                                                    <td style="border: 1px solid black;">
+                                                        <t t-if="line.get('opener_avg')">
+                                                            <span t-esc="line.get('opener_avg')"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <span/>
+                                                        </t>
+                                                    </td>
+                                                    <td colspan="3" align="center" style="border: 1px solid black">
+                                                        <t t-if="line.get('opener_result_comment')">
+                                                            <span t-esc="line.get('opener_result_comment')"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <span/>
+                                                        </t>
+
+                                                    </td>
+                                                    <td style="border: 1px solid black;">
+                                                        <t t-if="line.get('midterm_avg')">
+                                                            <span t-esc="line.get('midterm_avg')"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <span/>
+                                                        </t>
+                                                    </td>
+                                                    <td colspan="3" align="center"
+                                                        style="border: 1px solid black;">
+                                                        <t t-if="line.get('midterm_result_comment')">
+                                                            <span t-esc="line.get('midterm_result_comment')"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <span/>
+                                                        </t>
+                                                    </td>
+                                                    <td style="border: 1px solid black;">
+                                                        <t t-if="line.get('endterm_avg')">
+                                                            <span t-esc="line.get('endterm_avg')"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <span/>
+                                                        </t>
+                                                    </td>
+                                                    <td colspan="3" align="center"
+                                                        style="border: 1px solid black;">
+                                                        <t t-if="line.get('endterm_result_comment')">
+                                                            <span t-esc="line.get('endterm_result_comment')"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <span/>
+                                                        </t>
+
+                                                    </td>
+                                                    <t t-set="count_sub" t-value="line['subj_count']"/>
+                                                </tr>
+                                            </t>
+                                            <tr style="border: 1px solid black;">
+                                                <td colspan="2" style="border: 0px solid black;">
+                                                    <b>Average</b>
+                                                </td>
+                                                <td style="border: 1px solid black;">
+                                                    <t t-if="lines.get('total_opener_rubrics')">
+                                                        <span t-esc="lines.get('total_opener_rubrics')"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <span></span>
+                                                    </t>
+                                                </td>
+                                                <td colspan="3" align="center" style="border: 1px solid black;"></td>
+                                                <td style="border: 1px solid black;">
+                                                    <t t-if="lines.get('total_mid_rubrics')">
+                                                        <span t-esc="lines.get('total_mid_rubrics')"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <span></span>
+                                                    </t>
+                                                </td>
+                                                <td colspan="3" align="center" style="border: 1px solid black;"></td>
+                                                <td style="border: 1px solid black;">
+                                                    <t t-if="lines.get('total_endterm_rubrics')">
+                                                        <span t-esc="lines.get('total_endterm_rubrics')"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <span></span>
+                                                    </t>
+                                                </td>
+                                                <td colspan="3" align="center" style="border: 1px solid black;"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                    <table width="100%" class="table table-bordered"
+                                           style="border: 1px solid black;font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;text-align:left !important;">
+                                        <thead>
+                                            <tr style="border: 1px solid black;">
+                                                <th style="border: 1px solid black;">
+                                                    <b>EE (4):</b>
+                                                </th>
+                                                <th style="border: 1px solid black;">
+                                                    <b>ME (3):</b>
+                                                </th>
+                                                <th style="border: 1px solid black;">
+                                                    <b>AE (2):</b>
+                                                </th>
+                                                <th style="border: 1px solid black;">
+                                                    <b>BE (1):</b>
+                                                </th>
+                                                <th style="border: 1px solid black;">
+                                                    <b>AB (0):</b>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr style="border: 1px solid black;">
+                                                <td style="border: 1px solid black;">
+                                                    EXCEEDING EXPECTATION
+                                                </td>
+                                                <td style="border: 1px solid black;">
+                                                    MEETING EXPECTATION
+                                                </td>
+                                                <td style="border: 1px solid black;">
+                                                    APPROACHING EXPECTATION
+                                                </td>
+                                                <td style="border: 1px solid black;">
+                                                    BELOW EXPECTATION
+                                                </td>
+                                                <td style="border: 1px solid black;">
+                                                    ABSENT
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row"
+                                     style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;text-align:left !important;">
+                                    <div class="col-12">
+                                        <strong>Facilitator’s Reflection:</strong>
+                                        _______________________________________________________________________________________
+                                        <br/>
+                                        <br/>
+                                        _________________________________________________________________________________________________
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row"
+                                     style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;text-align:left !important;">
+                                    <div class="col-3">
+                                        <b>Signature:</b>
+                                    </div>
+                                    <div class="col-5">___________________________________</div>
+                                    <div class="col-4">
+                                        <strong>Date:
+                                        </strong>
+                                        _____________________
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row"
+                                     style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;text-align:left !important;">
+                                    <div class="col-3">
+                                        <b>Parent/ Guardian’s Signature:</b>
+                                    </div>
+                                    <div class="col-5">_________________________________</div>
+                                    <div class="col-4">
+                                        <strong>Date:</strong>
+                                        _____________________
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row"
+                                     style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;text-align:left !important;">
+                                    <div class="col-12">
+                                        <strong>Principal’s Reflection:</strong>
+                                        <t t-if="lines['head_teacher_comment']">
+                                            <span t-out="'%s' % lines['head_teacher_comment']"/>
+                                        </t>
+                                        <t t-else="">
+                                            _______________________________________________________________________________________
+                                            <br/>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="row"
+                                     style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;text-align:left !important;">
+                                    <div class="col-8">
+                                        <b>Signature:
+                                        </b>
+                                        <br/>
+                                        <t t-if="lines['head_teacher_signature']">
+                                            <img class="image"
+                                                 t-attf-src="data:image/png;base64,#{ lines['head_teacher_signature'] }"
+                                                 style="max-height:2.5cm; max-width:4cm; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                        </t>
+                                        <t t-else="">_____________________________</t>
+                                    </div>
+                                    <div class="col-4">
+                                        <strong>Date:</strong>
+                                        <br/>
+                                        _____________________
+                                    </div>
+                                </div>
+                                <div class="row"
+                                     style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;text-align:left !important;">
+                                    <div class="col-8">
+                                        <b>Closing Date:</b>
+                                        <span t-esc="lines['term_end_date']"/>
+                                    </div>
+                                    <div class="col-4">
+                                        <b>Opening Date:</b>
+                                        <span t-esc="lines['next_term_date']"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="page-break-before:always;"></p>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

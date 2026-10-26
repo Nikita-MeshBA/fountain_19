@@ -1,0 +1,22 @@
+<odoo>
+    <record model="ir.ui.view" id="suspended_students_list">
+        <field name="name">xe.suspended.students.list</field>
+        <field name="model">xe.suspended.students</field>
+          <field name="arch" type="xml">
+            <list create="false" delete="false">
+                <field name="student_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="misbehave_categ_id"/>
+                <field name="discipline_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="suspended_students_action_window">
+        <field name="name">Suspended Students</field>
+        <field name="res_model">xe.suspended.students</field>
+        <field name="view_mode">list</field>
+    </record>
+    <menuitem name="Suspended Students" id="suspended_stud_root" parent="discipline_main_menu" action="suspended_students_action_window" sequence="2"/>
+</odoo>

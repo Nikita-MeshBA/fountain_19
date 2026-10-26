@@ -1,0 +1,54 @@
+<odoo>
+    <record model="report.paperformat" id="paperformat_ms_report">
+        <field name="name">paperformat.ms.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_right">5</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <template id="ms_report_view">
+        <style>
+            .font{
+            font-size:14px;
+            font-family:"Helvetica"
+            }
+            @page{
+            margin-top:1%;
+            size: A4;
+            }
+        </style>
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="font">
+                    <div class="page"></div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="ms_report" model="ir.actions.report">
+        <field name="name">Monthly Salary Report</field>
+        <field name="model">ms.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_kenya_hr_payroll.ms_report_view</field>
+        <field name="report_file">xe_kenya_hr_payroll.ms_report_view</field>
+    </record>
+
+    <record id="ms_xlsx_report" model="ir.actions.report">
+        <field name="name">Monthly Salary Report</field>
+        <field name="model">ms.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">xe_kenya_hr_payroll.ms_report_xlsx</field>
+        <field name="report_file">xe_kenya_hr_payroll.ms_xlsx_report</field>
+    </record>
+
+</odoo>

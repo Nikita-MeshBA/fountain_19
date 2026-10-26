@@ -4,6 +4,7 @@ import { registry } from "@web/core/registry";
 const actionRegistry = registry.category("actions");
 import { Component, onWillStart } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
+import { user } from "@web/core/user";
 import { Layout } from "@web/search/layout";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { ControlPanel } from "@web/search/control_panel/control_panel";
@@ -28,7 +29,6 @@ class ksDynamicReportsWidget extends Component {
     setup() {
         this.orm = useService("orm");
         this.action = useService("action");
-        this.user = useService("user");
         this.rpc = useService("rpc");
         this.dialogService = useService('dialog');
         this.notificationService = useService("notification");

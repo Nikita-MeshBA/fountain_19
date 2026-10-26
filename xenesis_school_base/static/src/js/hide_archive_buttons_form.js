@@ -1,7 +1,7 @@
 /** @odoo-module **/
 import { onWillStart } from "@odoo/owl";
 import { registry } from "@web/core/registry";
-import { useService } from '@web/core/utils/hooks';
+import { user } from '@web/core/user';
 import { formView } from "@web/views/form/form_view";
 import { FormController } from "@web/views/form/form_controller";
 
@@ -9,9 +9,8 @@ export class StudentArchiveDisabledFormController extends FormController {
 
     setup() {
         super.setup();
-        this.user = useService("user");
         onWillStart(async () => {
-            this.hide_archive_button = await this.user.hasGroup("xenesis_school_base.group_xe_admin");
+            this.hide_archive_button = await user.hasGroup("xenesis_school_base.group_xe_admin");
         });
     }
 

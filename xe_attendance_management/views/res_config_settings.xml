@@ -1,0 +1,46 @@
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.attendance.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="109"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='academic_settings']" position="after">
+                <app data-string="Attendance" string="Attendance" name="attendance_settings"
+                     logo="/xe_attendance_management/static/description/icon.png">
+                    <div id="attendance_settings">
+                        <h2 groups="base.group_no_one">Attendance Settings</h2>
+                        <div groups="base.group_no_one" class="row mt16 o_settings_container"
+                             name="attendance_settings">
+                            <div class="col-12 col-lg-6 o_setting_box" id="attendance_type">
+                                <label for="attendance_type"/>
+                                <field name="attendance_type"/>
+                                <div class="text-muted">
+                                    Daily One-time - Attendance can be taken only once per day.
+                                    Morning and Afternoon - Attendance can be taken twice per day.
+                                    Subject wise - Attendance can be taken for each Subject
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box" id="days_bool">
+                                <field name="monday_bool"/>Monday
+                                <br/>
+                                <field name="tuesday_bool"/>Tuesday
+                                <br/>
+                                <field name="wednesday_bool"/>Wednesday
+                                <br/>
+                                <field name="thursday_bool"/>Thursday
+                                <br/>
+                                <field name="friday_bool"/>Friday
+                                <br/>
+                                <field name="saturday_bool"/>Saturday
+                                <br/>
+                                <field name="sunday_bool"/>Sunday
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

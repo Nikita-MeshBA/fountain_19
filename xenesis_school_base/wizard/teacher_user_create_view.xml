@@ -11,13 +11,13 @@
                 <separator string="Teachers"/>
                 <group col="4" colspan="4" name="teacher_information">
                     <field name="teacher_line_ids" nolabel="1">
-                        <tree string="Teacher Details" editable="top">
+                        <list string="Teacher Details" editable="top">
                             <field name="create_user" String="User Create"/>
                             <field name="teacher_id"/>
                             <field name="email"/>
                             <field name="mobile"/>
                             <field name="nationality_id" invisible="0"/>
-                        </tree>
+                        </list>
                     </field>
                 </group>
                 <footer>

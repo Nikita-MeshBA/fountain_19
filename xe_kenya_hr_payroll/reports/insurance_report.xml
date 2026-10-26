@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="report.paperformat" id="paperformat_insurance_report">
+        <field name="name">paperformat.insurance.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_right">5</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+    <record id="insurance_report" model="ir.actions.report">
+        <field name="name">Insurance Report</field>
+        <field name="model">insurance.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_kenya_hr_payroll.insurance_report_view</field>
+        <field name="report_file">xe_kenya_hr_payroll.insurance_report_view</field>
+    </record>
+    <template id="insurance_report_view">
+        <style>.font{
+            font-size:14px;
+            font-family:"Helvetica"
+            }
+            @page{
+            margin-top:1%;
+            size: A4;
+            }
+        </style>
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div>
+                    <h3 class="text-center">Insurance Report</h3>
+                    <h4 class="text-left">
+                        <strong>
+                            Employer Name:
+                            <t t-esc="res_company.name"/>
+                        </strong>
+                        <br/>
+                        <strong>Report For</strong>
+                        <t t-esc="date_start"/>
+                        <strong>,</strong>
+                        <t t-esc="date_end"/>
+                    </h4>
+                </div>
+                <table class="table table-condensed table-bordered" style="width: 100%">
+                    <thead>
+                        <th class="text-center" style="width: 17.5%">Payroll No</th>
+                        <th class="text-center" style="width: 30%">Employee</th>
+                        <th class="text-center" style="width: 17.5%">Loan Repayments</th>
+                        <th class="text-center" style="width: 17.5%">Prepayments B/F</th>
+                        <th class="text-center" style="width: 17.5%">Insurance Premium</th>
+                        <th class="text-center" style="width: 17.5%">
+                            <b>Total</b>
+                        </th>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="final_val['docs']" t-as="line">
+                            <tr>
+                                <td class="text-center">
+                                    <span t-esc="line['payroll_no']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['employee']"/>
+                                </td>
+                                <td/>
+                                <td/>
+                                <td class="text-right">
+                                    <span t-esc="line['amount']"/>
+                                </td>
+                                <td class="text-right">
+                                    <strong>
+                                        <span t-esc="line['amount']"/>
+                                    </strong>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr>
+                            <td class="text-right" colspan="4">
+                                <b>TOTAL:</b>
+                            </td>
+                            <td class="text-right">
+                                <t t-esc="sum([o['amount'] for o in final_val['docs']])"/>
+                            </td>
+                            <td class="text-right">
+                                <strong>
+                                    <t t-esc="sum([o['amount'] for o in final_val['docs']])"/>
+                                </strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+        </t>
+    </template>
+</odoo>
+
+

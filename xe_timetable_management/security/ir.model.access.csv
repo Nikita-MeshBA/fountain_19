@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_xe_timings_user,xe_timings_user,model_xe_timings,group_timetable_user,1,0,0,0
+access_xe_timetable_sessions_user,xe.timetable.sessions.user,model_xe_timetable_sessions,group_timetable_user,1,0,0,0
+access_week_day_sessions_user,week.day.sessions.user,model_week_day_sessions,group_timetable_user,1,0,0,0
+access_xe_session_lines_user,xe.session.lines.user,model_xe_session_lines,group_timetable_user,1,0,0,0
+
+access_xe_timings_admin,xe_timings_admin,model_xe_timings,group_timetable_admin,1,1,1,1
+access_xe_timetable_sessions_admin,xe.timetable.sessions.admin,model_xe_timetable_sessions,group_timetable_admin,1,1,1,1
+access_week_day_sessions,week.day.sessions.admin,model_week_day_sessions,group_timetable_admin,1,1,1,1
+access_xe_session_lines_admin,xe.session.lines.admin,model_xe_session_lines,group_timetable_admin,1,1,1,0
+access_xe_session_lines_main_admin,xe.session.lines.main.admin,model_xe_session_lines,base.group_system,1,1,1,1

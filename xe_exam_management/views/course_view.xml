@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="course_form_inherit_brighton" model="ir.ui.view">
+        <field name="name">xe.course.form</field>
+        <field name="model">xe.course</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="xenesis_school_base.view_course_form"/>
+        <field name="arch" type="xml">
+            <field name="attendance" position="after">
+                <field name="evaluation_type"/>
+            </field>
+            <xpath expr="//group[1]" position="after">
+                <group>
+                    <group>
+                        <field name="head_teacher_id"/>
+                        <field name="head_teacher_signature" widget="signature" class="oe_avatar oe_avatar"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

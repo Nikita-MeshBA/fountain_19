@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_report_fees_detail_analysis" model="ir.actions.report">
+        <field name="name">Fees Detail Analysis</field>
+        <field name="model">xe.student</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_fees_management.report_new_fees_analysis</field>
+        <field name="report_file">xe_fees_management.report_new_fees_analysis</field>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="fee_analysis_xlsx_report" model="ir.actions.report">
+        <field name="name">Fees Detail Analysis</field>
+        <field name="model">xe.student</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">xe_fees_management.report_fees_analysis_xlsx</field>
+        <field name="report_file">xe_fees_management.fee_analysis_xlsx_report</field>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_application_tree" model="ir.ui.view">
+        <field name="name">xe.application.tree</field>
+        <field name="model">xe.application</field>
+        <field name="arch" type="xml">
+            <list string="Application" create="false">
+                <field name="name" string="Number"/>
+                <field name="student_name"/>
+                <field name="email"/>
+                <field name="nationality_id"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+<!--    <record id="view_application_search" model="ir.ui.view">-->
+<!--        <field name="name">xe.application.search</field>-->
+<!--        <field name="model">xe.application</field>-->
+<!--        <field name="priority" eval="8"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <search string="Application">-->
+<!--                &lt;!&ndash; <field name="name"/> &ndash;&gt;-->
+<!--                <field name="student_name"/>-->
+<!--                <newline/>-->
+<!--                <field name="academic_year_id"/>-->
+<!--                <separator/>-->
+<!--                <filter string="Academic Year" name="academic_year_id"/>-->
+<!--                <group expand="0" string="Group By" colspan="4" name="enquiry_group">-->
+<!--                    <filter string="Academic Year" name="academic_year_id" domain="[]"-->
+<!--                            context="{'group_by':'academic_year_id'}"/>-->
+<!--                </group>-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
+        <record id="view_application_search" model="ir.ui.view">
+        <field name="name">xe.application.search</field>
+        <field name="model">xe.application</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Application">
+                <field name="student_name"/>
+                <field name="academic_year_id"/>
+                <separator/>
+                <filter string="Academic Year"
+                        name="group_by_academic_year"
+                        context="{'group_by': 'academic_year_id'}"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_application_form" model="ir.ui.view">
+        <field name="name">xe.application.form</field>
+        <field name="model">xe.application</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Application" create="false">
+                <header>
+                    <button name="action_submit" string="Submit" type="object"
+                            invisible="state != 'draft'"/>
+                    <button name="action_enroll" string="Enroll" type="object"
+                            invisible="state != 'submitted'"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            invisible="state not in ['draft','submitted']"/>
+                    <button name="action_reset_draft" string="Reset To Draft" type="object"
+                            invisible="state != 'cancelled'"/>
+                    <button name="action_open_student" string="Open Student" type="object"
+                            invisible="state != 'enrolled'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,enrolled,cancelled"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_view_invoice" type="object" class="oe_stat_button"
+                                invisible="state != 'enrolled'"><i
+                                class="fa fa-fw o_button_icon fa-pencil-square-o"></i>Invoice
+                        </button>
+                    </div>
+                    <field name="image" widget="image" class="oe_avatar oe_avatar"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="student_name" readonly="state == 'enrolled'"/>
+                            <field name="dob" readonly="state == 'enrolled'"/>
+                            <field name="nationality_id" readonly="state == 'enrolled'"/>
+                            <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="email" readonly="state == 'enrolled'"/>
+                            <field name="gender" readonly="state == 'enrolled'"/>
+                            <field name="academic_year_id" string="Joined Academic Year" required="1"/>
+                            <field name="joined_date"/>
+                        </group>
+                    </group>
+                    <group name="address" readonly="state == 'enrolled'">
+                        <label for="street" string="Address"/>
+                        <div name="div_address">
+                            <field name="street" placeholder="Street..."
+                                   readonly="state == 'enrolled'"/>
+                            <field name="street2" placeholder="Street2"
+                                   readonly="state == 'enrolled'"/>
+                            <div class="address_format">
+                                <field name="city" placeholder="City" style="width: 40%"
+                                       readonly="state == 'enrolled'"/>
+                                <field name="county" placeholder="County" style="width: 37%"
+                                       readonly="state == 'enrolled'"/>
+                                <field name="state_id" class="oe_no_button" placeholder="State" style="width: 37%"
+                                       options="{&quot;no_open&quot;: True}" invisible="1"
+                                       readonly="state == 'enrolled'"/>
+                                <field name="zip" placeholder="Postal Code" style="width: 20%"
+                                       readonly="state == 'enrolled'"/>
+                            </div>
+                            <field name="country_id" placeholder="Country" class="oe_no_button"
+                                   options="{&quot;no_open&quot;: True}"
+                                   readonly="state == 'enrolled'"/>
+                        </div>
+                    </group>
+                    <notebook>
+                        <page string="Admission Details">
+                            <group>
+                                <group>
+                                    <field name="course_id" readonly="state == 'enrolled'"/>
+                                    <field name="classroom_id" readonly="state == 'enrolled'"
+                                           domain="[('course_id', '=', course_id)]"/>
+                                    <field name="fee_structure_id" domain="[('academic_year_id', '=', academic_year_id), ('course_id', 'in', course_id)]"/>
+                                    <field name="stream_id" readonly="state == 'enrolled'" string="House"/>
+                                    <field name="previous_school_attended"
+                                           readonly="state == 'enrolled'"/>
+                                    <field name="admission_number"/>
+                                </group>
+                                <group>
+                                    <field name="assigned_id" readonly="state == 'enrolled'"/>
+                                    <field name="is_transport" invisible="is_boarding"/>
+                                    <field name="fees_to_zone_id"
+                                           domain="[('is_transport_fees', '=', is_transport)]"
+                                           invisible="is_transport == False" required="is_transport"/>
+                                    <field name="is_activity"/>
+                                    <field name="activity_fee_ids" string="Activities"
+                                           force_save="1" domain="[('is_activity', '=', is_activity)]"
+                                           widget="many2many_tags"
+                                           invisible="is_activity == False" required="is_activity"/>
+                                    <field name="is_boarding" invisible="is_transport"/>
+                                    <field name="is_optional"/>
+                                    <field name="optional_fee_ids" string="Optional" force_save="1"
+                                           domain="[('is_optional', '=', is_optional)]" widget="many2many_tags"
+                                           invisible="is_optional == False" required="is_optional"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Health Details" readonly="state == 'enrolled'"
+                              groups="xenesis_school_base.group_xe_health_details">
+                            <group string="ENT">
+                                <group>
+                                    <field name="discharge_from_ears"
+                                           readonly="state == 'enrolled'"/>
+                                    <field name="any_disease_of_eyes"
+                                           readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="hearing_difficulties"
+                                           readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                            <group string="Cardiovascular">
+                                <group>
+                                    <field name="breathlessness"
+                                           readonly="state == 'enrolled'"/>
+                                    <field name="palpitations" readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="pain_in_chest" readonly="state == 'enrolled'"/>
+                                    <field name="any_disease_of_heart"
+                                           readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                            <group string="Respiratory">
+                                <group>
+                                    <field name="persistant_cough"
+                                           readonly="state == 'enrolled'"/>
+                                    <field name="any_disease_of_chest"
+                                           readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="asthma" readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                            <group string="Gestrointestinal">
+                                <group>
+                                    <field name="worms" readonly="state == 'enrolled'"/>
+                                    <field name="chronic_diarrhoea" readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="blood_in_stool" readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                            <group string="Genitourinary">
+                                <group>
+                                    <field name="blood_in_urine"
+                                           readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="enuresis" readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                            <group string="Musculoskeletal">
+                                <group>
+                                    <field name="state_of_feet_legs"
+                                           readonly="state == 'enrolled'"/>
+                                    <field name="posture_defect" readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="spinal_deformity" readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                            <group string="Skin">
+                                <group>
+                                    <field name="scabies" readonly="state == 'enrolled'"/>
+                                    <field name="eruptions" readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="eczema" readonly="state == 'enrolled'"/>
+                                    <field name="hair_lice" readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                            <group string="Neuropsychiatric">
+                                <group>
+                                    <field name="disorders_of_speech"
+                                           readonly="state == 'enrolled'"/>
+                                    <field name="mental_illness" readonly="state == 'enrolled'"/>
+                                    <field name="personality_disorder"
+                                           readonly="state == 'enrolled'"/>
+                                    <field name="allergy_or_reaction"
+                                           readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="fits" readonly="state == 'enrolled'"/>
+                                    <field name="mental_subnormality"
+                                           readonly="state == 'enrolled'"/>
+                                    <field name="any_hereditary_disease"
+                                           readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                            <group string="Physical Examination">
+                                <group>
+                                    <field name="weight" readonly="state == 'enrolled'"/>
+                                    <field name="skin" readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="height" readonly="state == 'enrolled'"/>
+                                    <field name="general_appearance"
+                                           readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                            <group string="Eyes">
+                                <group>
+                                    <field name="pupils_right" readonly="state == 'enrolled'"/>
+                                    <field name="far_right" readonly="state == 'enrolled'"/>
+                                    <field name="near_right" readonly="state == 'enrolled'"/>
+                                    <field name="color_vision" readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="pupils_left" readonly="state == 'enrolled'"/>
+                                    <field name="far_left" readonly="state == 'enrolled'"/>
+                                    <field name="near_left" readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                            <group string="Ears">
+                                <group>
+                                    <field name="canals_right" readonly="state == 'enrolled'"/>
+                                    <field name="drums_right" readonly="state == 'enrolled'"/>
+                                    <field name="hearing_right" readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="canals_left" readonly="state == 'enrolled'"/>
+                                    <field name="drums_left" readonly="state == 'enrolled'"/>
+                                    <field name="hearing_left" readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                            <group string="Nose">
+                                <group>
+                                    <field name="nose_septum" readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="nose_musoca" readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                            <group string="Throat">
+                                <group>
+                                    <field name="throat_tonsils"
+                                           readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="throat_musoca" readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                            <group string="Mouth">
+                                <group>
+                                    <field name="teeth" readonly="state == 'enrolled'"/>
+                                    <field name="musoca" readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="tongue" readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                            <group string="Lymph Glands">
+                                <group>
+                                    <field name="cardio_vascular" readonly="state == 'enrolled'"/>
+                                    <field name="lungs" readonly="state == 'enrolled'"/>
+                                    <field name="liver" readonly="state == 'enrolled'"/>
+                                    <field name="pulse_right" readonly="state == 'enrolled'"/>
+                                    <field name="gastrointestinal" readonly="state == 'enrolled'"/>
+                                    <field name="spleen" readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="heart_sound" readonly="state == 'enrolled'"/>
+                                    <field name="contours" readonly="state == 'enrolled'"/>
+                                    <field name="hernia" readonly="state == 'enrolled'"/>
+                                    <field name="repspiratory" readonly="state == 'enrolled'"/>
+                                    <field name="masses" readonly="state == 'enrolled'"/>
+                                    <field name="genitourinary" readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                            <group string="Musculoskeletal">
+                                <group>
+                                    <field name="back" readonly="state == 'enrolled'"/>
+                                </group>
+                                <group/>
+                            </group>
+                            <group string="Muscular Development">
+                                <group>
+                                    <field name="posture" readonly="state == 'enrolled'"/>
+                                    <field name="extremities" readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="deformity" readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                            <group string="Neurological">
+                                <group>
+                                    <field name="motor_system" readonly="state == 'enrolled'"/>
+                                    <field name="s_g" readonly="state == 'enrolled'"/>
+                                    <field name="microscopic" readonly="state == 'enrolled'"/>
+                                    <field name="eggs_cysts" readonly="state == 'enrolled'"/>
+                                    <field name="urine_appearance" readonly="state == 'enrolled'"/>
+                                    <field name="deposits" readonly="state == 'enrolled'"/>
+                                    <field name="worms_n" readonly="state == 'enrolled'"/>
+                                    <field name="hbp" readonly="state == 'enrolled'"/>
+                                    <field name="summary_of_positive_findings"
+                                           readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="sensory_system" readonly="state == 'enrolled'"/>
+                                    <field name="albumin" readonly="state == 'enrolled'"/>
+                                    <field name="blood" readonly="state == 'enrolled'"/>
+                                    <field name="reflexes" readonly="state == 'enrolled'"/>
+                                    <field name="sugar" readonly="state == 'enrolled'"/>
+                                    <field name="stool" readonly="state == 'enrolled'"/>
+                                    <field name="blood_level" readonly="state == 'enrolled'"/>
+                                    <field name="lbp" readonly="state == 'enrolled'"/>
+                                    <field name="remarks" readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                            <group string="Family Doctor">
+                                <group>
+                                    <field name="doctor_name" readonly="state == 'enrolled'"/>
+                                    <field name="cell_no" readonly="state == 'enrolled'"/>
+                                </group>
+                                <group>
+                                    <field name="contact_no" readonly="state == 'enrolled'"/>
+                                    <field name="particular_note" readonly="state == 'enrolled'"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Documents">
+                            <group>
+                                <field name="store_fname1" invisible="1"/>
+                                <field name="store_fname9" invisible="1"/>
+                                <field name="store_fname11" invisible="1"/>
+                                <field name="store_fname3" invisible="1"/>
+                                <field name="store_fname4" invisible="1"/>
+                                <field name="store_fname5" invisible="1"/>
+                                <field name="store_fname6" invisible="1"/>
+                                <field name="student_birthcert" string="Student's Date of Birth Certificate"
+                                       filename="store_fname1" readonly="state == 'enrolled'"/>
+                                <field name="certificate_number" readonly="state == 'enrolled'"/>
+                                <field name="previous_term_report" filename="store_fname9"
+                                       string="Student Report Card "
+                                       readonly="state == 'enrolled'"/>
+                                <field name="leaving_certificate" filename="store_fname11"
+                                       string="Previous School Leaving Certificate"
+                                       readonly="state == 'enrolled'"/>
+                                <field name="father_passport" filename="store_fname3"
+                                       string="National ID Parent 1"
+                                       readonly="state == 'enrolled'"/>
+                                <field name="mother_passport" filename="store_fname4"
+                                       string="National ID Parent 2"
+                                       readonly="state == 'enrolled'"/>
+                                <field name="passportcopy_father" filename="store_fname5"
+                                       string="Passport Copy Parent 1"
+                                       readonly="state == 'enrolled'"/>
+                                <field name="passportcopy_mother" filename="store_fname6"
+                                       string="Passport Copy Parent 2"
+                                       readonly="state == 'enrolled'"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="act_application" model="ir.actions.act_window">
+        <field name="name">Application</field>
+        <field name="res_model">xe.application</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_application_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add a new Application</p>
+        </field>
+    </record>
+    <menuitem id="menu_application" name="Application" action="act_application"
+              groups="xe_admission_management.group_xe_admission_user"
+              parent="xe_admission_management.menu_admission_root" sequence="2"/>
+</odoo>

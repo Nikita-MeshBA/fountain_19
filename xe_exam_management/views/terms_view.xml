@@ -1,0 +1,29 @@
+<odoo>
+    <record id="batch_form_inherit_brighton" model="ir.ui.view">
+        <field name="name">xe.term.form</field>
+        <field name="model">xe.term</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="xenesis_school_base.view_term_form"/>
+        <field name="arch" type="xml">
+            <field name="course_id" position="after">
+                <field name="sequence"/>
+            </field>
+            <xpath expr="//group[1]" position="after">
+                <group name="exam_dates">
+                    <group name="opener" string="Opener Exam Dates">
+                        <field name="t1_start_date"/>
+                        <field name="t1_end_date" required="t1_start_date"/>
+                    </group>
+                    <group name="mid" string="Mid Exam Dates">
+                        <field name="t2_start_date"/>
+                        <field name="t2_end_date" required="t2_start_date"/>
+                    </group>
+                    <group name="end" string="End Exam Dates">
+                        <field name="t3_start_date"/>
+                        <field name="t3_end_date" required="t3_start_date"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

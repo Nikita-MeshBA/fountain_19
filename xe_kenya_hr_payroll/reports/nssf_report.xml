@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="report.paperformat" id="paperformat_nssf_report">
+        <field name="name">paperformat.nssf.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_right">5</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+    <record id="nssf_report" model="ir.actions.report">
+        <field name="name">NSSF Report</field>
+        <field name="model">nssf.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_kenya_hr_payroll.nssf_report_view</field>
+        <field name="report_file">xe_kenya_hr_payroll.nssf_report_view</field>
+    </record>
+    <template id="nssf_report_view">
+        <style>.font{
+            font-size:14px;
+            font-family:"Helvetica"
+            }
+            @page{
+            margin-top:1%;
+            size: A4;
+            }
+        </style>
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div>
+                    <h3 class="text-center">NSSF Report</h3>
+                    <h4 class="text-left">
+                        <strong>Employer No:</strong>
+                        <t t-esc="nssf_no"/>
+                        <br/>
+                        <strong>Employer Name:</strong>
+                        <t t-esc="res_company.name"/>
+                        <br/>
+                        <strong>Report For</strong>
+                        <t t-esc="date_start"/>
+                        <strong>,</strong>
+                        <t t-esc="date_end"/>
+                    </h4>
+                </div>
+                <table class="table table-condensed table-bordered" style="width: 100%">
+                    <thead>
+                        <th class="text-center" style="width: 14%">PAYROLL NUMBER</th>
+                        <th class="text-center" style="width: 30%">SURNAME</th>
+                        <th class="text-center" style="width: 14%">OTHER NAME</th>
+                        <th class="text-center" style="width: 14%">ID NO</th>
+                        <th class="text-center" style="width: 14%">KRA PIN</th>
+                        <th class="text-center" style="width: 14%">NSSF NO</th>
+                        <th class="text-center" style="width: 14%">GROSS PAY</th>
+                        <th class="text-center" style="width: 14%">VOLUNTARY</th>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="final_val['docs']" t-as="line">
+                            <tr>
+                                <td class="text-center">
+                                    <span t-esc="line['payroll_no']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['surname']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['other_name']"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="line['id_no']"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="line['pin_no']"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="line['nssf_no']"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="line['total']"/>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+        </t>
+    </template>
+
+    <record id="nssf_xlsx_report" model="ir.actions.report">
+        <field name="name">NSSF Report</field>
+        <field name="model">nssf.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">xe_kenya_hr_payroll.nssf_report_xlsx</field>
+        <field name="report_file">xe_kenya_hr_payroll.nssf_xlsx_report</field>
+    </record>
+
+</odoo>
+
+

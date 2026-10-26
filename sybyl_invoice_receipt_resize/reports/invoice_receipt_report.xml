@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="report.paperformat" id="paperformat_receipt_report">
+        <field name="name">invoice.receipt.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_width">210</field>
+        <field name="page_height">90</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">0</field>
+        <field name="margin_right">7</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+    <record id="action_print_invoice_receipt" model="ir.actions.report">
+        <field name="name">Resized Invoice Receipt</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sybyl_invoice_receipt_resize.print_invoice_receipt</field>
+        <field name="report_file">sybyl_invoice_receipt_resize.print_invoice_receipt</field>
+        <field name="print_report_name">'Resized Invoice Receipt'</field>
+        <field name="binding_model_id" ref="account.model_account_move" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="sybyl_invoice_receipt_resize.paperformat_receipt_report"/>
+    </record>
+</odoo>

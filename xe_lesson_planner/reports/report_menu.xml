@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_scheme_of_work_report" model="ir.actions.report">
+        <field name="name">Scheme Of Work Analysis</field>
+        <field name="model">scheme.of.work</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_lesson_planner.report_schme_of_work_pdf</field>
+        <field name="report_file">xe_lesson_planner.report_schme_of_work_pdf</field>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="xe_lesson_planner.lesson_planner_paper_format"/>
+    </record>
+    
+    <record id="xlsx_scheme_of_work_report" model="ir.actions.report">
+        <field name="name">Scheme Of Work Analysis</field>
+        <field name="model">scheme.of.work</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">xe_lesson_planner.report_scheme_of_work_xlsx</field>
+        <field name="report_file">xe_lesson_planner.xlsx_scheme_of_work_report</field>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="cbc_scheme_of_work_report" model="ir.actions.report">
+		<field name="name">CBC Scheme of Work</field>
+		<field name="model">cbc.scheme.of.work</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">xe_lesson_planner.report_cbc_scheme_of_work</field>
+		<field name="report_file">xe_lesson_planner.report_cbc_scheme_of_work</field>
+		<field name="binding_model_id" ref="xe_lesson_planner.model_cbc_scheme_of_work" />
+		<field name="binding_type">report</field>
+		<field name="paperformat_id" ref="scheme_of_work_paper_format"/>
+	</record>
+
+    <record id="cbc_lesson_plan_report" model="ir.actions.report">
+		<field name="name">CBC Lesson Plan</field>
+		<field name="model">cbc.lesson.plan</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">xe_lesson_planner.report_cbc_lesson_plan</field>
+		<field name="report_file">xe_lesson_planner.report_cbc_lesson_plan</field>
+		<field name="binding_model_id" ref="xe_lesson_planner.model_cbc_lesson_plan" />
+		<field name="binding_type">report</field>
+		<field name="paperformat_id" ref="lesson_planner_paper_format"/>
+	</record>
+</odoo>

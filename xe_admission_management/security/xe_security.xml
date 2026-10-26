@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <record id="module_category_xe_admission" model="ir.module.category">
+        <field name="name">Admission</field>
+        <field name="description">Helps you to Manage Access Rights</field>
+        <field name="sequence">16</field>
+    </record>
+
+    <record id="privilege_xe_admission" model="res.groups.privilege"><field name="name">Admission</field><field name="category_id" ref="module_category_xe_admission"/></record><record id="group_xe_admission_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="privilege_id" ref="privilege_xe_admission"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_xe_admission_admin" model="res.groups">
+        <field name="name">Back Office Admin</field>
+        <field name="privilege_id" ref="privilege_xe_admission"/>
+        <field name="implied_ids" eval="[(4, ref('xe_admission_management.group_xe_admission_user')), (4, ref('base.group_user'))]"/>
+        </record>
+
+    <record id="admission_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company admission rule</field>
+        <field name="model_id" ref="model_xe_admission_enquiry"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="application_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company application rule</field>
+        <field name="model_id" ref="model_xe_application"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

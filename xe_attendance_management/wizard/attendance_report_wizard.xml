@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="attendance_report_form">
+        <field name="name">attendance.report.wizard.form</field>
+        <field name="model">attendance.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="attendance_state" widget="radio"/>
+                        <group>
+                            <field name="from_date"/>
+                            <field name="course_id" options="{'no_create': True}" string="Class"/>
+                        </group>
+                        <group>
+                            <field name="to_date"/>
+                            <field name="class_room_id" domain="[('course_id','=',course_id)]"
+                                   ptions="{'no_create': True}"/>
+                        </group>
+                        <strong>
+                            <br/>
+                            <p>
+                                * If you want to print for the entire school, leave Class and Classroom Blank.
+                            </p>
+                            <p>
+                                * Leave classroom blank if you wish to print all classrooms under the selected class
+                            </p>
+                        </strong>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="print_attendance_report" type="object" class="oe_highlight" string="Print PDF"/>
+                    <button name="print_attendance_report_excel" type="object" class="oe_highlight"
+                            string="Print Excel"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="attendance_report_wizard" model="ir.actions.act_window">
+        <field name="name">Student Attendance Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">attendance.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="Attendance Report" id="report_sub_menu"
+              parent="xe_attendance_management.xe_attendance_report_menu"
+              action="attendance_report_wizard"/>
+</odoo>

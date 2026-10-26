@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Citam Marksheet Report Header and Footer -->
+    <template id="citam_custom_layout_header">
+        <div class="header">
+            <div class="row">
+                <div align="center">
+                    <img t-if="company.logo" t-attf-src="data:image/png;base64,#{company.logo}" alt=""
+                         style="max-height: 120px;"/>
+                    <br></br>
+                    <b>
+                        <span t-field="company.name" style="font-size:20px;"/>
+                    </b>
+                </div>
+            </div>
+            <div t-if="company.logo or company.report_header" class="row zero_min_height">
+                <div class="col-xs-12">
+                    <div style="border-bottom: 1px solid black;"/>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="citam_custom_layout_footer">
+        <div class="footer">
+            <div class="row">
+                <div class="col-12" align="center">
+                    <br/>
+                    <t t-if="company.zip">
+                        P.O. Box:
+                        <span t-field="company.zip"/>
+                        ,
+                    </t>
+                    <t t-if="company.state_id">
+                        <span t-field="company.state_id.name"/>
+                        ,
+                    </t>
+                    <t t-if="company.phone">
+                        Tel:
+                        <span t-field="company.phone"/>,
+                    </t>
+                    <t t-if="company.email">
+                        Email:
+                        <span t-field="company.email"/>,
+                    </t>
+                    <t t-if="company.website">
+                        Website:
+                        <span t-field="company.website"/>,
+                    </t>
+                    <br/>
+                    <div class="text-muted">
+                        Page:
+                        <span class="page"/>
+                        /
+                        <span class="topage"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="marksheet_report_external_layout">
+        <t t-esc="company_id"/>
+        <t t-if="company">
+            <t t-set="company" t-value="company"/>
+        </t>
+        <t t-else="">
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.get('company_id')"/>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+        <div class="article">
+            <t t-call="xe_exam_management.citam_custom_layout_header"/>
+            <t t-out="0"/>
+            <t t-call="xe_exam_management.citam_custom_layout_footer"/>
+        </div>
+    </template>
+
+    <record id="cbc_marksheet_paper_format" model="report.paperformat">
+        <field name="name">CBC Marksheet Report Paper Format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">38</field>
+        <field name="margin_bottom">18</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">35</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="paperformat_cbc_combine_marksheet" model="report.paperformat">
+        <field name="name">CBC Combine Marksheet</field>
+        <field name="default" eval="True"/>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="dpi">96</field>
+    </record>
+
+    <record id="report_marksheet_cbc" model="ir.actions.report">
+        <field name="name">CBC Marksheet</field>
+        <field name="model">xe.marksheet.register</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_exam_management.report_cbc_marksheet_rep</field>
+        <field name="report_file">xe_exam_management.report_cbc_marksheet_rep</field>
+        <field name="binding_model_id" ref="xe_exam_management.model_xe_marksheet_register"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="xe_exam_management.cbc_marksheet_paper_format"></field>
+        <field name="groups_id" eval="[(4, ref('xe_exam_management.group_rubrics_configurations'))]"/>
+    </record>
+    <record id="report_marksheet_cbc_session_wise" model="ir.actions.report">
+        <field name="name">CBC Marksheet</field>
+        <field name="model">xe.marksheet.register</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_exam_management.report_cbc_session_wise</field>
+        <field name="report_file">xe_exam_management.report_cbc_session_wise</field>
+        <field name="binding_model_id" ref="xe_exam_management.model_xe_marksheet_register"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="xe_exam_management.cbc_marksheet_paper_format"></field>
+        <field name="groups_id" eval="[(4, ref('xe_exam_management.group_subject_rubrics_configuration'))]"/>
+    </record>
+
+    <record id="report_cbc_summative_report" model="ir.actions.report">
+        <field name="name">CBC Summative Report</field>
+        <field name="model">xe.marksheet.register</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_exam_management.report_cbc_summative_rep</field>
+        <field name="report_file">xe_exam_management.report_cbc_summative_rep</field>
+        <field name="binding_model_id" ref="xe_exam_management.model_xe_marksheet_register"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="xe_exam_management.cbc_marksheet_paper_format"></field>
+    </record>
+
+    <record id="report_cbc_marksheetline" model="ir.actions.report">
+        <field name="name">CBC Marksheet Line Report</field>
+        <field name="model">xe.marksheet.line</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_exam_management.cbc_mark_line_rep</field>
+        <field name="report_file">xe_exam_management.cbc_mark_line_rep</field>
+        <field name="binding_model_id" ref="xe_exam_management.model_xe_marksheet_line"/>
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[(4, ref('xe_exam_management.group_rubrics_configurations'))]"/>
+    </record>
+    <record id="report_cbc_session_wise_marksheetline" model="ir.actions.report">
+        <field name="name">CBC Marksheet Line Report</field>
+        <field name="model">xe.marksheet.line</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_exam_management.session_wise_mark_line</field>
+        <field name="report_file">xe_exam_management.session_wise_mark_line</field>
+        <field name="binding_model_id" ref="xe_exam_management.model_xe_marksheet_line"/>
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[(4, ref('xe_exam_management.group_subject_rubrics_configuration'))]"/>
+    </record>
+
+    <record id="report_cbc_combine_marksheetline" model="ir.actions.report">
+        <field name="name">CBC Combine Marksheet Line</field>
+        <field name="model">xe.marksheet.line</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_exam_management.cbc_combine_marksheetline</field>
+        <field name="report_file">xe_exam_management.cbc_combine_marksheetline</field>
+        <field name="binding_model_id" ref="xe_exam_management.model_xe_marksheet_line"/>
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[(4, ref('xe_exam_management.group_rubrics_configurations'))]"/>
+    </record>
+
+    <record id="report_cbc_session_wise_combine_marksheetline" model="ir.actions.report">
+        <field name="name">CBC Combine Marksheet Line</field>
+        <field name="model">xe.marksheet.line</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_exam_management.cbc_session_combine_ml</field>
+        <field name="report_file">xe_exam_management.cbc_session_combine_ml</field>
+        <field name="binding_model_id" ref="xe_exam_management.model_xe_marksheet_line"/>
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[(4, ref('xe_exam_management.group_subject_rubrics_configuration'))]"/>
+    </record>
+</odoo>

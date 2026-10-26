@@ -1,0 +1,20 @@
+<odoo>
+	<record id="session_configuration_tree" model="ir.ui.view">
+        <field name="name">session.form.attributes.tree</field>
+        <field name="model">rfid.session.configuration</field>
+        <field name="arch" type="xml">
+            <list string="Session Configuration" editable="bottom">
+                <field name="session_id"/>
+                <field name="session_name"/>
+                <field name="device_id"/>
+                <field name="session_limit"/>
+            </list>
+        </field>
+    </record>
+    <record id="act_session_configuration" model="ir.actions.act_window">
+        <field name="name">Session Configuration Action</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">rfid.session.configuration</field>
+        <field name="view_id" ref="session_configuration_tree"/>
+    </record>
+</odoo>

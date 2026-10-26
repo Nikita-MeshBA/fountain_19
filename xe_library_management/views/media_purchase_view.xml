@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_xe_purchase_tree" model="ir.ui.view">
+        <field name="name">xe.media.purchase.tree</field>
+        <field name="model">xe.media.purchase</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <list string="Purchase Request">
+                <field name="name"/>
+                <field name="author"/>
+                <field name="edition"/>
+                <field name="publisher"/>
+                <field name="course_ids"/>
+                <field name="subject_id"/>
+                <field name="requested_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_xe_purchase_form" model="ir.ui.view">
+        <field name="name">xe.media.purchase.form</field>
+        <field name="model">xe.media.purchase</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Purchase Request">
+                <header groups="base.group_user">
+                    <!-- <button name="action_request" states="draft" type="object" -->
+                    <button name="action_request" invisible="state != 'draft'" type="object"
+                            string="Request media" class="oe_highlight"
+                            groups="xenesis_school_base.group_xe_student,xenesis_school_base.group_xe_staff,xe_library_management.group_xe_library"/>
+                    <button name="action_accept" invisible="state != 'request'" type="object"
+                            string="Accept" class="oe_highlight"
+                            groups="xenesis_school_base.group_xe_admin,xe_library_management.group_xe_library"/>
+                    <button name="action_reject" invisible="state != 'request'" type="object"
+                            string="Reject"
+                            groups="xe_library_management.group_xe_library"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,request,accept"/>
+                </header>
+                <sheet>
+                    <group col="4">
+                        <field name="name"/>
+                        <field name="media_type_id"/>
+                        <field name="course_ids"/>
+                        <field name="subject_id"/>
+                        <field name="author"/>
+                        <field name="publisher"/>
+                        <field name="requested_id" readonly="1"/>
+                        <field name="edition"/>
+                        <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="view_xe_purchase_search" model="ir.ui.view">
+        <field name="name">xe.media.purchase.search</field>
+        <field name="model">xe.media.purchase</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Purchase Request">
+                <field name="name"/>
+                <field name="author"/>
+                <field name="edition"/>
+                <field name="publisher"/>
+                <field name="course_ids"/>
+                <field name="subject_id"/>
+                <field name="requested_id"/>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="act_open_xe_purchase_view">
+        <field name="name">Media Purchase Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">xe.media.purchase</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_xe_purchase_search"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+    <!--        <record model="ir.actions.act_window.view" id="act_open_xe_purchase_view_form">-->
+    <!--            <field name="act_window_id" ref="act_open_xe_purchase_view" />-->
+    <!--            <field name="sequence" eval="20" />-->
+    <!--            <field name="view_mode">form</field>-->
+    <!--            <field name="view_id" ref="view_xe_purchase_form" />-->
+    <!--        </record>-->
+    <!--        <record model="ir.actions.act_window.view" id="act_open_xe_purchase_view_tree">-->
+    <!--            <field name="act_window_id" ref="act_open_xe_purchase_view" />-->
+    <!--            <field name="sequence" eval="10" />-->
+    <!--            <field name="view_mode">list</field>-->
+    <!--            <field name="view_id" ref="view_xe_purchase_tree" />-->
+    <!--        </record>-->
+</odoo>

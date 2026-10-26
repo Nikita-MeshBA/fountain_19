@@ -1,0 +1,31 @@
+<odoo>
+    <record model="ir.ui.view" id="mailing_list_view_form_inherit">
+        <field name="name">mailing.list.form</field>
+        <field name="model">mailing.list</field>
+        <field name="inherit_id" ref="mass_mailing.mailing_list_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_public']" position="after">
+                <field name="mailing_type" widget="radio" options="{'horizontal': true}"/>
+                <field name="class_ids" invisible="mailing_type == 'classroom'" required="mailing_type == 'class'"
+                       widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+                <field name="classroom_ids" invisible="mailing_type == 'class'" required="mailing_type == 'classroom'"
+                       widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mailing_list_view_form_simplified_inherit" model="ir.ui.view">
+        <field name="name">mailing.list.form.simplified.inherit</field>
+        <field name="model">mailing.list</field>
+        <field name="inherit_id" ref="mass_mailing.mailing_list_view_form_simplified"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_public']" position="after">
+                <field name="mailing_type" widget="radio" options="{'horizontal': true}"/>
+                <field name="class_ids" invisible="mailing_type == 'classroom'" required="mailing_type == 'class'"
+                       widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+                <field name="classroom_ids" invisible="mailing_type == 'class'" required="mailing_type == 'classroom'"
+                       widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_xe_exam_root" name="Exams" sequence="12"
+              web_icon="xe_exam_management,static/description/icon.png"
+              groups="xe_exam_management.group_xe_exam_user,xe_exam_management.group_xe_exam_admin"/>
+
+    <menuitem id="menu_xe_school_exam_result" name="Exams" parent="menu_xe_exam_root" sequence="10"/>
+
+    <menuitem id="menu_xe_exam_session" name="Exam Sessions" parent="menu_xe_school_exam_result" sequence="10"
+              action="act_open_xe_exam_session_view" groups="xe_exam_management.group_xe_exam_admin"/>
+    <menuitem id="menu_xe_exam_main" name="Exams" parent="menu_xe_school_exam_result" sequence="20"
+              action="act_open_xe_exam_view"
+              groups="xe_exam_management.group_xe_exam_user,xe_exam_management.group_xe_exam_admin"/>
+    <menuitem id="menu_xe_exam_attendees_sub" name="Exam Attendees" parent="menu_xe_school_exam_result" sequence="30"
+              action="act_open_xe_exam_attendees_view"
+              groups="xe_exam_management.group_xe_exam_user,xe_exam_management.group_xe_exam_admin"/>
+    <menuitem id="menu_xe_marksheet_register_sub" name="Marksheet Registers" parent="menu_xe_school_exam_result"
+              sequence="100" action="act_open_xe_marksheet_register_view"
+              groups="xe_exam_management.group_xe_exam_admin" active="False"/>
+    <menuitem id="menu_xe_marksheet_line_sub" name="Marksheet Lines" parent="menu_xe_school_exam_result" sequence="110"
+              action="act_open_xe_marksheet_line_view"
+              groups="xe_exam_management.group_xe_exam_admin,xe_exam_management.group_xe_exam_user"/>
+    <menuitem id="menu_xe_exam_general" name="General" parent="menu_xe_exam_root" sequence="20"
+              groups="xe_exam_management.group_xe_exam_admin"/>
+
+    <!-- wizard menu -->
+    <menuitem id="menu_student_hall_ticket" name="Student Hall Tickets" parent="menu_xe_exam_general" sequence="30"
+              action="student_hall_ticket_act" groups="xe_exam_management.group_xe_exam_admin"/>
+
+    <menuitem id="menu_xe_exam_reports" name="Reports" parent="menu_xe_exam_root" sequence="21"
+              groups="xe_exam_management.group_xe_exam_admin"/>
+
+    <menuitem id="menu_exam_configuration" parent="menu_xe_exam_root" sequence="30" name="Configuration"
+              groups="xe_exam_management.group_xe_exam_admin"/>
+
+    <menuitem id="menu_xe_exam_type_sub" name="Exam Types" parent="menu_exam_configuration" sequence="10"
+              action="act_open_xe_exam_type_view" groups="xe_exam_management.group_xe_exam_admin"/>
+
+    <menuitem id="menu_xe_exam_room_sub" name="Exam Rooms" parent="menu_exam_configuration" sequence="20"
+              action="act_open_xe_exam_room_view" groups="xe_exam_management.group_xe_exam_admin"/>
+
+    <menuitem id="menu_xe_grade_category_configuration" name="8-4-4 Grade Categories" parent="menu_exam_configuration" sequence="45" action="action_xe_grade_category_configuration" groups="xe_exam_management.group_xe_exam_admin"/>
+
+    <menuitem id="menu_xe_grade_configuration" name="8-4-4 Grade Configuration" parent="menu_exam_configuration" sequence="40" action="act_open_xe_grade_configuration_view" groups="xe_exam_management.group_xe_exam_admin" active="false"/>
+</odoo>

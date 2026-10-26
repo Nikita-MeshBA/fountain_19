@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <data>
+        <record id="discipline_email_send_wizard" model="ir.ui.view">
+            <field name="name">discipline.send.email.wizard.form</field>
+            <field name="model">send.email.discipline</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                                <field name="discipline_records_ids" widget="many2many_tags"/>
+                                <field name="email_template_id"/>
+                                <field name="template_body" widget="html"/>
+                                <field name="attachment_ids" widget="many2many_binary"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Send Email" name="action_send_email" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+         </record>
+
+         <record id="discipline_pass_send_email" model="ir.actions.act_window">
+               <field name="name">Send Email</field>
+               <field name="res_model">send.email.discipline</field>
+               <field name="view_mode">form</field>
+               <field name="target">new</field>
+               <field name="binding_model_id" ref="model_xe_discipline_records"/>
+               <field name="binding_view_types">list,form</field>
+       </record>
+    </data>
+</odoo>

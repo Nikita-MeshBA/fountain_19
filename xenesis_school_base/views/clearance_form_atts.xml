@@ -4,10 +4,10 @@
         <field name="name">clearance.form.attributes.tree</field>
         <field name="model">clearance.form.attributes</field>
         <field name="arch" type="xml">
-            <tree string="Clearance form Attributes" editable="bottom">
+            <list string="Clearance form Attributes" editable="bottom">
                 <field name="name" required="1"/>
                 <field name="section"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="act_clearance_form" model="ir.actions.act_window">

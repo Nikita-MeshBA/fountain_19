@@ -120,7 +120,9 @@ Best Odoo Dashboard Apps
 			 'views/ks_mail_template.xml'],
 	'module_type':'official',
 
-	'assets': {'web.assets_backend': ['ks_dn_advance/static/src/css/ks_tv_dashboard.css',
+	'assets': {'web.assets_backend': [
+									('include', 'web._assets_jquery'),
+									'ks_dn_advance/static/src/css/ks_tv_dashboard.css',
 									  'ks_dn_advance/static/lib/css/owl.carousel.min.css',
 									  # 'ks_dn_advance/static/src/js/ks_dn_kpi_preview.js',
 									  'ks_dn_advance/static/src/js/ks_labels.js',

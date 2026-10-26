@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="res_config_settings_view_acad_form_inherit" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.academic.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="70"/>
+        <field name="inherit_id" ref="xenesis_school_base.res_config_settings_view_acad_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='academic_block']" position="inside">
+                <!-- <block title="Exams" name="exam_settings_container" groups="base.group_no_one"> -->
+                <block title="Exams" name="exam_settings_container">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="group_subject_rubrics_configuration"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="group_subject_rubrics_configuration"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="group_rubrics_configurations"/>
+                        </div>
+                        <div class="o_setting_right_pane" id="partner_autocomplete_settings">
+                            <label for="group_rubrics_configurations"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="is_auto_session_name" force_save="1" class="o_light_label"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="is_auto_session_name" string="Auto concatenate exam session name"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="show_marks_in_cbc_report" force_save="1" class="o_light_label"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="show_marks_in_cbc_report" string="Display Marks in CBC Marksheet Line Report"/>
+                        </div>
+                    </div>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

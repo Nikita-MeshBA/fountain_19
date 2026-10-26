@@ -8,14 +8,14 @@
                 <group>
                     <field name="student_id" invisible="1"/>
                     <field name="sibling_ids" domain="[('id','!=',student_id)]">
-                        <tree editable="bottom">
+                        <list editable="bottom">
                             <field name="roll_number" string="Admission Number"
                                    required="1"/>
                             <field name="name" string="Student Name"/>
                             <field name="course_id" string="Class"/>
                             <field name="classroom_id" string="Classroom"
                                    domain="[('course_id', '=', course_id)]"/>
-                        </tree>
+                        </list>
                     </field>
                 </group>
                 <footer>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="ir.ui.view" id="take_action_form">
+        <field name="name">take.action.form</field>
+        <field name="model">xe.take.action</field>
+        <field name="arch" type="xml">
+            <form string="Take Action">
+                <group>
+                    <field name="is_fine"/>
+                    <field name="fine_amount"
+                           widget="monetary"
+                           invisible="not is_fine" required="is_fine"
+                           style="width:35%%"/>
+                    <field name="is_suspend"/>
+                    <field name="suspend_from_date"
+                           invisible="not is_suspend" required="is_suspend"
+                           style="width:35%%"/>
+                    <field name="suspend_to_date"
+                           invisible="not is_suspend" required="is_suspend"
+                           style="width:35%%"/>
+                    <field name="remarks"/>
+                </group>
+                <footer groups="base.group_user">
+                    <button name="take_action" type="object" string="Submit" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

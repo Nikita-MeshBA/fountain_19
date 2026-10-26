@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_send_sms_wizard,send.sms.wizard.all,model_send_sms_wizard,,1,1,1,1
+access_sms_gateway,access_sms_gateway,model_sms_gateway,,1,1,1,1
+access_sms_send_log,access_sms_send_log,model_sms_send_log,,1,1,1,1
+access_send_sms_template,access_send_sms_template,model_send_sms_template,,1,1,1,1
+access_wizard_sms_send_log,wizard.sms.send.log.all,model_wizard_sms_send_log,,1,1,1,1

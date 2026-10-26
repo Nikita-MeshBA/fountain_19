@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_visitor_management_root" name="Reception Management"
+            sequence="40" groups="group_xe_reception"/>
+
+        <menuitem id="menu_visitor_pass_main" name="Reception Management"
+            parent="menu_visitor_management_root" action="act_open_visitor_pass_view"
+            sequence="10" />
+
+        <menuitem id="menu_student_pass_main" name="Student Pass"
+            parent="menu_visitor_management_root" action="act_open_student_pass_view"
+            sequence="20" />
+
+        <menuitem id="menu_visitor_management_config" name="Configurations"
+            parent="menu_visitor_management_root" sequence="40" />
+
+		<menuitem
+			id="menu_hr_payroll_global_settings"
+			name="Settings"
+			parent="xe_visitor_management.menu_visitor_management_config"
+			sequence="5"
+			action="action_visitor_configuration"
+			groups="base.group_system"
+            active="False"/>
+
+        <menuitem id="menu_purpose_type_main" name="Purpose Type"
+            parent="menu_visitor_management_config" action="act_open_purpose_type_view"
+            sequence="10" />
+        <menuitem id="menu_document_type_main" name="Document Type"
+            parent="menu_visitor_management_config" action="act_open_document_type_view"
+            sequence="20" />
+            
+		<menuitem id="menu_visitor_reports" name="Reporting"
+			parent="menu_visitor_management_root" sequence="30"/>
+			
+		<menuitem id="menu_purpose_type_report"
+			name="Purpose Type Wise" parent="menu_visitor_reports"
+			action="action_purpose_type_wizard" sequence="21" />
+			
+		<menuitem id="menu_employee_wise_report"
+			name="Employee Wise" parent="menu_visitor_reports"
+			action="employee_wise_act" sequence="22" />
+			
+		<menuitem id="menu_student_pass_wise_report"
+			name="Student Pass Wise" parent="menu_visitor_reports"
+			action="student_pass_wise_act" sequence="23" />
+
+    </data>
+</odoo>

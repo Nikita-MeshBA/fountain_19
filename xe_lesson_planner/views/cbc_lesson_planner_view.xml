@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_employee_form_adms_inheirt" model="ir.ui.view">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="xenesis_school_base.view_employee_form_adms"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="scheme_of_work_view" string="Scheme Of Work" type="object" class="oe_stat_button" icon="fa-book"/>
+                    <button name="lesson_planner_view" string="Lesson Plan" type="object" class="oe_stat_button" icon="fa-book"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- Start Schema Of Work structure-->
+        <record id="view_cbc_scheme_of_work_tree" model="ir.ui.view">
+            <field name="name">cbc scheme.of.work.tree</field>
+            <field name="model">cbc.scheme.of.work</field>
+            <field name="arch" type="xml">
+                <list string="CBC Scheme of Work">
+                    <field name="seq_name" string="Sequence"/>
+                    <field name="employee_id" string="Teacher" />
+                    <field name="department_head" string="Department Head" />
+                    <field name="department_id" string="Department" invisible="1" />
+                    <field name="department_manager_id" string="Department manager" invisible="1" />
+                    <field name="company_id" />
+                    <field name="class_id" string="Class" />
+                    <field name="status" string="Status" decoration-info="status == 'draft'" decoration-warning="status in ['waiting_for_approval', '1st_approval']" decoration-success="status == 'approved'" decoration-danger="status == 'rejected'" widget="badge" />
+                </list>
+            </field>
+        </record>
+
+        <record id="view_cbc_scheme_of_work_search" model="ir.ui.view">
+            <field name="name">cbc scheme.of.work.search</field>
+            <field name="model">cbc.scheme.of.work</field>
+            <field name="arch" type="xml">
+                <search string="Scheme Of Work Search">
+                    <field name="employee_id" string="Teacher" />
+                    <field name="seq_name" string="Sequence"/>
+                    <field name="status" string="Status" />
+                    <field name="class_id" string="Class" />
+                    <field name="classroom_id" string="Class Room" />
+                    <newline />
+                    <!-- <filter string="Waiting for Department Head Approval" name="filter_departmental_approved"
+                        domain="[('status','=','departmental_approved')]"/>
+                    <separator/>
+                    <filter string="Waiting for Headteacher Approval" name="filter_head_teacher_approved"
+                        domain="[('status','=','head_teacher_approved')]"/> -->
+                </search>
+            </field>
+        </record>
+
+        <record id="view_cbc_scheme_of_work_form" model="ir.ui.view">
+            <field name="name">cbc scheme.of.work.form</field>
+            <field name="model">cbc.scheme.of.work</field>
+            <field name="arch" type="xml">
+                <form string="CBC Scheme of Work">
+                    <header>
+                        <field name="is_scheme_of_work" invisible="1" />
+                        <field name="is_submit" invisible="1" />
+                        <field name="is_resubmit" invisible="1" />
+                        <field name="is_manager" invisible="1" />
+                        <field name="is_approver" invisible="1" />
+                        <field name="is_ht_approver" invisible="1" />
+                        <button name="button_submit" string="Submit" type="object" invisible="status != 'draft'" class="oe_highlight" groups="xe_lesson_planner.group_lesson_plan_teacher"/>
+                        <button name="button_first_approval" string="First Approval" type="object" invisible="status != 'waiting_for_approval'" class="oe_highlight" groups="xe_lesson_planner.group_lesson_plan_department_head"/>
+                        <button name="button_second_approval" string="Approve" type="object" invisible="status != '1st_approval'" class="oe_highlight" groups="xe_lesson_planner.group_lesson_plan_department_head"/>
+                        <button name="button_rejected" string="Reject" type="object" invisible="status in ['draft', 'approved', 'rejected']" groups="xe_lesson_planner.group_lesson_plan_department_head"/>
+                        <button name="reset_draft" string="Reset to Draft" type="object" invisible="status not in ['waiting_for_approval', '1st_approval']"/>
+                        <button name="import_excel" string="Import Excel" type="object" class="oe_highlight"/>
+                        <button name="export_excel" string="Export Excel" type="object" class="oe_highlight"/>
+                        <field name="status" widget="statusbar" statusbar_visible="draft,waiting_for_approval,1st_approval,approved"/>
+                    </header>
+                    <sheet>
+                        <group col="2">
+                            <group>
+                                <field name="seq_name" string="Name"/>
+                                <field name="tsc_number" string="TSC Number" readonly="1" force_save="1"/>
+                                <field name="employee_id" string="Teacher" required="1" readonly="1"/>
+                                <field name="company_id" string="School" required="1" readonly="1"/>
+                                <field name="reg_no" string="TSC No / Employee Number" invisible="1"/>
+                                <field name="period_per_week" string="Period Per Week" readonly="status in ['1st_approval','approved','rejected']" required="1" invisible="1"/>
+                                <field name="type_select" widget="radio" readonly="status in ['1st_approval','approved','rejected']" required="1"/>
+                            </group>
+                            <field name="department_head_ids" invisible="1"/>
+                            <field name="head_teacher_ids" invisible="1"/>
+                            <!-- <field name="academic_year" invisible="1"/> -->
+                            <group>
+                                <field name="year_id" readonly="status in ['1st_approval','approved','rejected']" required="1"/>
+                                <field name="class_id" invisible="type_select in ['class_room']" readonly="status in ['1st_approval','approved','rejected']" required="1"/>
+                                <field name="classroom_id" domain="[('course_id', '=', class_id)]" invisible="type_select in ['class']" required="type_select == 'both'" readonly="status in ['1st_approval','approved','rejected']"/>
+                                <field name="assigned_sub_ids" string="Learning Area" widget="many2many_tags" readonly="status in ['1st_approval','approved','rejected']" required="1" domain="[('course_ids', 'in', [class_id])]"/>
+                                <field name="term_id" domain="[('academic_year_id', '=', year_id)]" readonly="status in ['1st_approval','approved','rejected']" required="1"/>
+                                <field name="department_head" string="Department Head" invisible="1" force_save="1" readonly="status in ['1st_approval','approved','rejected']"/>
+                                <field name="department_head_id" string="Department Head" force_save="1" readonly="status in ['1st_approval','approved','rejected']" required="1" invisible="1"/>
+                                <field name="department_id" string="Deparmtent" force_save="1" readonly="status in ['1st_approval','approved','rejected']" invisible="1"/>
+                                <field name="department_manager_id" string="Department Manager" invisible="1" readonly="status in ['1st_approval','approved','rejected']"/>
+                                <field name="head_teacher_id" string="Head Teacher" force_save="1" readonly="status in ['1st_approval','approved','rejected']" required="1" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="cbc_scheme_of_work_ids" string="CBC Scheme Of Work Details">
+                                <field name="cbc_scheme_of_work_ids" readonly="status in ['1st_approval','approved','rejected']">
+                                    <list editable="bottom">
+                                        <field name="week" string="WEEK"/>
+                                        <field name="lesson" string="LESSON"/>
+                                        <field name="topic" string="STRAND"/>
+                                        <field name="sub_topic" string="SUB STRAND"/>
+                                        <field name="objectives" string="SPECIFIC LEARNING OUTCOMES"/>
+                                        <field name="learning_activities" string="SUGGESTED LEARNING EXPERIENCES"/>
+                                        <field name="key_inquiry_questions" string="KEY INQUIRY QUESTIONS"/>
+                                        <field name="learning_resources" string="LEARNING RESOURCES"/>
+                                        <field name="assessment_methods" string="ASSESSMENT TECHNIQUES"/>
+                                        <field name="remarks" string="REFLECTION"/>
+                                        <field name="cbc_scheme_of_work_id" column_invisible="1"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- <record id="view_cbc_cheme_of_work_form_inherit" model="ir.ui.view">
+            <field name="name">cbc.cheme.of.work.form.inherit</field>
+            <field name="model">cbc.scheme.of.work</field>
+            <field name="inherit_id" ref="xe_lesson_planner.view_cbc_scheme_of_work_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='re_submit']" position="attributes">
+                    <t groups="xe_lesson_planner.group_lesson_plan_department_head">
+                        <attribute name="invisible">1</attribute>
+                    </t>
+                </xpath>
+            </field>
+        </record> -->
+
+        <record id="act_cbc_scheme_of_work" model="ir.actions.act_window">
+            <field name="name">CBC Scheme Of Work</field>
+            <field name="res_model">cbc.scheme.of.work</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_cbc_scheme_of_work_search" />
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Add a new CBC Scheme Of Work</p>
+            </field>
+        </record>
+        <!-- End Schema Of Work structure-->
+
+        <!-- Start Lesson Plan structure-->
+        <record id="view_cbc_lesson_plan_tree" model="ir.ui.view">
+            <field name="name">cbc.lesson.plan.tree</field>
+            <field name="model">cbc.lesson.plan</field>
+            <field name="arch" type="xml">
+                <list string="CBC Lesson Plan">
+                    <field name="seq_name_lp" string="Sequence"/>
+                    <!-- <field name="lesson" /> -->
+                    <field name="employee_id" string="Teacher" />
+                    <field name="company_id" />
+                    <field name="status" string="Status" decoration-info="status == 'draft'" decoration-warning="status in ['waiting_for_approval', '1st_approval']" decoration-success="status == 'approved'" decoration-danger="status == 'rejected'" widget="badge" />
+                </list>
+            </field>
+        </record>
+
+        <record id="view_cbc_lesson_plan_search" model="ir.ui.view">
+            <field name="name">cbc.lesson.plan.search</field>
+            <field name="model">cbc.lesson.plan</field>
+            <field name="arch" type="xml">
+                <search string="CBC Lesson Plan">
+                    <field name="employee_id" string="Teacher" />
+                    <field name="seq_name_lp"  string="Sequence"/>
+                    <field name="status" string="Status" />
+                    <field name="class_id" string="Class" />
+                    <field name="classroom_id" string="Class Room" />
+                    <!-- <newline />
+                    <filter string="Departmental Approved" name="filter_departmental_approved"
+                        domain="[('status','=','departmental_approved')]"/>
+                    <separator/>
+                    <filter string="Head Teacher Approved" name="filter_head_teacher_approved"
+                        domain="[('status','=','head_teacher_approved')]"/> -->
+                </search>
+            </field>
+        </record>
+
+        <record id="view_cbc_lesson_plan_form" model="ir.ui.view">
+            <field name="name">cbc.lesson.plan.form</field>
+            <field name="model">cbc.lesson.plan</field>
+            <field name="arch" type="xml">
+                <form string="CBC Lesson Plan">
+                    <header>
+                        <field name="is_lesson_plan" invisible="1" />
+                        <field name="is_submit" invisible="1" />
+                        <field name="is_resubmit" invisible="1" />
+                        <field name="is_manager" invisible="1" />
+                        <field name="is_approver" invisible="1" />
+                        <field name="is_ht_approver" invisible="1" />
+                        <button name="button_submit" string="Submit" type="object" invisible="status != 'draft'" class="oe_highlight" groups="xe_lesson_planner.group_lesson_plan_teacher"/>
+                        <button name="button_first_approval" string="First Approval" type="object" invisible="status != 'waiting_for_approval'" class="oe_highlight" groups="xe_lesson_planner.group_lesson_plan_department_head"/>
+                        <button name="button_second_approval" string="Approve" type="object" invisible="status != '1st_approval'" class="oe_highlight" groups="xe_lesson_planner.group_lesson_plan_department_head"/>
+                        <button name="button_rejected" string="Reject" type="object" invisible="status in ['draft', 'approved', 'rejected']" groups="xe_lesson_planner.group_lesson_plan_department_head"/>
+                        <button name="reset_draft" string="Reset to Draft" type="object" invisible="status not in ['waiting_for_approval', '1st_approval']"/>
+                        <field name="status" widget="statusbar" statusbar_visible="draft,waiting_for_approval,1st_approval,approved"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <!-- <label for="seq_name_lp" string="Name"/> -->
+                            <h1 class="d-flex">
+                                <field name="seq_name_lp" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="employee_id" string="Teacher" readonly="1" required="1"/>
+                                <field name="academic_year_id" string="Year" readonly="status in ['1st_approval','approved','rejected']" required="1"/>
+                                <field name="academic_term_id" string="Term" domain="[('academic_year_id', '=', academic_year_id)]" readonly="status in ['1st_approval','approved','rejected']" required="1"/>
+                                <field name="class_id" readonly="status in ['1st_approval','approved','rejected']" required="1"/>
+                                <field name="classroom_id" domain="[('course_id', '=', class_id)]" readonly="status in ['1st_approval','approved','rejected']" required="1"/>
+                                <field name="subject_id" string="Learning Area" domain="[('course_ids', 'in', [class_id])]" readonly="status in ['1st_approval','approved','rejected']" required="1"/>
+
+                                <field name="company_id" string="School" readonly="status in ['1st_approval','approved','rejected']" required="1" invisible="1"/>
+                                <field name="reg_no" string="TSC No / Employee Number" invisible="1" required="1"/>
+                                <field name="week" string="Period Per Week" readonly="status in ['1st_approval','approved','rejected']" required="1"/>
+                                <field name="no_of_students" string="Roll" readonly="1" force_save="1" required="1"/>
+                            </group>
+                            <field name="department_head_ids" invisible="1"/>
+                            <field name="head_teacher_ids" invisible="1"/>
+                            <group>
+                                <field name="theme" readonly="status in ['1st_approval','approved','rejected']"/>
+                                <!-- <field name="lesson" readonly="status in ['1st_approval','approved','rejected']" required="1"/> -->
+                                <field name="topic" string="Strand" readonly="status in ['1st_approval','approved','rejected']" required="1"/>
+                                <field name="sub_topic" string="Sub strand" readonly="status in ['1st_approval','approved','rejected']" required="1"/>
+                                <field name="lesson_date" readonly="status in ['1st_approval','approved','rejected']" required="1"/>
+                                <field name="age" />
+                                <field name="scheme_of_work_id" invisible="1" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Specific Learning Outcomes">
+                                <field name="learning_outcomes_ids" readonly="status in ['1st_approval','approved','rejected']">
+                                    <list editable="bottom">
+                                        <field name="name" required="1"/>
+                                        <field name="lesson_plan_id" column_invisible="1"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                        <notebook>
+                            <page string="Key Inquiry Questions">
+                                <field name="key_inquiry_questions_ids" readonly="status in ['1st_approval','approved','rejected']">
+                                    <list editable="bottom">
+                                        <field name="name" required="1"/>
+                                        <field name="lesson_plan_id" column_invisible="1"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                        <notebook>
+                            <page string="Learning Resources">
+                                <field name="learning_resources_ids" readonly="status in ['1st_approval','approved','rejected']">
+                                    <list editable="bottom">
+                                        <field name="name" required="1"/>
+                                        <field name="lesson_plan_id" column_invisible="1"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                        <notebook>
+                            <page name="lesson_plan_line" string="Lesson Plan Details">
+                                <field name="lesson_plan_ids" readonly="status in ['1st_approval','approved','rejected']">
+                                    <list editable="bottom">
+                                        <field name="time" string="TIME" width="20%"/>
+                                        <field name="learning_experiences" string="LEARNING EXPERIENCES" required="1"/>
+                                        <field name="content" column_invisible="1"/>
+                                        <field name="learning_activities" column_invisible="1"/>
+                                        <field name="learning_resources" column_invisible="1"/>
+                                        <field name="lesson_plan_id" column_invisible="1"/>
+                                    </list>
+                                </field>
+                                <group>
+                                    <field name="reflection" string="Reflection on the Lesson" readonly="status in ['1st_approval','approved','rejected']"/>
+                                </group>
+                                <field name="lesson_plan_header_ids" readonly="status in ['1st_approval','approved','rejected']" invisible="1">
+                                    <list editable="bottom">
+                                        <field name="cbc_header_id" options="{'no_create': False, 'no_create_edit':False}"/>
+                                        <field name="content"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- <record id="view_cbc_lesson_plan_form_inherit" model="ir.ui.view">
+            <field name="name">cbc.lesson.plan.form.inherit</field>
+            <field name="model">cbc.lesson.plan</field>
+            <field name="inherit_id" ref="xe_lesson_planner.view_cbc_lesson_plan_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='re_submit']" position="attributes">
+                    <t groups="xe_lesson_planner.group_lesson_plan_department_head">
+                        <attribute name="invisible">1</attribute>
+                    </t>
+                </xpath>
+            </field>
+        </record> -->
+
+        <record id="act_cbc_lesson_plan" model="ir.actions.act_window">
+            <field name="name">CBC Lesson Plan</field>
+            <field name="res_model">cbc.lesson.plan</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_cbc_lesson_plan_search" />
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Add a New CBC Lesson Plan</p>
+            </field>
+        </record>
+        <!-- End Lesson Plan structure-->
+
+        <!-- Sequence -->
+        <record id="seq_scheme_of_work" model="ir.sequence">
+            <field name="name">Scheme Of Work</field>
+            <field name="code">scheme.of.work</field>
+            <field name="prefix">SOW</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False" />
+        </record>
+
+        <record id="seq_lesson_plan" model="ir.sequence">
+            <field name="name">Lesson Plan</field>
+            <field name="code">lesson.plan</field>
+            <field name="prefix">LP</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False" />
+        </record>
+
+        <record id="seq_cbc_scheme_of_work" model="ir.sequence">
+            <field name="name">CBC Scheme Of Work</field>
+            <field name="code">cbc.scheme.of.work</field>
+            <field name="prefix">CBC-SOW</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False" />
+        </record>
+
+        <record id="seq_cbc_lesson_plan" model="ir.sequence">
+            <field name="name">CBC Lesson Plan</field>
+            <field name="code">cbc.lesson.plan</field>
+            <field name="prefix">CBC-LP</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False" />
+        </record>
+
+    </data>
+</odoo>

@@ -1,16 +1,15 @@
 /** @odoo-module **/
 import { onWillStart } from "@odoo/owl";
 import { registry } from "@web/core/registry";
-import { useService } from '@web/core/utils/hooks';
+import { user } from '@web/core/user';
 import { listView } from '@web/views/list/list_view';
 import { ListController } from '@web/views/list/list_controller';
 
 export class StudentArchiveDisabledListController extends ListController {
     setup() {
         super.setup();
-        this.user = useService("user");
         onWillStart(async () => {
-            this.hide_archive_button = await this.user.hasGroup("xenesis_school_base.group_xe_admin");
+            this.hide_archive_button = await user.hasGroup("xenesis_school_base.group_xe_admin");
         });
     }
 

@@ -1,0 +1,52 @@
+<odoo>
+
+    <record model="ir.ui.view" id="xe_grade_category_tree_view">
+        <field name="name">xe.grade.category.tree.view</field>
+        <field name="model">xe.grade.category</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="course_ids" string="Class" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="xe_grade_category_form_view">
+        <field name="model">xe.grade.category.form.view</field>
+        <field name="model">xe.grade.category</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                        <group>
+                            <field name="course_ids" string="Class" widget="many2many_tags" required="1" domain="[('evaluation_type', '=', '8-4-4')]"/>
+                            <field name="subject_ids" string="Subject" widget="many2many_tags" required="1" domain="[('course_ids', 'in', course_ids)]"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Grade">
+                            <field name="grade_category_line_ids" required="1">
+                                <list editable="bottom">
+                                    <field name="min_per" width="25%"/>
+                                    <field name="max_per" width="25%"/>
+                                    <field name="result" width="25%" required="1"/>
+                                    <field name="points" width="25%"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_xe_grade_category_configuration" model="ir.actions.act_window">
+        <field name="name">Grade Category</field>
+        <field name="res_model">xe.grade.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

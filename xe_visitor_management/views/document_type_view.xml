@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_document_type_tree" model="ir.ui.view">
+        <field name="name">document.type.tree</field>
+        <field name="model">document.type</field>
+        <field name="priority" eval="8" />
+        <field name="arch" type="xml">
+            <list string="Document Type" editable="bottom">
+                <field name="name" />
+                <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_document_type_search" model="ir.ui.view">
+        <field name="name">document.type.search</field>
+        <field name="model">document.type</field>
+        <field name="priority" eval="8" />
+        <field name="arch" type="xml">
+            <search string="Document Type">
+                <field name="name" />
+            </search>
+        </field>
+    </record>
+    <record id="act_open_document_type_view" model="ir.actions.act_window">
+        <field name="name">Document Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">document.type</field>
+        <field name="view_id" ref="view_document_type_tree" />
+        <field name="search_view_id" ref="view_document_type_search" />
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+</odoo>

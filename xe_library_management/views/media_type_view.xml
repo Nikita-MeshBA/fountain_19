@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_xe_media_type_tree" model="ir.ui.view">
+        <field name="name">xe.media.type.tree</field>
+        <field name="model">xe.media.type</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <list string="Tag" editable="bottom">
+                <field name="name" required="1"/>
+                <field name="code"/>
+                <field name="sequence_id"/>
+                <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_xe_media_type_search" model="ir.ui.view">
+        <field name="name">xe.media.type.search</field>
+        <field name="model">xe.media.type</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Tag">
+                <field name="name"/>
+                <newline/>
+                <group>
+                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="act_open_xe_media_type_view">
+        <field name="name">Media Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">xe.media.type</field>
+        <field name="view_id" ref="view_xe_media_type_tree"/>
+        <field name="search_view_id" ref="view_xe_media_type_search"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+    <!--        <record model="ir.actions.act_window.view" id="act_open_xe_media_type_view_form">-->
+    <!--            <field name="act_window_id" ref="act_open_xe_media_type_view" />-->
+    <!--            <field name="sequence" eval="20" />-->
+    <!--            <field name="view_mode">form</field>-->
+    <!--            <field name="view_id" ref="view_xe_media_type_form" />-->
+    <!--        </record>-->
+    <!--        <record model="ir.actions.act_window.view" id="act_open_xe_media_type_view_tree">-->
+    <!--            <field name="act_window_id" ref="act_open_xe_media_type_view" />-->
+    <!--            <field name="sequence" eval="10" />-->
+    <!--            <field name="view_mode">list</field>-->
+    <!--            <field name="view_id" ref="view_xe_media_type_tree" />-->
+    <!--        </record>-->
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="xe_enquiry_form_inherit" model="ir.ui.view">
+        <field name="name">xe.admission.enquiry</field>
+        <field name="model">xe.admission.enquiry</field>
+        <field name="inherit_id" ref="xe_admission_management.view_admission_enquiry_form"/>
+        <field name="arch" type="xml">
+            <field name="previous_school_attended" position="after">
+                <field name="doc_type" readonly="1"/>
+            </field>
+        </field>
+    </record>
+</odoo>

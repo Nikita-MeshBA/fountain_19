@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="exam_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company exam rule</field>
+        <field name="model_id" ref="model_xe_exam"/>
+        <field name="domain_force">['|', ('company_id','=',False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="exam_attendees_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company exam attendees rule</field>
+        <field name="model_id" ref="model_xe_exam_attendees"/>
+        <field name="domain_force">['|', ('company_id','=',False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="exam_room_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company exam room rule</field>
+        <field name="model_id" ref="model_xe_exam_room"/>
+        <field name="domain_force">['|', ('company_id','=',False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="exam_session_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company exam session rule</field>
+        <field name="model_id" ref="model_xe_exam_session"/>
+        <field name="domain_force">['|', ('company_id','=',False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="exam_type_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company exam type rule</field>
+        <field name="model_id" ref="model_xe_exam_type"/>
+        <field name="domain_force">['|', ('company_id','=',False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="grade_config_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company grade config rule</field>
+        <field name="model_id" ref="model_xe_grade_configuration"/>
+        <field name="domain_force">['|', ('company_id','=',False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="marksheet_line_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company mark sheet rule</field>
+        <field name="model_id" ref="model_xe_marksheet_line"/>
+        <field name="domain_force">['|', ('company_id','=',False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="marksheet_register_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company mark sheet register rule</field>
+        <field name="model_id" ref="model_xe_marksheet_register"/>
+        <field name="domain_force">['|', ('company_id','=',False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="result_line_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company exam result line rule</field>
+        <field name="model_id" ref="model_xe_result_line"/>
+        <field name="domain_force">['|', ('company_id','=',False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="result_template_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company exam result template rule</field>
+        <field name="model_id" ref="model_xe_result_template"/>
+        <field name="domain_force">['|', ('company_id','=',False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rubrics_multi_company_rule" model="ir.rule">
+        <field name="name">multi-company rubrics configuration rule</field>
+        <field name="model_id" ref="model_xe_rubrics_configuration"/>
+        <field name="domain_force">['|', ('company_id','=',False), ('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

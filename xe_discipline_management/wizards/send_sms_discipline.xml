@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="multi_discipline_sms_send_wizard" model="ir.ui.view">
+            <field name="name">send.discipline.sms.wizard.form</field>
+            <field name="model">send.sms.discipline</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                                <field name="discipline_records_ids" widget="many2many_tags"/>
+                                <field name="sms_template_id"/>
+                                <field name="template_body"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Send SMS" type="object" name="action_send_sms" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+         </record>
+         <record id="discipline_action_send_sms" model="ir.actions.act_window">
+               <field name="name">Send SMS</field>
+               <field name="res_model">send.sms.discipline</field>
+               <field name="view_mode">form</field>
+               <field name="target">new</field>
+               <field name="binding_model_id" ref="model_xe_discipline_records"/>
+               <field name="binding_view_types">list,form</field>
+       </record>
+    </data>
+</odoo>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_xe_marksheet_line_tree" model="ir.ui.view">
+        <field name="name">xe.marksheet.line.tree</field>
+        <field name="model">xe.marksheet.line</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <list string="Marksheet Line" js_class="view_xe_marksheet_line_tree">
+                <field name="academic_year_id"/>
+                <field name="exam_session_id"/>
+                <field name="academic_term_id"/>
+                <field name="student_id"/>
+                <field name="total_marks" column_invisible="True"/>
+                <field name="percentage" column_invisible="True"/>
+                <field name="grade" column_invisible="True"/>
+                <field name="status" column_invisible="True"/>
+                <field name="evaluation_type" column_invisible="True"/>
+                <field name="head_master_comment" string="Teacher Comments"/>
+                <button name="button_cbc_marksheet_line_report" string="CBC Marksheet Line" type="object" class="btn-primary" column_invisible="evaluation_type in ['8-4-4', 'Kindergarten', 'Playgroup', 'Pre Primary', 'Cambridge']"/>
+                <button name="button_cbc_combine_marksheet_line" string="CBC Combine Marksheet Line" type="object" class="btn-primary" column_invisible="evaluation_type in ['8-4-4', 'Kindergarten', 'Playgroup', 'Pre Primary', 'Cambridge']"/>
+                <button name="button_marksheet_line" string="Marksheet Line" type="object" class="btn-primary" column_invisible="evaluation_type in ['1-3 CBC', 'Kindergarten', 'Playgroup', 'Pre Primary', 'Cambridge']"/>
+                <button name="button_combine_marksheet_line" string="Combine Marksheet Line" type="object" class="btn-primary" column_invisible="evaluation_type in ['1-3 CBC', 'Kindergarten', 'Playgroup', 'Pre Primary', 'Cambridge']"/>
+                <!-- Below button added for only not raise error 'evaluation_type' in view -->
+                <button name="button_print" string="" type="object"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_xe_marksheet_line_form" model="ir.ui.view">
+        <field name="name">xe.marksheet.line.form</field>
+        <field name="model">xe.marksheet.line</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Marksheet Line" js_class="view_xe_marksheet_line_form">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="marksheet_reg_id"
+                                   options="{'no_create':True, 'no_edit': True, 'no_open': True}"/>
+                            <field name="student_id"/>
+                            <field name="total_marks" invisible="evaluation_type == '1-3 CBC'"/>
+                            <field name="head_master_comment" string="Comments"/>
+                            <field name="extra_curr_comment" invisible="1"/>
+                            <field name="classroom_id" readonly="1"/>
+                            <field name="head_teacher_comment" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="status" invisible="1"/>
+                            <field name="percentage" invisible="evaluation_type == '1-3 CBC'"/>
+                            <field name="grade" invisible="evaluation_type != 'grade'"/>
+                            <field name="evaluation_type"/>
+                            <field name="academic_year_id"
+                                   options="{'no_create':True, 'no_edit': True, 'no_open': True}"/>
+                            <field name="exam_session_id"
+                                   options="{'no_create':True, 'no_edit': True, 'no_open': True}"/>
+                            <field name="academic_term_id"
+                                   options="{'no_create':True, 'no_edit': True, 'no_open': True}"/>
+                            <field name="exam_ids" widget="many2many_tags" invisible="1"/>
+                            <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="result" string="Results">
+                            <field name="result_line_ids" nolabel="1">
+                                <list editable="bottom">
+                                    <field name="student_id" options="{'no_create':True, 'no_edit': True}"
+                                           domain="[('id', '=', parent.student_id)]"/>
+                                    <field name="exam_id" options="{'no_create':True, 'no_edit': True}"
+                                           domain="[('id', 'in', parent.exam_ids)]"/>
+                                    <field name="marks"/>
+                                    <field name="evaluation_type" column_invisible="1"/>
+                                    <field name="status" column_invisible="1"/>
+                                    <field name="comments" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_xe_marksheet_line_search" model="ir.ui.view">
+        <field name="name">xe.marksheet.line.search</field>
+        <field name="model">xe.marksheet.line</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Marksheet Line">
+                <field name="marksheet_reg_id"/>
+                <field name="student_id"/>
+                <field name="total_marks"/>
+                <field name="percentage"/>
+                <newline/>
+                <group expand="0" string="Group By...">
+                    <filter string="Marksheet Register" name="marksheet_register" domain="[]"
+                            context="{'group_by':'marksheet_reg_id'}"/>
+                    <filter string="Student" name="student" domain="[]" context="{'group_by':'student_id'}"/>
+                    <filter string="Class" name="class" domain="[]" context="{'group_by':'course_id'}"/>
+                    <filter string="Classroom" name="classroom" domain="[]" context="{'group_by':'classroom_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="act_open_xe_marksheet_line_view">
+        <field name="name">Marksheet Lines</field>
+        <field name="res_model">xe.marksheet.line</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_xe_marksheet_line_search"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_open_xe_marksheet_line_view_form">
+        <field name="act_window_id" ref="act_open_xe_marksheet_line_view"/>
+        <field name="sequence" eval="20"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_xe_marksheet_line_form"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_open_xe_marksheet_line_view_tree">
+        <field name="act_window_id" ref="act_open_xe_marksheet_line_view"/>
+        <field name="sequence" eval="10"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_xe_marksheet_line_tree"/>
+    </record>
+</odoo>

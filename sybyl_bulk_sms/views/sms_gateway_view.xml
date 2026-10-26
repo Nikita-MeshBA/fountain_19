@@ -1,0 +1,80 @@
+<odoo>
+    <record id="view_sms_gateway_from" model="ir.ui.view">
+        <field name="name">sms.gateway.config.view</field>
+        <field name="model">sms.gateway.config</field>
+        <field name="arch" type="xml">
+            <form string="SMS GateWay">
+                <header>
+                    <button name="test_send_sms_connection" type="object" string="Test Connection"
+                            icon="fa-television"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="url"/>
+                            <field name="body_property_id" domain="[('company_id', '=', company_id)]" required="1"/>
+                        </group>
+                        <group>
+                            <field name="phone_no" required="1"/>
+                            <field name="mobile_property_id" domain="[('company_id', '=', company_id)]" required="1"/>
+                            <field name="company_id" required="1" options="{'no_create': True}"
+                                   groups="base.group_multi_company"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Properties">
+                            <field name="property_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="value"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Header Properties">
+                            <field name="header_property_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="value"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sms_gateway_view_tree" model="ir.ui.view">
+        <field name="name">sms.gateway.config.tree</field>
+        <field name="model">sms.gateway.config</field>
+        <field name="arch" type="xml">
+            <list string="SMS Gateway Account">
+                <field name="name"/>
+                <field name="url"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sms_gateway_action" model="ir.actions.act_window">
+        <field name="name">SMS Gateway Accounts</field>
+        <field name="res_model">sms.gateway.config</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Add SMS Gateway Accounts</p>
+        </field>
+    </record>
+
+    <menuitem id="sybyl_bulk_sms_parent_menu"
+              name="SMS Marketing"
+              groups="group_bulk_sms_user"
+              sequence="28"/>
+
+    <menuitem id="sybyl_gateway_account_menu"
+              name="Gateway Accounts"
+              parent="sybyl_bulk_sms_parent_menu"
+              action="sms_gateway_action"
+              groups="group_bulk_sms_admin"
+              sequence="50"/>
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="ir.ui.view" id="fees_detail_report_wizard_form">
+        <field name="name">fees.detail.report.wizard.form</field>
+        <field name="model">fees.detail.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Fees Details">
+                <group>
+                    <group>
+                        <field name="date_from" required="1"/>
+                        <field name="fees_filter"/>
+                    </group>
+                    <group>
+                        <field name="date_to" required="1"/>
+                        <field name="student_id"
+                               invisible="fees_filter != 'student'" required="fees_filter == 'student'"/>
+                        <field name="all_courses" widget="radio" invisible="fees_filter != 'course'"/>
+                        <field name="course_id" invisible="all_courses != 'select_course' or fees_filter != 'course'"
+                               required="all_courses == 'select_course'"/>
+                        <field name="class_room_id" invisible="fees_filter != 'classroom'"
+                               required="fees_filter == 'classroom'"/>
+                    </group>
+                </group>
+                <footer groups="base.group_user">
+                    <button name="check_report" type="object" string="Print"
+                            class="oe_highlight"/>
+                    <button name="check_report_xls" type="object" string="Print XLSX"
+                            class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="fees_detail_report_wizard_act" model="ir.actions.act_window">
+        <field name="name">Fees Details</field>
+        <field name="res_model">fees.detail.report.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="fees_detail_report_wizard_form"/>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_fees_analysis_report" name="Fees Analysis"
+              action="fees_detail_report_wizard_act" parent="xenesis_school_base.menu_base_report" sequence="10"/>
+</odoo>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="employee_personal_rule" model="ir.rule">
+        <field name="name">Personal Employee</field>
+        <field ref="hr.model_hr_employee_public" name="model_id"/>
+        <field name="domain_force">[('user_id','=',user.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="employee_personal_rule_office" model="ir.rule">
+        <field name="name">Officer Employee</field>
+        <field ref="hr.model_hr_employee_public" name="model_id"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('hr.group_hr_manager'))]"/>
+    </record>
+
+
+    <function name="write" model="ir.model.data">
+        <function name="search" model="ir.model.data">
+            <value
+                    eval="[('module', '=', 'hr_payroll'), ('name', '=', 'hr_payroll_rule_officer')]"/>
+        </function>
+        <value eval="{'noupdate': False}"/>
+    </function>
+
+    <record id="hr_payroll_community.hr_payroll_rule_officer" model="ir.rule">
+        <field name="name">Officer and subordinates Payslip</field>
+        <field name="active">False</field>
+        <field name="model_id" ref="model_hr_payslip"/>
+        <field name="domain_force">['|','|', ('employee_id.user_id', '=', user.id), ('employee_id.department_id', '=',
+            False), ('employee_id.department_id.manager_id.user_id', '=', user.id)]
+        </field>
+        <field name="groups" eval="[(4, ref('hr_payroll_community.group_hr_payroll_community_user'))]"/>
+    </record>
+
+    <function name="write" model="ir.model.data">
+        <function name="search" model="ir.model.data">
+            <value eval="[('module', '=', 'hr_payroll_community'), ('name', '=', 'hr_payroll_rule_officer')]"/>
+        </function>
+        <value eval="{'noupdate': True}"/>
+    </function>
+
+</odoo>

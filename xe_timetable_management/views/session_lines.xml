@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="xe_session_lines_list">
+          <field name="name">xe.timetable.sessions.line.list</field>
+          <field name="model">xe.session.lines</field>
+          <field name="arch" type="xml">
+            <list create="false" edit="false" delete="false">
+                <field name="timetable_id" invisible="1"/>
+                <field name="timing_id" invisible="1"/>
+                <field name="name"/>
+                <field name="teacher_id"/>
+                <field name="course_id"/>
+                <field name="academic_term_id"/>
+                <field name="class_room_id"/>
+                <field name="subject_id"/>
+                <field name="session_date"/>
+                <field name="day"/>
+                <field name="start_time" widget="float_time"/>
+                <field name="end_time" widget="float_time"/>
+                <field name="duration" widget="float_time"/>
+            </list>
+          </field>
+        </record>
+        <record model="ir.ui.view" id="xe_session_lines_form">
+          <field name="name">xe.timetable.sessions.line.form</field>
+          <field name="model">xe.session.lines</field>
+          <field name="arch" type="xml">
+            <form create="false" edit="false" delete="false">
+                <sheet>
+                      <div class="oe_title">
+                          <h1 class="d-flex">
+                              <field name="name" readonly="1"/>
+                          </h1>
+                    </div>
+                    <group>
+                        <group>
+                             <field name="timetable_id" invisible="1"/>
+                             <field name="timing_id" invisible="1"/>
+                             <field name="teacher_id"/>
+                             <field name="course_id"/>
+                             <field name="academic_term_id"/>
+                            <field name="class_room_id"/>
+                             <field name="subject_id"/>
+                        </group>
+                        <group>
+                              <field name="session_date"/>
+                              <field name="day"/>
+                              <field name="start_time" widget="float_time"/>
+                              <field name="end_time" widget="float_time"/>
+                            <field name="duration" widget="float_time"/>
+                            <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                </sheet>
+                 <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                 </div>
+            </form>
+          </field>
+        </record>
+        <record id="session_lines_filter" model="ir.ui.view">
+            <field name="name">xe.session.lines.select</field>
+            <field name="model">xe.session.lines</field>
+            <field name="arch" type="xml">
+<!--                <search string="Search Sessions">-->
+<!--                    <field name="teacher_id" filter_domain="[('teacher_id', 'ilike', self)]"/>-->
+<!--                    <field name="course_id" filter_domain="[('course_id', 'ilike', self)]"/>-->
+<!--                    <field name="academic_term_id" filter_domain="[('academic_term_id', 'ilike', self)]"/>-->
+<!--                    <field name="subject_id" filter_domain="[('subject_id', 'child_of', self)]"/>-->
+<!--                    <search string="Search Sessions">-->
+<!--                    <field name="teacher_id" filter_domain="[('teacher_id.name', 'ilike', self)]"/>-->
+<!--                    <field name="course_id" filter_domain="[('course_id.name', 'ilike', self)]"/>-->
+<!--                    <field name="academic_term_id" filter_domain="[('academic_term_id.name', 'ilike', self)]"/>-->
+<!--                    <field name="subject_id" filter_domain="[('subject_id.name', 'ilike', self)]"/>-->
+<!--                    <group expand="0" name="group_by" string="Group By">-->
+<!--                        <filter name="group_teacher" string="Teacher" domain="[]" context="{'group_by' : 'teacher_id'}" />-->
+<!--                        <filter name="group_course" string="Class" context="{'group_by': 'course_id'}"/>-->
+<!--                        <filter name="group_term" string="Term" context="{'group_by': 'academic_term_id'}"/>-->
+<!--                        <filter name="group_subject" string="Subject" context="{'group_by': 'subject_id'}"/>-->
+<!--                        <filter name="group_date" string="Session Date" context="{'group_by': 'session_date'}"/>-->
+<!--                    </group>-->
+<!--                </search>-->
+                 <search string="Search Sessions">
+                <field name="teacher_id"/>
+                <field name="course_id"/>
+                <field name="academic_term_id"/>
+                <field name="subject_id"/>
+                <field name="session_date"/>
+            </search>
+            </field>
+        </record>
+
+         <record id="session_line_kanban_view_custom" model="ir.ui.view">
+            <field name="name">xe.session.lines.view.custom</field>
+            <field name="model">xe.session.lines</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="day" class="o_kanban_small_column o_kanban_project_tasks" create="false" edit="false" delete="false">
+                    <field name="day"/>
+                    <field name="name"/>
+                    <field name="teacher_id"/>
+                    <field name="session_date"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/><field name="duration"/>
+                    <field name="course_id"/>
+                    <field name="academic_term_id"/>
+                    <field name="class_room_id"/>
+                    <field name="subject_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="o_kanban_card_content mw-100 oe_kanban_global_click">
+                                <div class="o_kanban_primary_left">
+                                    <div class="o_primary">
+                                        <span class="o_text_overflow"><strong><t t-esc="record.name.value"/></strong></span>
+                                        <span class="o_text_overflow" style="float:right"><strong>Date:<t t-esc="record.session_date.value"/></strong></span>
+
+                                    </div>
+                                    <div/>
+                                    <div >
+                                        Teacher:<t t-esc="record.teacher_id.value"/>
+                                    </div>
+                                    <div>
+                                        Term:<t t-esc="record.academic_term_id.value"/>
+                                    </div>
+                                    <div>
+                                        Class:<t t-esc="record.course_id.value"/><br/>
+                                    </div>
+                                    <div>
+                                        Classroom:<t t-esc="record.class_room_id.value"/><br/>
+                                    </div>
+                                    <div>
+                                        Sub:<t t-esc="record.subject_id.value"/><br/>
+                                    </div>
+
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            Start:<field name="start_time" widget="float_time"/><br/>
+                                        </div>
+                                        <div class="oe_kanban_bottom_right">
+                                            End:<field name="end_time" widget="float_time"/>
+                                        </div>
+                                    </div>
+                                <div class="oe_clear"></div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="xe_session_line_act">
+          <field name="name">Timetable Sessions</field>
+          <field name="res_model">xe.session.lines</field>
+          <field name="view_mode">kanban,list,form</field>
+        </record>
+        <menuitem name="Timetable Sessions" id="session_line_menu" parent="timetable_menu_root"
+              action="xe_session_line_act" sequence="1"/>
+    </data>
+</odoo>

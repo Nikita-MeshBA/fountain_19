@@ -1,0 +1,119 @@
+<odoo>
+    <record model="ir.ui.view" id="student_attendance_list">
+        <field name="name">xe.student.attendance.list</field>
+        <field name="model">xe.student.attendance</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="attendance_register_id"/>
+                <field name="attendance_date"/>
+                <field name="teacher_user_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="student_attendance_form">
+        <field name="name">xe.student.attendance.form</field>
+        <field name="model">xe.student.attendance</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved"/>
+                    <button name="submit" string="Confirm" class="oe_highlight" type="object"
+                            invisible="state not in ['draft']"/>
+                    <button name="approve" string="Approve" class="oe_highlight" type="object"
+                            groups="xe_attendance_management.group_s_attendance_admin"
+                            invisible="state not in ['submitted']"/>
+                    <button name="refresh" string="Refresh" class="oe_highlight" type="object"
+                            invisible="state not in ['draft']"
+                            groups="xe_attendance_management.group_s_attendance_admin"/>
+                    <button name="reset_to_draft" string="Reset to Draft" type="object" class="oe_highlight"
+                            invisible="state not in ['submitted']"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1 class="d-flex">
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="attendance_register_id" required="1" readonly="state not in ['draft']"/>
+                            <field name="fetch_students" invisible="1"/>
+                            <field name="attendance_type" invisible="1"/>
+                            <field name="attendance_session" invisible="attendance_type != 'daily_2'" readonly="1"/>
+                            <field name="subject_id" invisible="attendance_type != 'subject_wise'"/>
+                        </group>
+                        <group>
+                            <field name="attendance_date" readonly="state not in ['draft']" required="True"/>
+                            <field name="teacher_user_id" readonly="state not in ['draft']"/>
+                            <field name="teacher_id" invisible="1"/>
+                            <field name="company_id" options="{'no_create':True}"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="attendance_details" string="Attendance Details"
+                              invisible="fetch_students == False">
+                            <field name="attendance_details_ids" readonly="state not in ['draft']">
+                                <tree editable="bottom" create="false">
+                                    <field name="student_id" readonly="1"/>
+                                    <field name="roll_number"/>
+                                    <field name="attendance" string="Status"/>
+                                    <field name="remarks_type_id"/>
+                                    <field name="attendance_id" column_invisible="1"/>
+                                    <field name="course_id" column_invisible="1"/>
+                                    <field name="term_id" column_invisible="1"/>
+                                    <field name="attendance_date" column_invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <group>
+                        <group>
+                            <field name="total_student_present" invisible="state not in ['submitted','approved']"
+                                   readonly="1" force_save="1"/>
+                        </group>
+                        <group>
+                            <field name="total_student_absent" invisible="state not in ['submitted','approved']"
+                                   readonly="1" force_save="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="view_attendance_filter" model="ir.ui.view">
+        <field name="name">xe.student.attendance.search</field>
+        <field name="model">xe.student.attendance</field>
+        <field name="arch" type="xml">
+            <search string="Search Attendance">
+                <field name="name"/>
+                <field name="attendance_register_id"/>
+                <field name="state"/>
+                <field name="attendance_date"/>
+                <filter string="Today" name="attendance_today"
+                        domain="[('attendance_date' , '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')), ('attendance_date' , '&lt;=' , datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="attendance_action_window">
+        <field name="name">Attendance Sheet</field>
+        <field name="res_model">xe.student.attendance</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Student Attendance" id="xe_attendance_menu_root" sequence="11"
+              groups="xe_attendance_management.group_s_attendance_admin,xe_attendance_management.group_s_attendance_user"/>
+
+    <menuitem name="Attendance Sheet" id="xe_attendance_stud" parent="xe_attendance_menu_root"
+              action="attendance_action_window"/>
+    <menuitem name="Reports" id="xe_attendance_report_menu" parent="xe_attendance_menu_root"
+              groups="xe_attendance_management.group_s_attendance_admin"/>
+</odoo>

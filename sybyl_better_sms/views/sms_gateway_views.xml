@@ -1,0 +1,23 @@
+<odoo>
+
+    <record id="view_better_sms_gateway_form_inherit" model="ir.ui.view">
+        <field name="name">better.sms.gateway.config.from.view.inherit</field>
+        <field name="model">sms.gateway.config</field>
+        <field name="inherit_id" ref="sybyl_bulk_sms.view_sms_gateway_from"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='url']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="is_better_sms" string="Better SMS"/>
+                <field name="better_username" string="Username" invisible="is_better_sms == False" required="is_better_sms"/>
+                <field name="better_password" string="Password" invisible="is_better_sms == False" required="is_better_sms" password="True"/>
+                <field name="sender_id" string="Sender ID" invisible="is_better_sms == False" required="is_better_sms"/>
+                <field name="better_sms_type" string="SMS Type" invisible="is_better_sms == False" required="is_better_sms"/>
+                <field name="better_coding" string="Coding" invisible="is_better_sms == False" required="is_better_sms"/>
+                <field name="url" string="URL" required="is_better_sms" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

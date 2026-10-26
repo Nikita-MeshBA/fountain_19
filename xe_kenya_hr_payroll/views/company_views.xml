@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="company_view_inherited" model="ir.ui.view">
+        <field name="name">res.company.form.inherited</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[last()]" position="after">
+                <page string="Attendance">
+                    <group string="Gratuity">
+                        <field name="gratuity_period" class="oe_inline"/>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="nssf_no" class="oe_inline"/>
+                <field name="nhif_no" class="oe_inline"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="employee_id_front_end" string="Front End" invisible="1"/>
+                <field name="employee_id_back_end" string="Back End" invisible="1"/>
+                <field name="type_select" string="Employee Template" widget="selection"/>
+                <field name="employee_front_side" string="Employee Front Side"/>
+                <field name="employee_back_side" string="Employee Back Side"/>
+                <field name="type_select_std" string="Student Template" widget="selection"/>
+                <field name="student_front_side" string="Student Front Side"/>
+                <field name="student_back_side" string="Student Back Side"/>
+                <field name="signature" widget="signature"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_bank_inherited" model="ir.ui.view">
+        <field name="name">res.bank.form.inherited</field>
+        <field name="model">res.bank</field>
+        <field name="inherit_id" ref="base.view_res_bank_form"/>
+        <field name="arch" type="xml">
+            <field name="phone" position="before">
+                <field name="swift_code"/>
+            </field>
+        </field>
+    </record>
+</odoo>

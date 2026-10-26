@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="attendance_summary_report_form">
+        <field name="name">attendance.summary.report.wizard.form</field>
+        <field name="model">attendance.summary.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <sheet>
+                    <group>
+                        <group>
+
+                            <field name="from_date" required="1"/>
+                            <field name="course_id" options="{'no_create': True}" string="Class" required="1"/>
+                        </group>
+                        <group>
+                            <field name="to_date" required="1"/>
+                            <field name="class_room_id" domain="[('course_id','=',course_id)]"
+                                   ptions="{'no_create': True}" required="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="print_attendance_report_excel" type="object" class="oe_highlight"
+                            string="Print Excel"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="attendance_summary_report_wizard" model="ir.actions.act_window">
+        <field name="name">Attendance Summary Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">attendance.summary.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="Attendance Summary Report" id="report_summary_menu"
+              parent="xe_attendance_management.xe_attendance_report_menu"
+              action="attendance_summary_report_wizard"/>
+</odoo>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="report_visitor_pass_report">
+            <t t-call="xe_visitor_management.visitor_management_external_layout">
+                <div class="page">
+                    <div class="text-center">
+                        <h5>
+                            <strong>
+                                VISITOR GATE PASS:
+                                <span t-field='o.pass_number'/>
+                            </strong>
+                        </h5>
+                    </div>
+                    <div class="row">
+                        <table class="table table-bordered table-condensed"
+                               width="100%">
+                            <tr>
+                                <td>
+                                    <b>Name:</b>
+                                    <span t-field='o.name'/>
+                                </td>
+                                <td>
+                                    <b>Meeting With:</b>
+                                    <span t-field='o.meeting_with_id.name'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Phone:</b>
+                                    <span t-field='o.phone'/>
+                                </td>
+                                <td>
+                                    <b>Email:</b>
+                                    <span t-field='o.email'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Street:</b>
+                                    <span t-field='o.street'/>
+                                </td>
+                                <td>
+                                    <b>Street2:</b>
+                                    <span t-field='o.street2'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>City:</b>
+                                    <span t-field='o.city'/>
+                                </td>
+                                <td>
+                                    <b>P.O. Box No.:</b>
+                                    <span t-field='o.po_box_no'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Visitor In Time:</b>
+                                    <span t-field='o.visitor_in_time'/>
+                                </td>
+                                <td>
+                                    <b>Visitor Out Time:</b>
+                                    <span t-field='o.visitor_out_time'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Document Type:</b>
+                                    <span t-field='o.document_type_id.name'/>
+                                </td>
+                                <td>
+                                    <b>Document Number:</b>
+                                    <span t-field='o.document_number'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Vehicle Number:</b>
+                                    <span t-field='o.vehicle_number'/>
+                                </td>
+                                <td>
+                                    <b>Purpose Type:</b>
+                                    <span t-field='o.purpose_type_id.name'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Approved By:</b>
+                                    <span t-field='o.approved_by_id.name'/>
+                                </td>
+                                <td>
+                                    <b>Reception Duty Officer:</b>
+                                    <span t-field='o.duty_officer_name_id.name'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <b>Purpose:</b>
+                                    <span t-field='o.purpose'/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </template>
+        <template id="report_visitor_pass">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="o" t-value="o.with_context(lang=o.env.lang)"/>
+                    <t t-call="xe_visitor_management.report_visitor_pass_report"
+                       t-lang="o.env.lang"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

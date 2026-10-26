@@ -1,0 +1,71 @@
+<odoo>
+    <record id="view_fees_type_tree" model="ir.ui.view">
+        <field name="name">xe.fees.type.tree</field>
+        <field name="model">xe.fees.type</field>
+        <field name="arch" type="xml">
+            <list string="FeesTerm">
+                <field name="fee_type" string="Fee Type"/>
+                <field name="type" string="Type"/>
+                <field name="product_id" string="Product"/>
+                <field name="fee"/>
+                <field name="duration"/>
+                <field name="description"/>
+                <field name="company_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_fees_type_search" model="ir.ui.view">
+        <field name="name">xe.fees.type.search</field>
+        <field name="model">xe.fees.type</field>
+        <field name="arch" type="xml">
+            <search string="Fee Type">
+                <field name="fee_type" string="Fee Type"/>
+                <field name="duration" string="Duration"/>
+                <field name="description" string="Description"/>
+                <newline/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_fees_type_form" model="ir.ui.view">
+        <field name="name">xe.fees.type.form</field>
+        <field name="model">xe.fees.type</field>
+        <field name="arch" type="xml">
+            <form string="Fees Type">
+                <sheet>
+                    <group col="2">
+                        <group>
+                            <field name="fee_type" string="Fee Type"/>
+<!--                            <field name="product_id" string="Product" domain=" [('detailed_type','=','service')]"/>-->
+                            <field name="product_id" string="Product" domain="[('type','=','service')]"/>
+                            <field name="is_academic" invisible="1"/>
+                            <field name="is_transport_fees" invisible="1"/>
+                            <field name="is_activity" invisible="1"/>
+                            <field name="is_boarding" invisible="1"/>
+                            <field name="is_optional" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="fee"/>
+                            <field name="type"/>
+                            <field name="duration"/>
+                            <field name="description" string="Description"/>
+                            <field name="company_id" options="{'no_create':True}"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_fees_type" model="ir.actions.act_window">
+        <field name="name">Fees Type</field>
+        <field name="res_model">xe.fees.type</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_fees_type_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add a new Fees Type</p>
+        </field>
+    </record>
+</odoo>

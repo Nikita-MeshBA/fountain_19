@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rfid_card_configuration,access.rfid.card.configuration,model_rfid_card_configuration,,1,1,1,1
+access_rfid_device_configuration,access.rfid.device.configuration,model_rfid_device_configuration,,1,1,1,1
+access_rfid_session_configuration,access.rfid.session.configuration,model_rfid_session_configuration,,1,1,1,1
+access_rfid_logs,access.rfid.logs,model_rfid_logs,,1,1,1,1
+access_rfid_request_record,access.rfid.request.record,model_rfid_request_record,,1,1,1,1

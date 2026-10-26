@@ -1,0 +1,36 @@
+<odoo>
+    <record model="ir.ui.view" id="salary_report_wizard">
+        <field name="name">salary Template Report</field>
+        <field name="model">salary.report.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Salary Template Report">
+                <group>
+                    <group>
+                        <field name="date_start"/>
+                    </group>
+                    <group>
+                        <field name="date_end"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="get_report" string="Get Report" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_salary_report_wizard" model="ir.actions.act_window">
+        <field name="name">Salary Template Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">salary.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem action="action_salary_report_wizard"
+              id="menu_salary_report_wizard"
+              parent="payroll_report"
+              sequence="203"/>
+</odoo>

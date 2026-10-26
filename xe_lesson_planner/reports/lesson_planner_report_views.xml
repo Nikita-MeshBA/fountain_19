@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Lesson Planner Header and Footer -->
+    <template id="xen_custom_layout_header1">
+        <!-- <div t-att-style="report_header_style"> -->
+        <!-- <div class="article"> -->
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id" />
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company" />
+        </t>
+        <div class="header">
+            <div class="row">
+                <div class="col-4" align="left">
+                    <img t-if="company.logo" t-attf-src="data:image/png;base64,#{company.logo}" alt=""
+                         style="max-height: 100px;"/>
+                </div>
+                <div class="col-4" align="center">
+                    <img t-if="company.report_watermark" t-attf-src="data:image/png;base64,#{company.report_watermark}" alt=""
+                         style="max-height: 100px;"/>
+                </div>
+                <div class="col-4" align="right">
+                    <table class="table" style="border: none!important; border:0px white !important;" border="0">
+                        <t t-if="company.email">
+                            <tr style="border: none!important;">
+                                <td style="border: none!important; text-align: left;"><t t-esc="company.email"/></td>
+                                <td style="border: none!important;"><i class="fa fa-envelope" style="font-size:24px;color: #FFC300"></i></td>
+                            </tr>
+                        </t>
+                        <t t-if="company.website">
+                            <tr style="border: none!important;">
+                                <td style="border: none!important; text-align: left;"><t t-esc="company.website"/></td>
+                                <td style="border: none!important;"><i class="fa fa-globe" style="font-size:24px;color: #FFC300"></i></td>
+                            </tr>
+                        </t>
+                        <t t-if="company.phone">
+                            <tr style="border: none!important;">
+                                <td style="border: none!important; text-align: left;"><t t-esc="company.phone"/></td>
+                                <td style="border: none!important;"><i class="fas fa-mobile-phone" style="font-size:24px;color: #FFC300"></i></td>
+                            </tr>
+                        </t>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <!-- </div> -->
+        <!-- <div class="pt-5"/> -->
+        <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout {{  'o_layout_background' if company.layout_background in ['Geometric', 'Custom']  else  '' }}" t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if company.layout_background == 'Geometric' else ''}});" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <div>
+                <!-- This div ensures that the address is not cropped by the header. -->
+                <div class="pt-5">
+                <!-- <div class="mt8 mb8"> -->
+                    <t t-call="web.address_layout"/>
+                    <t t-out="0"/>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+            <!-- <div t-if="company.logo or company.report_watermark" class="row zero_min_height">
+                <div class="col-xs-12">
+                    <div style="border-bottom: 1px solid black;"/>
+                </div>
+            </div> -->
+    </template>
+
+    <template id="custom_layout_header">
+        <div class="header" style="font-size: 15px;border:0px solid blue;">
+            <div class="row">
+                <div class="col-3">
+                    <img t-if="company.logo"
+                        t-att-src="'data:image/png;base64,%s' % to_text(company.logo)"
+                        style="max-height: 80px;" />
+                </div>
+                <div class="col-6" align="center">
+                    <b>
+                        <span t-field="company.name" style="font-size:20px;" />
+                    </b><br/>
+                    <t t-if="company.street">
+                        <span t-field="company.street" />
+                    </t>
+                    <t t-if="company.street2">
+                        <span t-field="company.street2" />
+                    </t>
+                    <t t-if="company.city">
+                        <span t-field="company.city" />
+                    </t>
+                    <t t-if="company.state_id">
+                        <span t-field="company.state_id.name" />
+                    </t>
+                    <t t-if="company.country_id">
+                        <span t-field="company.country_id.name" />
+                    </t>
+                    <br />
+                    <span t-field="company.email" />
+                </div>
+                <div class="col-3">
+                </div>
+            </div>
+            <div t-if="company.logo or company.report_header" class="row zero_min_height">
+                <div class="col-xs-12">
+                    <div style="border-bottom: 1px solid black;" />
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="custom_layout_footer">
+        <div class="footer">
+            <div class="row">
+            </div>
+        </div>
+    </template>
+    <template id="lesson_planner_external_layout">
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id" />
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company" />
+        </t>
+        <div class="article">
+            <t t-call="xe_lesson_planner.custom_layout_header" />
+            <t t-raw="0" />
+            <t t-call="xe_lesson_planner.custom_layout_footer" />
+        </div>
+    </template>
+    
+    <!-- Lesson Planner paper format -->
+    <record id="scheme_of_work_paper_format" model="report.paperformat">
+            <field name="name">Scheme Of Work Report</field>
+            <field name="default" eval="True" />
+            <field name="format">B4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">45</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">30</field>
+            <field name="dpi">90</field>
+    </record>
+    <record id="lesson_planner_paper_format" model="report.paperformat">
+            <field name="name">Lesson Planner</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">50.00</field>
+            <field name="margin_bottom">16</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">38</field>
+            <field name="dpi">95</field>
+    </record>
+    
+    <!-- Scheme of work report -->
+    <record id="scheme_of_work_report" model="ir.actions.report">
+        <field name="name">Scheme of Work</field>
+        <field name="model">scheme.of.work</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_lesson_planner.report_scheme_of_work</field>
+        <field name="report_file">xe_lesson_planner.report_scheme_of_work</field>
+        <field name="binding_model_id" ref="xe_lesson_planner.model_scheme_of_work" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="scheme_of_work_paper_format"/>
+    </record>
+
+     <record id="cbc_scheme_work_xlsx_report" model="ir.actions.report">
+        <field name="name">CBC Work Report</field>
+        <field name="model">cbc.scheme.of.work</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">xe_lesson_planner.cbc_work_report_xlsx</field>
+        <field name="report_file">xe_lesson_planner.cbc_scheme_work_xlsx_report</field>
+    </record>
+
+    <record model="ir.ui.view" id="import_cbc_scheme_of_work_wizard_form">
+        <field name="name">import.cbc.scheme.of.work.wizard.form</field>
+        <field name="model">import.cbc.work.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="file" filename="filename"/>
+                        <field name="filename" invisible="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_upload" type="object" class="oe_highlight" string="Upload"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Scheme of work report template -->
+    <template id="report_scheme_of_work">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="xe_lesson_planner.lesson_planner_external_layout">
+                    <div class="container">
+                        <div class="page">
+                            <div>
+                                <h4><center>SCHEMS OF WORK</center></h4><br/>
+                            </div>
+                            <div class="row" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;">
+                                <div t-if="o.employee_id" class="col-4">
+                                    <b>NAME:</b> <span t-esc="o.employee_id.name" />
+                                </div>
+                                <div t-if="o.company_id" class="col-4">
+                                    <b>COMPANY:</b> <span t-esc="o.company_id.name" />
+                                </div>
+                                <div t-if="o.reg_no" class="col-4">
+                                    <b>REG No:</b> <span t-esc="o.reg_no" />
+                                </div>
+                            </div>
+                            <div class="row" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;">
+                                <div t-if="o.period_per_week" class="col-4">
+                                    <b>PERIOD PER WEEK:</b> <span t-esc="o.period_per_week" />
+                                </div>
+                                <div t-if="o.department_head_id" class="col-4">
+                                    <b>HEAD OF DEPARTMENT:</b> <span t-esc="o.department_head_id.name" />
+                                </div>
+                                <div t-if="o.class_id" class="col-4">
+                                    <b>CLASS:</b> <span t-esc="o.class_id.name" />
+                                </div>
+                            </div>
+                            <div class="row" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;">
+                                <div t-if="o.classroom_id" class="col-4">
+                                    <b>CLASS ROOM:</b> <span t-esc="o.classroom_id.name" />
+                                </div>
+                                <div t-if="o.year_id" class="col-4">
+                                    <b>YEAR:</b> <span t-esc="o.year_id.name" />
+                                </div>
+                                <div t-if="o.term_id" class="col-4">
+                                    <b>TERM: </b><span t-esc="o.term_id.name" />
+                                </div>
+                            </div>
+                            <table class="table table-condensed" name="scheme_of_work">
+                                <thead>
+                                    <tr>
+                                        <th>WK</th>
+                                        <th>LESSON</th>
+                                        <th>TOPIC/SUB TOPIC</th>
+                                        <th>OBJECTIVES</th>
+                                        <th>LEARNING ACTIVITIES</th>
+                                        <th>LEARNING RESOURCE / REFERENCE</th>
+                                        <th>REMARKS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.scheme_of_work_ids" t-as="line">
+                                        <td><strong><span t-esc="line.week"/></strong> </td>
+                                        <td><strong><span t-esc="line.lesson"/></strong> </td>
+                                        <td><strong><span t-esc="line.topic"/></strong> </td>
+                                        <td><strong><span t-esc="line.objectives"/></strong> </td>
+                                        <td><strong><span t-esc="line.learning_activities"/></strong> </td>
+                                        <td><strong><span t-esc="line.learning_resources"/></strong> </td>
+                                        <td><strong><span t-esc="line.remarks"/></strong> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>  
+                </t>
+            </t>
+        </t>
+    </template>
+    
+    <!-- Lesson Plan report -->
+    <record id="lesson_plan_report" model="ir.actions.report">
+        <field name="name">lesson plan</field>
+        <field name="model">lesson.plan</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_lesson_planner.report_lesson_plan</field>
+        <field name="report_file">xe_lesson_planner.report_lesson_plan</field>
+        <field name="binding_model_id" ref="model_lesson_plan" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="lesson_planner_paper_format"/>
+    </record>
+
+    <!-- Lesson Plan Report Template -->
+    <template id="report_lesson_plan">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="xe_lesson_planner.lesson_planner_external_layout">
+                    <div class="page">
+                        <div>
+                            <h4><center>LESSON PLAN</center></h4><br/>
+                        </div>
+                        <div class="row" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;">
+                            <div t-if="o.reg_no" class="col-4">
+                                <b>REG No:</b> <span t-esc="o.reg_no" />
+                            </div>
+                            <div t-if="o.employee_id" class="col-4">
+                                <b>NAME:</b> <span t-esc="o.employee_id.name" />
+                            </div>
+                            <div t-if="o.company_id" class="col-4">
+                                <b>SCHOOL:</b> <span t-esc="o.company_id.name" />
+                            </div>
+                        </div>
+                        <div class="row" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;">
+                            <div t-if="o.class_id" class="col-4">
+                                <b>CLASS:</b> <span t-esc="o.class_id.name" />
+                            </div>
+                            <div t-if="o.classroom_id" class="col-4">
+                                <b>CLASS ROOM:</b> <span t-esc="o.classroom_id.name" />
+                            </div>
+                            <div t-if="o.no_of_students" class="col-4">
+                                <b>NO OF STUDENTS:</b> <span t-esc="o.no_of_students" />
+                            </div>
+                        </div>
+                        <div class="row" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;">
+                            <div t-if="o.subject_id" class="col-4">
+                                <b>SUBJECT:</b> <span t-esc="o.subject_id.name" />
+                            </div>
+                            <div t-if="o.topic" class="col-4">
+                                <b>TOPIC: </b><span t-esc="o.topic" />
+                            </div>
+                            <div t-if="o.sub_topic" class="col-4">
+                                <b>SUB TOPIC:</b> <span t-esc="o.sub_topic" />
+                            </div>
+                        </div>
+                        <div class="row" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;">
+                            <div t-if="o.lesson_date" class="col-4">
+                                <b>DATE/TIME:</b> <span t-esc="o.lesson_date" />
+                            </div>
+                            <div t-if="o.week" class="col-4">
+                                <b>WEEK: </b><span t-esc="o.week" />
+                            </div>
+                            <div t-if="o.lesson" class="col-4">
+                                <b>LESSON:</b> <span t-esc="o.lesson" />
+                            </div>
+                        </div>
+                        <div class="row" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;">
+                            <div class="col-12">
+                                <p><span><strong>Scheme Of Work:</strong></span><br/>
+                                <span t-if="o.scheme_of_work_id.objectives">
+                                    <b>OBJECTIVES:</b> <span t-esc="o.scheme_of_work_id.objectives" />
+                                </span></p>
+                            </div>
+                        </div>
+                        <table class="table table-condensed" name="scheme_of_work">
+                            <thead>
+                                <tr>
+                                    <th>TIME</th>
+                                    <th>CONTENT</th>
+                                    <th>LEARNING ACTIVITIES</th>
+                                    <th>LEARNING RESOURCE / REFERENCE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.lesson_plan_ids" t-as="line">
+                                    <td><strong><span t-esc="line.time"/></strong> </td>
+                                    <td><strong><span t-esc="line.content"/></strong> </td>
+                                    <td><strong><span t-esc="line.learning_activities"/></strong> </td>
+                                    <td><strong><span t-esc="line.learning_resources"/></strong> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    
+</odoo>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="student_details_dialog" owl="1">
+<div class="student-profile-container">
+    <div class="student-profile-card" t-if="this.state.student_name">
+        <div class="header">
+            <div class="timerContainer">
+                <p class="timer" id="timer">Closing in 30 seconds</p>
+                <p class="currenttime" id="currentTime">Current Time: </p>
+            </div>
+            <div class="date" id="currentDateTime">
+                <t t-out="this.state.date"/>
+            </div>
+            <div class="close-session" id="openModalBtn" t-on-click="() => this.openPopup()">
+                Close Session X
+            </div>
+        </div>
+        <br/>
+        <div class="row profile-info">
+            <div class="info col-6">
+                <h2><t t-out="this.state.student_name"/></h2>
+                <p><t t-out="this.state.roll_number"/></p> <!-- Added student ID -->
+                <br/>
+                <br/>
+                <p>Class: <t t-out="this.state.class"/></p>
+                <p>Classroom: <t t-out="this.state.classroom"/></p>
+            </div>
+            <div class="col-6">
+                <img t-attf-src="data:image/png;base64,{{this.state.image}}"
+                     t-att-alt="this.state.student_name"
+                     class="student-image"/>
+            </div>
+        </div>
+        <div class="row profile-info info">
+            <p>Fee Balance: <t t-out="this.state.fee_balance"/> KES</p>
+        </div>
+        <div class="status">
+            <t t-if="this.state.status == 'declined'">
+                <span class="declined">Declined X</span>
+            </t>
+            <t t-if="this.state.status == 'approved'">
+                <span class="approved">Approved &#9989;</span>
+            </t>
+        </div>
+    </div>
+    <t t-else="">
+        <div style="background-color:white;">
+            <div class="scan-message">
+                Please scan card at the reader to display output.
+            </div>
+        </div>
+    </t>
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" id="closeBtn" t-on-click="() => this.closePopup()">X</span>
+            <p>Are you sure you want to close the session?</p>
+            <div class="button-group">
+                <button id="cancelBtn" t-on-click="() => this.cancelPopup()">Cancel</button>
+                <button id="closeSessionBtn" t-on-click="() => this.closeSession()">Close Session</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </t>
+</templates>

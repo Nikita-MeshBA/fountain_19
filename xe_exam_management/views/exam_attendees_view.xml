@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_xe_exam_attendees_tree" model="ir.ui.view">
+        <field name="name">xe.exam.attendees.tree</field>
+        <field name="model">xe.exam.attendees</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <list string="Exam Attendees" editable="top">
+                <field name="student_id" readonly="state == 'done'"/>
+                <field name="exam_id" readonly="state == 'done'"/>
+                <field name="status" readonly="state == 'done'"/>
+                <field name="marks" readonly="state == 'done'"/>
+                <field name="comments" readonly="state == 'done'" column_invisible="True"/>
+                <field name="evaluation_type" column_invisible="True"/>
+                <field name="room_id" readonly="state == 'done'" column_invisible="True"/>
+                <field name="state" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="user_view_xe_exam_attendees_tree_inherit" model="ir.ui.view">
+        <field name="name">user.xe.exam.attendees.tree.inherit</field>
+        <field name="model">xe.exam.attendees</field>
+        <field name="inherit_id" ref="xe_exam_management.view_xe_exam_attendees_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <t groups="xe_exam_management.group_xe_exam_user">
+                    <attribute name="create">0</attribute>
+                    <attribute name="delete">0</attribute>
+                </t>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="admin_view_xe_exam_attendees_tree_inherit2" model="ir.ui.view">
+        <field name="name">admin.xe.exam.attendees.tree.inherit2</field>
+        <field name="model">xe.exam.attendees</field>
+        <field name="inherit_id" ref="xe_exam_management.view_xe_exam_attendees_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <t groups="xe_exam_management.group_xe_exam_admin">
+                    <attribute name="create">1</attribute>
+                    <attribute name="delete">1</attribute>
+                </t>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_xe_exam_attendees_form" model="ir.ui.view">
+        <field name="name">xe.exam.attendees.form</field>
+        <field name="model">xe.exam.attendees</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Exam Attendees">
+                <sheet>
+                    <group col="4" colspan="4">
+                        <field name="course_id" invisible="0"/>
+                        <!-- <field name="term_id" invisible="1"/> -->
+                        <field name="exam_id" readonly="state == 'done'"/>
+                        <field name="marks"/>
+                        <field name="student_id" domain="[('course_detail_ids.course_id','=',course_id)]"/>
+                        <field name="state"/>
+                        <field name="status" readonly="state == 'done'"/>
+                        <field name="marks" readonly="state not in ['held','result_updated']"/>
+                        <field name="comments" readonly="state not in ['held','result_updated']"/>
+                        <field name="evaluation_type"/>
+                        <field name="room_id" readonly="state == 'done'"/>
+                        <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_xe_exam_attendees_search" model="ir.ui.view">
+        <field name="name">xe.exam.attendees.search</field>
+        <field name="model">xe.exam.attendees</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Exam Attendees">
+                <field name="student_id"/>
+                <field name="status"/>
+                <field name="marks"/>
+                <field name="exam_id"/>
+                <newline/>
+                <group expand="0" string="Group By...">
+                    <filter string="Student" name="student" domain="[]" context="{'group_by':'student_id'}"/>
+                    <filter string="Status" name="status" domain="[]" context="{'group_by':'status'}"/>
+                    <filter string="Exam" name="exam" domain="[]" context="{'group_by':'exam_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="act_open_xe_exam_attendees_view">
+        <field name="name">Exam Attendees</field>
+        <field name="res_model">xe.exam.attendees</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_xe_exam_attendees_search"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_open_xe_exam_attendees_view_form">
+        <field name="act_window_id" ref="act_open_xe_exam_attendees_view"/>
+        <field name="sequence" eval="20"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_xe_exam_attendees_form"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_open_xe_exam_attendees_view_tree">
+        <field name="act_window_id" ref="act_open_xe_exam_attendees_view"/>
+        <field name="sequence" eval="10"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_xe_exam_attendees_tree"/>
+    </record>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_xe_send_sms_config,xe.send.sms.config.all,model_xe_send_sms_config,base.group_user,1,1,1,1
+access_send_sms_template,send.sms.template.all,model_send_sms_template,base.group_user,1,1,1,1
+access_send_sms_wizard,send.sms.wizard.all,model_send_sms_wizard,base.group_user,1,1,1,1
+

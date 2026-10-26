@@ -1,0 +1,61 @@
+<odoo>
+    <record id="email_template_hr_payslip" model="mail.template">
+        <field name="name">Payslip - Send by Email</field>
+        <field name="email_from">${(user.email or '')|safe}</field>
+        <field name="subject">{{ object.name or 'n/a' }}</field>
+        <field name="email_to">${(object.employee_id.work_email or '')|safe}</field>
+        <field name="model_id" ref="hr_payroll_community.model_hr_payslip"/>
+        <field name="auto_delete" eval="True"/>
+        <field name="lang">${(object.employee_id.user_id.lang or user.lang)}</field>
+        <!-- report_name field remove from v17 -->
+        <!-- <field name="report_name">Payslip_{{ (object.name or '').replace('/','_') }}{{ object.state != 'draft' and '_draft' or '' }}</field> -->
+        <field name="body_html"><![CDATA[
+            <p>Dear,  <t t-out="object.employee_id.name or ''"/>,</p>
+            </br>
+            <p> Please find attached payslip with reference <t t-out="object.number"/></p>
+            <p>If you have any question, do not hesitate co contact us.</p>
+            <br/>
+            <p>Thanks<br/>
+        ]]></field>
+        <field name="report_template_ids" eval="[(4, ref('hr_payroll_community.action_report_payslip'))]"/>
+    </record>
+
+    <record id="email_contract_expiry" model="mail.template">
+        <field name="name">Contract Expiry Notification</field>
+        <field name="email_from">${(user.email or '')|safe}</field>
+        <field name="subject">${(object.name or 'n/a')}</field>
+        <field name="email_to">${(object.emails)|safe}</field>
+<!--        <field name="model_id" ref="hr_contract.model_hr_contract"/>-->
+        <field name="model_id" ref="hr.model_hr_version"/>
+        <field name="auto_delete" eval="True"/>
+        <field name="lang">${(object.employee_id.user_id.lang or user.lang)}</field>
+        <field name="body_html"><![CDATA[
+            <div style="font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                <p>Hello,</p><br/>
+                <p>Employment Contract : ${object.name} is going to expire on ${object.date_end} </p><br/>
+                <p>Thanks.</p>
+                <br/>
+                <br/>
+            </div>
+        ]]></field>
+    </record>
+
+    <record id="email_visa_expiry" model="mail.template">
+        <field name="name">Visa Expiry Notification</field>
+        <field name="email_from">${(user.email or '')|safe}</field>
+        <field name="subject">${(object.name or 'n/a')}</field>
+        <field name="email_to">${(object.emails)|safe}</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="auto_delete" eval="True"/>
+        <field name="lang">${(user.lang)}</field>
+        <field name="body_html"><![CDATA[
+            <div style="font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                <p>Hello,</p><br/>
+                <p>Visa is going to expire on ${object.visa_expire} </p><br/>
+                <p>Thanks.</p>
+                <br/>
+                <br/>
+            </div>
+        ]]></field>
+    </record>
+</odoo>

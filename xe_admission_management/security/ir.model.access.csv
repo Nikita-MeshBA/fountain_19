@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_xe_admission_enquiry,xe.admission.enquiry,model_xe_admission_enquiry,xe_admission_management.group_xe_admission_user,1,1,1,0
+access_xe_admission_enquiry_main_admin,xe.admission.enquiry.main.admin,model_xe_admission_enquiry,base.group_system,1,1,1,1
+access_xe_schedule_interview,xe.schedule.interview,model_xe_schedule_interview,xe_admission_management.group_xe_admission_user,1,1,1,1
+access_pass_or_fail_reason,pass.or.fail.reason,model_pass_or_fail_reason,xe_admission_management.group_xe_admission_user,1,1,1,1
+access_xe_application,xe.application,model_xe_application,xe_admission_management.group_xe_admission_user,1,1,1,0
+access_xe_application_admin,xe.application.main.admin,model_xe_application,base.group_system,1,1,1,1
+access_assign_employee_wizard,assign.employee.wizard,model_assign_employee_wizard,xe_admission_management.group_xe_admission_user,1,1,1,1
+access_fail_reason,fail.reason,model_fail_reason,xe_admission_management.group_xe_admission_user,1,1,1,1
+access_account_move_readonly_stud,account.movereadonly.stud,account.model_account_move,xenesis_school_base.group_xe_student,1,0,0,0
+access_admission_fee_wizard,admission_fee_wizard,model_admission_fee_wizard,xenesis_school_base.group_xe_admin,1,1,1,1
+access_admn_fees_details_wizard,admn_fees_details_wizard,model_admn_fees_details_wizard,xenesis_school_base.group_xe_admin,1,1,1,1

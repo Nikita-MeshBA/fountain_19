@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_xe_media_movement_tree" model="ir.ui.view">
+        <field name="name">xe.media.movement.tree</field>
+        <field name="model">xe.media.movement</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <list string="media Movement">
+                <field name="media_id"/>
+                <field name="media_unit_id"/>
+                <field name="type"/>
+                <field name="student_id"/>
+                <field name="faculty_id"/>
+                <field name="library_card_id"/>
+                <field name="issued_date"/>
+                <field name="return_date"/>
+                <field name="actual_return_date"/>
+                <field name="penalty"/>
+                <field name="invoice_id"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_xe_media_movement_form" model="ir.ui.view">
+        <field name="name">xe.media.movement.form</field>
+        <field name="model">xe.media.movement</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="media Movement">
+                <!-- <header groups="base.group_user"> -->
+                <header>
+                    <button name="issue_media" string="Issue media" type="object" class="oe_highlight"
+                            invisible="state not in ('available','reserve')"
+                            groups="xe_library_management.group_xe_library"/>
+                    <!-- attrs="{'invisible':[('state','not in',('available','reserve'))]}" -->
+                    <button name="%(return_media_act)d" string="Return Media"
+                            type="action"
+                            context="{'default_media_id': media_id, 'default_media_unit_id': media_unit_id}"
+                            invisible="state != 'issue'"
+                            class="oe_highlight" groups="xe_library_management.group_xe_library"/>
+                    <!-- attrs="{'invisible':[('state','!=','issue')]}" -->
+                    <field name="state" widget="statusbar" statusbar_visible="available,issue"/>
+                </header>
+                <sheet>
+                    <group col="4">
+                        <field name="media_id"/>
+                        <field name="media_unit_id"
+                               domain="['&amp;',('media_id','=',media_id),('state','=','available')]"
+                               context="{'default_media_id': media_id}"/>
+                        <field name="media_type_id"/>
+                        <field name="invoice_id"/>
+                    </group>
+                    <group col="4" string="Student/Teacher Detail">
+                        <field name="library_card_id"/>
+                        <field name="type"/>
+                        <!-- <field name="student_id" attrs="{'required':[('type','=','student')],'invisible':[('type','!=','student')]}" context="{'form_view_ref':'xe_library_management.view_xe_student_library_form'}"/> -->
+                        <field name="student_id" required="type == 'student'" invisible="type != 'student'"
+                               context="{'form_view_ref':'xe_library_management.view_xe_student_library_form'}"/>
+                        <!-- <field name="faculty_id" attrs="{'required':[('type','=','faculty')],'invisible':[('type','!=','faculty')]}"/> -->
+                        <field name="faculty_id" required="type == 'faculty'" invisible="type != 'faculty'"/>
+                        <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                    </group>
+                    <group col="4">
+                        <field name="issued_date"/>
+                        <field name="return_date"/>
+                        <field name="actual_return_date"/>
+                        <label for="penalty" string="Penalty"/>
+                        <div>
+                            <field name="penalty" widget="monetary"/>
+                            <button name="create_penalty_invoice" string="Create Invoice" type="object"
+                                    class="oe_highlight"
+                                    invisible="state not in ('return',) or invoice_id != False or penalty == 0"/>
+                            <!-- attrs="{'invisible':['|','|',('state','not in','return'),('invoice_id','!=',False),('penalty','=',0)]}" /> -->
+                        </div>
+                    </group>
+                    <group col="4" string="Reservation Detail" invisible="1">
+                        <field name="partner_id"/>
+                        <field name="reserver_name"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="view_xe_media_movement_search" model="ir.ui.view">
+        <field name="name">xe.media.movement.search</field>
+        <field name="model">xe.media.movement</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="media Movement">
+                <field name="media_id"/>
+                <field name="student_id"/>
+                <field name="library_card_id"/>
+                <field name="issued_date"/>
+                <field name="return_date"/>
+                <field name="actual_return_date"/>
+                <field name="state"/>
+                <field name="penalty"/>
+                <newline/>
+                <group>
+                    <filter string="media" name="media_id" domain="[]" context="{'group_by':'media_id'}"/>
+                    <filter string="Student" name="student_id" domain="[]" context="{'group_by':'student_id'}"/>
+                    <filter string="Library Card" name="library_card_id" domain="[]"
+                            context="{'group_by':'library_card_id'}"/>
+                    <filter string="Issued Date" name="issued_date" domain="[]" context="{'group_by':'issued_date'}"/>
+                    <filter string="Return Date" name="return_date" domain="[]" context="{'group_by':'return_date'}"/>
+                    <filter string="Actual Return Date" name="actual_return_date" domain="[]"
+                            context="{'group_by':'actual_return_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="act_open_xe_media_movement_view">
+        <field name="name">Media Movements</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">xe.media.movement</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_xe_media_movement_search"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+    <!--        <record model="ir.actions.act_window.view" id="act_xeen_xe_media_movement_view_form">-->
+    <!--            <field name="act_window_id" ref="act_xeen_xe_media_movement_view" />-->
+    <!--            <field name="sequence" eval="20" />-->
+    <!--            <field name="view_mode">form</field>-->
+    <!--            <field name="view_id" ref="view_xe_media_movement_form" />-->
+    <!--        </record>-->
+    <!--        <record model="ir.actions.act_window.view" id="act_open_xe_media_movement_view_tree">-->
+    <!--            <field name="act_window_id" ref="act_open_xe_media_movement_view" />-->
+    <!--            <field name="sequence" eval="10" />-->
+    <!--            <field name="view_mode">list</field>-->
+    <!--            <field name="view_id" ref="view_xe_media_movement_tree" />-->
+    <!--        </record>-->
+</odoo>

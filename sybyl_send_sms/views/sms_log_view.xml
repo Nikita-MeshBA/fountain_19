@@ -1,0 +1,66 @@
+<odoo>
+    <data>
+        <record id="sms_send_log_from_view" model="ir.ui.view">
+            <field name="name">sms.send.log.from.view</field>
+            <field name="model">sms.send.log</field>
+            <field name="arch" type="xml">
+                <form string="SMS Log">
+                    <header>
+                        <button string="Resend" type="object" name="resend_sms" class="oe_highlight" invisible="state in ['send', 'cancel']"/>
+                        <button string="cancel" type="object" name="cancel_state" invisible="state in ['send', 'cancel']"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <h2><field name="name"/></h2>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="error_code"/>
+                                <field name="sms_gateway_id" readonly='1'/>
+                            </group>
+                            <group>
+                                <field name="to_number" readonly="state in ['send', 'cancel']"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="template_body"/>
+                        </group>
+                        <group>
+                            <field name="error_message"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="sms_send_log_tree_view" model="ir.ui.view">
+            <field name="name">sms.send.log.tree.view</field>
+            <field name="model">sms.send.log</field>
+            <field name="arch" type="xml">
+                <list string="SMS LOG">
+                    <field name="name"/>
+                    <field name="error_code"/>
+                    <field name="error_message"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="sms_send_log_action" model="ir.actions.act_window">
+            <field name="name">SMS Log</field>
+            <field name="res_model">sms.send.log</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('state', '=', 'draft')]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Add SMS Error Log</p>
+            </field>
+        </record>
+
+        <menuitem id="sms_log_menu"
+            name="Error Log"
+            parent="sms_parent_menu"
+            action="sms_send_log_action"
+            sequence="11"/>
+
+    </data>
+</odoo>

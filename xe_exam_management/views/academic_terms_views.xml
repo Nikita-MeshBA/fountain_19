@@ -1,0 +1,13 @@
+<odoo>
+    <record id="view_xe_academic_year_term_form" model="ir.ui.view">
+        <field name="name">view.xe.academic.year.term.form</field>
+        <field name="model">xe.academic.terms</field>
+        <field name="inherit_id" ref="xenesis_school_base.view_xe_academic_year_term_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='end_date']" position="after">
+                <field name="next_term_open_date" string="Opening Date of Next Term"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="student_achievers_list">
+      <field name="name">xe.student.achievers.list</field>
+      <field name="model">xe.student.achievers</field>
+      <field name="arch" type="xml">
+        <list delete="false">
+          <field name="course_id"/>
+          <field name="teacher_id"/>
+          <field name="achieve_date"/>
+          <field name="achieve_categ_id"/>
+          <field name="state" widget="badge"/>
+        </list>
+      </field>
+    </record>
+     <record id="view_student_achievers_form" model="ir.ui.view">
+            <field name="name">xe.student.achievers.form</field>
+            <field name="model">xe.student.achievers</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form string="Student Achievers" delete="false">
+                    <header>
+                        <button name="act_send_students_list" invisible="state not in ['draft']"
+                                string="Send Students List" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,done"/>
+                    </header>
+                    <sheet>
+                        <group col="4" colspan="4">
+                            <field name="course_id"/>
+                            <field name="teacher_id"/>
+                            <field name="achieve_date"/>
+                            <field name="achieve_categ_id"/>
+                        </group>
+                        <group>
+                           <field name="achieve_line_ids">
+                               <list editable="bottom">
+                                   <field name="student_id"/>
+                                   <field name="remarks"/>
+                               </list>
+                           </field>
+
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+    <record model="ir.actions.act_window" id="student_achievers_act">
+      <field name="name">Student Achievers</field>
+      <field name="res_model">xe.student.achievers</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <menuitem name="Student Achievers" id="student_achievers_root" parent="discipline_main_menu" action="student_achievers_act" sequence="3"/>
+    </data>
+</odoo>

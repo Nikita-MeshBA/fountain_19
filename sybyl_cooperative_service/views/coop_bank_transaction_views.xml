@@ -1,0 +1,194 @@
+<odoo>
+
+
+    <record id="sybyl_cooperative_transaction_list" model="ir.ui.view">
+        <field name="name">coop.bank.transaction.list</field>
+        <field name="model">coop.bank.transaction</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false" delete="false" decoration-info="state == 'draft'" decoration-success="state == 'done'" decoration-muted="state == 'cancel'">
+                <field name="state" optional="hide" invisible="1"/>
+                <field name="message_id" optional="hide" invisible="1"/>
+                <field name="odoo_id" optional="hide" invisible="1"/>
+                <field name="student_id" optional="hide" invisible="1"/>
+                <field name="invoice_id" optional="hide" invisible="1"/>
+                <field name="connection_id" optional="hide" invisible="1"/>
+                <field name="transaction_reference_code"/>
+                <field name="transaction_date" optional="hide" invisible="1"/>
+                <field name="transaction_datetime"/>
+                <field name="total_amount"/>
+                <field name="currency" optional="hide" invisible="1"/>
+                <field name="document_reference_number"/>
+                <field name="bank_code" optional="hide" invisible="1"/>
+                <field name="branch_code" optional="hide" invisible="1"/>
+                <field name="payment_date" optional="hide" invisible="1"/>
+                <field name="payment_reference_code"/>
+                <field name="payment_code" optional="hide" invisible="1"/>
+                <field name="payment_mode" optional="hide" invisible="1"/>
+                <field name="payment_amount" optional="hide" invisible="1"/>
+                <field name="additional_info" optional="hide" invisible="1"/>
+                <field name="account_number" optional="hide" invisible="1"/>
+                <field name="account_name" optional="hide" invisible="1"/>
+                <field name="institution_code" optional="hide" invisible="1"/>
+                <field name="log_ids" optional="hide" invisible="1"/>
+                <button name="view_manual_reconcile" type="object" string="Reconcile" class="oe_highlight" invisible="state in ('done', 'cancel')"/>
+            </list>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="sybyl_cooperative_transaction_form">
+        <field name="name">coop.bank.transaction.form</field>
+        <field name="model">coop.bank.transaction</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false" delete="false">
+                <header>
+                    <button name="view_manual_reconcile" type="object" string="Reconcile" class="oe_highlight" invisible="state in ('done', 'cancel')"/>
+                    <button name="state_cancel" type="object" string="Cancel" class="oe_highlight" invisible="state in ('cancel', 'done')"/>
+                    <button name="state_draft" type="object" string="Set to Draft" invisible="state in ('draft', 'done')"/>
+                    <field name='state' widget="statusbar" statusbar_visible='draft,done,cancel'/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="message_id"/>
+                            <field name="odoo_id"/>
+                            <field name="student_id"/>
+                            <field name="invoice_id"/>
+                            <field name="invoice_amount"/>
+                            <field name="connection_id"/>
+                            <field name="transaction_reference_code"/>
+                            <field name="transaction_date"/>
+                            <field name="transaction_datetime"/>
+                            <field name="total_amount"/>
+                            <field name="currency"/>
+                            <field name="document_reference_number"/>
+                            <field name="payment_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="bank_code"/>
+                            <field name="branch_code"/>
+                            <field name="payment_date"/>
+                            <field name="payment_reference_code"/>
+                            <field name="payment_code"/>
+                            <field name="payment_mode"/>
+                            <field name="payment_amount"/>
+                            <field name="additional_info"/>
+                            <field name="account_number"/>
+                            <field name="account_name"/>
+                            <field name="institution_code"/>
+                        </group>
+                    </group>
+                    <field name="log_ids" optional="hide"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    
+<!--    <record id="view_coop_payment_transaction_filter" model="ir.ui.view">-->
+<!--            <field name="name">coop.payment.transaction.select</field>-->
+<!--            <field name="model">coop.bank.transaction</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--&lt;!&ndash;                <search string="Search Coop Transaction">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <filter&ndash;&gt;-->
+<!--&lt;!&ndash;    icon="terp-go-today"&ndash;&gt;-->
+<!--&lt;!&ndash;    name="Today"&ndash;&gt;-->
+<!--&lt;!&ndash;    domain="[('create_date', '&gt;=', context_today().strftime('%%Y-%%m-%%d 00:00:00')),&ndash;&gt;-->
+<!--&lt;!&ndash;             ('create_date', '&lt;=', context_today().strftime('%%Y-%%m-%%d 23:59:59'))]"&ndash;&gt;-->
+<!--&lt;!&ndash;    help="Today"&ndash;&gt;-->
+<!--&lt;!&ndash;/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <search string="Search Coop Transaction">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <filter&ndash;&gt;-->
+<!--&lt;!&ndash;                        name="Today"&ndash;&gt;-->
+<!--&lt;!&ndash;                        string="Today"&ndash;&gt;-->
+<!--&lt;!&ndash;                        domain="[('create_date', '>=', context_today().strftime('%Y-%m-%d 00:00:00')), ('create_date', '<=', context_today().strftime('%Y-%m-%d 23:59:59'))]"&ndash;&gt;-->
+<!--&lt;!&ndash;                    />&ndash;&gt;-->
+<!--                                <search string="Search Coop Transaction">-->
+<!--                    <filter-->
+<!--                        name="Today"-->
+<!--                        string="Today"-->
+<!--                        domain="[('create_date', '&gt;=', context_today().strftime('%Y-%m-%d 00:00:00')), ('create_date', '&lt;=', context_today().strftime('%Y-%m-%d 23:59:59'))]"-->
+<!--                    />-->
+<!--                    <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>-->
+<!--                    <filter name="paid" string="Reconciled" domain="[('state', '=', 'done')]"/>-->
+<!--                    <filter name="cancel" string="Cancelled" domain="[('state', '=', 'cancel')]"/>-->
+<!--                    <separator/>-->
+<!--                    <field name="create_date" string="Period"/>-->
+<!--                    <separator/>-->
+<!--                    <group expand="0" string="Group By">-->
+<!--                        <filter string="Status"-->
+<!--                                name="filter_state"-->
+<!--                                domain=""-->
+<!--                                context="{'group_by':'state'}"/>-->
+<!--                        <filter string="Date"-->
+<!--                                name="filter_date"-->
+<!--                                domain=""-->
+<!--                                context="{'group_by':'create_date'}"/>-->
+
+<!--                    </group>-->
+<!--               </search>-->
+<!--            </field>-->
+<!--        </record>-->
+<!--        <record id="view_coop_payment_transaction_filter" model="ir.ui.view">-->
+<!--        <field name="name">coop.payment.transaction.select</field>-->
+<!--        <field name="model">coop.bank.transaction</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <search string="Search Coop Transaction">-->
+<!--                <field name="create_date" string="Period"/>-->
+<!--                <field name="state"/>-->
+
+<!--                <filter name="draft"-->
+<!--                        string="Draft"-->
+<!--                        domain="[('state', '=', 'draft')]"/>-->
+
+<!--                <filter name="paid"-->
+<!--                        string="Reconciled"-->
+<!--                        domain="[('state', '=', 'done')]"/>-->
+
+<!--                <filter name="cancel"-->
+<!--                        string="Cancelled"-->
+<!--                        domain="[('state', '=', 'cancel')]"/>-->
+
+<!--                <separator/>-->
+
+<!--                <group expand="0" string="Group By">-->
+<!--                    <filter name="filter_state"-->
+<!--                            string="Status"-->
+<!--                            context="{'group_by': 'state'}"/>-->
+
+<!--                    <filter name="filter_date"-->
+<!--                            string="Date"-->
+<!--                            context="{'group_by': 'create_date'}"/>-->
+<!--                </group>-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
+        <record id="view_coop_payment_transaction_filter" model="ir.ui.view">
+        <field name="name">coop.payment.transaction.select</field>
+        <field name="model">coop.bank.transaction</field>
+        <field name="arch" type="xml">
+            <search string="Search Coop Transaction">
+                <field name="transaction_reference_code"/>
+                <field name="state"/>
+
+                <filter name="draft"
+                        string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+
+                <filter name="paid"
+                        string="Reconciled"
+                        domain="[('state', '=', 'done')]"/>
+
+                <filter name="cancel"
+                        string="Cancelled"
+                        domain="[('state', '=', 'cancel')]"/>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="sybyl_cooperative_transaction_action_window">
+        <field name="name">COOP-Bank Transactions</field>
+        <field name="res_model">coop.bank.transaction</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="sybyl_cooperative_transaction_menu" parent="account.menu_finance_receivables" sequence="199"
+              action="sybyl_cooperative_transaction_action_window"/>
+</odoo>

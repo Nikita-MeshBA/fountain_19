@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Fees Analysis Header and Footer -->
+    <template id="custom_layout_header">
+        <div class="header">
+            <div class="row">
+                <div class="col-3">
+                    <img t-if="company.logo"
+                         t-att-src="'data:image/png;base64,%s' % to_text(company.logo)"
+                         style="max-height: 120px;"/>
+                </div>
+                <div class="col-6" align="center">
+                    <b>
+                        <span t-field="company.name" style="font-size:20px;"/>
+                    </b>
+                    <br/>
+                    <span t-field="company.email"/>
+                </div>
+                <div class="col-3">
+                    P.O.Box:
+                    <span t-field="company.zip"/>
+                    <br/>
+                    Tel:
+                    <span t-field="company.phone"/>
+                </div>
+            </div>
+            <div t-if="company.logo or company.report_header" class="row zero_min_height">
+                <div class="col-xs-12">
+                    <div style="border-bottom: 1px solid black;"/>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="custom_layout_footer">
+        <div class="footer">
+            <div class="row">
+                <div class="col-12" align="center"
+                     style="border-top: 1px solid black;">
+                    <t t-if="company.zip">
+                        P.O. Box:
+                        <span t-field="company.zip"/>
+                        ,
+                    </t>
+                    <t t-if="company.state_id">
+                        <span t-field="company.state_id.name"/>
+                        ,
+                    </t>
+                    <t t-if="company.phone">
+                        Tel:
+                        <span t-field="company.phone"/>
+                    </t>
+                    <br/>
+                    <t t-if="company.email">
+                        Email:
+                        <span t-field="company.email"/>
+                    </t>
+                    <t t-if="company.website">
+                        Website:
+                        <span t-field="company.website"/>
+                    </t>
+                    <br/>
+                    <div class="text-muted">
+                        Page:
+                        <span class="page"/>
+                        /
+                        <span class="topage"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="fee_analysis_external_layout">
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"/>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"/>
+        </t>
+        <div class="article">
+            <t t-call="xe_fees_management.custom_layout_header"/>
+            <t t-raw="0"/>
+            <t t-call="xe_fees_management.custom_layout_footer"/>
+        </div>
+    </template>
+
+    <!-- Fee Analysis paper format -->
+    <record id="fee_analysis_paper_format" model="report.paperformat">
+        <field name="name">Fee Analysis Paper Format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">28</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">35</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <template id="report_new_fees_analysis">
+        <t t-call="web.html_container">
+            <t t-call="xe_fees_management.fee_analysis_external_layout">
+                <div class="font">
+                    <div class="page">
+                        <div class="text-center">
+                            <center>
+                                <h2>
+                                    <strong>Fees Detail</strong>
+                                </h2>
+                            </center>
+                        </div>
+                        <br/>
+                        <table class="table table-condensed table-bordered">
+                            <tbody class="o_black_border">
+                                <tr t-if="'date_from' in data" style="padding:5px;">
+                                    <th width="25%;">
+                                        <b>Start Date :</b>
+                                        <span t-esc="data['date_from']"/>
+                                    </th>
+                                    <th width="25%;">
+                                        <b>End Date :</b>
+                                        <span t-esc="data['date_to']"/>
+                                    </th>
+                                    <td t-if="'course_name' in data" width="25%;">
+                                        <b>Class :</b>
+                                        <span t-esc="data['course_name']"/>
+                                    </td>
+                                    <td t-if="'classroom_name' in data" width="25%;">
+                                        <b>Class Room :</b>
+                                        <span t-esc="data['classroom_name']"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <br/>
+                        <table class="table table-condensed table-bordered">
+                            <tbody class="o_black_border">
+                                <tr>
+                                    <t t-foreach="header_rows" t-as="header">
+                                        <th width="5%;" t-if="header == 'roll_number'">Admission Number</th>
+                                        <th width="5%;" t-if="header == 'student'">Student</th>
+                                        <th width="5%;"
+                                            t-if="header not in ['roll_number','student','total_amount','total_discount','paid_amount','balance_amount','credit_note','partner_balance']">
+                                            <span t-esc="header"/>
+                                        </th>
+                                        <th width="5%;" t-if="header == 'total_amount'">Total Amount</th>
+                                        <th width="5%;" t-if="header == 'total_discount'">Total Discount</th>
+                                        <th width="5%;" t-if="header == 'paid_amount'">Paid Amount</th>
+                                        <th width="5%;" t-if="header == 'credit_note'">Credit Note Amount</th>
+                                        <th width="5%;" t-if="header == 'partner_balance'">Balance Amount</th>
+                                    </t>
+                                </tr>
+
+                                <tr t-foreach="line_data" t-as="line">
+                                    <t t-foreach="header_rows" t-as="header">
+                                        <th width="5%;" t-if="header == 'roll_number'">
+                                            <t t-esc="line.get(header)"/>
+                                        </th>
+                                        <th width="5%;" t-if="header == 'student'">
+                                            <t t-esc="line.get(header)"/>
+                                        </th>
+                                        <th width="5%;"
+                                            t-if="header not in ['roll_number','student','total_amount','total_discount','paid_amount','balance_amount','credit_note','partner_balance']">
+                                            <t t-esc="line.get(header)"/>
+                                        </th>
+                                        <th width="5%;" t-if="header == 'total_amount'">
+                                            <t t-esc="line.get(header)"/>
+                                        </th>
+                                        <th width="5%;" t-if="header == 'total_discount'">
+                                            <t t-esc="line.get(header)"/>
+                                        </th>
+                                        <th width="5%;" t-if="header == 'paid_amount'">
+                                            <t t-esc="line.get(header)"/>
+                                        </th>
+                                        <th width="5%;" t-if="header == 'credit_note'">
+                                            <t t-esc="line.get(header)"/>
+                                        </th>
+                                        <th width="5%;" t-if="header == 'partner_balance'">
+                                            <t t-esc="line.get(header)"/>
+                                        </th>
+                                    </t>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

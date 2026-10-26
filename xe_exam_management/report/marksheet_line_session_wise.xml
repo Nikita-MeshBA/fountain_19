@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="session_wise_mark_line">
+        <style>
+            .font{
+            font-size:14px;
+            font-family:"Helvetica"
+            }
+            @page{
+            margin-top:1%;
+            size: A4;
+            }
+        </style>
+        <t t-call="web.html_container">
+            <t t-call="xe_exam_management.marksheet_report_external_layout">
+                <div class="font">
+                    <div class="page">
+                        <br/>
+                        <t t-foreach="data_line" t-as="obj">
+                            <t t-if="obj">
+                                <div class="row"
+                                     style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 16px;text-align:left !important;">
+                                    <div class="col-3">
+                                        <b>Admission Number:</b>
+                                        <span t-esc="obj['admission_number']"/>
+                                    </div>
+                                    <div class="col-3">
+                                        <b>Name:</b>
+                                        <span t-esc="obj['student_name']"/>
+                                    </div>
+                                    <div class="col-3">
+                                        <b>Grade:</b>
+                                        <span t-esc="obj['course_name']"/>
+                                    </div>
+                                    <div class="col-3">
+                                        <b>Term:</b>
+                                        <span t-esc="obj['academic_term']"/>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row"
+                                     style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 16px;text-align:center !important;">
+                                    <div class="col-12">
+                                        <h3 align="left">
+                                            <strong>
+                                                <span t-esc="obj['term']"/>
+                                            </strong>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <br/>
+                                <table class="table table-bordered table-sm"
+                                       style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 16px;text-align:center !important;">
+                                    <tr style="border: 1px solid black;">
+                                        <t t-foreach="header_data" t-as="h_data">
+                                            <th class="text-center" style="border: 1px solid black;">
+                                                <span t-esc="h_data"/>
+                                            </th>
+                                        </t>
+                                    </tr>
+                                    <t t-foreach="obj['result_line']" t-as="line">
+                                        <tr style="border: 1px solid black;">
+                                            <td class="text-left" style="border: 1px solid black;">
+                                                <span t-esc="line['LEARNING AREA']"/>
+                                            </td>
+                                            <t t-foreach="header_data" t-as="h_data">
+                                                <t t-if="h_data in line">
+                                                    <t t-if="h_data == 'MARKS'">
+                                                        <td class="text-left" style="border: 1px solid black;">
+                                                            <span t-esc="line.get('MARKS')"/>
+                                                        </td>
+                                                    </t>
+                                                    <t t-if="h_data != 'LEARNING AREA' and h_data != 'MARKS'">
+                                                        <td class="text-left" style="border: 1px solid black;">
+                                                            <input type="checkbox" id="checkbox_EE"
+                                                                   checked="checked"/>
+                                                        </td>
+                                                    </t>
+                                                </t>
+                                                <t t-else="">
+                                                    <td style="border: 1px solid black;"/>
+                                                </t>
+                                            </t>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <br/>
+                                <table class="table table-bordered table-sm"
+                                       style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 16px;text-align:center !important;">
+                                    <tr style="border: 1px solid black;">
+                                        <t t-foreach="point_lines" t-as="point_head">
+                                            <th class="text-center" style="border: 1px solid black;">
+                                                <span t-esc="point_head"/>
+                                            </th>
+                                        </t>
+                                    </tr>
+                                    <tr style="border: 1px solid black;">
+                                        <t t-foreach="point_lines" t-as="point_head">
+                                            <td class="text-center" style="border: 1px solid black;">
+                                                <span t-esc="point_lines[point_head]"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </table>
+                                <br/>
+                                <!-- <t t-if="obj['is_exam_session_wise_rubics']">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <b>Feedback on learners acquisition of competencies:</b>
+                                            <t t-if="obj['head_master_comment']">
+                                                <span t-esc="obj['head_master_comment']"
+                                                      style="text-decoration: underline black 2px;"/>
+                                            </t>
+                                            <t t-else="">
+                                                ____________________________________________________________________________________________________________________________
+                                            </t>
+                                        </div>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <b>Class Teacher's remarks/Suggestions:</b>
+                                            <t t-if="obj['head_master_comment']">
+                                                <span t-esc="obj['head_master_comment']"/>
+                                            </t>
+                                            <t t-else="">
+                                                ____________________________________________________________________________________________________________________________
+                                            </t>
+                                        </div>
+                                    </div>
+                                </t>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <b>Name: ________________________</b>
+                                    </div>
+                                    <div class="col-4">
+                                        <b>Signature: ________________________</b>
+                                    </div>
+                                    <div class="col-4">
+                                        <b>Date: ______________________________</b>
+                                    </div>
+                                </div> -->
+                                <!-- <br/>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <b>Parents/Guardians remarks:
+                                            ______________________________________________________________________________________________
+                                        </b>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-7">
+                                        <b>Signature: ______________________________________</b>
+                                    </div>
+                                    <div class="col-5">
+                                        <b>Date: _________________________________________</b>
+                                    </div>
+                                </div>
+                                <br/>
+                                <t t-if="not obj['is_exam_session_wise_rubics']">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <b>Puplis remarks:
+                                                _____________________________________________________________________________________________________________
+                                            </b>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <b>Signature: ______________________________________</b>
+                                        </div>
+                                        <div class="col-5">
+                                            <b>Date: _________________________________________</b>
+                                        </div>
+                                    </div>
+                                </t>
+                                <br/> -->
+                                <!-- <t t-if="not obj['is_exam_session_wise_rubics']">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <b>Feedback on learners acquisition of competencies
+                                            </b>
+                                            <u>
+                                                <span t-esc="obj['head_teacher_comment']"/>
+                                            </u>
+                                        </div>
+                                    </div>
+                                </t>
+                                <br/>
+                                <b>Head Teacher's details:</b>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <b>Name:</b>
+                                        <u>
+                                            <span t-esc="obj['head_teacher_name']"/>
+                                        </u>
+                                    </div>
+                                    <div class="col-4">
+                                        <span>
+                                            <b>Signature:</b>
+                                        </span>
+                                        <br></br>
+                                        <img t-if="obj['head_teacher_signature']" class="image"
+                                             t-attf-src="data:image/png;base64,#{ obj['head_teacher_signature'] }"
+                                             width="250" height="200" alt="Signature"/>
+                                    </div>
+                                    <div class="col-4">
+                                        <b>Date:</b>
+                                        <t t-esc="obj['register_generated_date']"/>
+                                    </div>
+                                </div> -->
+                                <div class="container" style="page-break-before: auto;">
+                                    <div class="row" style="display: inline;page-break-before: auto; font-size: 16px;">
+                                        <div style="text-decoration: underline;">Comments:</div>
+                                        <div>
+                                            <span t-out="obj['head_master_comment']"/>
+                                        </div>
+                                    </div>
+                                    <br></br>
+                                </div>
+                                <div class="container" style="page-break-before: auto;">
+                                    <div class="row" style="page-break-before: auto;">
+                                        <div style="font-size: 16px;" class="col-4">Class Teacher Signature:
+                                            <br></br>
+                                            <t t-if="obj['teacher_signature']">
+                                                <img class="image"
+                                                     t-attf-src="data:image/png;base64,#{ obj['teacher_signature'] }"
+                                                     style="max-height: 250px; max-width: 250px; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                            </t>
+                                        </div>
+                                        <div style="font-size: 16px;" class="col-4">Head Teacher Signature:
+                                            <br></br>
+                                            <t t-if="obj['head_teacher_signature']">
+                                                <img class="image"
+                                                     t-attf-src="data:image/png;base64,#{ obj['head_teacher_signature'] }"
+                                                     style="max-height: 250px; max-width: 250px; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                            </t>
+                                        </div>
+                                        <div class="col-4">
+                                            <div style="font-size: 16px">Closing Date of Term:
+                                                <span t-out="obj['term_end_date']"/>
+                                            </div>
+                                            <div style="font-size: 16px">Opening Date of Term:
+                                                <span t-out="obj['opening_next_term_date']"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <p style="page-break-after: always;"/>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

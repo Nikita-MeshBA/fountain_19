@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="email_template_report_card" model="mail.template">
+        <field name="name">Exam Report Card Template</field>
+        <field name="model_id" ref="xe_exam_management.model_xe_marksheet_line"/>
+        <field name="email_from">{{object.company_id.email}}</field>
+        <field name="email_to">{{object.student_id.email}}</field>
+        <field name="subject">{{object.marksheet_reg_id.exam_session_id.name or 'n/a' }}</field>
+        <field name="lang">{{object.student_id.partner_id.lang}}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="report_template_ids" eval="[(4, ref('xe_exam_management.report_marksheetline'))]"/>
+        <field name="body_html">
+            <![CDATA[<p>Hi <t t-out="object.student_id.name or ''"/>,</p><br/><p>Kindly find the attached Exam report card.</p><br/><p>Thanks</p>]]>
+        </field>
+    </record>
+    <record id="email_template_report_card_new" model="mail.template">
+        <field name="name">Exam Report Card Template</field>
+        <field name="model_id" ref="xe_exam_management.model_xe_marksheet_line"/>
+        <field name="email_from">{{object.company_id.email}}</field>
+        <field name="email_to">{{ ctx.get('mail', '') }}</field>
+        <field name="subject">{{object.marksheet_reg_id.exam_session_id.name or 'n/a' }}</field>
+        <field name="lang">{{object.student_id.partner_id.lang}}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="report_template_ids" eval="[(4, ref('xe_exam_management.report_marksheetline'))]"/>
+        <field name="body_html">
+            <![CDATA[<p>Hi <t t-out="object.student_id.name or ''"/>,</p><br/><p>Kindly find the attached Exam report card.</p><br/><p>Thanks</p>]]>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_visitor_pass_tree" model="ir.ui.view">
+        <field name="name">visitor.pass.tree</field>
+        <field name="model">visitor.pass</field>
+        <field name="priority" eval="8" />
+        <field name="arch" type="xml">
+            <list string="Gate Pass">
+                <field name="pass_number" />
+                <field name="name" />
+                <field name="meeting_with_id" />
+                <field name="visitor_in_time" />
+                <field name="visitor_out_time" />
+                <field name="vehicle_number" />
+                <field name="state" />
+            </list>
+        </field>
+    </record>
+    <record id="view_visitor_pass_form" model="ir.ui.view">
+        <field name="name">visitor.pass.form</field>
+        <field name="model">visitor.pass</field>
+        <field name="priority" eval="8" />
+        <field name="arch" type="xml">
+            <form string="Reception Management">
+                <header groups="base.group_user">
+                    <button name="action_visitor_in" invisible="state not in ['draft']" string="Visitor In" groups="xe_visitor_management.group_xe_reception" type="object" class="oe_highlight" />
+                    <button name="action_approve_visitor" invisible="state not in ['visitor_in']" string="Approve Visitor" type="object" class="oe_highlight" />
+                    <button name="action_visitor_out" invisible="state not in ['approve_visitor']" string="Visitor Out" groups="xe_visitor_management.group_xe_reception" type="object" class="oe_highlight" />
+                    <button name="action_done" invisible="state not in ['visitor_out']" string="Done" type="object" groups="xe_visitor_management.group_xe_reception" class="oe_highlight" />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,visitor_in,approve_visitor,visitor_out,done" />
+                </header>
+                <sheet>
+                    <field name="state" invisible="1"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="pass_number" readonly="state in ['done', 'visitor_out']"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" readonly="state in ['done', 'visitor_out']"/>
+                            <field name="meeting_with_id" readonly="state in ['done', 'visitor_out']"/>
+                            <field name="phone" readonly="state in ['done', 'visitor_out']"/>
+                            <field name="email" readonly="state in ['done', 'visitor_out']"/>
+                            <field name="street" readonly="state in ['done', 'visitor_out']"/>
+                            <field name="street2" readonly="state in ['done', 'visitor_out']"/>
+                            <field name="city" readonly="state in ['done', 'visitor_out']"/>
+                            <field name="po_box_no" readonly="state in ['done', 'visitor_out']"/>
+                            <field name="visitor_in_time"/>
+                            <field name="visitor_out_time"/>
+                            <field name="document_type_id" readonly="state in ['done', 'visitor_out']"/>
+                            <field name="document_number" readonly="state in ['done', 'visitor_out']"/>
+                            <field name="vehicle_number" readonly="state in ['done', 'visitor_out']"/>
+                            <field name="approved_by_id" readonly="state in ['done', 'visitor_out']"/>
+                            <field name="duty_officer_name_id" readonly="state in ['done', 'visitor_out']"/>
+                        </group>
+                        <group>
+                            <field name="purpose_type_id" readonly="state in ['done', 'visitor_out']"/>
+                            <field name="purpose" required="approved_by_id != False" readonly="state in ['done', 'visitor_out']" />
+                            <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user" />
+                    <field name="message_ids" widget="mail_thread" />
+                    <field name="activity_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+<!--	<record id="view_visitor_pass_search" model="ir.ui.view">-->
+<!--		<field name="name">visitor.pass.search</field>-->
+<!--		<field name="model">visitor.pass</field>-->
+<!--		<field name="arch" type="xml">-->
+<!--			<search string="Reception Management">-->
+<!--				<field name="pass_number" string="Pass Number"/>-->
+<!--                <field name="name" string="Name"/>-->
+<!--                <filter name="visitor_in" string="Visitor In" domain="[('state','=', 'visitor_in')]" help="Visitor In"/>-->
+<!--                <filter name="approve_visitor" string="Approve Visitor" domain="[('state','=', 'approve_visitor')]" help="Approve Visitor"/>-->
+<!--                <filter name="visitor_out" string="Visitor Out" domain="[('state','=', 'visitor_out')]" help="Visitor Out"/>-->
+<!--                <filter name="done" string="Done" domain="[('state','=', 'done')]" help="Done"/>-->
+<!--                <newline />-->
+<!--                <group expand="0" string="Group By...">-->
+<!--                    <filter name="visitor_name" string="Visitor Name" domain="[]" context="{'group_by':'name'}" />-->
+<!--                    <filter name="meeting_with_id" string="Meeting With" domain="[]" context="{'group_by':'meeting_with_id'}" />-->
+<!--                    <filter name="state" string="States" domain="[]" context="{'group_by':'state'}" />-->
+<!--                    <filter name="month_wise" string="Month Wise" domain="[]" context="{'group_by': 'visitor_in_time:month'}"/>-->
+<!--                </group>-->
+<!--			</search>-->
+<!--		</field>-->
+<!--	</record>-->
+    <record id="view_visitor_pass_search" model="ir.ui.view">
+        <field name="name">visitor.pass.search</field>
+        <field name="model">visitor.pass</field>
+        <field name="arch" type="xml">
+            <search string="Reception Management">
+                <field name="pass_number"/>
+                <field name="name"/>
+                <field name="state"/>
+
+                <filter name="visitor_in"
+                        string="Visitor In"
+                        domain="[('state', '=', 'visitor_in')]"/>
+
+                <filter name="approve_visitor"
+                        string="Approve Visitor"
+                        domain="[('state', '=', 'approve_visitor')]"/>
+
+                <filter name="visitor_out"
+                        string="Visitor Out"
+                        domain="[('state', '=', 'visitor_out')]"/>
+
+                <filter name="done"
+                        string="Done"
+                        domain="[('state', '=', 'done')]"/>
+            </search>
+        </field>
+    </record>    <record id="act_open_visitor_pass_view" model="ir.actions.act_window">
+        <field name="name">Reception Management</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">visitor.pass</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_visitor_pass_search" />
+        <field name="domain">[]</field>
+    </record>
+    <record id="act_open_visitor_pass_view_form" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="act_open_visitor_pass_view" />
+        <field name="sequence" eval="20" />
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_visitor_pass_form" />
+    </record>
+    <record id="act_open_visitor_pass_view_tree" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="act_open_visitor_pass_view" />
+        <field name="sequence" eval="10" />
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_visitor_pass_tree" />
+    </record>
+
+    <record id="seq_visitor_pass" model="ir.sequence">
+        <field name="name">Visitor Pass</field>
+        <field name="code">visitor.pass</field>
+        <field name="prefix">VP</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False" />
+    </record>
+</odoo>

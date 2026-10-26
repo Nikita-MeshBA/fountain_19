@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_category_lesson_plan" model="ir.module.category">
+        <field name="name">Lesson Planner</field>
+        <field name="description">Helps you to Manage Access Rights</field>
+        <field name="sequence">16</field>
+    </record>
+    
+    <record id="group_lesson_plan_teacher" model="res.groups">
+        <field name="name">Teacher</field>
+<!--        <field name="category_id" ref="xe_lesson_planner.module_category_lesson_plan"/>-->
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_lesson_plan_department_head" model="res.groups">
+        <field name="name">Department Head</field>
+<!--        <field name="category_id" ref="xe_lesson_planner.module_category_lesson_plan"/>-->
+        <field name="implied_ids" eval="[(4, ref('xe_lesson_planner.group_lesson_plan_teacher'))]"/>
+    </record>
+
+    <!-- Show Scheme of Work Based on User -->
+    <record model="ir.rule" id="view_schem_of_work_access_user">
+        <field name="name">Scheme Of Work User Rule</field>
+        <field name="model_id" ref="model_scheme_of_work"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_lesson_plan_teacher'))]"/>
+        <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+    </record>
+    <record model="ir.rule" id="view_schem_of_work_access_manager">
+        <field name="name">Scheme Of Work Manager Rule</field>
+        <field name="model_id" ref="model_scheme_of_work"/>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_lesson_plan_department_head'))]"/>
+        <field name="domain_force">['|',('employee_id.user_id','=',user.id),('department_head_id.user_id','=',user.id)]</field>
+    </record>
+
+    <!-- Show Lesson Plan Based on User -->
+    <record model="ir.rule" id="view_lesson_plan_access_user">
+        <field name="name">Lesson Plan User Rule</field>
+        <field name="model_id" ref="model_lesson_plan"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_lesson_plan_teacher'))]"/>
+        <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+    </record>
+
+    <record model="ir.rule" id="view_lesson_plan_access_manager">
+        <field name="name">Lesson Plan Manager Rule</field>
+        <field name="model_id" ref="model_lesson_plan"/>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_lesson_plan_department_head'))]"/>
+        <field name="domain_force">['|',('employee_id.user_id','=',user.id),('department_head_id.user_id','=',user.id)]</field>
+    </record>
+
+	<!-- Show Scheme of Work Based on Multi Company - Manager and Admin -->
+	<record model="ir.rule" id="sow_multi_company_manager_admin">
+		<field name="name">Scheme of Work - Multi Company Rule</field>
+		<field name="model_id" ref="model_scheme_of_work" />
+		<field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+	</record>
+	
+	<!-- Show Lesson Plan Based on Multi Company -->
+	<record model="ir.rule" id="lp_multi_company_manager_admin">
+		<field name="name">Lesson Plan - Multi Company Rule</field>
+		<field name="model_id" ref="model_lesson_plan" />
+		<field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+	</record>
+
+    <!--  Department Head Rule-->
+    <!-- <record id="group_department_head" model="res.groups">
+        <field name="name">Department Head</field>
+        <field name="implied_ids" eval="[(4, ref('xenesis_school_base.group_xe_admin')),(4, ref('xe_lesson_planner.group_lesson_plan_teacher')),(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record model="ir.rule" id="view_department_head_access">
+        <field name="name">Department Head Rule</field>
+        <field name="model_id" ref="model_hr_employee_approval"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_department_head'))]"/>
+        <field name="domain_force">[('first_approval_user_id','=',user.id)]</field>
+    </record>
+    
+    <record model="ir.rule" id="view_lesson_plan_dop">
+        <field name="name">Lesson Plan - Department Head Rule</field>
+        <field name="model_id" ref="model_lesson_plan"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_lesson_plan_department_head'))]"/>
+        <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+    </record>
+    
+    <record model="ir.rule" id="view_schem_of_work_dop">
+        <field name="name">Scheme of work - Department Head Rule</field>
+        <field name="model_id" ref="model_scheme_of_work"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_department_head'))]"/>
+        <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+    </record> -->
+
+    <!--    Head Teacher Rule-->
+    <!-- <record id="group_head_teacher" model="res.groups">
+        <field name="name">Head Teacher</field>
+        <field name="implied_ids" eval="[(4, ref('xenesis_school_base.group_xe_admin')),(4, ref('xe_lesson_planner.group_lesson_plan_teacher')),(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record model="ir.rule" id="view_head_teacher_access">
+        <field name="name">Head Teacher Rule</field>
+        <field name="model_id" ref="model_hr_employee_approval"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_head_teacher'))]"/>
+        <field name="domain_force">[('second_approval_user_id','=',user.id)]</field>
+    </record>
+
+    <record model="ir.rule" id="view_lesson_plan_ht">
+        <field name="name">Lesson Plan - Head Teacher Rule</field>
+        <field name="model_id" ref="model_lesson_plan"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_lesson_plan_department_head'))]"/>
+        <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+    </record>
+    
+    <record model="ir.rule" id="view_schem_of_work_ht">
+        <field name="name">Scheme of work - Head Teacher Rule</field>
+        <field name="model_id" ref="model_scheme_of_work"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_department_head'))]"/>
+        <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+    </record> -->
+
+    <!-- Show CBC - Scheme of Work Based on User -->
+    <record model="ir.rule" id="view_schem_of_work_cbc_user">
+        <field name="name">CBC Scheme Of Work User Rule</field>
+        <field name="model_id" ref="model_cbc_scheme_of_work"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_lesson_plan_teacher'))]"/>
+        <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+    </record>
+
+    <!-- Show CBC - Lesson Plan Based on User -->
+    <record model="ir.rule" id="view_cbc_lesson_plan_access_user">
+        <field name="name">CBC Lesson Plan User Rule</field>
+        <field name="model_id" ref="model_cbc_lesson_plan"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_lesson_plan_teacher'))]"/>
+        <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+    </record>
+
+    <!-- Show CBC - Scheme of Work Based on Manager -->
+    <record model="ir.rule" id="view_cbc_schem_of_work_access_manager">
+        <field name="name">CBC Scheme Of Work Manager Rule</field>
+        <field name="model_id" ref="model_cbc_scheme_of_work"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_lesson_plan_department_head'))]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <!-- Show CBC - Lesson Plan Based on Manager -->
+    <record model="ir.rule" id="view_cbc_lesson_plan_access_manager">
+        <field name="name">CBC Lesson Plan Manager Rule</field>
+        <field name="model_id" ref="model_cbc_lesson_plan"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_lesson_plan_department_head'))]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <!-- Show CBC - Scheme of Work Based on Multi Company - Manager and Admin -->
+	<record model="ir.rule" id="cbc_sow_multi_company_manager_admin">
+		<field name="name">CBC - Scheme of Work - Multi Company Rule</field>
+		<field name="model_id" ref="model_cbc_scheme_of_work" />
+		<field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+	</record>
+
+	<!-- Show CBC - Lesson Plan Based on Multi Company -->
+	<record model="ir.rule" id="cbc_lp_multi_company_manager_admin">
+		<field name="name">CBC - Lesson Plan - Multi Company Rule</field>
+		<field name="model_id" ref="model_cbc_lesson_plan" />
+		<field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+	</record>
+
+    <!-- CBC Department Head Rule-->
+    <!-- <record model="ir.rule" id="view_cbc_department_head_access">
+        <field name="name">CBC Department Head Rule</field>
+        <field name="model_id" ref="model_hr_employee_approval_cbc"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_department_head'))]"/>
+        <field name="domain_force">[('first_approval_user_id','=',user.id)]</field>
+    </record> -->
+
+<!--     <record model="ir.rule" id="view_cbc_head_teacher_access">
+        <field name="name">CBC Head Teacher Rule</field>
+        <field name="model_id" ref="model_hr_employee_approval_cbc"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_head_teacher'))]"/>
+        <field name="domain_force">[('first_approval_user_id','=',user.id)]</field>
+    </record>
+ -->
+    <record model="ir.rule" id="view_cbc_lesson_plan_dop">
+        <field name="name">CBC Lesson Plan - Department Head Rule</field>
+        <field name="model_id" ref="model_cbc_lesson_plan"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_lesson_plan_department_head'))]"/>
+        <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+    </record>
+
+    <record model="ir.rule" id="view_cbc_schem_of_work_dop">
+        <field name="name">CBC Scheme of work - Department Head Rule</field>
+        <field name="model_id" ref="model_cbc_scheme_of_work"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_lesson_plan_department_head'))]"/>
+        <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+    </record>
+
+    <record model="ir.rule" id="view_first_user_cbc_access">
+        <field name="name">CBC Approval User  Rule</field>
+        <field name="model_id" ref="model_hr_employee_approval_cbc"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_lesson_plan_teacher'))]"/>
+        <field name="domain_force">[('first_approval_user_id','=',user.id)]</field>
+    </record>
+
+    <!--    Head Teacher Rule-->
+    <!-- <record model="ir.rule" id="view_cbc_head_teacher_access">
+        <field name="name">CBC Head Teacher Rule</field>
+        <field name="model_id" ref="model_hr_employee_approval_cbc"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_head_teacher'))]"/>
+        <field name="domain_force">[('second_approval_user_id','=',user.id)]</field>
+    </record> -->
+<!--
+    <record model="ir.rule" id="view_cbc_dept_head_access">
+        <field name="name">CBC Dept Head Rule</field>
+        <field name="model_id" ref="model_hr_employee_approval_cbc"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_department_head'))]"/>
+        <field name="domain_force">[('second_approval_user_id','=',user.id)]</field>
+    </record> -->
+
+    <record model="ir.rule" id="view_cbc_lesson_plan_ht">
+        <field name="name">CBC Lesson Plan - Head Teacher Rule</field>
+        <field name="model_id" ref="model_cbc_lesson_plan"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_lesson_plan_department_head'))]"/>
+        <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+    </record>
+<!--
+    <record model="ir.rule" id="view_cbc_schem_of_work_ht">
+        <field name="name">CBC Scheme of work - Head Teacher Rule</field>
+        <field name="model_id" ref="model_cbc_scheme_of_work"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_department_head'))]"/>
+        <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+    </record> -->
+
+    <!-- New Rule for CBC Scheme of Work -->
+    <!-- <record model="ir.rule" id="cbc_scheme_of_work_department_head_approval_rule">
+        <field name="name">CBC Scheme of Work - Department Head Approval Rule</field>
+        <field name="model_id" ref="model_cbc_scheme_of_work"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_department_head'))]"/>
+        <field name="domain_force">[('department_head_id.user_id.id','=',user.id), ('status', 'in', ['departmental_approved', 'head_teacher_approved'])]</field>
+    </record> -->
+<!--
+    <record model="ir.rule" id="cbc_scheme_of_work_head_teacher_approval_rule">
+        <field name="name">CBC Scheme of Work - Head Teacher Approval Rule</field>
+        <field name="model_id" ref="model_cbc_scheme_of_work"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_head_teacher'))]"/>
+        <field name="domain_force">[('head_teacher_id.user_id.id','=',user.id), ('status', 'in', ['head_teacher_approved', 'approved'])]</field>
+    </record> -->
+
+    <!-- New Rule for CBC Lesson Plan -->
+    <!-- <record model="ir.rule" id="cbc_lesson_plan_department_head_approval_rule">
+        <field name="name">CBC Lesson Plan - Department Head Approval Rule</field>
+        <field name="model_id" ref="model_cbc_lesson_plan"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_department_head'))]"/>
+        <field name="domain_force">[('department_head_id.user_id.id','=',user.id), ('status', 'in', ['departmental_approved', 'head_teacher_approved', 'approved', 'rejected'])]</field>
+    </record> -->
+<!--
+    <record model="ir.rule" id="cbc_lesson_plan_head_teacher_approval_rule">
+        <field name="name">CBC Lesson Plan - Head Teacher Approval Rule</field>
+        <field name="model_id" ref="model_cbc_lesson_plan"></field>
+        <field name="groups" eval="[(4, ref('xe_lesson_planner.group_head_teacher'))]"/>
+        <field name="domain_force">[('head_teacher_id.user_id.id','=',user.id), ('status', 'in', ['head_teacher_approved', 'approved', 'rejected'])]</field>
+    </record> -->
+
+</odoo>

@@ -1,0 +1,81 @@
+<odoo>
+    <record id="email_alert_view_form" model="ir.ui.view">
+        <field name="name">xe.send.email.config.view.form</field>
+        <field name="model">xe.send.email.config</field>
+        <field name="arch" type="xml">
+            <form string="Email Alert">
+                <sheet>
+                     <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" required="1" readonly="1" force_save="1"/>
+                        </h1>
+                    </div>
+                    <notebook>
+                        <page string="Accounting">
+                             <group>
+                               <group>
+                                   <field name="is_email_invoice_validate"/>
+                                   <field name="is_email_payment"/>
+                                   <field name="is_email_manual"/>
+                               </group>
+                                 <group>
+                                     <field name="inv_validate_mail_id"/>
+                                     <field name="inv_paid_mail_id"/>
+                                 </group>
+                           </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="email_alert_view_tree" model="ir.ui.view">
+        <field name="name">xe.send.email.config.tree</field>
+        <field name="model">xe.send.email.config</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="is_email_invoice_validate"/>
+                <field name="is_email_payment"/>
+                <field name="is_email_manual"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="email_alert_action" model="ir.actions.act_window">
+        <field name="name">Email Alert</field>
+        <field name="res_model">xe.send.email.config</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="email_alert_menu"
+              name="Email Alert"
+              parent="xe_accounting_sms.sub_menu_admin4"
+              action="email_alert_action"
+              sequence="41"/>
+
+    <record id="account_move_view_form" model="ir.ui.view">
+        <field name="name">account.move.view.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <field name="invoice_date" position="after">
+                <field name="parent_partner_ids" widget="many2many_tags" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="account_payment_view_form" model="ir.ui.view">
+        <field name="name">account.payment.view.form</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="parent_partner_ids" widget="many2many_tags" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

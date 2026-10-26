@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="multi_sms_send_wizard" model="ir.ui.view">
+        <field name="name">send.sms.wizard.form</field>
+        <field name="model">send.sms.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="invoice_ids" widget="many2many_tags"/>
+                        <field name="sms_template_id" domain="[('company_id', '=', company_id)]"/>
+                        <field name="template_body"/>
+                        <field name="sms_account_gateway_id" required="1" string="Gateway Account"
+                               options='{"no_open": True, "no_create": True}'/>
+                        <field name="company_id" invisible="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Send SMS" name="action_send_sms" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="invoice_send_sms" model="ir.actions.act_window">
+        <field name="name">Send SMS</field>
+        <field name="res_model">send.sms.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_view_types">list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Salary Rules Categories -->
+    <data noupdate="1">
+        <record id="TS" model="hr.salary.rule.category">
+            <field name="name">Taxable Salary</field>
+            <field name="code">TS</field>
+        </record>
+
+        <record id="TC" model="hr.salary.rule.category">
+            <field name="name">Tax Charged</field>
+            <field name="code">TC</field>
+        </record>
+
+        <record id="RELIEF1" model="hr.salary.rule.category">
+            <field name="name">Relief</field>
+            <field name="code">RELIEF1</field>
+        </record>
+
+        <record id="RELIEF2" model="hr.salary.rule.category">
+            <field name="name">Relief</field>
+            <field name="code">RELIEF2</field>
+        </record>
+
+        <record id="NCB" model="hr.salary.rule.category">
+            <field name="name">Non-cash Benefits</field>
+            <field name="code">NCB</field>
+        </record>
+
+        <record id="Advance" model="hr.salary.rule.category">
+            <field name="name">Advance</field>
+            <field name="code">ADVANCE</field>
+        </record>
+
+        <record id="Advance_deduction" model="hr.salary.rule.category">
+            <field name="name">Advance Deduction</field>
+            <field name="code">ADVDED</field>
+        </record>
+
+        <record id="hr_salary_rule_house_bonus" model="hr.salary.rule">
+            <field name="code">HB</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="name">House Bonus</field>
+            <field name="sequence" eval="8"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+if contract.payroll_type == '13_month':
+    result = payslip.work_perc*(contract.house_bonus/13)
+else:
+    result = payslip.work_perc*(contract.house_bonus/12)
+        </field>
+        </record>
+
+        <record id="hr_salary_rule_food_allowance" model="hr.salary.rule">
+            <field name="code">FDA</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="name">Food Allowance</field>
+            <field name="sequence" eval="9"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+if contract.is_activity_rate and contract.food_allowance and contract.activity_rate:
+    result = (payslip.food_allowance*contract.activity_rate)/100
+else:
+    result = payslip.food_allowance
+        </field>
+        </record>
+
+        <record id="hr_salary_rule_transport_allowance" model="hr.salary.rule">
+            <field name="code">TRA</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="name">Transport Allowance</field>
+            <field name="sequence" eval="10"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+if contract.is_activity_rate and contract.transport_allowance and contract.activity_rate:
+    result = (contract.transport_allowance*contract.activity_rate)/100
+else:
+    result = payslip.transport_allowance
+        </field>
+        </record>
+
+        <record id="hr_salary_rule_houserentallowance1" model="hr.salary.rule">
+            <field name="code">HRA</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="name">House Allowance</field>
+            <field name="sequence" eval="11"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.BASIC * 0.15</field>
+        </record>
+
+
+        <record id="hr_salary_rule_taxallowance" model="hr.salary.rule">
+            <field name="code">TAX ALW</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="name">Tax Allowance</field>
+            <field name="sequence" eval="12"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.monthly_tax_allowance</field>
+        </record>
+
+        <record id="hr_rule_TS" model="hr.salary.rule">
+            <field name="name">Taxable Salary</field>
+            <field name="sequence" eval="56"/>
+            <field name="code">TS</field>
+            <field name="category_id" ref="xe_kenya_hr_payroll.TS"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.GROSS - contract.nssf_amount</field>
+        </record>
+
+        <record id="hr_rule_MIR" model="hr.salary.rule">
+            <field name="name">Monthly Insurance Relief</field>
+            <field name="sequence" eval="150"/>
+            <field name="code">MIR</field>
+            <field name="category_id" ref="xe_kenya_hr_payroll.RELIEF2"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.monthly_insurance_relief</field>
+        </record>
+        <record id="hr_rule_SCHL_FEE" model="hr.salary.rule">
+            <field name="name">School Fees Benefits</field>
+            <field name="sequence" eval="14"/>
+            <field name="code">SFB</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.school_fees_benefits</field>
+        </record>
+
+        <record id="hr_rule_TC" model="hr.salary.rule">
+            <field name="name">Tax Charged</field>
+            <field name="sequence" eval="101"/>
+            <field name="code">TC</field>
+            <field name="category_id" ref="xe_kenya_hr_payroll.TC"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+range_list = [
+    {'range': range(0, 24000), 'percentage': 0.10, 'amount': 0},
+    {'range': range(24001, 32333), 'percentage': 0.25, 'amount': 2400}]
+TS = int(round(categories.TS))
+for item in range_list:
+    if TS in item['range']:
+        value = TS - (item['range'][0] >
+                      0 and (item['range'][0] - 1) or item['range'][0])
+        value1 = value * item['percentage']
+        result = value1 + item['amount']
+    elif TS not in item['range'] and TS > 32333:
+        value = TS - 32333
+        value1 = value * 0.30
+        result = value1 + 4483
+if TS &lt;23999.99 or TS == 23999.99:
+    result = 0
+else:
+    result = result
+        </field>
+        </record>
+
+        <record id="hr_rule_MPR" model="hr.salary.rule">
+            <field name="name">Monthly Personal Relief</field>
+            <field name="sequence" eval="151"/>
+            <field name="code">MPR</field>
+            <field name="category_id" ref="xe_kenya_hr_payroll.RELIEF2"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.monthly_personal_relief</field>
+        </record>
+
+        <record id="hr_rule_longtermadvance_ded" model="hr.salary.rule">
+            <field name="name">Advance Deduction</field>
+            <field name="sequence" eval="100"/>
+            <field name="code">ADV DED</field>
+            <field name="category_id" ref="Advance_deduction"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">fix</field>
+        </record>
+
+        <record id="hr_rule_longtermadvance" model="hr.salary.rule">
+            <field name="name">Long Term Advance</field>
+            <field name="sequence" eval="140"/>
+            <field name="code">LT ADVANCE</field>
+            <field name="category_id" ref="Advance"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">fix</field>
+        </record>
+
+        <record id="hr_rule_extra_class" model="hr.salary.rule">
+            <field name="name">Other Earnings</field>
+            <field name="sequence" eval="15"/>
+            <field name="code">EXT</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.other_earnings</field>
+        </record>
+
+        <record id="hr_rule_other_deductions" model="hr.salary.rule">
+            <field name="name">Other Deductions</field>
+            <field name="sequence" eval="111"/>
+            <field name="code">EDED</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.other_deductions</field>
+        </record>
+
+        <record id="hr_rule_gr1" model="hr.salary.rule">
+            <field name="name">Gratuity Total</field>
+            <field name="sequence" eval="140"/>
+            <field name="code">GRA</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.gratuity</field>
+        </record>
+
+        <record id="hr_rule_PAYE" model="hr.salary.rule">
+            <field name="name">PAYE</field>
+            <field name="sequence" eval="102"/>
+            <field name="code">PAYE</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+range_list = [{'range': range(0, 24000), 'percentage': 0.10, 'amount': 0},
+{'range': range(24001, 32334), 'percentage': 0.25, 'amount': 2400}]
+TS = int(round(categories.TS))
+for item in range_list:
+    if TS in item['range']:
+        value = TS - (item['range'][0] >
+                      0 and (item['range'][0] - 1) or item['range'][0])
+        value1 = value * item['percentage']
+        result = value1 + item['amount']
+    elif TS not in item['range'] and TS > 32333:
+        value = TS - 32333
+        value1 = value * 0.30
+        result = value1 + 4483.25
+if TS > 23999.99:
+    result = result - contract.monthly_personal_relief - (0.15 * contract.monthly_medical_insurance) - contract.insurance_premium - contract.monthly_insurance_relief
+else:
+    result = 0
+</field>
+        </record>
+
+        <record id="hr_rule_NSSF" model="hr.salary.rule">
+            <field name="name">NSSF</field>
+            <field name="sequence" eval="53"/>
+            <field name="code">NSSF</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.nssf_amount</field>
+        </record>
+
+        <record id="hr_rule_EMPNSSF" model="hr.salary.rule">
+            <field name="name">NSSF Employer Contribution</field>
+            <field name="sequence" eval="53"/>
+            <field name="code">EMPNSSF</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.nssf_amount</field>
+        </record>
+
+        <record id="hr_rule_schoolfees" model="hr.salary.rule">
+            <field name="name">School Fees</field>
+            <field name="sequence" eval="106"/>
+            <field name="code">SCHOOL FEES</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.schoolfees_deduction</field>
+        </record>
+
+        <record id="hr_rule_helb_deduction" model="hr.salary.rule">
+            <field name="name">HELB Deduction</field>
+            <field name="sequence" eval="107"/>
+            <field name="code">HELB</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.helb_deduction</field>
+        </record>
+
+        <record id="hr_rule_samaj" model="hr.salary.rule">
+            <field name="name">KIMISITU SACCO Contribution-deduction</field>
+            <field name="sequence" eval="103"/>
+            <field name="code">KSHCD</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.sacco_contribution</field>
+        </record>
+
+        <record id="hr_rule_fsamaj" model="hr.salary.rule">
+            <field name="name">FINNLEMM SACCO Contribution-deduction</field>
+            <field name="sequence" eval="104"/>
+            <field name="code">FSHCD</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.finnlem_sacco_contribution</field>
+        </record>
+
+        <record id="hr_rule_parking_fee" model="hr.salary.rule">
+            <field name="name">Parking Fee-deduction</field>
+            <field name="sequence" eval="105"/>
+            <field name="code">PARKFEE</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.parking_fee</field>
+        </record>
+
+        <record id="hr_rule_welfare" model="hr.salary.rule">
+            <field name="name">Welfare Contribution</field>
+            <field name="sequence" eval="106"/>
+            <field name="code">WLF</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.welfare_contribution</field>
+        </record>
+
+        <record id="hr_rule_insurance_premium" model="hr.salary.rule">
+            <field name="name">Insurance premium-deduction</field>
+            <field name="sequence" eval="107"/>
+            <field name="code">INSP</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.insurance_premium</field>
+        </record>
+
+        <record id="hr_rule_pension_contribution" model="hr.salary.rule">
+            <field name="name">Pension contribution - deduction</field>
+            <field name="sequence" eval="108"/>
+            <field name="code">PENS</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.pension_contribution</field>
+        </record>
+
+        <record id="hr_rule_medical_deduction" model="hr.salary.rule">
+            <field name="name">Medical Deduction</field>
+            <field name="sequence" eval="109"/>
+            <field name="code">MED</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.medical_deduction</field>
+        </record>
+
+        <record id="hr_rule_NHIF" model="hr.salary.rule">
+            <field name="name">NHIF</field>
+            <field name="sequence" eval="110"/>
+            <field name="code">NHIF</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+range_list = [
+    {'range': range(0, 5999), 'amount': 150},
+    {'range': range(6000, 7999), 'amount': 300},
+    {'range': range(8000, 11999), 'amount': 400},
+    {'range': range(12000, 14999), 'amount': 500},
+    {'range': range(15000, 19999), 'amount': 600},
+    {'range': range(20000, 24999), 'amount': 750},
+    {'range': range(25000, 29999), 'amount': 850},
+    {'range': range(30000, 34999), 'amount': 900},
+    {'range': range(35000, 39999), 'amount': 950},
+    {'range': range(40000, 44999), 'amount': 1000},
+    {'range': range(45000, 49999), 'amount': 1100},
+    {'range': range(50000, 59999), 'amount': 1200},
+    {'range': range(60000, 69999), 'amount': 1300},
+    {'range': range(70000, 79999), 'amount': 1400},
+    {'range': range(80000, 89999), 'amount': 1500},
+    {'range': range(90000, 99999), 'amount': 1600}
+]
+GROSS = int(round(categories.GROSS))
+for item in range_list:
+    if GROSS in item['range']:
+        result = item['amount']
+    elif GROSS not in item['range'] and GROSS > 100000:
+        result = 1700
+        </field>
+        </record>
+
+        <record id="structure_002" model="hr.payroll.structure">
+            <field name="name">Generic Salary Structure</field>
+            <field name="code">Generic</field>
+            <field name="rule_ids"
+                   eval="[(6, 0, [ref('hr_payroll_community.hr_rule_basic'),
+        ref('hr_payroll_community.hr_rule_taxable'),
+        ref('hr_payroll_community.hr_rule_net'),
+        ref('hr_rule_NHIF'),
+        ref('hr_rule_pension_contribution'),
+        ref('hr_rule_medical_deduction'),
+        ref('hr_rule_insurance_premium'),
+        ref('hr_rule_welfare'),
+        ref('hr_rule_parking_fee'),
+        ref('hr_rule_fsamaj'),
+        ref('hr_rule_samaj'),
+        ref('hr_rule_NSSF'),
+        ref('hr_rule_EMPNSSF'),
+        ref('hr_rule_PAYE'),
+        ref('hr_rule_gr1'),
+        ref('hr_rule_other_deductions'),
+        ref('hr_rule_extra_class'),
+        ref('hr_rule_longtermadvance_ded'),
+        ref('hr_rule_MPR'),
+        ref('hr_rule_TC'),
+        ref('hr_rule_SCHL_FEE'),
+        ref('hr_rule_MIR'),
+        ref('hr_rule_TS'),
+        ref('hr_salary_rule_taxallowance'),
+        ref('hr_salary_rule_houserentallowance1'),
+        ref('hr_salary_rule_transport_allowance'),
+        ref('hr_salary_rule_food_allowance'),
+        ref('hr_salary_rule_house_bonus')])]"
+            />
+        </record>
+
+        <!-- Resource Calendar data -->
+        <record id="resource_calendar_morning" model="resource.calendar">
+            <field name="name">Morning Shift</field>
+            <field name="attendance_ids" eval="[(5, 0),
+            (0, 0, {'name': 'Monday Morning', 'dayofweek': str(0), 'hour_from': 10, 'hour_to': 13}),
+            (0, 0, {'name': 'Tuesday Morning', 'dayofweek': str(1), 'hour_from': 10, 'hour_to': 13}),
+            (0, 0, {'name': 'Wednesday Morning', 'dayofweek': str(2), 'hour_from': 10, 'hour_to': 13}),
+            (0, 0, {'name': 'Thursday Morning', 'dayofweek': str(3), 'hour_from': 10, 'hour_to': 13}),
+            (0, 0, {'name': 'Friday Morning', 'dayofweek': str(4), 'hour_from': 10, 'hour_to': 13}),
+            (0, 0, {'name': 'Saturday Morning', 'dayofweek': str(5), 'hour_from': 10, 'hour_to': 13})]"/>
+        </record>
+
+        <record id="resource_calendar_noon" model="resource.calendar">
+            <field name="name">Afternoon Shift</field>
+            <field name="attendance_ids" eval="[(5, 0),
+            (0, 0, {'name': 'Monday Noon', 'dayofweek': str(0), 'hour_from': 14, 'hour_to': 17}),
+            (0, 0, {'name': 'Tuesday Noon', 'dayofweek': str(1), 'hour_from': 14, 'hour_to': 17}),
+            (0, 0, {'name': 'Wednesday Noon', 'dayofweek': str(2), 'hour_from': 14, 'hour_to': 17}),
+            (0, 0, {'name': 'Thursday Noon', 'dayofweek': str(3), 'hour_from': 14, 'hour_to': 17}),
+            (0, 0, {'name': 'Friday Noon', 'dayofweek': str(4), 'hour_from': 14, 'hour_to': 17}),
+            (0, 0, {'name': 'Saturday Noon', 'dayofweek': str(5), 'hour_from': 14, 'hour_to': 17})]"/>
+        </record>
+
+        <record id="resource_calendar_evening" model="resource.calendar">
+            <field name="name">Evening Shift</field>
+            <field name="attendance_ids" eval="[(5, 0),
+            (0, 0, {'name': 'Monday Noon', 'dayofweek': str(0), 'hour_from': 18, 'hour_to': 21}),
+            (0, 0, {'name': 'Tuesday Noon', 'dayofweek': str(1), 'hour_from': 18, 'hour_to': 21}),
+            (0, 0, {'name': 'Wednesday Noon', 'dayofweek': str(2), 'hour_from': 18, 'hour_to': 21}),
+            (0, 0, {'name': 'Thursday Noon', 'dayofweek': str(3), 'hour_from': 18, 'hour_to': 21}),
+            (0, 0, {'name': 'Friday Noon', 'dayofweek': str(4), 'hour_from': 18, 'hour_to': 21}),
+            (0, 0, {'name': 'Saturday Noon', 'dayofweek': str(5), 'hour_from': 18, 'hour_to': 21})]"/>
+        </record>
+    </data>
+</odoo>

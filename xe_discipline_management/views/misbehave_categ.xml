@@ -1,0 +1,85 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="misbehave_category_list">
+      <field name="name">xe.misbehave.category.list</field>
+      <field name="model">xe.misbehave.category</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="category_type"/>
+          <field name="sub_category_ids" widget="many2many_tags"/>
+          <field name="email_tmpl_id"/>
+        </list>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="misbehave_category_form">
+      <field name="name">xe.misbehave.category.form</field>
+      <field name="model">xe.misbehave.category</field>
+      <field name="arch" type="xml">
+        <form>
+        <sheet>
+            <group col="4">
+                <field name="name"/>
+                <field name="category_type"/>
+                <field name="email_tmpl_id"/>
+            </group>
+            <group>
+                <field name="sub_category_ids">
+                    <list editable="bottom">
+                        <field name="name"/>
+                    </list>
+                </field>
+            </group>
+
+        </sheet>
+        </form>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="misbehave_sub_category_list">
+      <field name="name">xe.misbehave.category.list</field>
+      <field name="model">xe.misbehave.sub.category</field>
+      <field name="arch" type="xml">
+        <list editable="bottom">
+          <field name="name"/>
+          <field name="category_id"/>
+        </list>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="xe_achieve_category_list">
+      <field name="name">xe.achieve.category.list</field>
+      <field name="model">xe.achieve.category</field>
+      <field name="arch" type="xml">
+        <list editable="bottom">
+          <field name="name"/>
+        </list>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="misbehave_category_action_window">
+      <field name="name">Misbehaviour Categories</field>
+      <field name="res_model">xe.misbehave.category</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="misbehave_sub_category_action_window">
+      <field name="name">Misbehaviour Sub Categories</field>
+      <field name="res_model">xe.misbehave.sub.category</field>
+      <field name="view_mode">list</field>
+    </record>
+    <record model="ir.actions.act_window" id="achieve_category_action_window">
+      <field name="name">Achievement Categories</field>
+      <field name="res_model">xe.achieve.category</field>
+      <field name="view_mode">list</field>
+    </record>
+
+
+    <menuitem name="Discipline Management" id="discipline_main_menu" groups="xenesis_school_base.group_xe_admin,xenesis_school_base.group_xe_staff,xe_discipline_management.group_discipline_management"/>
+    <menuitem name="Configuration" id="discipline_config_root" parent="discipline_main_menu" sequence="100"/>
+    <menuitem name="Misbehaviour Categories" id="misbehaviour_categ_menu" parent="discipline_config_root"
+              action="misbehave_category_action_window"/>
+    <menuitem name="Misbehaviour Sub Categories" id="misbehaviour_sub_categ_menu" parent="discipline_config_root"
+              action="misbehave_sub_category_action_window"/>
+    <menuitem name="Achievement Categories" id="achievement_categ_menu" parent="discipline_config_root"
+              action="achieve_category_action_window"/>
+
+  </data>
+</odoo>

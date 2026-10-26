@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="ir.ui.view" id="renew_media_form">
+        <field name="name">renew.media.form</field>
+        <field name="model">renew.media</field>
+        <field name="arch" type="xml">
+            <form string="Media Renew">
+                <group col="4">
+                    <field name="media_id" readonly="1"/>
+                    <field name="media_unit_id" domain="[('media_id','=',media_id)]" readonly="1"/>
+                    <field name="issue_date" readonly="1"/>
+                    <field name="move_due_date" readonly="1"/>
+                    <field name="renew_issue_date" required="1"/>
+                    <field name="actual_return_date" readonly="1"/>
+                    <field name="renew_return_date" required="1"/>
+                </group>
+                <footer groups="base.group_user">
+                    <button name="do_renew" type="object" string="Proceed" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="renew_media_act">
+        <field name="name">Renew Media</field>
+        <field name="res_model">renew.media</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="renew_media_form"/>
+        <field name="context">{'default_media_unit_id': active_id}</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

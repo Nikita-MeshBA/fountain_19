@@ -4,12 +4,12 @@
         <field name="name">xe.medicalcheckup.tree</field>
         <field name="model">xe.medicalcheckup</field>
         <field name="arch" type="xml">
-            <tree string="Medical Checkup">
+            <list string="Medical Checkup">
                 <field name="name" required="1" string="Number"/>
                 <field name="partner_id" string="Name"/>
                 <field name="checkup_date" required="1"/>
                 <field name="next_date"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -245,28 +245,75 @@
         </field>
     </record>
 
-    <record id="view_medical_checkup_search" model="ir.ui.view">
-        <field name="name">xe.medicalcheckup.search</field>
-        <field name="model">xe.medicalcheckup</field>
-        <field name="priority" eval="8"/>
-        <field name="arch" type="xml">
-            <search string="Medical Checkup">
-                <field name="next_date"/>
-                <field name="name" required="1" readonly="1" invisible="1"/>
-                <field name="checkup_date" required="1"/>
-                <filter name="teachers" string="Teachers" domain="[('type_record', '=', 't')]"/>
-                <filter name="students" string="Students" domain="[('type_record', '=', 's')]"/>
-                <group expand="0" string="Group By">
-                    <filter string="User Type" name="type" domain="[]" context="{'group_by': 'type_record'}"/>
-                </group>
-            </search>
-        </field>
-    </record>
+<!--    <record id="view_medical_checkup_search" model="ir.ui.view">-->
+<!--    <field name="name">xe.medicalcheckup.search</field>-->
+<!--    <field name="model">xe.medicalcheckup</field>-->
+<!--    <field name="priority" eval="8"/>-->
+<!--    <field name="arch" type="xml">-->
+<!--        <search string="Medical Checkup">-->
+<!--            <field name="next_date"/>-->
+<!--            <field name="name"/>-->
+<!--            <field name="checkup_date"/>-->
 
+<!--            <filter name="teachers"-->
+<!--                    string="Teachers"-->
+<!--                    domain="[('type_record', '=', 't')]"/>-->
+
+<!--            <filter name="students"-->
+<!--                    string="Students"-->
+<!--                    domain="[('type_record', '=', 's')]"/>-->
+
+<!--            <group expand="0" string="Group By">-->
+<!--                <filter string="User Type"-->
+<!--                        name="type"-->
+<!--                        context="{'group_by': 'type_record'}"/>-->
+<!--            </group>-->
+<!--        </search>-->
+<!--    </field>-->
+<!--</record>-->
+
+<!--    <record id="view_medical_checkup_search" model="ir.ui.view">-->
+<!--        <field name="name">xe.medicalcheckup.search</field>-->
+<!--        <field name="model">xe.medicalcheckup</field>-->
+<!--        <field name="priority" eval="8"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--&lt;!&ndash;            <search string="Medical Checkup">&ndash;&gt;-->
+<!--&lt;!&ndash;                <field name="next_date"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <field name="name" required="1" readonly="1" invisible="1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <field name="checkup_date" required="1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <filter name="teachers" string="Teachers" domain="[('type_record', '=', 't')]"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <filter name="students" string="Students" domain="[('type_record', '=', 's')]"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <group expand="0" string="Group By">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <filter string="User Type" name="type" domain="[]" context="{'group_by': 'type_record'}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                </group>&ndash;&gt;-->
+<!--&lt;!&ndash;            </search>&ndash;&gt;-->
+
+<!--        </field>-->
+<!--        <search string="Medical Checkup">-->
+<!--                <field name="next_date"/>-->
+<!--                <field name="name"/>-->
+<!--                <field name="checkup_date"/>-->
+<!--                <filter name="teachers" string="Teachers" domain="[('type_record', '=', 't')]"/>-->
+<!--                <filter name="students" string="Students" domain="[('type_record', '=', 's')]"/>-->
+<!--                <group expand="0" string="Group By">-->
+<!--                    <filter string="User Type" name="type" context="{'group_by': 'type_record'}"/>-->
+<!--                </group>-->
+<!--        </search>-->
+<!--    </record>-->
+  <record id="view_medical_checkup_search" model="ir.ui.view">
+    <field name="name">xe.medicalcheckup.search</field>
+    <field name="model">xe.medicalcheckup</field>
+    <field name="priority" eval="8"/>
+    <field name="arch" type="xml">
+        <search string="Medical Checkup">
+            <field name="name"/>
+        </search>
+    </field>
+</record>
     <record id="act_medical_checkup" model="ir.actions.act_window">
         <field name="name">Health Details</field>
         <field name="res_model">xe.medicalcheckup</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="search_view_id" ref="view_medical_checkup_search"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">

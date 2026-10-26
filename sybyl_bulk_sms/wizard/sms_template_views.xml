@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="send_sms_template_form" model="ir.ui.view">
+        <field name="name">send.sms.template.form</field>
+        <field name="model">send.sms.template.new</field>
+        <field name="arch" type="xml">
+            <form string="Templates">
+                <sheet>
+                    <group>
+                        <field name="filter_by"/>
+                        <field name="emp_send_by" invisible="filter_by != 'employee'"/>
+                        <field name="department_ids" widget="many2many_tags"
+                               invisible="filter_by != 'employee' or emp_send_by != 'department'"/>
+                        <field name="employee_ids" widget="many2many_tags"
+                               invisible="filter_by != 'employee' or emp_send_by != 'employee'"/>
+                        <field name="student_ids" widget="many2many_tags" invisible="filter_by != 'student'"/>
+                        <field name="classroom_ids" widget="many2many_tags" invisible="filter_by != 'classroom'"/>
+                        <field name="partner_ids" string="Contact" widget="many2many_tags"
+                               invisible="filter_by != 'contact'"/>
+                        <field name="template_body" string="Message"/>
+                        <field name="sms_account_gateway_id" required="1" string="Gateway Account"
+                               options='{"no_open": True, "no_create": True}'/>
+                    </group>
+                    <footer>
+                        <button string="Send Sms" name="send_sms_new" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sms_template_action" model="ir.actions.act_window">
+        <field name="name">Send Sms</field>
+        <field name="res_model">send.sms.template.new</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <menuitem id="bulk_send_sms_menu"
+              name="Send SMS"
+              parent="sybyl_bulk_sms_parent_menu"
+              action="sms_template_action"
+              sequence="40"/>
+</odoo>

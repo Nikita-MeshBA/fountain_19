@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_xe_rubrics_configuration_tree" model="ir.ui.view">
+        <field name="name">xe.rubrics.configuration.tree</field>
+        <field name="model">xe.rubrics.configuration</field>
+        <field name="arch" type="xml">
+            <list string="Rubrics Configuration" editable="top">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="points"/>
+                <field name="min_per"/>
+                <field name="max_per"/>
+                <field name="exam_session_id" groups="base.group_no_one" optional="hide" column_invisible="1"/>
+                <field name="subject_id" groups="base.group_no_one" optional="hide" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_xe_rubrics_configuration_form" model="ir.ui.view">
+        <field name="name">xe.rubrics.configuration.form</field>
+        <field name="model">xe.rubrics.configuration</field>
+        <field name="arch" type="xml">
+            <form string="Rubrics Configuration">
+                <sheet>
+                    <group colspan="4">
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="points"/>
+                        <field name="min_per"/>
+                        <field name="max_per"/>
+                        <field name="exam_session_id" groups="base.group_no_one" invisible="1"/>
+                        <field name="subject_id" groups="base.group_no_one" invisible="1"/>
+                        <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_open_xe_rubrics_configuration_view">
+        <field name="name">Rubrics Configuration</field>
+        <field name="res_model">xe.rubrics.configuration</field>
+        <field name="domain">[('subject_id','=',False),('exam_session_id','=',False)]</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_xe_rubrics_configuration" parent="xe_exam_management.menu_exam_configuration" sequence="40"
+              action="act_open_xe_rubrics_configuration_view" groups="xe_exam_management.group_rubrics_configurations"/>
+</odoo>

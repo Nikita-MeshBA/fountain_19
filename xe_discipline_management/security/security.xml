@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Discipline Management Category -->
+    <record id="module_category_discipline_management" model="ir.module.category">
+        <field name="name">Discipline Management</field>
+        <field name="parent_id" ref="base.module_category_human_resources"/>
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- Discipline Management Privilege -->
+    <record id="group_discipline_management_privilege" model="res.groups.privilege">
+        <field name="name">Discipline Management</field>
+        <field name="category_id" ref="module_category_discipline_management"/>
+    </record>
+
+    <!-- Discipline Management Group -->
+    <record id="group_discipline_management" model="res.groups">
+        <field name="name">Discipline Management</field>
+        <field name="privilege_id" ref="group_discipline_management_privilege"/>
+    </record>
+
+</odoo>
+
+<!--<odoo>-->
+
+<!--    <record id="group_discipline_management" model="res.groups">-->
+<!--        <field name="name">Discipline Management</field>-->
+<!--        <field name="category_id" ref="base.module_category_usability"/>-->
+<!--    </record>-->
+
+<!--</odoo>-->

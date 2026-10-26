@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_admission_enquiry_tree" model="ir.ui.view">
+        <field name="name">xe.admission.enquiry.tree</field>
+        <field name="model">xe.admission.enquiry</field>
+        <field name="arch" type="xml">
+            <list string="Enquiry">
+                <field name="number"/>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="nationality_id"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+<!--    <record id="view_admission_enquiry_search" model="ir.ui.view">-->
+<!--        <field name="name">xe.admission.enquiry.search</field>-->
+<!--        <field name="model">xe.admission.enquiry</field>-->
+<!--        <field name="priority" eval="8"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--&lt;!&ndash;            <search string="Enquiry">&ndash;&gt;-->
+<!--&lt;!&ndash;                <field name="name"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <newline/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <field name="academic_year_id"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <separator/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <filter string="Academic Year" name="academic_year_id"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <group expand="0" string="Group By" colspan="4"&ndash;&gt;-->
+<!--&lt;!&ndash;                       name="enquiry_group">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <filter string="Academic Year" name="academic_year_id"&ndash;&gt;-->
+<!--&lt;!&ndash;                            domain="[]" context="{'group_by':'academic_year_id'}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                </group>&ndash;&gt;-->
+<!--&lt;!&ndash;            </search>&ndash;&gt;-->
+<!--              <search string="Enquiry">-->
+<!--                    <field name="name"/>-->
+<!--                    <newline/>-->
+<!--                    <field name="academic_year_id"/>-->
+<!--                    <separator/>-->
+<!--                    <group expand="0" string="Group By" colspan="4" name="enquiry_group">-->
+<!--                        <filter string="Academic Year" name="academic_year_id"-->
+<!--                                domain="[]" context="{'group_by':'academic_year_id'}"/>-->
+<!--                    </group>-->
+<!--        </search>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="view_admission_enquiry_search" model="ir.ui.view">-->
+<!--    <field name="name">xe.admission.enquiry.search</field>-->
+<!--    <field name="model">xe.admission.enquiry</field>-->
+<!--    <field name="priority" eval="8"/>-->
+<!--    <field name="arch" type="xml">-->
+<!--        <search string="Enquiry">-->
+<!--            <field name="name"/>-->
+<!--            <field name="academic_year_id"/>-->
+<!--            <group expand="0" string="Group By">-->
+<!--                <filter string="Academic Year"-->
+<!--                        name="group_by_academic_year"-->
+<!--                        context="{'group_by': 'academic_year_id'}"/>-->
+<!--            </group>-->
+<!--        </search>-->
+<!--    </field>-->
+<!--</record>-->
+    <record id="view_admission_enquiry_search" model="ir.ui.view">
+    <field name="name">xe.admission.enquiry.search</field>
+    <field name="model">xe.admission.enquiry</field>
+    <field name="priority" eval="8"/>
+    <field name="arch" type="xml">
+        <search string="Enquiry">
+            <field name="name"/>
+            <field name="academic_year_id"/>
+            <filter string="Academic Year"
+                    name="group_by_academic_year"
+                    context="{'group_by': 'academic_year_id'}"/>
+        </search>
+    </field>
+</record>
+    <record id="view_admission_enquiry_form" model="ir.ui.view">
+        <field name="name">xe.admission.enquiry.form</field>
+        <field name="model">xe.admission.enquiry</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Enquiry">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object"
+                            invisible="state != 'draft'"/>
+                    <button
+                            name="%(xe_admission_management.action_assign_employee)d"
+                            string="Assign" type="action" class="btn-primary"
+                            invisible="state != 'confirmed'"/>
+                    <button name="action_reset_draft" string="Reset To Draft"
+                            type="object" invisible="state != 'cancelled'"/>
+                    <button
+                            name="%(xe_admission_management.action_xe_schedule_interview)d"
+                            string="Schedule Interview" type="action" class="btn-primary"
+                            invisible="state != 'assigned' or is_interview == False"/>
+                    <button
+                            name="%(xe_admission_management.action_pass_or_fail_reason)d"
+                            string="Pass" type="action"
+                            invisible="state != 'interview_scheduled' or is_interview == False"
+                            context="{'default_result': 'pass'}"/>
+                    <button
+                            name="%(xe_admission_management.action_fail_reason)d"
+                            string="Fail" type="action"
+                            invisible="state != 'interview_scheduled' or is_interview == False"
+                            context="{'default_result': 'fail'}"/>
+                    <button
+                            name="%(xe_admission_management.action_xe_schedule_interview)d"
+                            string="Reschedule Interview" type="action"
+                            invisible="state != 'interview_scheduled' or is_interview == False"/>
+                    <button name="action_create_application"
+                            string="Create Application" type="object"
+                            invisible="(is_interview and state != 'passed') or (is_interview == False and state != 'assigned')"/>
+                    <button name="action_open_application"
+                            string="Open Application" type="object"
+                            invisible="state != 'application_created'"/>
+                    <button name="action_open_student" string="Open Student"
+                            type="object"
+                            invisible="state != 'application_created'"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            invisible="state not in ['draft','confirmed','assigned','interview_scheduled','passed']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed,assigned,interview_scheduled,application_created"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_schedule_meeting" type="object" class="oe_stat_button" icon="fa-calendar"
+                                invisible="is_interview == False">
+                            <div class="o_stat_info">
+                                <field name="calendar_event_count" class="o_stat_value"/>
+                                <span class="o_stat_text" invisible="calendar_event_count > 1">Interview</span>
+                            </div>
+                        </button>
+                    </div>
+                    <field name="image" widget="image"
+                           class="oe_avatar oe_avatar"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="number"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" placeholder="Student's Full Name"
+                                   required="True" readonly="state != 'draft'"/>
+                            <field name="nationality_id"
+                                   readonly="state != 'draft'"/>
+                            <field name="gender"
+                                   readonly="state != 'draft'"/>
+                            <field name="previous_school_attended"
+                                   readonly="state != 'draft'"/>
+                            <field name="assigned_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="email"
+                                   readonly="state != 'draft'"/>
+                            <field name="dob"
+                                   readonly="state != 'draft'"/>
+                            <field name="academic_year_id" required="1"/>
+                            <field name="course_id"
+                                   readonly="state != 'draft'"/>
+                            <field name="classroom_id" domain="[('course_id', '=', course_id)]"
+                                   readonly="state != 'draft'"/>
+                            <field name="enq_url" invisible="1"/>
+                            <field name="add_interview_fee" invisible="1"/>
+                            <field name="interview_fee_inv_id"
+                                   invisible="state == 'draft' or add_interview_fee == False"
+                                   readonly="state != 'draft'"/>
+                            <field name="is_interview" invisible="1"/>
+                        </group>
+                    </group>
+                    <group name="address">
+                        <label for="street" string="Address"/>
+                        <div name="div_address">
+                            <field name="street" placeholder="Street..."/>
+                            <field name="street2" placeholder="Street2"/>
+                            <div class="address_format">
+                                <field name="city" placeholder="City" style="width: 40%"/>
+                                <field name="county" placeholder="County" style="width: 37%"/>
+                                <field name="zip" placeholder="Postal Code" style="width: 20%"/>
+                                <field name="state_id" class="oe_no_button"
+                                       placeholder="State" style="width: 37%"
+                                       options="{&quot;no_open&quot;: True}" invisible="1"/>
+                            </div>
+                            <field name="country_id" placeholder="Country"
+                                   class="oe_no_button" options="{&quot;no_open&quot;: True}"/>
+                        </div>
+                    </group>
+                    <group name="siblings">
+                        <field name="is_sibling" string="Is Sibling"/>
+                        <field name="student_ids" string="Sibling"
+                               invisible="is_sibling == False">
+                            <list string="Student Details">
+                                <field name="name"/>
+                                <field name="roll_number"/>
+                                <field name="course_id"/>
+                                <field name="classroom_id"/>
+                                <field name="nationality_id"/>
+                                <field name="email"/>
+                            </list>
+                        </field>
+                        <field name="parent_ids" string="Parents"
+                               domain="[('student_detail_ids.student_id','in',student_ids)]">
+                            <list string="Parent">
+                                <field name="name"/>
+                                <field name="phone"/>
+<!--                                <field name="mobile"/>-->
+                                <field name="email"/>
+                                <field name="relation"/>
+                            </list>
+                        </field>
+                    </group>
+
+                    <field name="remarks" nolabel="1" placeholder="Notes..."
+                           readonly="state != 'draft'"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="act_admission_enquiry" model="ir.actions.act_window">
+        <field name="name">Enquiries</field>
+        <field name="res_model">xe.admission.enquiry</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_admission_enquiry_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add a new Enquiry</p>
+        </field>
+    </record>
+    <menuitem id="menu_admission_root" name="Admission"
+              groups="xe_admission_management.group_xe_admission_user" sequence="5"
+              web_icon="xe_admission_management,static/description/icon.png"/>
+    <menuitem id="menu_admission_enquiries" name="Enquiries"
+              action="act_admission_enquiry"
+              groups="xe_admission_management.group_xe_admission_user"
+              parent="menu_admission_root" sequence="1"/>
+</odoo>

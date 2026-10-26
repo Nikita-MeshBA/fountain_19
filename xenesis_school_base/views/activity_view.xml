@@ -4,13 +4,13 @@
         <field name="name">xe.activity.tree</field>
         <field name="model">xe.activity</field>
         <field name="arch" type="xml">
-            <tree string="Activity">
+            <list string="Activity">
                 <field name="date"/>
                 <field name="student_id"/>
                 <field name="teacher_id"/>
                 <field name="type_id"/>
                 <field name="description"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_activity_form" model="ir.ui.view">
@@ -43,7 +43,7 @@
     <record id="act_activity" model="ir.actions.act_window">
         <field name="name">Activity</field>
         <field name="res_model">xe.activity</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Add an Activity

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sclp_res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.sclp</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="hr.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//setting[@id='default_company_schedule_setting']" position="after">
+                <setting id="working_days_setting" help="Set total months to calculate gratuity.">
+                    <field name="working_days"/>
+                    <span>/ Month</span>
+                </setting>
+            </xpath>
+            <xpath expr="//block[@name='employees_setting_container']" position="inside">
+                <setting id="gratuity_period_setting" help="Set total months to calculate gratuity.">
+                    <field name="gratuity_period"/>
+                </setting>
+            </xpath>
+            <xpath expr="//app[@name='hr']" position="inside">
+                <block title="Employee Identifier" name="employee_identifier_setting_container">
+                    <setting company_dependent="1"
+                             help="Select &amp; configure default employee identifier generation scheme">
+                        <field name="employee_id_gen_method" class="o_light_label"
+                               context="{'default_company_id': company_id}"/>
+                        <div class="mt16" invisible="employee_id_gen_method != 'random'">
+                            <label for="employee_id_random_digits"/>
+                            <field
+                                    name="employee_id_random_digits"
+                                    class="o_light_label"
+                                    context="{'default_company_id': company_id}"
+                                    required="employee_id_gen_method == 'random'"
+                            />
+                        </div>
+                        <div class="mt16" invisible="employee_id_gen_method != 'sequence'">
+                            <label for="employee_sequence_id"/>
+                            <field
+                                    name="employee_sequence_id"
+                                    class="o_light_label"
+                                    domain="[('company_id', '=', company_id)]"
+                                    context="{'default_company_id': company_id}"
+                                    required="employee_id_gen_method == 'sequence'"/>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="payroll_res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.payroll</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="hr_payroll_community.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='hr_payroll_accountant']" position="after">
+                <block title="Kenya Payroll" name="hr_payroll_send_mail">
+                    <setting id="hr_payroll_send_mail" string="Send Payslip by Email"
+                             help="Payslip will be sent by email to employee on confirmation/validation of payslip.">
+                        <field name="send_payslip_mail"/>
+                    </setting>
+                    <setting id="hr_payroll_nita_deduction">
+                        <label for="nita_deduction_amt"/>
+                        <field name="nita_deduction_amt"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Employee Entitle Days -->
+    <record id="entitle_employee_days_tree" model="ir.ui.view">
+        <field name="name">entitle.employee.days.tree</field>
+        <field name="model">entitle.employee.days</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="display_name"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="entitle_employee_days_form" model="ir.ui.view">
+        <field name="name">entitle.employee.days.form</field>
+        <field name="model">entitle.employee.days</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="confirm" string="Confirm" type="object" default_focus="1" class="oe_highlight"
+                            invisible="state not in ['draft']"/>
+                    <button name="set_to_draft" string="Reset to Draft" type="object" class="oe_highlight"
+                            invisible="state not in ['confirmed']" groups="hr.group_hr_manager"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="display_name" readonly="state != 'draft'"/>
+                        <field name="start_date" readonly="state != 'draft'"/>
+                        <field name="end_date" readonly="state != 'draft'"/>
+                    </group>
+                    <notebook>
+                        <page string="Employees">
+                            <field name="employee_data_ids" readonly="state != 'draft'">
+                                <list editable="top">
+                                    <field name="employee_name" force_save="1"/>
+                                    <field name="employee_no" force_save="1"/>
+                                    <field name="working_days" force_save="1"/>
+                                    <field name="entitle_days"/>
+                                    <field name="employee_id" invisible="1"/>
+                                    <field name="food_allowance" invisible="1"/>
+                                    <field name="transport_allowance" invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="entitle_employee_days_action" model="ir.actions.act_window">
+        <field name="name">Entitled Employee Day's</field>
+        <field name="res_model">entitle.employee.days</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'list', 'view_id': ref('xe_kenya_hr_payroll.entitle_employee_days_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('xe_kenya_hr_payroll.entitle_employee_days_form')})
+                ]"/>
+    </record>
+
+    <menuitem id="entitle_employee_days_menu_new"
+              name="Entitled Employee Day's"
+              action="entitle_employee_days_action"
+              parent="hr.menu_hr_employee_payroll"
+              sequence="5"/>
+
+</odoo>

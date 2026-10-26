@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="subject_form_inherit" model="ir.ui.view">
+        <field name="name">xe.subject.form</field>
+        <field name="model">xe.subject</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="xenesis_school_base.view_subject_form"/>
+        <field name="arch" type="xml">
+            <field name="subject_mode" position="after">
+                <field name="is_examinable"/>
+            </field>
+            <field name="company_id" position="after">
+                <field name="is_parent"/>
+                <field name="parent_id" invisible="is_parent"/>
+                <field name="sequence"/>
+                <field name="show_on_report_card"/>
+                <field name="hide_grade_on_report"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="subject_tree_inherit" model="ir.ui.view">
+        <field name="name">xe.subject.form</field>
+        <field name="model">xe.subject</field>
+        <field name="inherit_id" ref="xenesis_school_base.view_subject_tree"/>
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="sequence"/>
+                <field name="is_parent"/>
+                <field name="parent_id" invisible="is_parent"/>
+            </field>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_xe_exam_session_tree" model="ir.ui.view">
+        <field name="name">xe.exam.session.tree</field>
+        <field name="model">xe.exam.session</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <list string="Exam Session">
+                <field name="name"/>
+                <field name="exam_code"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="course_id"/>
+                <field name="academic_term_id"/>
+                <field name="exam_type_id"/>
+                <field name="evaluation_type"/>
+                <field name="venue"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_xe_exam_session_form" model="ir.ui.view">
+        <field name="name">xe.exam.session.form</field>
+        <field name="model">xe.exam.session</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Exam Session">
+                <header>
+                    <field name="is_exam_created" invisible="1"/>
+                    <field name="is_auto_session" invisible="1"/>
+                    <button name="create_exams" type="object" class="oe_highlight" string="Create Exams"
+                            invisible="is_exam_created or state != 'draft'"/>
+                    <button name="add_exams" type="object" class="oe_highlight" string="Add Exams"
+                            invisible="state != 'exams_created'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                                class="oe_stat_button"
+                                name="create_result_template"
+                                type="object"
+                                string="Results"
+                                icon="fa-bars"
+                                invisible="is_exam_created != True"/>
+
+                    </div>
+                    <div class="oe_title">
+                        <h1 class="d-flex">
+                            <field name="name" readonly="is_auto_session" force_save="1"/>
+                            <br/>
+                        </h1>
+                        <h4>
+                            <label for="exam_code" invisible="is_auto_session"/>
+                            <field name="exam_code" readonly="is_auto_session" force_save="1"/>
+                        </h4>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="start_date" string="Date" widget="daterange"
+                                   options="{'end_date_field': 'end_date'}"/>
+                            <field name="course_id"/>
+                            <field name="classroom_ids" widget="many2many_tags"
+                                   domain="[('course_id', '=', course_id)]"/>
+                            <field name="academic_year_id" required="1"/>
+                            <field name="academic_term_id" required="1"
+                                   domain="[('academic_year_id', '=', academic_year_id)]"/>
+                        </group>
+                        <group>
+                            <field name="staff_id" domain="[('teach_type', '=', 'teaching')]"
+                                   context="{'default_teach_type': 'teaching'}"/>
+                            <field name="exam_type_id"/>
+                            <field name="evaluation_type"/>
+                            <field name="course_evaluation_type" force_save="1" invisible="1"/>
+                            <field name="venue" required="0" readonly="0"/>
+                            <field name="subject_ids" widget="many2many_tags" invisible="1"/>
+                            <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                            <field name="staff_user_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="exam_ids" string="Exams">
+                            <field name="exam_ids" colspan="4" readonly="1" nolabel="1">
+                                <list string="Exam">
+                                    <field name="name"/>
+                                    <field name="subject_id"/>
+                                    <field name="exam_code"/>
+                                    <field name="start_time"/>
+                                    <field name="end_time"/>
+                                    <field name="state"/>
+                                    <field name="total_marks"/>
+                                    <field name="min_marks"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="rubrics_config" string="Rubrics"
+                              groups="xe_exam_management.group_subject_rubrics_configuration">
+                            <group>
+                                <group>
+                                    <div>
+                                        <button name="import_rubrics_file" string="Import" class="oe_highlight"
+                                                type="object"/>
+                                        <span>-</span>
+                                        <button name="export_rubrics_file" string="Export" class="oe_highlight"
+                                                type="object"/>
+                                    </div>
+                                </group>
+                                <group>
+                                </group>
+                            </group>
+                            <br></br>
+                            <field name="rubrics_ids" domain="[('subject_id.course_ids','in',[course_id])]"
+                                   widget="section_and_note_one2many">
+                                <list editable="bottom" string="Rubrics Configuration">
+                                    <control>
+                                        <create name="add_product_control" string="Add a line"/>
+                                        <create name="add_section_control" string="Add a section"
+                                                context="{'default_display_type': 'line_section'}"/>
+                                    </control>
+                                    <field name="display_type" column_invisible="1"/>
+                                    <field name="sequence" widget="handle" readonly="1"/>
+                                    <field name="course_id" string="Class" column_invisible="1"/>
+                                    <field name="subject_id" width="25%"
+                                           domain="[('course_ids','in',[course_id]),('is_examinable','=',True),('id', 'in', parent.subject_ids)]"
+                                           options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}"/>
+                                    <field name="new_code_id" width="10%" required="display_type == False"
+                                           options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="name" widget="section_and_note_text" optional="show" width="25%"/>
+                                    <field name="min_per" width="20%" required="display_type == False"/>
+                                    <field name="max_per" width="20%" required="display_type == False"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="view_xe_exam_session_search" model="ir.ui.view">
+        <field name="name">xe.exam.session.search</field>
+        <field name="model">xe.exam.session</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Exam Session">
+                <field name="name" select="True"/>
+                <field name="exam_code" select="True"/>
+                <field name="start_date" select="True"/>
+                <field name="end_date" select="True"/>
+                <field name="course_id" select="True"/>
+                <field name="academic_term_id" select="True"/>
+                <field name="venue"/>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="act_open_xe_exam_session_view">
+        <field name="name">Exam Sessions</field>
+        <field name="res_model">xe.exam.session</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_xe_exam_session_search"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_open_xe_exam_session_view_form">
+        <field name="act_window_id" ref="act_open_xe_exam_session_view"/>
+        <field name="sequence" eval="20"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_xe_exam_session_form"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_open_xe_exam_session_view_tree">
+        <field name="act_window_id" ref="act_open_xe_exam_session_view"/>
+        <field name="sequence" eval="10"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_xe_exam_session_tree"/>
+    </record>
+</odoo>

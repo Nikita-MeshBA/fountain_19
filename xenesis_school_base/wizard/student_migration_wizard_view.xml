@@ -25,11 +25,11 @@
                 <notebook>
                     <page string="Students">
                         <field name="student_ids" nolabel="1">
-                            <tree editable="top">
+                            <list editable="top">
                                 <field name="name"/>
                                 <field name="roll_number"/>
                                 <field name="remarks"/>
-                            </tree>
+                            </list>
                         </field>
                     </page>
                 </notebook>

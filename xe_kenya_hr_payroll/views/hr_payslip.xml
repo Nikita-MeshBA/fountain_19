@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_payslip_inherit" model="ir.ui.view">
+        <field name="name">hr.payslip.form</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll_community.hr_payslip_view_form"/>
+        <field name="arch" type="xml">
+            <button name="action_payslip_done" position="replace">
+                <button string="Confirm" name="action_payslip_done" type="object" invisible="state not in ['draft']"
+                        class="oe_highlight" context="{'payslip_generate_pdf': True}"/>
+            </button>
+            <button name="action_payslip_done" position="after">
+                <button string="Send Email" name="send_email" type="object" invisible="state not in ['draft']"
+                        class="oe_highlight"/>
+            </button>
+            <field name="name" position="after">
+                <field name="work_perc" invisible="1"/>
+            </field>
+            <field name="number" position="after">
+                <field name="is_last_month" invisible="1"/>
+                <field name="dec_basic_salary" invisible="1"/>
+                <field name="dec_hra" invisible="1"/>
+                <field name="food_allowance" invisible="1"/>
+                <field name="transport_allowance" invisible="1"/>
+            </field>
+            <xpath expr="//field[@name='line_ids']" position="after">
+                <group string="Note"/>
+                <field name="note"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="server_action_payslip_done">
+        <field name="name">Confirm</field>
+        <field name="model_id" ref="hr_payroll_community.model_hr_payslip"/>
+        <field name="binding_model_id" ref="hr_payroll_community.model_hr_payslip"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.server_action_payslip_done()</field>
+    </record>
+</odoo>

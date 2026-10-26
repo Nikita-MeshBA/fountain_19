@@ -24,8 +24,8 @@
                                     <li t-if="record.email.raw_value" class="o_text_overflow">
                                         <field name="email"/>
                                     </li>
-                                    <li t-if="record.mobile.raw_value" class="o_force_ltr">
-                                        <field name="mobile"/>
+                                    <li t-if="record.phone.raw_value" class="o_force_ltr">
+                                        <field name="phone"/>
                                     </li>
                                 </ul>
                             </div>
@@ -39,13 +39,14 @@
         <field name="name">xe.staff.tree</field>
         <field name="model">xe.staff</field>
         <field name="arch" type="xml">
-            <tree string="Teacher">
+            <list string="Teacher">
                 <field name="name"/>
                 <field name="blood_group"/>
                 <field name="nationality_id"/>
                 <field name="email"/>
-                <field name="mobile"/>
-            </tree>
+<!--                <field name="mobile"/>-->
+                   <field name="phone"/>
+            </list>
         </field>
     </record>
 
@@ -57,7 +58,8 @@
             <search string="Teacher">
                 <field name="email"/>
                 <field name="name"/>
-                <field name="mobile"/>
+<!--                <field name="mobile"/>-->
+                    <field name="phone"/>
                 <newline/>
             </search>
         </field>
@@ -87,7 +89,8 @@
                     </div>
                     <group>
                         <group>
-                            <field name="mobile" required="1"/>
+<!--                            <field name="mobile" required="1"/>-->
+                            <field name="phone" required="1"/>
                             <field name="email" required="1"/>
                             <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
                         </group>
@@ -151,7 +154,7 @@
     <record id="act_staff" model="ir.actions.act_window">
         <field name="name">Teachers</field>
         <field name="res_model">xe.staff</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,list,form</field>
         <field name="search_view_id" ref="view_staff_search"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -164,7 +167,7 @@
         <field name="name">hr.employee.tree</field>
         <field name="model">hr.employee</field>
         <field name="arch" type="xml">
-            <tree string="Employees" multi_edit="1" sample="1" create="0" js_class="hr_employee_list">
+            <list string="Employees" multi_edit="1" sample="1" create="0" js_class="hr_employee_list">
                 <field name="name" readonly="1"/>
                 <field name="work_phone" class="o_force_ltr" readonly="1"/>
                 <field name="work_email"/>
@@ -183,7 +186,7 @@
                 <field name="active" invisible="1"/>
                 <field name="category_ids" widget="many2many_tags"
                        options="{'color_field': 'color'}" optional="hide"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -318,7 +321,8 @@
                                     <!-- <field name="phone" class="o_force_ltr"
                                         groups="hr.group_hr_user" string="Phone" readonly="True" /> -->
                                     <field name="lang" string="Language"/>
-                                    <field name="bank_account_id"/>
+<!--                                    <field name="bank_account_id"/>-->
+                                        <field name="bank_account_ids"/>
                                     <label for="km_home_work"/>
                                     <div class="o_row" name="div_km_home_work">
                                         <field name="km_home_work" groups="hr.group_hr_user"/>
@@ -331,7 +335,7 @@
                                            options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
                                     <field name="identification_id" groups="hr.group_hr_user"/>
                                     <field name="passport_id" groups="hr.group_hr_user"/>
-                                    <field name="gender"/>
+<!--                                    <field name="gender"/>-->
                                     <field name="birthday"/>
                                     <field name="place_of_birth" groups="hr.group_hr_user"/>
                                     <field name="country_of_birth" groups="hr.group_hr_user"/>
@@ -523,9 +527,9 @@
     <record id="act_teaching" model="ir.actions.act_window">
         <field name="name">Teaching</field>
         <field name="res_model">hr.employee</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,list,form</field>
         <field name="view_ids" eval="[(5, 0, 0),
-            (0, 0, {'view_mode': 'tree', 'view_id': ref('view_teaching_tree')}),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('view_teaching_tree')}),
             (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_teaching_kanban')}),
             (0, 0, {'view_mode': 'form', 'view_id': ref('view_teaching_form')})]"/>
         <field name="domain">[('teach_type', '=', 'teaching')]</field>
@@ -540,7 +544,7 @@
         <field name="name">hr.employee.tree</field>
         <field name="model">hr.employee</field>
         <field name="arch" type="xml">
-            <tree string="Employees" multi_edit="1" sample="1" create="0" js_class="hr_employee_list">
+            <list string="Employees" multi_edit="1" sample="1" create="0" js_class="hr_employee_list">
                 <field name="name" readonly="1"/>
                 <field name="work_phone" class="o_force_ltr" readonly="1"/>
                 <field name="work_email"/>
@@ -560,7 +564,7 @@
                 <field name="active" invisible="1"/>
                 <field name="category_ids" widget="many2many_tags"
                        options="{'color_field': 'color'}" optional="hide"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -698,7 +702,8 @@
                                     <!-- <field name="phone" class="o_force_ltr"
                                         groups="hr.group_hr_user" string="Phone" readonly="True" /> -->
                                     <field name="lang" string="Language"/>
-                                    <field name="bank_account_id"/>
+<!--                                    <field name="bank_account_id"/>-->
+                                    <field name="bank_account_ids"/>
                                     <label for="km_home_work"/>
                                     <div class="o_row" name="div_km_home_work">
                                         <field name="km_home_work" groups="hr.group_hr_user"/>
@@ -711,7 +716,7 @@
                                            options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
                                     <field name="identification_id" groups="hr.group_hr_user"/>
                                     <field name="passport_id" groups="hr.group_hr_user"/>
-                                    <field name="gender"/>
+<!--                                    <field name="gender"/>-->
                                     <field name="birthday"/>
                                     <field name="place_of_birth" groups="hr.group_hr_user"/>
                                     <field name="country_of_birth" groups="hr.group_hr_user"/>
@@ -903,9 +908,9 @@
     <record id="act_non_teaching" model="ir.actions.act_window">
         <field name="name">Non Teaching</field>
         <field name="res_model">hr.employee</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,list,form</field>
         <field name="view_ids" eval="[(5, 0, 0),
-            (0, 0, {'view_mode': 'tree', 'view_id': ref('view_non_teaching_tree')}),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('view_non_teaching_tree')}),
             (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_non_teaching_kanban')}),
             (0, 0, {'view_mode': 'form', 'view_id': ref('view_non_teaching_form')})]"/>
         <field name="domain">[('teach_type', '=', 'non')]</field>

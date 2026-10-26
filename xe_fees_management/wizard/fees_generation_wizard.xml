@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="fees_generation_form" model="ir.ui.view">
+        <field name="name">xe.fees.generation.form</field>
+        <field name="model">xe.fees.generation</field>
+        <field name="arch" type="xml">
+            <form string="Fees Generation">
+                <group>
+                    <group>
+                        <field name="current_academic_year_id" string="Academic Year" required="1"/>
+                        <field name="fee_structure_ids" string="Fee Structure" widget="many2many_tags"/>
+                        <field name="term_id" required="1"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_generation" string="Generate Invoice" type="object" default_focus="1"
+                            class="oe_highlight" groups="account.group_account_manager,account.group_account_user"/>
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_fees_generation" model="ir.actions.act_window">
+        <field name="name">Fees Generation</field>
+        <field name="res_model">xe.fees.generation</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="fees_generation_form"/>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add a new Fees Generation</p>
+        </field>
+    </record>
+</odoo>

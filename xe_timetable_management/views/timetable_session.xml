@@ -1,0 +1,194 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="xe_timetable_sessions_list">
+      <field name="name">xe.timetable.sessions.list</field>
+      <field name="model">xe.timetable.sessions</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="course_id"/>
+          <field name="academic_term_id"/>
+          <field name="from_date"/>
+          <field name="to_date"/>
+        </list>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="xe_timetable_sessions_form">
+      <field name="name">xe.timetable.sessions.form</field>
+      <field name="model">xe.timetable.sessions</field>
+      <field name="arch" type="xml">
+        <form>
+            <header>
+              <field name="state" widget="statusbar" statusbar_visible="draft,configured"/>
+              <button name="configure_session" string="Confirm" class="oe_highlight" type="object" invisible="state not in ['draft']"/>
+              <button name="cancel_session" string="Cancel" class="oe_highlight" type="object" invisible="state in ['cancel','configured']"/>
+              <button name="upload_sessions" type= "object" class="oe_highlight" string="Import Sessions" invisible="is_upload or state in ['cancel','configured']"/>
+              <button name="reset_to_draft" string="Reset to Draft" class="oe_highlight" type="object" invisible="state not in ['cancel']"/>
+            </header>
+          <sheet>
+             <div class="oe_title">
+                  <h1 class="d-flex">
+                      <field name="name" readonly="1"/>
+                  </h1>
+             </div>
+            <group>
+              <group>
+                  <field name="course_id" readonly="state not in ['draft']" required="1"/>
+                  <field name="academic_term_id" readonly="state not in ['draft']" required="1"/>
+                  <field name="applicable_staff_ids" widget="many2many_tags" invisible="1"/>
+                  <field name="is_upload" invisible="1"/>
+              </group>
+              <group>
+                  <field name="from_date" readonly="state not in ['draft']" required="1"/>
+                  <field name="to_date" readonly="state not in ['draft']" required="1"/>
+                  <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                  <field name="upload_file" filename="file_name" />
+                  <field name="file_name" invisible="1"/>
+              </group>
+            </group>
+              <notebook>
+
+                  <page name="monday" string="Monday">
+                      <field name="mon_sessions_ids" readonly="state not in ['draft']" context="{'default_week_day': 'mon'}">
+                          <list editable="bottom">
+                              <field name="timetable_id" column_invisible="1"/>
+                              <field name="course_id" column_invisible="1"/>
+                              <field name="academic_term_id" column_invisible="1"/>
+                              <field name="timing_id"/>
+                              <field name="start_time" widget="float_time"/>
+                              <field name="end_time" widget="float_time"/>
+                              <field name="duration" widget="float_time"/>
+                              <field name="class_room_id" domain="[('course_id','=',course_id)]"/>
+                              <field name="subject_id"/>
+                              <field name="teacher_id"/>
+                              <field name="week_day" column_invisible="1"/>
+                          </list>
+                      </field>
+                  </page>
+                  <page name="tuesday" string="Tuesday">
+                      <field name="tues_sessions_ids" readonly="state not in ['draft']"  context="{'default_week_day': 'tues'}">
+                          <list editable="bottom">
+                             <field name="timetable_id" invisible="1"/>
+                              <field name="course_id" invisible="1"/>
+                              <field name="academic_term_id" invisible="1"/>
+                              <field name="timing_id"/>
+                              <field name="start_time" widget="float_time"/>
+                              <field name="end_time" widget="float_time"/>
+                              <field name="duration" widget="float_time"/>
+                              <field name="class_room_id" domain="[('course_id','=',course_id)]"/>
+                              <field name="subject_id"/>
+                              <field name="teacher_id"/>
+                              <field name="week_day" invisible="1"/>
+                          </list>
+                      </field>
+                  </page>
+                  <page name="wednesday" string="Wednesday">
+                      <field name="wed_sessions_ids" readonly="state not in ['draft']" context="{'default_week_day': 'wed'}">
+                          <list editable="bottom">
+                              <field name="timetable_id" invisible="1"/>
+                              <field name="course_id" invisible="1"/>
+                              <field name="academic_term_id" invisible="1"/>
+                              <field name="timing_id"/>
+                              <field name="start_time" widget="float_time"/>
+                              <field name="end_time" widget="float_time"/>
+                              <field name="duration" widget="float_time"/>
+                              <field name="class_room_id" domain="[('course_id','=',course_id)]"/>
+                              <field name="subject_id"/>
+                              <field name="teacher_id"/>
+                              <field name="week_day" invisible="1"/>
+                          </list>
+                      </field>
+                  </page>
+                  <page name="thursday" string="Thursday">
+                      <field name="thurs_sessions_ids" readonly="state not in ['draft']" context="{'default_week_day': 'thurs'}">
+                          <list editable="bottom">
+                              <field name="timetable_id" invisible="1"/>
+                              <field name="course_id" invisible="1"/>
+                              <field name="academic_term_id" invisible="1"/>
+                              <field name="timing_id"/>
+                              <field name="start_time" widget="float_time"/>
+                              <field name="end_time" widget="float_time"/>
+                              <field name="duration" widget="float_time"/>
+                              <field name="class_room_id" domain="[('course_id','=',course_id)]"/>
+                              <field name="subject_id"/>
+                              <field name="teacher_id"/>
+                              <field name="week_day" invisible="1"/>
+                          </list>
+                      </field>
+                  </page>
+                  <page name="friday" string="Friday">
+                      <field name="fri_sessions_ids" readonly="state not in ['draft']" context="{'default_week_day': 'fri'}">
+                          <list editable="bottom">
+                             <field name="timetable_id" invisible="1"/>
+                              <field name="course_id" invisible="1"/>
+                              <field name="academic_term_id" invisible="1"/>
+                              <field name="timing_id"/>
+                              <field name="start_time" widget="float_time"/>
+                              <field name="end_time" widget="float_time"/>
+                              <field name="duration" widget="float_time"/>
+                              <field name="class_room_id" domain="[('course_id','=',course_id)]"/>
+                              <field name="subject_id"/>
+                              <field name="teacher_id"/>
+                              <field name="week_day" invisible="1"/>
+                          </list>
+                      </field>
+                  </page>
+                  <page name="saturday" string="Saturday">
+                      <field name="sat_sessions_ids" readonly="state not in ['draft']" context="{'default_week_day': 'sat'}">
+                          <list editable="bottom">
+                              <field name="timetable_id" invisible="1"/>
+                              <field name="course_id" invisible="1"/>
+                              <field name="academic_term_id" invisible="1"/>
+                              <field name="timing_id"/>
+                              <field name="start_time" widget="float_time"/>
+                              <field name="end_time" widget="float_time"/>
+                              <field name="duration" widget="float_time"/>
+                              <field name="class_room_id" domain="[('course_id','=',course_id)]"/>
+                              <field name="subject_id"/>
+                              <field name="teacher_id"/>
+                              <field name="week_day" invisible="1"/>
+                          </list>
+                      </field>
+                  </page>
+                  <page name="sunday" string="Sunday">
+                      <field name="sun_sessions_ids" readonly="state not in ['draft']" context="{'default_week_day': 'sun'}">
+                          <list editable="bottom">
+                              <field name="timetable_id" invisible="1"/>
+                              <field name="course_id" invisible="1"/>
+                              <field name="academic_term_id" invisible="1"/>
+                              <field name="timing_id"/>
+                              <field name="start_time" widget="float_time"/>
+                              <field name="end_time" widget="float_time"/>
+                              <field name="duration" widget="float_time"/>
+                              <field name="class_room_id" domain="[('course_id','=',course_id)]"/>
+                              <field name="subject_id"/>
+                              <field name="teacher_id"/>
+                              <field name="week_day" invisible="1"/>
+                          </list>
+                      </field>
+                  </page>
+
+              </notebook>
+          </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids"/>
+                <field name="message_ids"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="xe_timetable_session_act">
+      <field name="name">Generate Sessions</field>
+      <field name="res_model">xe.timetable.sessions</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem name="Timetable" id="timetable_menu_root" sequence="9"/>
+    <menuitem name="Generate Sessions" id="session_menu" parent="timetable_menu_root"
+              action="xe_timetable_session_act" sequence="2" groups="xe_timetable_management.group_timetable_admin"/>
+    <!-- <menuitem name="Reports" id="report_menu" parent="timetable_menu_root" groups="xe_timetable_management.group_timetable_admin" sequence="3"/>
+    <menuitem name="Reports" id="report_sub_menu" parent="report_menu" action="xe_timetable_session_act"/> -->
+    <menuitem name="Configuration" id="xe_config_menu" parent="timetable_menu_root" groups="xe_timetable_management.group_timetable_admin" sequence="99"/>
+  </data>
+</odoo>

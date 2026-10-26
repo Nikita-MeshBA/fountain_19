@@ -1,0 +1,97 @@
+<odoo>
+    <record id="fees_student_form_view_inherit" model="ir.ui.view">
+        <field name="name">xe.student.form.view.inherit</field>
+        <field name="model">xe.student</field>
+        <field name="inherit_id" ref="xenesis_school_base.view_student_form"/>
+        <field name="arch" type="xml">
+            <page name="documents" position="after">
+                <page name="fee_details" string="Fee Details" invisible="hide_parent_field">
+                    <group>
+                        <group>
+                            <field name="is_transport" string="Enroll Transport"/>
+                            <field name="fees_to_zone_id" string="Transportation Zone" force_save="1"
+                               domain="[('is_transport_fees', '=', is_transport)]" required="is_transport" invisible="is_transport == False"/>
+                            <field name="is_activity" string="Enroll Clubs"/>
+                            <field name="activity_fee_ids" string="Clubs" force_save="1"
+                               domain="[('is_activity', '=', is_activity)]" widget="many2many_tags"
+                               required="is_activity " invisible="is_activity == False"/>
+                            <field name="partner_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="is_optional" string="Enroll Options"/>
+                            <field name="optional_fee_ids" string="Optional" force_save="1"
+                                   domain="[('is_optional', '=', is_optional)]" widget="many2many_tags"
+                                   required="is_optional" invisible="is_optional == False"/>
+                        </group>
+                    </group>
+                    <!-- <group>
+                        <field name="invoice_ids" domain="[('partner_id','=',partner_id)]" string="Invoices">
+                            <tree string="Journal Entries" sample="1" decoration-info="state == 'draft'"
+                                  options="{'no_create': True}">
+                                <field name="invoice_date"/>
+                                <field name="invoice_date_due"/>
+                                <field name="name"/>
+                                <field name="partner_id" optional="show" string="Student" invisible="1"/>
+                                <field name="amount_total_signed" sum="Total Amount" string="Total"
+                                       decoration-bf="1"/>
+                                <field name="state" widget="badge" string="Invoice Status"
+                                       decoration-info="state == 'draft'"
+                                       decoration-success="state == 'posted'"/>
+                                <field name="payment_state"/>
+                            </tree>
+                        </field>
+                    </group> -->
+                </page>
+                <!-- <page name="fees" string="Transport Details" invisible="is_transport == False">
+                    <group string="Transportation Fee" col="8">
+                        <field name="fees_to_zone_id" string="Transportation Zone" force_save="1"
+                               domain="[('is_transport_fees', '=', is_transport)]" required="is_transport"/>
+                        <button name="update_invoice" string="Generate" type="object" invisible="0"/>
+                        <field name="fees_from_zone_id" string="From Zone" force_save="1"
+                               domain="[('is_transport_fees', '=', is_transport)]" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="fee_line_details_ids" string="Transportation Details">
+                            <tree editable="bottom" create="0" readonly="1">
+                                <field name="fee_type"/>
+                                <field name="term"/>
+                                <field name="invoice_date"/>
+                                <field name="due_days" invisible="1"/>
+                                <field name="due_date"/>
+                                <field name="schedule_date"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="receipt_name_id"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                        <field name="transport_history_ids" string="Transport Change History">
+                            <tree create="0">
+                                <field name="from_zone_id"/>
+                                <field name="to_zone_id" invisible="1"/>
+                                <field name="previous_amt" string="Previous Amount" invisible="1"/>
+                                <field name="current_amt" string="Current Amount"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page> -->
+              <!--   <page name="activity_changes" string="Activity Details" invisible="is_activity == False">
+                    <group>
+                        <field name="activity_fee_ids" string="Activities" force_save="1"
+                               domain="[('is_activity', '=', is_activity)]" widget="many2many_tags"
+                               required="is_activity"/>
+                        <button name="update_invoice" string="Generate" type="object"/>
+                    </group>
+                </page> -->
+              <!--   <page name="optional_fee" string="Optional Fee Details" invisible="is_optional == False">
+                    <group>
+                        <group>
+                            <field name="optional_fee_ids" string="Optional" force_save="1"
+                                   domain="[('is_optional', '=', is_optional)]" widget="many2many_tags"
+                                   required="is_optional"/>
+                        </group>
+                    </group>
+                </page> -->
+            </page>
+        </field>
+    </record>
+</odoo>

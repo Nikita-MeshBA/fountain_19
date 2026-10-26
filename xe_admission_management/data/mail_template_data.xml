@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+    <record id="email_template_interview_schedule" model="mail.template">
+        <field name="name">Interview Schedule Email Template</field>
+        <field name="model_id" ref="xe_admission_management.model_xe_schedule_interview"/>
+        <field name="email_from">{{ (object.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.all_email }}</field>
+        <field name="subject">Ref {{ object.subject or 'n/a' }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="body_html"><![CDATA[
+            <p>Hi  <t t-out="object.student_name or ''"/>,</p>
+            <br/>
+            <p>Thanks for Your Enquiry to <t t-out="object.company_id.name or ''"/></p>
+            <br/>
+            <p>We were impressed by your background and would like to invite you to interview at our school to get to
+                know you better
+            </p>
+            <br/>
+            <p>Interview Details</p>
+            <br/>
+            <p>Start time : <t t-out="object.interview_start_date or ''"/></p>
+            <br/>
+            <p>End time : <t t-out="object.interview_end_date or ''"/></p>
+            <br/>
+            <p><t t-out="object.description or ''"/></p>
+            <br/>
+            <p>Thanks</p>]]>
+        </field>
+    </record>
+
+    <record id="mail_template_interview_schedule_new1" model="mail.template">
+        <field name="name">Interview Schedule Email Template</field>
+        <field name="model_id" ref="xe_admission_management.model_xe_schedule_interview"/>
+        <field name="subject">Ref {{ object.subject or 'n/a' }}</field>
+        <field name="email_to">{{ object.all_email }}</field>
+        <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0"
+                   style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                <tr>
+                    <td align="center">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590"
+                               style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                            <tbody>
+                                <!-- HEADER -->
+                                <tr>
+                                    <td align="center" style="min-width: 590px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                               style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                            <tr>
+                                                <td valign="middle">
+                                                    <span style="font-size: 10px;">Interview Invitation From</span>
+                                                    <br/>
+                                                    <span style="font-size: 20px; font-weight: bold;">
+                                                        <t t-out="user.company_id.name or ''">YourCompany</t>
+                                                    </span>
+                                                </td>
+                                                <td valign="middle" align="right">
+                                                    <img t-attf-src="/logo.png?company={{ user.company_id.id }}"
+                                                         style="padding: 0px; margin: 0px; height: auto; width: 80px;"
+                                                         t-att-alt="user.company_id.name"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="text-align:center;">
+                                                    <hr width="100%"
+                                                        style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- CONTENT -->
+                                <tr>
+                                    <td align="center" style="min-width: 590px;">
+                                        <table border="0" cellpadding="0" cellspacing="0"
+                                               width="590"
+                                               style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                            <tr>
+                                                <td valign="top" style="font-size: 13px;">
+                                                    <div>
+                                                        Dear&amp;nbsp;<t t-out="object.student_name"/>,
+                                                        <br/>
+                                                        <br/>
+                                                        Thanks for Your Enquiry to
+                                                        <t t-out="object.company_id.name or ''"/>.
+                                                        <br/>
+                                                        We were impressed by your background and would like to
+                                                        invite you to interview at our school to get to know you
+                                                        better.
+                                                        <br/>
+                                                        Interview Details:
+                                                        <ul>
+                                                            <li>Start time :
+                                                                <t t-out="object.interview_start_date or ''"/>
+                                                            </li>
+                                                            <li>End time :
+                                                                <t t-out="object.interview_end_date or ''"/>
+                                                            </li>
+                                                        </ul>
+                                                        <br/>
+                                                        <t t-if="object.description">
+                                                            <t t-out="object.description or ''"/>
+                                                            <br/>
+                                                            <br/>
+                                                        </t>
+                                                        Thank You
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;">
+                                                    <hr width="100%"
+                                                        style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- FOOTER -->
+                                <tr>
+                                    <td align="center" style="min-width: 590px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                               style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                            <tr>
+                                                <td valign="middle" align="left">
+                                                    <t t-out="user.company_id.name or ''">YourCompany</t>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td valign="middle" align="left" style="opacity: 0.7;">
+                                                    <t t-out="user.company_id.phone or ''">+1 650-123-4567</t>
+                                                    <a t-if="user.company_id.email"
+                                                       t-attf-href="'mailto:%s' % {{ user.company_id.email }}"
+                                                       style="text-decoration:none; color: #454748;"
+                                                       t-out="user.company_id.email or ''">info@yourcompany.com
+                                                    </a>
+                                                    <t t-if="user.company_id.email and user.company_id.website">|</t>
+                                                    <a t-if="user.company_id.website"
+                                                       t-attf-href="'%s' % {{ user.company_id.website }}"
+                                                       style="text-decoration:none; color: #454748;"
+                                                       t-out="user.company_id.website or ''">http://www.example.com
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <record id="mail_template_assign_emp" model="mail.template">
+        <field name="name">Assigned Enquiry</field>
+        <field name="model_id" ref="xe_admission_management.model_xe_admission_enquiry"/>
+        <field name="subject">Ref:Assigned Enquiry</field>
+        <field name="email_to">{{ object.assigned_id.user_id.login or '' }}</field>
+        <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0"
+                   style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                <tr>
+                    <td align="center">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590"
+                               style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                            <tbody>
+                                <!-- HEADER -->
+                                <tr>
+                                    <td align="center" style="min-width: 590px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                               style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                            <tr>
+                                                <td valign="middle">
+                                                    <span style="font-size: 10px;">Assigned Enquiry</span>
+                                                    <br/>
+                                                    <span style="font-size: 20px; font-weight: bold;">
+                                                        <t t-out="object.assigned_id.user_id.company_id.name or ''">
+                                                            My Company (San Francisco)
+                                                        </t>
+                                                    </span>
+                                                </td>
+                                                <td valign="middle" align="right">
+                                                    <img t-attf-src="/logo.png?company={{ object.assigned_id.user_id.company_id.id }}"
+                                                         style="padding: 0px; margin: 0px; height: auto; width: 80px;"
+                                                         t-att-alt="object.assigned_id.user_id.company_id.name"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="text-align:center;">
+                                                    <hr width="100%"
+                                                        style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- CONTENT -->
+                                <tr>
+                                    <td align="center" style="min-width: 590px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                               style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                            <tr>
+                                                <td valign="top" style="font-size: 13px;">
+                                                    <div>
+                                                        Dear&amp;nbsp;<t t-out="object.assigned_id.name or ''"/>,
+                                                        <br/>
+                                                        <br/>
+                                                        You have been assigned to admission enquiry:
+                                                        <t t-out="object.number or ''"/>.
+                                                        <br/>
+                                                        <br/>
+                                                        <center>
+                                                            <a href="{{ object.enq_url }}"
+                                                               style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">
+                                                                View Enquiry
+                                                            </a>
+                                                        </center>
+                                                        <br/>
+                                                        Thank You
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;">
+                                                    <hr width="100%"
+                                                        style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- FOOTER -->
+                                <tr>
+                                    <td align="center" style="min-width: 590px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                               style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                            <tr>
+                                                <td valign="middle" align="left">
+                                                    <t t-out="user.company_id.name or ''">YourCompany</t>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td valign="middle" align="left" style="opacity: 0.7;">
+                                                    <t t-out="user.company_id.phone or ''">+1 650-123-4567</t>
+                                                    <a t-if="user.company_id.email"
+                                                       t-attf-href="'mailto:%s' % {{ user.company_id.email }}"
+                                                       style="text-decoration:none; color: #454748;"
+                                                       t-out="user.company_id.email or ''">info@yourcompany.com
+                                                    </a>
+                                                    <t t-if="user.company_id.email and user.company_id.website">|</t>
+                                                    <a t-if="user.company_id.website"
+                                                       t-attf-href="'%s' % {{ user.company_id.website }}"
+                                                       style="text-decoration:none; color: #454748;"
+                                                       t-out="user.company_id.website or ''">http://www.example.com
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </field>
+        <field name="lang">{{ object.assigned_id.user_id.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+</odoo>
+
+

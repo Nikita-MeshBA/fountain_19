@@ -1,0 +1,13 @@
+<odoo>
+
+    <record id="paye_xlsx_report" model="ir.actions.report">
+        <field name="name">PAYE Report</field>
+        <field name="model">paye.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">xe_kenya_hr_payroll.paye_report_xlsx</field>
+        <field name="report_file">xe_kenya_hr_payroll.paye_xlsx_report</field>
+    </record>
+
+</odoo>
+
+

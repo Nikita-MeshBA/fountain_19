@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<odoo>
+   <data>
+        <record id="send_otp_template" model="send.sms.template">
+            <field name="name">Send OTP Template</field>
+            <field name="model_id" ref="xe_visitor_management.model_student_pass"/>
+            <field name="msg_to">${object.mobile or ''}</field>
+            <field name="template_body"><![CDATA[
+                Dear ${object.student_id.name}
+                OTP number is ${object.stud_otp}
+           ]]></field>
+        </record>
+    </data>
+</odoo>

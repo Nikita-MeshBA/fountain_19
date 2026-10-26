@@ -1,0 +1,19 @@
+<odoo>
+    <record model="ir.ui.view" id="xe_assignment_type_list">
+        <field name="name">xe.assignment.type.list</field>
+        <field name="model">xe.assignment.type</field>
+        <field name="arch" type="xml">
+            <list editable="top" create="1" delete="1" multi_edit="1">
+                <field name="name"/>
+                <field name="code"/>
+            </list>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="xe_assignment_type_act">
+        <field name="name">Assignment Type</field>
+        <field name="res_model">xe.assignment.type</field>
+        <field name="view_mode">list</field>
+    </record>
+    <menuitem name="Assignment Type" id="xe_assignment_type_config_menu"
+              parent="xe_assignment_management.xe_assignment_config_menu" action="xe_assignment_type_act" sequence="1"/>
+</odoo>

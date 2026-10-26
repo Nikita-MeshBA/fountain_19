@@ -1,0 +1,173 @@
+<odoo>
+	<data>
+		<record id="purpose_type_report" model="ir.actions.report">
+			<field name="name">Purpose Type Wise</field>
+			<field name="model">purpose.type.wizard</field>
+			<field name="report_type">qweb-pdf</field>
+			<field name="report_name">xe_visitor_management.report_purpose_type</field>
+			<field name="report_file">xe_visitor_management.report_purpose_type</field>
+		</record>
+		<template id="report_purpose_type">
+		   <style>.font{
+		             font-size:14px;
+		             font-family:"Helvetica"
+		             }
+		             @page{
+		             margin-top:1%;
+		             size: A4;
+		             }</style>
+		   <t t-call="web.html_container">
+		      <t t-call="web.external_layout">
+		         				<div class="page">
+					<br />
+					<div class="text-center">
+						<h3>
+							<strong>Purpose Type Details</strong>
+						</h3>
+					</div>
+					<br />
+					<div class="text-center">
+						<strong>
+							Purpose Type :
+							<span t-esc="get_data['form']['purpose_type_name']" />
+						</strong>
+						<br />
+						<strong>
+							From Date :
+							<span t-esc="get_data['form']['date_start']" />
+						</strong>
+						to
+						<strong>
+							To Date :
+							<span t-esc="get_data['form']['date_end']" />
+						</strong>
+					</div>
+					<br />
+					<br />
+					<table width="100%"
+						class="table table-bordered table-condensed">
+						<thead>
+							<th class="text-center">Pass No.</th>
+							<th class="text-center">Name</th>
+							<th class="text-center">Approved By</th>
+							<th class="text-center">Reception Duty Officer</th>
+							<th class="text-center">In Time</th>
+							<th class="text-center">Out Time</th>
+							<th class="text-center">State</th>
+						</thead>
+						<tbody>
+							<t t-foreach="get_object" t-as="obj">
+								<tr t-foreach="obj['record']" t-as="l">
+									<td class="text-center">
+										<t t-esc="l['pass_number']" />
+									</td>
+									<td class="text-center">
+										<t t-esc="l['name']" />
+									</td>
+									<td class="text-center">
+										<t t-esc="l['approved_by_id']" />
+									</td>
+									<td class="text-center">
+										<t t-esc="l['duty_officer_name_id']" />
+									</td>
+									<td class="text-center">
+										<t t-esc="l['visitor_in_time']" />
+									</td>
+									<td class="text-center">
+										<t t-esc="l['visitor_out_time']" />
+									</td>
+									<td class="text-center">
+										<t t-esc="l['state']" />
+									</td>
+								</tr>
+							</t>
+						</tbody>
+					</table>
+				</div>
+		         <p style="page-break-after: always;" />
+		      </t>
+		   </t>
+		</template>
+   	
+<!-- 		<template id="report_purpose_type_wise">
+			<t t-call="web.external_layout">
+				<div class="page">
+					<br />
+					<div class="text-center">
+						<h3>
+							<strong>Purpose Type Details</strong>
+						</h3>
+					</div>
+					<br />
+					<div class="text-center">
+						<strong>
+							Purpose Type :
+							<span t-esc="get_data['purpose_type_id'][1]" />
+						</strong>
+						<br />
+						<strong>
+							From Date :
+							<span t-esc="get_data['from_date']" />
+						</strong>
+						to
+						<strong>
+							To Date :
+							<span t-esc="get_data['to_date']" />
+						</strong>
+					</div>
+					<br />
+					<br />
+					<table width="100%"
+						class="table table-bordered table-condensed">
+						<thead>
+							<th class="text-center">Pass No.</th>
+							<th class="text-center">Name</th>
+							<th class="text-center">Approved By</th>
+							<th class="text-center">Reception Duty Officer</th>
+							<th class="text-center">In Time</th>
+							<th class="text-center">Out Time</th>
+							<th class="text-center">State</th>
+						</thead>
+						<tbody>
+							<t t-foreach="get_object" t-as="obj">
+								<tr t-foreach="obj['record']" t-as="l">
+									<td class="text-center">
+										<t t-esc="l['pass_number']" />
+									</td>
+									<td class="text-center">
+										<t t-esc="l['name']" />
+									</td>
+									<td class="text-center">
+										<t t-esc="l['approved_by_id']" />
+									</td>
+									<td class="text-center">
+										<t t-esc="l['duty_officer_name_id']" />
+									</td>
+									<td class="text-center">
+										<t t-esc="l['visitor_in_time']" />
+									</td>
+									<td class="text-center">
+										<t t-esc="l['visitor_out_time']" />
+									</td>
+									<td class="text-center">
+										<t t-esc="l['state']" />
+									</td>
+								</tr>
+							</t>
+						</tbody>
+					</table>
+				</div>
+			</t>
+		</template>
+
+		<template id="purchase_type_wise_report">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-set="o" t-value="o.with_context(lang=o.env.lang)" />
+					<t t-call="xe_visitor_management.report_purpose_type_wise"
+						t-lang="o.env.lang" />
+				</t>
+			</t>
+		</template> -->
+	</data>
+</odoo>

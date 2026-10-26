@@ -1,0 +1,18 @@
+<odoo>
+    <record id="fees_account_move_form_view_inherit" model="ir.ui.view">
+        <field name="name">fees.account.move.form.view.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <field name="roll_number" position="after">
+                <field name="fee_name" invisible="1"/>
+                <field name="fee_structu_type" invisible="move_type != 'out_invoice'" string="Type"/>
+                <field name="is_academic" invisible="1"/>
+                <field name="is_transport_fees" invisible="1"/>
+                <field name="is_activity" invisible="1"/>
+                <field name="is_optional" invisible="1"/>
+                <field name="is_boarding" invisible="1"/>
+            </field>
+        </field>
+    </record>
+</odoo>

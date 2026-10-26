@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_xe_grade_configuration_tree" model="ir.ui.view">
+        <field name="name">xe.grade.configuration.tree</field>
+        <field name="model">xe.grade.configuration</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <list string="Grade Configuration" editable="bottom">
+                <field name="min_per" required="1"/>
+                <field name="max_per" required="1"/>
+                <field name="result"/>
+                <field name="grade_category_id"/>
+                <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_open_xe_grade_configuration_view">
+        <field name="name">Grade Configuration</field>
+        <field name="res_model">xe.grade.configuration</field>
+        <field name="view_id" ref="view_xe_grade_configuration_tree"/>
+    </record>
+</odoo>

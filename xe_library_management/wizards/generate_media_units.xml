@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="ir.ui.view" id="generate_media_form">
+        <field name="name">generate.media.units.form</field>
+        <field name="model">generate.media.units</field>
+        <field name="arch" type="xml">
+            <form string="Generate Media Units">
+                <sheet>
+                    <group col="4">
+                        <field name="no_of_units"/>
+                        <field name="media_id" invisible="1"/>
+                    </group>
+                </sheet>
+                <footer groups="base.group_user">
+                    <button name="generate_media_units" type="object" string="Generate" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="issue_media_act">
+        <field name="name">Issue media</field>
+        <field name="res_model">issue.media</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="generate_media_form"/>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

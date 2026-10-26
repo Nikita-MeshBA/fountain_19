@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="act_xe_media_today">
+        <field name="name">Media</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">xe.media.movement</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('media_type_id', 'in', [active_id]),
+            ('state', '=', 'issue'),('return_date','=',time.strftime('%Y-%m-%d'))]
+        </field>
+        <field name="context">{}</field>
+    </record>
+    <!-- List VIEW of medias To be Due by This Week -->
+    <record model="ir.actions.act_window" id="act_xe_media_month">
+        <field name="name">Media</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">xe.media.movement</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('media_type_id', 'in', [active_id]), ('state', '=', 'issue'), ('return_date','&lt;=',(context_today()+datetime.timedelta(days=31)).strftime('%Y-%m-%d')),('return_date','&gt;=',(context_today()-datetime.timedelta(days=1)).strftime('%Y-%m-%d'))]
+        </field>
+        <field name="context">{'search_default_month':1}</field>
+    </record>
+
+    <record id="view_xe_media_enterprise_form" model="ir.ui.view">
+        <field name="name">xe.media.form</field>
+        <field name="model">xe.media</field>
+        <field name="inherit_id" ref="xe_library_management.view_xe_media_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button class="oe_stat_button"
+                            name="%(xe_library_management.act_open_media_unit_view)d"
+                            context="{'search_default_media_id': id}"
+                            groups="xe_library_management.group_xe_library"
+                            type="action" icon="fa-tasks">
+                        <field name="total_units" widget="statinfo" string="Units"/>
+                    </button>
+                    <button class="oe_stat_button"
+                            name="%(xe_library_management.act_open_xe_media_movement_view)d"
+                            context="{'search_default_media_id': id}"
+                            groups="xe_library_management.group_xe_library"
+                            type="action" icon="fa-tasks" string="Movements">
+                    </button>
+                </div>
+            </xpath>
+            <xpath expr="//notebook/page[@name='units']" position="replace">
+            </xpath>
+            <xpath expr="//notebook/page[@name='movements']" position="replace">
+            </xpath>
+        </field>
+    </record>
+    <record id="openeducat_media_dashboard_kanban_view" model="ir.ui.view">
+        <field name="name">xe.media.type.dashboard.kanban</field>
+        <field name="model">xe.media.type</field>
+        <field name="arch" type="xml">
+            <kanban create="false" class="oe_background_grey o_kanban_dashboard o_account_kanban">
+                <field name="id"/>
+                <field name="name"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{kanban_color(0)}">
+                            <div class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div class="o_primary mt8">
+                                        <a>
+                                            <field name="name"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_manage_button_section">
+                                    <a class="o_kanban_manage_toggle_button" href="#">More
+                                        <i class="fa fa-caret-down"/>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="container o_kanban_card_content o_visible">
+                                <div class="row">
+                                    <div name="first_collumn" class="col-xs-3 col-md-3" style="width:25%;">
+                                        <center>
+                                            <button type="object" name="create_new_media_type"
+                                                    groups="xe_library_management.group_xe_library"
+                                                    class="btn btn-primary btn-sm">New Media
+                                            </button>
+                                        </center>
+                                    </div>
+                                    <div name="second_collumn" class="col-xs-3 col-md-3 o_kanban_primary_left"
+                                         style="width:25%;">
+                                        <a>
+                                            <b>
+                                                <field name="issued"/>
+                                            </b>
+                                            Issued
+                                        </a>
+                                        <a>
+                                            <b>
+                                                <field name="available"/>
+                                            </b>
+                                            Available
+                                        </a>
+                                    </div>
+                                    <div name="third_collumn" class="col-xs-6 col-md-6 o_kanban_primary_left"
+                                         style="width:50%;">
+                                        <a type="action" name="%(act_xe_media_today)d">
+                                            <b>
+                                                <field name="due_media_today"/>
+                                            </b>
+                                            Due
+                                            <field name="name"/>
+                                            of Today
+                                        </a>
+                                        <a type="action" name="%(act_xe_media_month)d">
+                                            <b>
+                                                <field name="due_media_month"/>
+                                            </b>
+                                            Due
+                                            <field name="name"/>
+                                            of Month
+                                        </a>
+                                    </div>
+                                </div>
+                                <div name="graph_section" class="o_kanban_graph_section">
+                                    <field name="kanban_dashboard_graph" t-att-graph_type="'bar'"
+                                           widget="dashboard_graph"/>
+                                </div>
+                            </div>
+                            <div class="container o_kanban_card_manage_pane o_invisible" style="display:none;">
+                                <div class="row">
+                                    <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_new">
+                                        <div name="library_new" class="o_kanban_card_manage_title">
+                                            <span>New</span>
+                                        </div>
+                                        <div>
+                                            <a type="object" name="create_new_media_type">New
+                                                <field name="name"/>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_operations">
+                                        <div name="library_reports" class="o_kanban_card_manage_title">
+                                            <span>Reports</span>
+                                        </div>
+                                        <div>
+                                            <a>
+                                                <field name="name"/>
+                                                Status
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row o_kanban_card_settings">
+                                    <div class="col-xs-6">
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+                                        <a t-if="widget.editable" type="edit">Settings</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="open_library_dashboard_kanban" model="ir.actions.act_window">
+        <field name="name">Library Dashboard</field>
+        <field name="res_model">xe.media.type</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="usage">menu</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p>
+                This is the Library Dashboard.
+            </p>
+        </field>
+    </record>
+
+    <!-- <menuitem id="menu_xe_dashboard_librarian" name="Dashboard"
+        groups="xe_library_management.group_xe_library,xenesis_school_base.group_xe_admin,xenesis_school_base.group_xe_admin"
+        parent="xe_library_management.menu_xe_library_root" sequence="10" action="open_library_dashboard_kanban" /> -->
+</odoo>

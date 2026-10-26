@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="action_report_student_wise" model="ir.actions.report">
+            <field name="name">Student Wise</field>
+            <field name="model">xe.discipline.records</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">xe_discipline_management.student_wise_report</field>
+            <field name="report_file">xe_discipline_management.student_wise_report</field>
+        </record>
+        <record id="action_report_misbehaviour_type" model="ir.actions.report">
+            <field name="name">Misbehaviour Type Wise</field>
+            <field name="model">xe.discipline.records</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">xe_discipline_management.misbehaviour_type_report</field>
+            <field name="report_file">xe_discipline_management.misbehaviour_type_report</field>
+        </record>
+    </data>
+</odoo>

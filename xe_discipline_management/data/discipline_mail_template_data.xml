@@ -1,0 +1,157 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">
+        <!--Misbehaviour Templates-->
+        <record id="email_fighting_in_school_template" model="mail.template">
+            <field name="name">Fighting In School Template</field>
+            <field name="subject">Fighting in school</field>
+            <field name="email_from">${object.create_user_id.login}</field>
+            <field name="email_to">${object.student_id.email}</field>
+            <field name="model_id" ref="model_xe_discipline_records"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+<p>Dear Parent</p>
+<br/>
+<p>This is to bring to your attention that your Child <b>${object.student_id.name}</b> was involved in a fight on ________ with a fellow student in school which is against the school rules.</p>
+<br/>
+<p>In view of the serious nature of the issues, the school administration requires you to accompany your child to school on <b>${object.meeting_datetime}</b> to discuss this matter further with administration.</p>
+<br/>
+<p>Hoping for your full co-operation.</p>
+<br/>
+<p>Yours faithfully,</p>
+            ]]>
+            </field>
+        </record>
+
+        <record id="email_cheating_in_the_exam_template" model="mail.template">
+            <field name="name">Cheating In The Exam Template</field>
+            <field name="subject">Misconduct - cheating in the exam</field>
+            <field name="email_from">${object.create_user_id.login}</field>
+            <field name="email_to">${object.student_id.email}</field>
+            <field name="model_id" ref="model_xe_discipline_records"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+<p>Dear Parent</p>
+<br/>
+<p>This is to bring to your notice that your Child <b>${object.student_id.name} Class <b>${object.course_id.name}</b> was caught handed copying in the Mid-Term II, [Date] [Class] [Subject] Examination.</p>
+<br/>
+<p>We feel that this is a serious offence which is against the school policy bearing in mind that as a young student he/she should display good character.</p>
+<br/>
+<p>You are therefore asked to accompany your son/daughter to school on <b>${object.meeting_datetime}</b> to discuss this issue with the administration.</p>
+<br/>
+<p>Hoping for full co-operation from your end.</p>
+<br/>
+<p>Yours faithfully,</p>
+            ]]>
+            </field>
+        </record>
+
+        <record id="email_boy_girl_relationship_template" model="mail.template">
+            <field name="name">Misconduct - boy-girl relationship</field>
+            <field name="subject">Misconduct - boy-girl relationship</field>
+            <field name="email_from">${object.create_user_id.login}</field>
+            <field name="email_to">${object.student_id.email}</field>
+            <field name="model_id" ref="model_xe_discipline_records"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+<p>Dear Parent</p>
+<br/>
+<p>This is to bring to your attention that your Child <b>${object.student_id.name}</b> Class <b>${object.course_id.name}</b> has been involved in a boy - girl relationship which has been affecting his concentration in class.</p>
+<br/>
+<p>we feel that this a serious offence which is against the school policy bearing in mind that as a young student he/she should display good character.</p>
+<br/>
+<p>You are therefore asked to accompany your child to school on <b>${object.meeting_datetime}</b> to discuss the matter with the administration. Both parents have to be present.</p>
+<br/>
+<p>Hoping for your full co-operation.</p>
+<br/>
+<p>Yours faithfully,</p>
+            ]]>
+            </field>
+        </record>
+
+        <record id="email_neglecting_school_rules_template" model="mail.template">
+            <field name="name">Neglecting the school rules</field>
+            <field name="subject">Neglecting the school rules</field>
+            <field name="email_from">${object.create_user_id.login}</field>
+            <field name="email_to">${object.student_id.email}</field>
+            <field name="model_id" ref="model_xe_discipline_records"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+<p>Dear Parent</p>
+<br/>
+<p>This is to bring to your notice that your Child <b>${object.student_id.name}</b> Class <b>${object.course_id.name}</b> [REASON] on [DATETIME] inspite of having been reminded over this matter on several occasions.</p>
+<br/>
+<p>It is the school policy that every student has to be in [REASON]. This is to ensure proper discipline in maintained in the school.</p>
+<br/>
+<p>Therefore, you are kindly requested to come to school accompanied by your child on <b>${object.meeting_datetime}</b> in order to discuss this matter with the administration.</p>
+<br/>
+<p>Hoping for a favourable response and thanking you in anticipation.</p>
+<br/>
+<p>Yours faithfully,</p>
+            ]]>
+            </field>
+        </record>
+
+        <record id="email_indiscipline_electronic_gadget_template" model="mail.template">
+            <field name="name">Indiscipline - Electronic gadget</field>
+            <field name="subject">Indiscipline - Electronic gadget</field>
+            <field name="email_from">${object.create_user_id.login}</field>
+            <field name="email_to">${object.student_id.email}</field>
+            <field name="model_id" ref="model_xe_discipline_records"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+<p>Dear Parent</p>
+<br/>
+<p>In reference to rules and regulations of the school as laid down by the school board of governors on the matter of electronics, I would like to bring to your attention that your Child <b>${object.student_id.name}</b> Class <b>${object.course_id.name}</b> was caught in possession of an electronic gadget which is against the set school rules and regulations.</p>
+<br/>
+<p>We feel this is a serious matter and you are therefore requested to accompany your Child to school on <b>${object.meeting_datetime+1}</b> to discuss this issue further with the administrators.</p>
+<br/>
+<p>Looking forward to your co-operation.</p>
+<br/>
+<p>Yours faithfully,</p>
+            ]]>
+            </field>
+        </record>
+
+        <!--Suspend From School Template-->
+        <record id="email_suspension_from_school_template" model="mail.template">
+            <field name="name">Suspension from school</field>
+            <field name="subject">Suspension from school</field>
+            <field name="email_from">${object.discipline_id.create_user_id.login}</field>
+            <field name="email_to">${object.student_id.email}</field>
+            <field name="model_id" ref="model_xe_suspended_students"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+<p>Dear Parent</p>
+<br/>
+<p>This is to bring to your attention that your Child <b>${object.student_id.name}</b> Class <b>${object.discipline_id.course_id.name}</b> has been given suspension effective from <b>${object.suspend_from_date}</b> until <b>${object.suspend_to_date}</b>.</p>
+<br/>
+<p>The school administration arrived at this decision after your child was grossly involved in <b>${object.misbehaviour_category_id.name}</b> within the school compound. This is a serious offense which is even banned by government.</p>
+<br/>
+<p>You are therefore asked to ensure that you guide and counsel your child during the suspension period. You are further asked to accompany you child back to school on <b>${object.suspend_to_date}</b> to allow your child resume studies.</p>
+<br/>
+<p>Yours faithfully,</p>
+            ]]>
+            </field>
+        </record>
+
+        <!--Student Apology Template-->
+        <record id="email_student_apology_letter_template" model="mail.template">
+            <field name="name">Student Apology Letter</field>
+            <field name="subject">${object.student_id.name} Apology Letter</field>
+            <field name="email_from">${object.student_id.email}</field>
+            <field name="email_to">${object.create_user_id.login}</field>
+            <field name="model_id" ref="model_xe_discipline_records"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+<p>Dear Sir,</p>
+<br/>
+<p>Write your Letter</p>
+<br/>
+<p>Yours faithfully,</p>
+<p>${object.student_id.name}</p>
+            ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

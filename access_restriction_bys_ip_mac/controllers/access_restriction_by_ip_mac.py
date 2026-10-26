@@ -57,10 +57,17 @@ class AccessHome(Home):
                         ip_list.append(rec.ip_address)
                     if ip_address in ip_list:
                         try:
-                            uid = request.session.authenticate(
-                                request.session.db,
-                                request.params["login"],
-                                request.params["password"],
+                            # uid = request.session.authenticate(
+                            #     request.session.db,
+                            #     request.params["login"],
+                            #     request.params["password"],
+                            # )
+                            auth_info = request.session.authenticate(                                request.env,
+                                {
+                                    "login": request.params["login"],
+                                    "password": request.params["password"],
+                                    "type": "password",
+                                },
                             )
                             request.params["login_success"] = True
                             return redirect_with_hash(
@@ -101,10 +108,17 @@ class AccessHome(Home):
                         mac_list.append(rec.macs_address)
                     if now_mac in mac_list:
                         try:
-                            uid = request.session.authenticate(
-                                request.session.db,
-                                request.params["login"],
-                                request.params["password"],
+                            # uid = request.session.authenticate(
+                            #     request.session.db,
+                            #     request.params["login"],
+                            #     request.params["password"],
+                            # )
+                            auth_info = request.session.authenticate(                                request.env,
+                                {
+                                    "login": request.params["login"],
+                                    "password": request.params["password"],
+                                    "type": "password",
+                                },
                             )
                             request.params["login_success"] = True
                             return redirect_with_hash(
@@ -119,10 +133,17 @@ class AccessHome(Home):
                         values["error"] = _("Not allowed to login from this MAC")
                 else:
                     try:
-                        uid = request.session.authenticate(
-                            request.session.db,
-                            request.params["login"],
-                            request.params["password"],
+                        # uid = request.session.authenticate(
+                        #     request.session.db,
+                        #     request.params["login"],
+                        #     request.params["password"],
+                        # )
+                        auth_info = request.session.authenticate(                            request.env,
+                            {
+                                "login": request.params["login"],
+                                "password": request.params["password"],
+                                "type": "password",
+                            },
                         )
                         request.params["login_success"] = True
                         return redirect_with_hash(

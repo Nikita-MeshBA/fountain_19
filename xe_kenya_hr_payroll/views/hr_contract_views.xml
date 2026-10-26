@@ -1,0 +1,171 @@
+<!--<odoo>-->
+<!--    <record id="hr_contract_view_form_sclp" model="ir.ui.view">-->
+<!--        <field name="name">hr.contract.form</field>-->
+<!--        <field name="model">hr.contract</field>-->
+<!--        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>-->
+<!--        <field name="model">hr.version</field>-->
+<!--        <field name="inherit_id" ref="hr.hr_contract_template_form_view"/>-->
+<!--        <field name="arch" type="xml">-->
+<odoo>
+    <record id="hr_contract_view_form_sclp" model="ir.ui.view">
+        <field name="name">hr.version.form.kenya.payroll</field>
+<!--        <field name="model">hr.version</field>-->
+<!--        <field name="inherit_id" ref="hr.view_employee_form"/>-->
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+
+<!--            <group name="yearly_benefits" position="replace">-->
+<!--                <group string="Yearly Advantages" name="yearly_benefits" invisible="1">-->
+<!--                    <label for="yearly_wage"/>-->
+<!--                    <div class="o_row" name="yearly_wage">-->
+<!--                        <field name="yearly_wage" nolabel="1"/>-->
+<!--                        <span>/ year</span>-->
+<!--                    </div>-->
+<!--                </group>-->
+<!--            </group>-->
+<!--            <group name="salary_info" position="after">-->
+                <xpath expr="//group[@name='payroll_group']" position="inside">
+                <group name="outer_salary_and_relief">
+                    <group name="salary_and_relief" string="Monthly Reliefs/Allowances">
+                        <label for="monthly_personal_relief"/>
+                        <div class="o_row" name="monthly_personal_relief">
+                            <field name="monthly_personal_relief" nolabel="1" required="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="house_bonus"/>
+                        <div class="o_row" name="house_bonus">
+                            <field name="house_bonus" nolabel="1"/>
+                            <span>/ year</span>
+                        </div>
+                        <label for="transport_allowance"/>
+                        <div class="o_row" name="transport_allowance">
+                            <field name="transport_allowance" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="food_allowance"/>
+                        <div class="o_row" name="food_allowance">
+                            <field name="food_allowance" nolabel="1"/>
+                            <span>/ day</span>
+                        </div>
+                        <label for="gratuity"/>
+                        <div class="o_row" name="gratuity">
+                            <field name="gratuity" nolabel="1"/>
+                        </div>
+                        <label for="other_earnings"/>
+                        <div class="o_row" name="other_earnings">
+                            <field name="other_earnings" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="bonus"/>
+                        <div class="o_row">
+                            <field name="bonus" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="monthly_tax_allowance"/>
+                        <div class="o_row" name="monthly_tax_allowance">
+                            <field name="monthly_tax_allowance" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="monthly_insurance_relief"/>
+                        <div class="o_row" name="monthly_insurance_relief">
+                            <field name="monthly_insurance_relief" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="school_fees_benefits"/>
+                        <div class="o_row" name="school_fees_benefits">
+                            <field name="school_fees_benefits" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="consolidated_benefits"/>
+                        <div class="o_row" name="consolidated_benefits">
+                            <field name="consolidated_benefits" nolabel="1"/>
+                            <span>/ year</span>
+                        </div>
+                        <label for="meal_allowance"/>
+                        <div class="o_row">
+                            <field name="meal_allowance" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="medical_allowance"/>
+                        <div class="o_row">
+                            <field name="medical_allowance" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                    </group>
+                </group>
+                <group name="outer_salary_and_deductions">
+                    <group name="salary_and_deductions" string="Monthly Deductions">
+                        <label for="nssf_amount"/>
+                        <div class="o_row" name="nssf_amount">
+                            <field name="nssf_amount" nolabel="1" required="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="insurance_premium"/>
+                        <div class="o_row" name="insurance_premium">
+                            <field name="insurance_premium" nolabel="1" required="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="pension_contribution"/>
+                        <div class="o_row" name="pension_contribution">
+                            <field name="pension_contribution" nolabel="1" required="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="sacco_contribution"/>
+                        <div class="o_row" name="sacco_contribution">
+                            <field name="sacco_contribution" nolabel="1" required="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="helb_deduction"/>
+                        <div class="o_row">
+                            <field name="helb_deduction" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="finnlem_sacco_contribution"/>
+                        <div class="o_row" name="finnlem_sacco_contribution">
+                            <field name="finnlem_sacco_contribution" nolabel="1" required="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="parking_fee"/>
+                        <div class="o_row" name="parking_fee">
+                            <field name="parking_fee" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="medical_deduction"/>
+                        <div class="o_row" name="medical_deduction">
+                            <field name="medical_deduction" nolabel="1" required="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="schoolfees_deduction"/>
+                        <div class="o_row" name="schoolfees_deduction">
+                            <field name="schoolfees_deduction" nolabel="1" required="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="welfare_contribution"/>
+                        <div class="o_row" name="welfare_contribution">
+                            <field name="welfare_contribution" nolabel="1" required="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="other_deductions"/>
+                        <div class="o_row" name="other_deductions">
+                            <field name="other_deductions" nolabel="1" required="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="is_pension"/>
+                        <div class="o_row">
+                            <field name="is_pension" nolabel="1"/>
+                        </div>
+                    </group>
+<!--                </group>-->
+<!--            </group>-->
+<!--            <field name="hr_responsible_id" position="after">-->
+                </group>
+            </xpath>
+            <xpath expr="//group[@name='contract']/field[@name='structure_type_id']" position="after">
+                <field name="payroll_type"/>
+                <field name="is_activity_rate"/>
+                <field name="activity_rate" invisible="is_activity_rate == False"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

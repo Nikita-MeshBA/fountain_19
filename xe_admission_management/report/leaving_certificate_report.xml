@@ -1,0 +1,129 @@
+<odoo>
+    <template id="xenesis_school_base.report_leaving_certificate">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="xenesis_school_base.leave_certificate_external_layout">
+                    <div class="page" style="font-size:16px;">
+                        <t t-set="company" t-value="o.company_id.sudo()"/>
+                        <div t-att-style="report_header_style" style="padding-bottom:10px;">
+                            <div class="row">
+                                <div class="col-3 mb4">
+                                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                                         style="max-height: 45px;" alt="Logo"/>
+                                </div>
+                                <div class="col-6" name="company_address">
+                                    <center>
+                                        <span t-esc="company.name"/>
+                                        <br/>
+                                        <span t-esc="company.street"/>
+                                        <br/>
+                                        <span t-esc="company.street2"/>
+                                        <br/>
+                                        <span t-esc="company.city"/>
+                                        <span t-esc="company.state_id.name"/>
+                                        <span t-esc="company.zip"/>
+                                        <br/>
+                                        <span t-esc="company.country_id.name"/>
+                                    </center>
+
+                                </div>
+                                <div class="col-3 text-right" style="margin-top:22px;" t-field="company.report_header"
+                                     name="moto"/>
+                            </div>
+                            <div t-if="company.logo or company.report_header" class="row zero_min_height">
+                                <div class="col-12">
+                                    <div style="border-bottom: 1px solid black;"/>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div>
+                            <h2>
+                                <center>SCHOOL LEAVING CERTIFICATE</center>
+                            </h2>
+                            <br/>
+                        </div>
+                        <p>
+                            <strong>ADMISSION NO:
+                                <span t-esc="o.roll_number"/>
+                            </strong>
+                        </p>
+                        <p>
+                            This is to certify that
+                            <span t-esc="o.name"/>
+                            joined this school in the year
+                            <span t-esc="o.academic_year_id.name"/>
+                            and was enrolled in class/grade
+                            <span t-esc="data['enrolled_course']"/>
+                            .
+                            <span t-esc="data['gender']"/>
+                            left in the year
+                            <span t-esc="data['leaving_date']"/>
+                            having satisfactorily completed the approved course for
+                            <span t-esc="o.course_id.name"/>
+                            .
+                            <br/>
+                            Date of Birth in the School Register:
+                            <span t-if="o.dob" t-esc="o.dob.strftime('%d-%m-%Y')"/>
+                            .
+                            <br/>
+                            Principal’s report on pupil’s
+                            <t t-foreach="attribute_lines_ids" t-as="line"><span t-esc="line.attribute_id.name"/>,
+                            </t>
+                        </p>
+                        <div>
+                            <table class="table table-condensed table-borderless">
+                                <tr t-foreach="attribute_lines_ids" t-as="line">
+                                    <td>
+                                        <strong>
+                                            <span t-esc="line.attribute_id.name"/>
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.value"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:30%;">Pupil’s Signature:</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Date of Issue:</td>
+                                    <td>
+                                        <span t-esc="current_date"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <table class="table table-condensed table-borderless">
+                                <tr>
+                                    <td style="width:30%;"></td>
+                                    <td>
+                                        Signed:
+                                        <br/>
+                                        <img t-if="o.company_id.signature"
+                                             t-att-src="image_data_uri(o.company_id.signature)"
+                                             style="max-height:220px; max-width:225px;"/>
+                                        <br/>
+                                        <strong>(PRINCIPAL)</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br/>
+                        <br/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

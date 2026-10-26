@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="exam_analysis_report_form">
+        <field name="name">exam.analysis.report.wizard.form</field>
+        <field name="model">exam.analysis.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="analysis_type" widget="radio"/>
+                        <field name="type" widget="radio" options="{'horizontal': true}"/>
+                        <field name="course_id"/>
+                        <field name="classroom_ids" widget="many2many_tags" domain="[('course_id','=',course_id)]"
+                               invisible="type == 'class'"
+                               options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+                        <field name="exam_session_id" domain="[('course_id','=',course_id)]" required="1"/>
+                        <field name="subject_ids" widget="many2many_tags"
+                               invisible="analysis_type != 'subject_wise'"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="print_analysis_report_excel" type="object" class="oe_highlight"
+                            string="Print Excel"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="exam_analysis_report_wizard" model="ir.actions.act_window">
+        <field name="name">Exam Analysis Report</field>
+        <field name="res_model">exam.analysis.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_exam_analysis_report" name="Exam Analysis Report"
+              parent="xe_exam_management.menu_xe_exam_reports" sequence="1"
+              action="xe_exam_management.exam_analysis_report_wizard"
+              groups="xe_exam_management.group_xe_exam_admin"/>
+</odoo>

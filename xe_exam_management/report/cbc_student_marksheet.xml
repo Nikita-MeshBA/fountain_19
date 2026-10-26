@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_cbc_marksheet_rep">
+        <style>
+            .font{
+            font-size:14px;
+            font-family:"Helvetica"
+            }
+            @page{
+            margin-top:1%;
+            size: A4;
+            }
+        </style>
+        <t t-call="web.html_container">
+            <t t-call="xe_exam_management.marksheet_report_external_layout">
+                <div class="font">
+                    <div class="page">
+                        <t t-foreach="get_objects(docs)" t-as="objs">
+                            <t t-foreach="objs" t-as="obj">
+                                <t t-foreach="get_lines(obj,marksheet_line_id)" t-as="get_lines">
+                                    <t t-if="get_lines['evaluation_type'] in ['1-3 CBC']">
+                                        <div class="row"
+                                             style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 16px;text-align:left !important;">
+                                            <div class="col-4">
+                                                <strong>Name:
+                                                    <span t-raw="'%s' % get_lines['student']"/>
+                                                </strong>
+                                            </div>
+                                            <div class="col-4">
+                                                <strong>Grade:
+                                                    <span t-raw="'%s' % get_lines['course']"/>
+                                                </strong>
+                                            </div>
+                                            <div class="col-4">
+                                                <strong>Term:
+                                                    <span t-raw="'%s' % get_lines['academic_term']"/>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row"
+                                             style="font-family: Times, Times New Roman, serif; color: # 555;text-align:center !important;">
+                                            <div class="col-12">
+                                                <h3 align="left">
+                                                    <strong>
+                                                        <span t-esc="'%s' %  get_lines['term']"/>
+                                                    </strong>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <table class="table table-bordered"
+                                               style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 16px;text-align:center !important;">
+                                            <thead>
+                                                <th class="text-center" style="padding: 08px;">LEARNING AREA</th>
+                                                <th class="text-center" style="padding: 08px;">EXCEED EXPECTATION</th>
+                                                <th class="text-center" style="padding: 08px;">MEET EXPECTATION</th>
+                                                <th class="text-center" style="padding: 08px;">APPROACH EXPECTATION</th>
+                                                <th class="text-center" style="padding: 08px;">BELOW EXPECTATION</th>
+                                            </thead>
+                                            <tbody>
+                                                <t t-foreach="get_lines['exam_details']" t-as="detail">
+                                                    <tr>
+                                                        <td class="text-left" style="padding: 08px;">
+                                                            <span t-raw="'%s' % detail['exam']"/>
+                                                        </td>
+                                                        <td class="text-left" style="padding: 08px;">
+                                                            <t t-if="detail['rubric_ee']=='EE'">
+                                                                <input type="checkbox" id="checkbox_EE"
+                                                                       checked="checked"/>
+                                                            </t>
+                                                        </td>
+                                                        <td class="text-center" style="padding: 08px;">
+                                                            <t t-if="detail['rubric_me']=='ME'">
+                                                                <input type="checkbox" id="checkbox_ME"
+                                                                       checked="checked"/>
+                                                            </t>
+                                                        </td>
+                                                        <td class="text-center" style="padding: 08px;">
+                                                            <t t-if="detail['rubric_ae']=='AE'">
+                                                                <input type="checkbox" id="checkbox_aE"
+                                                                       checked="checked"/>
+                                                            </t>
+                                                        </td>
+                                                        <td class="text-center" style="padding: 08px;">
+                                                            <t t-if="detail['rubric_be']=='BE'">
+                                                                <input type="checkbox" id="checkbox_BE"
+                                                                       checked="checked"/>
+                                                            </t>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                        <table class="table table-bordered"
+                                               style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 14px;text-align:center !important;">
+                                            <thead>
+                                                <th class="text-center" style="padding: 08px;">Exceeding Expectations
+                                                </th>
+                                                <th class="text-center" style="padding: 08px;">Meeting Expectations</th>
+                                                <th class="text-center" style="padding: 08px;">Approaching
+                                                    Expectations
+                                                </th>
+                                                <th class="text-center" style="padding: 08px;">Below Expectations</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center" style="padding: 08px;">
+                                                        <span t-esc="get_lines['rubrics_range_ee']"/>
+                                                    </td>
+                                                    <td class="text-center" style="padding: 08px;">
+                                                        <span t-esc="get_lines['rubrics_range_me']"/>
+                                                    </td>
+                                                    <td class="text-center" style="padding: 08px;">
+                                                        <span t-esc="get_lines['rubrics_range_ae']"/>
+                                                    </td>
+                                                    <td class="text-center" style="padding: 08px;">
+                                                        <span t-esc="get_lines['rubrics_range_be']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <br/>
+                                        <div class="row"
+                                             style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 16px;">
+                                            <div class="col-12">
+                                                <b>Class Teacher's remarks/Suggestions:</b>
+                                                <t t-if="get_lines['general_comment']">
+                                                    <span t-esc="get_lines['general_comment']"/>
+                                                </t>
+                                                <t t-else="">
+                                                    ________________________________________________________________________________________
+                                                    _________________________________________________________________________________________
+                                                </t>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row"
+                                             style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 16px;">
+                                            <div class="col-4">
+                                                <b>Name:</b>
+                                                <u>
+                                                    <span t-esc="get_lines['teacher_name']"/>
+                                                </u>
+                                            </div>
+                                            <div class="col-4">
+                                                <span>
+                                                    <b>Signature:</b>
+                                                </span>
+                                                <br/>
+                                                <t t-if="get_lines['teacher_signature']">
+                                                    <img class="image"
+                                                         t-attf-src="data:image/png;base64,#{ get_lines['teacher_signature'] }"
+                                                         style="max-height:2cm; max-width:3cm; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                                </t>
+                                            </div>
+                                            <div class="col-4">
+                                                <b>Date: ___________________</b>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row"
+                                             style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 16px;">
+                                            <div class="col-12">
+                                                <b>Extra Curricular Comments:</b>
+                                                <t t-if="get_lines['extra_comment']">
+                                                    <span t-esc="get_lines['extra_comment']"/>
+                                                </t>
+                                                <t t-else="">
+                                                    ________________________________________________________________________________________
+                                                    _________________________________________________________________________________________
+                                                </t>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row"
+                                             style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 16px;">
+                                            <div class="col-12">
+                                                <b>Parents/Guardians remarks:
+                                                    ______________________________________________________________________________________________
+                                                </b>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row"
+                                             style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 16px;">
+                                            <div class="col-7">
+                                                <b>Signature: ___________________</b>
+                                            </div>
+                                            <div class="col-5">
+                                                <b>Date: ___________________</b>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <div class="row"
+                                             style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 16px;">
+                                            <div class="col-12">
+                                                <b>Feedback on learners acquisition of competencies
+                                                    <!--______________________________________________________________________
+                                                  ____________________________________________________________________________________________________________________________________-->
+                                                </b>
+                                                <u>
+                                                    <span t-esc="get_lines['head_teacher_comment']"/>
+
+                                                </u>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row"
+                                             style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 16px;">
+                                            <div class="col-4">
+                                                <b>Head Teacher's details:</b>
+                                                <br/>
+                                                <b>Name:</b>
+                                                <u>
+                                                    <span t-esc="get_lines['head_teacher_name']"/>
+                                                </u>
+                                            </div>
+                                            <div class="col-4">
+                                                <br/>
+                                                <span>
+                                                    <b>Signature:</b>
+                                                </span>
+                                                <br/>
+                                                <t t-if="get_lines['head_teacher_signature']">
+                                                    <img class="image"
+                                                         t-attf-src="data:image/png;base64,#{ get_lines['head_teacher_signature'] }"
+                                                         style="max-height:2.5cm; max-width:4cm; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"
+                                                         alt="Signature"/>
+                                                </t>
+                                            </div>
+                                            <div class="col-4">
+                                                <br/>
+                                                <b>Date:
+                                                    <br/>
+                                                    ___________________
+                                                </b>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <p style="page-break-after: always;"/>
+                                    </t>
+                                </t>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

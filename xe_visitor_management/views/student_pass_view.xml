@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_student_pass_tree" model="ir.ui.view">
+        <field name="name">student.pass.tree</field>
+        <field name="model">student.pass</field>
+        <field name="priority" eval="8" />
+        <field name="arch" type="xml">
+            <list string="Student Pass">
+                <field name="student_id" />
+                <field name="approved_by_id" />
+                <field name="approved_time" />
+                <field name="reason" />
+            </list>
+        </field>
+    </record>
+    <record id="view_student_pass_form" model="ir.ui.view">
+        <field name="name">student.pass.form</field>
+        <field name="model">student.pass</field>
+        <field name="priority" eval="8" />
+        <field name="arch" type="xml">
+            <form string="Student Pass">
+                <header>
+                    <field name="verified" invisible="1"/>
+                    <button name="action_approved" invisible="state not in ['draft']" string="Approved Student Pass" type="object" class="oe_highlight" />
+                    <button name="action_draft" invisible="state not in ['approved']" string="Draft" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approved" />
+                </header>
+                <sheet>
+                    <group col="4">
+                        <field name="student_id" />
+                        <field name="application_number"/>
+                        <field name="course_id" force_save="1" />
+                        <field name="classroom_id" force_save="1"/>
+                        <field name="batch_id" invisible="1"/>
+                    </group>
+                    <group col="4" colspan="4">
+                        <field name="approved_by_id" readonly="1" />
+                        <field name="approved_time" readonly="1" />
+                        <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                    </group>
+
+                    <group col="4">
+                        <field name="person_name" />
+                        <field name="relationship" />
+                        <field name="reason" />
+                        <field name="identification_no" />
+                        <field name="mobile" />
+                        <field name="send_otp" invisible="sent_sms == False"/>
+                        <field name="sent_sms" invisible="1"/>
+                    </group>
+                    <group col="4">
+                        <button name="sent_otp" string="Send OTP" type="object" class="oe_highlight" invisible="sent_sms == False"/>
+                        <field name="stud_otp" invisible="1"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"
+                        groups="base.group_user" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
+            </form>
+        </field>
+    </record>
+<!--    <record id="view_student_pass_search" model="ir.ui.view">-->
+<!--        <field name="name">student.pass.search</field>-->
+<!--        <field name="model">student.pass</field>-->
+<!--        <field name="priority" eval="8" />-->
+<!--        <field name="arch" type="xml">-->
+<!--            <search string="Student Pass">-->
+<!--                <field name="student_id" />-->
+<!--                <field name="approved_by_id" />-->
+<!--                <newline />-->
+<!--                <group expand="0" string="Group By...">-->
+<!--                    <filter name="student" string="Student" domain="[]" context="{'group_by':'student_id'}" />-->
+<!--                    <filter name="approved_by" string="Approved By" domain="[]"-->
+<!--                        context="{'group_by':'approved_by_id'}" />-->
+<!--                </group>-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
+    ```xml
+    <record id="view_student_pass_search" model="ir.ui.view">
+        <field name="name">student.pass.search</field>
+        <field name="model">student.pass</field>
+        <field name="arch" type="xml">
+            <search string="Student Pass">
+                <field name="student_id"/>
+                <field name="approved_by_id"/>
+            </search>
+        </field>
+    </record>
+```
+    <record id="act_open_student_pass_view" model="ir.actions.act_window">
+        <field name="name">Student Pass</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">student.pass</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_student_pass_search" />
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+    <record id="act_open_student_pass_view_form" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="act_open_student_pass_view" />
+        <field name="sequence" eval="20" />
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_student_pass_form" />
+    </record>
+    <record id="act_open_student_pass_view_tree" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="act_open_student_pass_view" />
+        <field name="sequence" eval="10" />
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_student_pass_tree" />
+    </record>
+
+</odoo>

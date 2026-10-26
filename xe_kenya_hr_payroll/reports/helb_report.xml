@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="report.paperformat" id="paperformat_helb_report">
+        <field name="name">paperformat.helb.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_right">5</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+    <record id="helb_report" model="ir.actions.report">
+        <field name="name">HELB Report</field>
+        <field name="model">helb.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">l10_kenya_hr_payroll.helb_report_view</field>
+        <field name="report_file">l10_kenya_hr_payroll.helb_report_view</field>
+    </record>
+
+    <template id="helb_report_view">
+        <style>.font{
+            font-size:14px;
+            font-family:"Helvetica"
+            }
+            @page{
+            margin-top:1%;
+            size: A4;
+            }
+        </style>
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div>
+                    <h3 class="text-center">HELB Report</h3>
+                    <h4 class="text-left">
+                        <strong>Employer No:</strong>
+                        <t t-esc="res_company.helb_no"/>
+                        <br/>
+                        <strong>Employer Name:</strong>
+                        <t t-esc="res_company.name"/>
+                        <strong>Report For</strong>
+                        <t t-esc="date_start"/>
+                        <strong>,</strong>
+                        <t t-esc="date_end"/>
+                    </h4>
+                </div>
+                <table class="table table-condensed table-bordered" style="width: 100%">
+                    <thead>
+                        <th class="text-center" style="width: 30%">Employee</th>
+                        <th class="text-center" style="width: 17.5%">ID No</th>
+                        <th class="text-center" style="width: 17.5%">Staff No</th>
+                        <th class="text-center" style="width: 17.5%">Amount</th>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="docs" t-as="doc">
+                            <tr>
+                                <td>
+                                    <span t-esc="doc['employee']"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="doc['id_no']"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="doc['payroll_no']"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="doc['amount']"/>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr>
+                            <td class="text-right" colspan="3">
+                                <b>TOTAL:</b>
+                            </td>
+                            <td class="text-right">
+                                <t t-esc="sum([o['amount'] for o in docs])"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+        </t>
+    </template>
+
+    <record id="helb_xlsx_report" model="ir.actions.report">
+        <field name="name">NHIF Report</field>
+        <field name="model">helb.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">xe_kenya_hr_payroll.helb_report_xlsx</field>
+        <field name="report_file">xe_kenya_hr_payroll.helb_xlsx_report</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,17 @@
+<odoo>
+	<record id="sequence_session_id" model="ir.sequence">
+        <field name="name">Session ID Sequence</field>
+        <field name="code">rfid.sessionid.seq</field>
+        <field name="active">TRUE</field>
+        <field name="prefix">SESSION</field>
+        <field name="padding">5</field>
+    </record>
+
+    <record id="sequence_badge_number" model="ir.sequence">
+        <field name="name">Badge Number Sequence</field>
+        <field name="code">rfid.badge.seq</field>
+        <field name="active">TRUE</field>
+        <field name="prefix">BADGE</field>
+        <field name="padding">5</field>
+    </record>
+</odoo>

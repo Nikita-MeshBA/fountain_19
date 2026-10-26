@@ -79,11 +79,14 @@
         <field name="sequence">21</field>
     </record>
 
+<!--    <record model="ir.ui.menu" id="hr_payroll_community.menu_hr_payroll_community_root">-->
+<!--        <field name="sequence">22</field>-->
+<!--        <field name="group_ids" eval="[(4, ref('hr_holidays.group_hr_holidays_responsible')), (4, ref('hr_holidays.group_hr_holidays_user')), (4, ref('hr_holidays.group_hr_holidays_manager'))]"></field>-->
+<!--    </record>-->
     <record model="ir.ui.menu" id="hr_payroll_community.menu_hr_payroll_community_root">
-        <field name="sequence">22</field>
-        <field name="groups_id" eval="[(4, ref('hr_holidays.group_hr_holidays_responsible')), (4, ref('hr_holidays.group_hr_holidays_user')), (4, ref('hr_holidays.group_hr_holidays_manager'))]"></field>
-    </record>
-
+    <field name="sequence">22</field>
+    <field name="group_ids" eval="[(4, ref('hr_holidays.group_hr_holidays_responsible')), (4, ref('hr_holidays.group_hr_holidays_user')), (4, ref('hr_holidays.group_hr_holidays_manager'))]"/>
+</record>
     <record model="ir.ui.menu" id="hr.menu_config_recruitment">
         <field name="sequence">23</field>
     </record>
@@ -113,15 +116,15 @@
     </record>
 
     <record model="ir.ui.menu" id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root">
-        <field name="groups_id" eval="[(4, ref('spreadsheet_dashboard.group_dashboard_manager'))]"></field>
+        <field name="group_ids" eval="[(4, ref('spreadsheet_dashboard.group_dashboard_manager'))]"></field>
     </record>
 
    <!--  <record model="ir.ui.menu" id="ks_dashboard_ninja.board_menu_root">
-        <field name="groups_id" eval="[(4, ref('ks_dashboard_ninja.ks_dashboard_ninja_group_manager'))]"></field>
+        <field name="group_ids" eval="[(4, ref('ks_dashboard_ninja.ks_dashboard_ninja_group_manager'))]"></field>
     </record> -->
 
     <record model="ir.ui.menu" id="base.menu_management">
-        <field name="groups_id" eval="[(4, ref('base.group_system'))]"></field>
+        <field name="group_ids" eval="[(4, ref('base.group_system'))]"></field>
     </record>
 
 </odoo>

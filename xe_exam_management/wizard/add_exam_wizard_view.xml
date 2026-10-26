@@ -1,0 +1,38 @@
+<odoo>
+
+    <record model="ir.ui.view" id="add_exam_wizard_form_view">
+        <field name="name">add.exam.wizard.form.view</field>
+        <field name="model">add.exam.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="session_id" readonly="1"/>
+                            <field name="class_id" readonly="1"/>
+                            <field name="classroom_ids" readonly="1" widget="many2many_tags"/>
+                            <field name="subject_ids" domain="[('id', 'in', new_subject_ids)]" widget="many2many_tags" options="{'no_create': true, 'no_edit': true}" required="1"/>
+                            <field name="new_subject_ids" widget="many2many_tags" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="start_date" string="Date" widget="daterange"
+                                   options="{'end_date_field': 'end_date'}" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="add_new_exam" type="object" class="oe_highlight"
+                            string="Proceed"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_add_exam__wizard" model="ir.actions.act_window">
+        <field name="name">Add Exams</field>
+        <field name="res_model">add.exam.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

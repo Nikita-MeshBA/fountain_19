@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="employee_wise_form">
+            <field name="name">employee.wise.form</field>
+            <field name="model">employee.wise</field>
+            <field name="arch" type="xml">
+                <form string="Employee Wise">
+                    <group col="2" colspan="2">
+                        <field name="meeting_with_id" required="1" />
+                    </group>
+                    <group col="4" colspan="4">
+                        <field name="from_date" required="1" />
+                        <field name="to_date" required="1" />
+                    </group>
+                    <footer>
+                        <span groups="base.group_user">
+                            <button string="Print" type="object" name="print_report" class="oe_highlight" />
+                            <button special="cancel" string="Close" type="object" />
+                        </span>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="employee_wise_act">
+            <field name="name">Employee Wise</field>
+            <field name="res_model">employee.wise</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="employee_wise_form" />
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

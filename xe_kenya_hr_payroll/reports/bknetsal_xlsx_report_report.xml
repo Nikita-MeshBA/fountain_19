@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="bknetsal_xlsx_report" model="ir.actions.report">
+        <field name="name">Bank Net Salary Report</field>
+        <field name="model">bank.netsalary.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">xe_kenya_hr_payroll.bknetsal_xlsx_report</field>
+        <field name="report_file">xe_kenya_hr_payroll.bknetsal_xlsx_report</field>
+    </record>
+
+</odoo>
+
+

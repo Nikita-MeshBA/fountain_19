@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Start Schema Of Work structure-->
+        <record id="view_scheme_of_work_tree" model="ir.ui.view">
+            <field name="name">scheme.of.work.tree</field>
+            <field name="model">scheme.of.work</field>
+            <field name="arch" type="xml">
+                <list string="Scheme of Work">
+                    <field name="seq_name" string="Sequence"/>
+                    <field name="employee_id" string="Teacher" />
+                    <field name="department_head_id" string="Department Head" />
+                    <field name="department_id" string="Department" invisible="1" />
+                    <field name="department_manager_id" string="Department manager" invisible="1" />
+                    <field name="company_id" />
+                    <field name="class_id" string="Class" />
+                    <field name="status" string="Status" decoration-info="status == 'draft'" decoration-warning="status == 'waiting_for_approval'" decoration-success="status in ['1st_approval', '2nd_approval']" widget="badge" />
+                </list>
+            </field>
+        </record>
+
+        <record id="view_scheme_of_work_search" model="ir.ui.view">
+            <field name="name">scheme.of.work.search</field>
+            <field name="model">scheme.of.work</field>
+            <field name="arch" type="xml">
+                <search string="Scheme Of Work Search">
+                    <field name="employee_id" string="Teacher" />
+                    <field name="seq_name" string="Sequence"/>
+                    <field name="status" string="Status" />
+                    <field name="class_id" string="Class" />
+                    <field name="classroom_id" string="Class Room" />
+                    <newline />
+                </search>
+            </field>
+        </record>
+
+        <record id="view_scheme_of_work_form" model="ir.ui.view">
+            <field name="name">scheme.of.work.form</field>
+            <field name="model">scheme.of.work</field>
+            <field name="arch" type="xml">
+                <form string="Scheme of Work">
+                    <header>
+                        <field name="is_scheme_of_work" invisible="1" />
+                        <field name="is_submit" invisible="1" />
+                        <field name="is_resubmit" invisible="1" />
+                        <button name="button_submit" string="Submit" type="object" invisible="status != 'draft'" class="oe_highlight"/>
+                        <button name="button_first_approval" string="Approve" type="object" invisible="status != 'waiting_for_approval'" class="oe_highlight"/>
+                        <button name="button_second_approval" string="Approve" type="object" invisible="status != '1st_approval'" class="oe_highlight"/>
+                        <button name="reset_draft" string="Reset to Draft" type="object" invisible="status not in ['waiting_for_approval', '1st_approval']"/>
+                        <field name="status" widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <group col="2">
+                            <group>
+                                <field name="seq_name" string="Name"/>
+                                <field name="employee_id" string="Teacher" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <field name="company_id" string="School" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <field name="assigned_sub_ids" string="Subjects" widget="many2many_tags" readonly="status in ['1st_approval','2nd_approval']" required="1" domain="[('course_ids', 'in', [class_id])]"/>
+                                <field name="reg_no" string="Register Number" invisible="1" />
+                                <field name="period_per_week" string="Period Per Week" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <field name="type_select" widget="radio" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                            </group>
+                            <group>
+                                <field name="class_id" invisible="type_select in ['class_room']" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <field name="classroom_id" domain="[('course_id', '=', class_id)]" invisible="type_select in ['class']" readonly="status in ['1st_approval','2nd_approval']" required="type_select == 'both'"/>
+                                <field name="year_id" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <field name="term_id" domain="[('academic_year_id', '=', year_id)]" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <field name="department_head_id" string="Department Head" force_save="1" readonly="status in ['1st_approval','2nd_approval']" required="1" invisible="1"/>
+                                <field name="department_id" string="Department" invisible="1" />
+                                <field name="department_manager_id" string="Department Manager" invisible="1" />
+                                <field name="head_teacher_id" string="Head Teacher" force_save="1" readonly="status in ['1st_approval','2nd_approval']" required="1" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="scheme_of_work_line" string="Scheme Of Work Details">
+                                <field name="scheme_of_work_ids" readonly="status in ['1st_approval','2nd_approval']">
+                                    <list editable="bottom">
+                                        <field name="week" />
+                                        <field name="lesson" />
+                                        <field name="topic" string="Strand" />
+                                        <field name="sub_topic" string="Sub strand" />
+                                        <field name="objectives" />
+                                        <field name="learning_activities" />
+                                        <field name="learning_resources" />
+                                        <field name="key_inquiry_questions" />
+                                        <field name="assessment_methods" />
+                                        <field name="remarks" />
+                                        <field name="scheme_of_work_id" invisible="1" />
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+        
+        <!-- <record id="view_scheme_of_work_form_inherit" model="ir.ui.view">
+            <field name="name">scheme.of.work.form.inherit</field>
+            <field name="model">scheme.of.work</field>
+            <field name="inherit_id" ref="xe_lesson_planner.view_scheme_of_work_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='re_submit']" position="attributes">
+                    <t groups="xe_lesson_planner.group_lesson_plan_department_head">
+                        <attribute name="invisible">1</attribute>
+                    </t>
+                </xpath>
+            </field>
+        </record> -->
+
+        <record id="act_scheme_of_work" model="ir.actions.act_window">
+            <field name="name">Scheme Of Work</field>
+            <field name="res_model">scheme.of.work</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_scheme_of_work_search" />
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Add a new Scheme Of Work</p>
+            </field>
+        </record>
+        <!-- End Schema Of Work structure-->
+
+        <!-- Start Lesson Plan structure-->
+        <record id="view_lesson_plan_tree" model="ir.ui.view">
+            <field name="name">lesson.plan.tree</field>
+            <field name="model">lesson.plan</field>
+            <field name="arch" type="xml">
+                <list string="Lesson Plan">
+                    <field name="seq_name_lp" string="Sequence"/>
+                    <field name="lesson" />
+                    <field name="employee_id" string="Teacher" />
+                    <field name="company_id" />
+                    <field name="status" string="Status" decoration-info="status == 'draft'" decoration-warning="status == 'waiting_for_approval'" decoration-success="status in ['1st_approval', '2nd_approval']" widget="badge" />
+                </list>
+            </field>
+        </record>
+
+        <record id="view_lesson_plan_search" model="ir.ui.view">
+            <field name="name">lesson.plan.search</field>
+            <field name="model">lesson.plan</field>
+            <field name="arch" type="xml">
+                <search string="Lesson Plan">
+                    <field name="employee_id" string="Teacher" />
+                    <field name="seq_name_lp"  string="Sequence"/>
+                    <field name="status" string="Status" />
+                    <field name="class_id" string="Class" />
+                    <field name="classroom_id" string="Class Room" />
+                    <newline />
+                </search>
+            </field>
+        </record>
+
+        <record id="view_lesson_plan_form" model="ir.ui.view">
+            <field name="name">lesson.plan.form</field>
+            <field name="model">lesson.plan</field>
+            <field name="arch" type="xml">
+                <form string="Lesson Plan">
+                    <header>
+                        <field name="is_lesson_plan" invisible="1" />
+                        <field name="is_submit" invisible="1" />
+                        <field name="is_resubmit" invisible="1" />
+                        <button name="button_submit" string="Submit" type="object" invisible="status != 'draft'" class="oe_highlight"/>
+                        <button name="button_first_approval" string="Approve" type="object" invisible="status != 'waiting_for_approval'" class="oe_highlight"/>
+                        <button name="button_second_approval" string="Approve" type="object" invisible="status != '1st_approval'" class="oe_highlight"/>
+                        <button name="reset_draft" string="Reset to Draft" type="object" invisible="status not in ['waiting_for_approval', '1st_approval']"/>
+                        <field name="status" widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <group col="2">
+                            <group>
+                                <field name="seq_name_lp" string="Name"/>
+                                <field name="employee_id" string="Teacher" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <field name="company_id" string="School" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <field name="reg_no" string="Register Number" invisible="1"/>
+                                <field name="week" string="Period Per Week" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <field name="class_id" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <field name="classroom_id" domain="[('course_id', '=', class_id)]" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <field name="no_of_students" string="Number of Students" readonly="status in ['1st_approval','2nd_approval']" force_save="1" required="1"/>
+                            </group>
+                            <group>
+                                <field name="academic_year_id" string="Year" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <field name="academic_term_id" string="Term" domain="[('academic_year_id', '=', academic_year_id)]" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <field name="subject_id" domain="[('course_ids', 'in', [class_id])]" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <field name="lesson" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <field name="topic" string="Strand" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <field name="sub_topic" string="Sub strand" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <field name="lesson_date" readonly="status in ['1st_approval','2nd_approval']" required="1"/>
+                                <!-- <field name="department_head_id" string="Department Head" force_save="1" readonly="status in ['1st_approval','2nd_approval']"/>
+                                <field name="head_teacher_id" string="Head Teacher" force_save="1" readonly="status in ['1st_approval','2nd_approval']"/> -->
+                                <field name="scheme_of_work_id" invisible="1" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="lesson_plan_line" string="Lesson Plan Details">
+                                <field name="lesson_plan_ids" readonly="status in ['1st_approval','2nd_approval']">
+                                    <list editable="bottom">
+                                        <field name="time" />
+                                        <field name="content" />
+                                        <field name="learning_activities" />
+                                        <field name="learning_resources" />
+                                        <field name="lesson_plan_id" invisible="1" />
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+        
+        <!-- <record id="view_lesson_plan_form_inherit" model="ir.ui.view">
+            <field name="name">lesson.plan.form.inherit</field>
+            <field name="model">lesson.plan</field>
+            <field name="inherit_id" ref="xe_lesson_planner.view_lesson_plan_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='re_submit']" position="attributes">
+                    <t groups="xe_lesson_planner.group_lesson_plan_department_head">
+                        <attribute name="invisible">1</attribute>
+                    </t>
+                </xpath>
+            </field>
+        </record> -->
+
+        <!-- <record id="view_lesson_plan_form_user_inherit" model="ir.ui.view">
+            <field name="name">lesson.plan.form.user.inherit</field>
+            <field name="model">lesson.plan</field>
+            <field name="inherit_id" ref="xe_lesson_planner.view_lesson_plan_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='first_approval']" position="attributes">
+                    <t groups="xe_lesson_planner.group_lesson_plan_teacher">
+                        <attribute name="invisible">1</attribute>
+                    </t>
+                </xpath>
+            </field>
+        </record> -->
+
+        <record id="act_lesson_plan" model="ir.actions.act_window">
+            <field name="name">Lesson Plan</field>
+            <field name="res_model">lesson.plan</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_lesson_plan_search" />
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Add a new Lesson Plan</p>
+            </field>
+        </record>
+        <!-- End Lesson Plan structure-->
+
+        <record id="view_cbc_lp_header_form" model="ir.ui.view">
+            <field name="name">cbc.lp.header.form</field>
+            <field name="model">cbc.lp.header</field>
+            <field name="arch" type="xml">
+                <form string="Lesson Plan Header">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="lesson_planner_header_action" model="ir.actions.act_window">
+            <field name="name">Lesson Plan Header</field>
+            <field name="res_model">cbc.lp.header</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Add a new Lesson Plan Header</p>
+            </field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_lesson_planner_root" name="Lesson Planner" sequence="8" groups="xe_lesson_planner.group_lesson_plan_teacher" web_icon="xe_lesson_planner,static/description/icon.png" />
+        <menuitem id="menu_lesson_planner_sub_root" name="8-4-4 Lesson Plan" groups="xe_lesson_planner.group_lesson_plan_teacher" parent="menu_lesson_planner_root" sequence="1" />
+        <menuitem id="menu_cbc_lesson_planner_sub_root2" name="CBC Lesson Plan" groups="xe_lesson_planner.group_lesson_plan_teacher,xe_lesson_planner.group_lesson_plan_department_head" parent="menu_lesson_planner_root" sequence="10" />
+
+        <!-- Lesson Plan Menu -->
+        <menuitem id="menu_scheme_of_work" name="Scheme Of Work" action="act_scheme_of_work" groups="xe_lesson_planner.group_lesson_plan_teacher" parent="menu_lesson_planner_sub_root" sequence="1" />
+        <menuitem id="menu_lesson_plan" name="Lesson Plan" action="act_lesson_plan" groups="xe_lesson_planner.group_lesson_plan_teacher" parent="menu_lesson_planner_sub_root" sequence="2" />
+        <!-- <menuitem id="menu_approval" name="Approval" groups="xe_lesson_planner.group_lesson_plan_teacher" parent="menu_lesson_planner_sub_root" sequence="3" />
+        <menuitem id="menu_approval_department_head" name="Department Head Approval" action="act_employee_approval_first" groups="xe_lesson_planner.group_lesson_plan_teacher" parent="menu_approval" sequence="1" />
+        <menuitem id="menu_approval_head_teacher" name="Head Teaher Approval" action="act_employee_approval_second" groups="xe_lesson_planner.group_lesson_plan_teacher" parent="menu_approval" sequence="2" /> -->
+        <!-- Lesson Plan Menu -->
+
+        <!-- CBC Lesson Plan Menu -->
+        <menuitem id="menu_cbc_scheme_of_work" name="Scheme Of Work" action="xe_lesson_planner.act_cbc_scheme_of_work" groups="xe_lesson_planner.group_lesson_plan_teacher" parent="menu_cbc_lesson_planner_sub_root2" sequence="1" />
+        <menuitem id="menu_cbc_lesson_plan" name="Lesson Plan" action="xe_lesson_planner.act_cbc_lesson_plan" groups="xe_lesson_planner.group_lesson_plan_teacher" parent="menu_cbc_lesson_planner_sub_root2" sequence="2" />
+        <!-- CBC Lesson Plan Menu -->
+
+        <!--Reports Menu -->
+        <menuitem id="menu_lesson_planner_sub_root3" name="Reports" groups="xe_lesson_planner.group_lesson_plan_teacher,xe_lesson_planner.group_lesson_plan_department_head" parent="menu_lesson_planner_root" sequence="20" />
+        <menuitem id="menu_lesson_planner_report" name="Lesson Planner Analysis" groups="xe_lesson_planner.group_lesson_plan_teacher" action="xe_lesson_planner.lesson_plan_report_wizard_act" parent="xe_lesson_planner.menu_lesson_planner_sub_root3" sequence="1" />
+        <menuitem id="menu_lesson_planner_analysis" name="Scheme of Work" action="xe_lesson_planner.lesson_plan_report_wizard_act" parent="xe_lesson_planner.menu_lesson_planner_report" sequence="1" />
+        <!--Reports Menu -->
+
+        <!--Configuration Menu -->
+        <menuitem id="menu_lesson_planner_sub_root4" name="Configuration" groups="xe_lesson_planner.group_lesson_plan_teacher,xe_lesson_planner.group_lesson_plan_department_head" parent="menu_lesson_planner_root" sequence="30" />
+        <menuitem id="menu_lesson_planner_header1" name="Lesson Plan Header" action="xe_lesson_planner.lesson_planner_header_action" parent="xe_lesson_planner.menu_lesson_planner_sub_root4" sequence="2" />
+        <menuitem id="menu_lesson_planner_timing" name="Timing" action="xe_lesson_planner.action_lesson_planner_timing" parent="xe_lesson_planner.menu_lesson_planner_sub_root4" sequence="3" groups="xe_lesson_planner.group_lesson_plan_department_head"/>
+        <!--Reports Menu -->
+
+        <!-- Sequence -->
+        <record id="seq_scheme_of_work" model="ir.sequence">
+            <field name="name">Scheme Of Work</field>
+            <field name="code">scheme.of.work</field>
+            <field name="prefix">SOW</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False" />
+        </record>
+        
+        <record id="seq_lesson_plan" model="ir.sequence">
+            <field name="name">Lesson Plan</field>
+            <field name="code">lesson.plan</field>
+            <field name="prefix">LP</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False" />
+        </record>
+        <!-- Sequence -->
+
+        <!-- CBC Sequence -->
+        <record id="seq_cbc_scheme_of_work" model="ir.sequence">
+            <field name="name">CBC Scheme Of Work</field>
+            <field name="code">cbc.scheme.of.work</field>
+            <field name="prefix">CBC_SOW</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False" />
+        </record>
+
+        <record id="seq_cbc_lesson_plan" model="ir.sequence">
+            <field name="name">CBC Lesson Plan</field>
+            <field name="code">cbc.lesson.plan</field>
+            <field name="prefix">CBC_LP</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False" />
+        </record>
+        <!-- Sequence -->
+
+    </data>
+</odoo>

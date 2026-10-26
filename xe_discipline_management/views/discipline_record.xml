@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_discipline_list" model="ir.ui.view">
+            <field name="name">xe.discipline.tree</field>
+            <field name="model">xe.discipline.records</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <list string="Discipline Records" delete="false">
+                    <field name="name"/>
+                    <field name="student_id"/>
+                    <field name="discipline_date"/>
+                    <field name="course_id"/>
+                    <field name="create_user_id" string="Created By"/>
+                    <field name="state" widget="badge"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_discipline_form" model="ir.ui.view">
+            <field name="name">xe.discipline.form</field>
+            <field name="model">xe.discipline.records</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form string="Discipline Records" delete="false">
+                    <header>
+                        <button name="act_apology_letter" invisible="state not in ['email_sent']" string="Apology Letter" type="object"
+                                class="oe_highlight"/>
+                        <button name="act_meeting_awaiting" invisible="state not in ['awaiting_letter']" string=" Done Meeting With Parents"
+                                type="object" class="oe_highlight"/>
+                        <button name="act_action_needed" invisible="state not in ['draft']"
+                                string="Action Needed" type="object" class="oe_highlight"/>
+                        <button name="act_take_action" invisible="state not in ['action_needed']"
+                                string="Take Action" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,action_needed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title mw-100 pr-0">
+                            <h1 class="flex-fill d-flex flex-row">
+                                <field name="name" class="text-truncate w-100" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group col="4" colspan="4">
+                            <field name="student_id"/>
+                            <field name="discipline_date"/>
+                            <field name="course_id" string="Class"/>
+                            <field name="classroom_id" string="Classroom"/>
+                            <field name="create_user_id" string="Created By" readonly="1"/>
+                            <field name="priority" widget="priority"/>
+                            <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <separator string="Misbehaviour Info" colspan="4"/>
+                            <group col="2" colspan="2">
+                                <field name="misbehave_type" style="width:35%"/>
+                            </group>
+                            <group col="4" colspan="4">
+                                <field name="misbehave_categ_id"
+                                       domain="[('category_type', '=', misbehave_type)]"/>
+                                <field name="misbehave_sub_categ_id" domain="[('category_id','=',misbehave_categ_id)]"/>
+                                <field name="action_to_take"/>
+                                <field name="meeting_time"/>
+                            </group>
+                        </group>
+                        <separator string="Note" colspan="4"/>
+                        <field name="notes"/>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                        <field name="activity_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+<!--        <record id="view_xe_discipline_search" model="ir.ui.view">-->
+<!--            <field name="name">xe.discipline.search</field>-->
+<!--            <field name="model">xe.discipline.records</field>-->
+<!--            <field name="type">search</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <search string="Discipline Records">-->
+<!--                    <field name="name"/>-->
+<!--                    <field name="student_id"/>-->
+<!--                    <field name="course_id"/>-->
+<!--                    <field name="create_user_id"/>-->
+<!--                    <field name="misbehave_categ_id"/>-->
+<!--                    <field name="state"/>-->
+<!--&lt;!&ndash;                    <filter string="Today" name="today" domain="[('discipline_date', '=', context_today())]"/>&ndash;&gt;-->
+<!--                    <filter string="Today" name="today" domain="[('discipline_date', '=', context_today().strftime('%Y-%m-%d'))]"/>-->
+<!--                    <group expand="0" string="Group By...">-->
+<!--                        <filter string="Student" name="group_by_student" domain="[]" context="{'group_by': 'student_id'}"/>-->
+<!--                        <filter string="Course" name="group_by_course" domain="[]" context="{'group_by': 'course_id'}"/>-->
+<!--                        <filter string="State" name="group_by_state" domain="[]" context="{'group_by': 'state'}"/>-->
+<!--                    </group>-->
+<!--                </search>-->
+<!--            </field>-->
+<!--        </record>-->
+        <record id="view_xe_discipline_search" model="ir.ui.view">
+    <field name="name">xe.discipline.search</field>
+    <field name="model">xe.discipline.records</field>
+    <field name="arch" type="xml">
+        <search string="Discipline Records">
+            <field name="name"/>
+        </search>
+    </field>
+    </record>
+
+        <record model="ir.actions.act_window" id="discipline_act_wndw">
+            <field name="name">Discipline Records</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">xe.discipline.records</field>
+            <field name="view_mode">list,form</field>
+        </record>
+        <record id="sequence_discipline" model="ir.sequence">
+            <field name="name">Discipline sequence</field>
+            <field name="code">xe.discipline.records.seq</field>
+            <field name="prefix">DSPLN/%(range_year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">4</field>
+        </record>
+        <menuitem name="Discipline Records" id="discipline_record_root" parent="discipline_main_menu" action="discipline_act_wndw" sequence="1"/>
+        <menuitem name="Reports" id="discipline_report_root_menu" parent="discipline_main_menu"/>
+    </data>
+</odoo>

@@ -1,0 +1,54 @@
+<odoo>
+
+
+    <record id="view_card_configuration_list" model="ir.ui.view">
+        <field name="name">rfid.card.configuration.list</field>
+        <field name="model">rfid.card.configuration</field>
+        <field name="arch" type="xml">
+            <list create="1" delete="1" multi_edit="1" string="Card Configuration"  open_form_view="True">
+                <field name="badge_number"/>
+                <field name="student_id"/>
+                <field name="card_number"/>
+                <field name="device_id"/>
+                <field name="state" widget="badge" decoration-success="state == 'add_to_db'" decoration-info="state == 'draft'" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_card_configuration_list_form">
+        <field name="name">view_card_configuration_list_form</field>
+        <field name="model">rfid.card.configuration</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="create_update_to_database" type="object" string="Create/Update in DB" class="oe_highlight" invisible="state not in ('draft')"/>
+                    <button name="add_to_device" type="object" string="Add to Device" class="oe_highlight" invisible="state not in ('add_to_db')"/>
+                    <field name='state' widget="statusbar" statusbar_visible='draft,add_to_db,add_to_device'/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="badge_number"/>
+                            <field name="student_id"/>
+                            <field name="card_number"/>
+                            <field name="device_id"/>
+                            <field name="image_data"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_card_form" model="ir.actions.act_window">
+        <field name="name">Card Configuration</field>
+        <field name="res_model">rfid.card.configuration</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_card_configuration_list"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Add a new Card Configuration
+          </p>
+        </field>
+    </record>
+</odoo>

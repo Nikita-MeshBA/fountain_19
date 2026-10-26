@@ -40,16 +40,17 @@
         <field name="name">xe.parent.tree</field>
         <field name="model">xe.parent</field>
         <field name="arch" type="xml">
-            <tree string="Parents">
+            <list string="Parents">
                 <field name="name" string="Parent Name"/>
-                <field name="mobile" string="Mobile" required="1"/>
+<!--                <field name="mobile" string="Mobile" required="1"/>-->
+                <field name="phone" string="Phone" required="1"/>
                 <field name="phone" string="Phone"/>
                 <field name="email" string="Email"/>
                 <field name="student_user_ids" widget="many2many_tags" optional="hide" invisible="1"/>
                 <field name="user_id"/>
                 <field name="education" invisible="1" optional="hide"/>
                 <field name="relation"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -62,7 +63,7 @@
                 <field name="name"/>
                 <field name="email"/>
                 <field name="phone"/>
-                <field name="mobile"/>
+<!--                <field name="mobile"/>-->
                 <newline/>
             </search>
         </field>
@@ -92,9 +93,15 @@
                             <field name="relation"/>
                             <field name="yearly_income"/>
                         </group>
-                        <group>
-                            <field name="phone" required="0"/>
-                            <field name="mobile" required="1"/>
+<!--                        <group>-->
+<!--                            <field name="phone" required="0"/>-->
+<!--                            <field name="mobile" required="1"/>-->
+<!--                            <field name="education"/>-->
+<!--                            <field name="student_user_ids" widget="many2many_tags" invisible="1"/>-->
+<!--                            <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>-->
+<!--                        </group>-->
+                           <group>
+                            <field name="phone" required="1"/>
                             <field name="education"/>
                             <field name="student_user_ids" widget="many2many_tags" invisible="1"/>
                             <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
@@ -131,13 +138,13 @@
                         </page>
                         <page name="student_information" string="Students">
                             <field name="student_ids" delete="0">
-                                <tree delete="0">
+                                <list delete="0">
                                     <field name="roll_number" readonly="1"/>
                                     <field name="name"/>
                                     <field name="course_id"/>
                                     <field name="classroom_id"
                                            domain="[('course_id','=',course_id)]"/>
-                                </tree>
+                                </list>
                                 <form>
                                     <group>
                                         <group>
@@ -178,7 +185,7 @@
     <record id="act_parent" model="ir.actions.act_window">
         <field name="name">Parents</field>
         <field name="res_model">xe.parent</field>
-        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_mode">list,kanban,form</field>
         <field name="search_view_id" ref="view_parent_search"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">

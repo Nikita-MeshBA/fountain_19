@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_payslip_inherited" inherit_id="report_payslip1">
+        <xpath expr="//table/tr[1]" position="replace">
+            <tr>
+                <td class="w-25">
+                    <strong>Employee</strong>
+                </td>
+                <td class="w-25">
+                    <strong>Designation</strong>
+                </td>
+                <td class="w-25">
+                    <strong>Pay Period</strong>
+                </td>
+                <td class="w-25">
+                    <strong>Employee Category</strong>
+                </td>
+            </tr>
+        </xpath>
+        <xpath expr="//table/tr[2]" position="replace">
+            <tr>
+                <td>
+                    <span t-field="o.employee_id"/>
+                </td>
+                <td>
+                    <span t-field="o.employee_id.sudo().job_title"/>
+                </td>
+                <td>
+                    <span t-field="o.date_from"/>
+                    -
+                    <span t-field="o.date_to"/>
+                </td>
+                <td>
+                    <span t-field="o.employee_id.sudo().emp_salary_grade_id.name"/>
+                </td>
+            </tr>
+        </xpath>
+        <xpath expr="//table/tr[4]" position="replace">
+            <tr>
+                <td>
+                    <strong>Email</strong>
+                </td>
+                <td>
+                    <strong>Salary Grade</strong>
+                </td>
+                <td>
+                    <strong>Computed on</strong>
+                </td>
+                <td>
+                    <strong>Contract Start Date</strong>
+                </td>
+            </tr>
+        </xpath>
+        <xpath expr="//table/tr[5]" position="replace">
+            <tr>
+                <td>
+                    <span t-field="o.employee_id.sudo().work_email"/>
+                </td>
+                <td>
+                    <t t-esc="dict(o.employee_id.fields_get(allfields=['salary_band'])['salary_band']['selection'])[o.employee_id.salary_band]"/>
+                </td>
+                <td>
+                    <span t-field="o.compute_date"/>
+                </td>
+                <td>
+                    <span t-field="o.employee_id.first_contract_date"/>
+                </td>
+            </tr>
+        </xpath>
+        <xpath expr="//table[2]" position="replace">
+            <table/>
+        </xpath>
+
+        <xpath expr="//table/tr[5]" position="after">
+            <tr>
+                <td>
+                    <strong>Employee No.</strong>
+                </td>
+                <td>
+                    <strong>Employee Type</strong>
+                </td>
+                <td>
+                    <strong>Employee Belonging</strong>
+                </td>
+                <td>
+                    <strong>Payroll No</strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span t-field="o.employee_id.sud().employee_no"/>
+                </td>
+                <td>
+                    <span t-field="o.employee_id.sudo().emp_type"/>
+                </td>
+                <td>
+                    <span t-field="o.employee_id.sudo().emp_belonging_id"/>
+                </td>
+                <td>
+                    <span t-field="o.employee_id.sudo().identification_id1"/>
+                </td>
+            </tr>
+        </xpath>
+
+        <xpath expr="//table[last()]" position="before">
+            <p class="text-left">Bank Details</p>
+            <table class="table table-condensed table-bordered">
+                <tr>
+                    <td>
+                        <strong>Bank Name</strong>
+                    </td>
+                    <td>
+                        <span t-esc="o.employee_id.primary_bank_account_id.bank_id.name"></span>
+                    </td>
+                    <td>
+                        <strong>Bank Code</strong>
+                    </td>
+                    <td>
+                        <span t-esc="o.employee_id.primary_bank_account_id.bank_id.bic_id"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>NSSF</strong>
+                    </td>
+                    <td>
+                        <span t-esc="o.employee_id.nssf_no"></span>
+                    </td>
+                    <td>
+                        <strong>PIN</strong>
+                    </td>
+                    <td>
+                        <span t-esc="o.employee_id.pin_no"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>NHIF</strong>
+                    </td>
+                    <td>
+                        <span t-esc="o.employee_id.nhif_no"></span>
+                    </td>
+                </tr>
+            </table>
+        </xpath>
+        <xpath expr="//div[@id='total']" position="replace">
+            <table class="table table-sm">
+                <thead class="o_black_border">
+                    <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Employee Contribution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <span t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)"
+                          t-as="line">
+                        <t t-set="line_style"/>
+                        <t t-set="line_class"/>
+                        <t t-if="line.code == 'NET'">
+                            <t t-set="line_style" t-value="'color:#875A7B;'"/>
+                            <t t-set="line_class" t-value="'o_total o_border_bottom'"/>
+                        </t>
+                        <t t-if="(line.code == 'BASIC') or (line.code == 'GROSS')">
+                            <t t-set="line_style" t-value="'color:#00A09D;'"/>
+                            <t t-set="line_class" t-value="'o_subtotal o_border_bottom'"/>
+                        </t>
+                        <tr t-att-class="line_class" t-att-style="line_style">
+                            <td>
+                                <span t-field="line.name"/>
+                            </td>
+                            <td>
+                                <t t-if="line.category_id.name not in ['Allowance']">
+                                    <span t-esc="line.total"
+                                          t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                </t>
+                            </td>
+                            <td>
+                                <t t-if="line.category_id.name in ['Allowance']">
+                                    <span t-esc="line.total"
+                                          t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                </t>
+                            </td>
+                        </tr>
+                    </span>
+                </tbody>
+            </table>
+        </xpath>
+        <xpath expr="//p[1]" position="replace"/>
+        <xpath expr="//p[2]" position="replace"/>
+        <xpath expr="//table[@name='contract-infos']" position="after">
+            <p t-if="o.note">
+                Notes:
+                <span t-field="o.note"/>
+            </p>
+        </xpath>
+        <xpath expr="//table[@name='contract-infos']" position="attributes">
+            <attribute name="style">display:none;</attribute>
+        </xpath>
+    </template>
+</odoo>

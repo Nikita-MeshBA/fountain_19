@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_coop_payment_manual_reconcile" model="ir.ui.view">
+            <field name="name">coop.payment.manual.reconcile.form.view</field>
+            <field name="model">coop.payment.manual.reconcile</field>
+            <field name="arch" type="xml">
+                <form string="Coop Payment Manual Reconcile">
+                    <group>
+                        <!-- <field name="invoice_id" required="1" domain="[('state', '=', 'open'), ('type', '=', 'out_invoice')]"/> -->
+                        <field name="reconcile_method" widget="radio"/>
+                        <field name="company_id" invisible="1"/>
+                        <field name="trans_amount" invisible="1"/>
+                        <field name="student_id" invisible="1"/>
+                        <field name="journal_id" invisible="1"/>
+                        <field name="invoice_ids" class="oe_inline"
+                               domain="[('state', '=', 'posted'), ('move_type', '=', 'out_invoice')]"
+                               invisible ="reconcile_method != 'invoice'"
+                               context="{'default_move_type': 'out_invoice'}">
+                            <list editable="bottom">
+                                <field name="name" readonly="1"/>
+                                <field name="partner_id" readonly="1"/>
+                                <field name="amount_total_signed" readonly="1"/>
+                                <field name="amount_residual_signed" readonly="1"/>
+                                <field name="state" readonly="1"/>
+                                <field name="reg_payment" required="1"/>
+                            </list>
+                        </field>
+                        <field name="payment_ids" class="oe_inline"
+                               domain="[('state', '=', 'draft'),('payment_type','=','inbound')]"
+                               invisible ="reconcile_method != 'payment'"
+                                context="{'default_amount':trans_amount,'default_payment_type':'inbound',
+'default_partner_id': student_id,'default_journal_id': journal_id}">
+                            <list editable="bottom">
+                                <field name="partner_id" readonly="1"/>
+                                <field name="amount"/>
+                                <field name="journal_id" readonly="1"/>
+                                <field name="state" readonly="1"/>
+                            </list>
+                        </field>
+
+                    </group>
+                    <footer>
+                        <button name="make_payment_reconcile" string="Reconcile" type="object"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- <record id="action_view_sale_advance_payment_inv" model="ir.actions.act_window">
+            <field name="name">Manual Reconcile</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mpesa.payment.manual.reconcile</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="mpesa_transaction_integration.model_mpesa_payment_transaction"/>
+        </record> -->
+        <!-- <record model="ir.actions.server" id="action_manual_reconcile_inv">
+            <field name="name">Manual Reconcile</field>
+            <field name="model_id" ref="model_mpesa_payment_manual_reconcile"/>
+            <field name="binding_model_id" ref="model_mpesa_payment_transaction"/>
+            <field name="binding_view_types">form</field>
+            <field name="state">code</field>
+            <field name="code">
+                    action = model.view_manual_reconcile()
+            </field>
+        </record> -->
+    </data>
+</odoo>

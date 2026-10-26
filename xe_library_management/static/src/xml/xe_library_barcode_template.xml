@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<templates xml:space="preserve">
+
+    <t t-name="xe_library_barcode_template">
+
+
+        <div class="o_xe_library_barcode_bg o_event_info">
+            <div class="o_xe_library_barcode_main mt16 mb16">
+                <h1 class="mt0">Barcode Scanning</h1>
+                <img class="mt16" src="/xe_library_barcode/static/src/img/barcode.png"/>
+                <br></br>
+                <br></br>
+                <select id="mySelect" onchange="myFunction()" style="display:none">
+					  <option value="none">None</option>
+                    <option value="issue">Issue</option>
+                    <option value="return">Return</option>
+				</select>
+                <label id="issue_text" class="text-center" style="display:none">Issue</label>
+                <label id="return_text" class="text-center" style="display:none">Return</label>
+                <input class="mt32" type="text" id="xe_library_barcode"
+                       placeholder="Waiting for 'Media Unit ID' barcode scan..." size="40" style="display:none"/>
+                <input class="mt32" type="text" id="xe_library_barcode1"
+                       placeholder="Waiting for 'Library Card ID' barcode scan..." size="40" style="display:none"/>
+                <button style="display:block" id="btn_issue" onclick="IssueClick()"
+                        class="btn btn-large btn-block btn-primary" type="button">Issue</button>
+                <br/>
+                <button style="display:block" id="btn_return" onclick="ReturnClick()"
+                        class="btn btn-large btn-block btn-primary" type="button">Return</button>
+                <button id="btn_main_menu" onclick="MainMenuClick()" style="display:none"
+                        class="btn btn-large btn-block btn-primary" type="button">Main Menu</button>
+
+
+                <script>
+function myFunction() {
+    var x = document.getElementById("mySelect").value;
+    if (x == 'return') {
+    	document.getElementById('xe_library_barcode1').style.display = 'none'
+    	document.getElementById('xe_library_barcode').value = '';
+    	document.getElementById('xe_library_barcode1').value = '';
+    } else {
+    	document.getElementById('xe_library_barcode1').style.display = 'none'
+    	document.getElementById('xe_library_barcode').value = '';
+    	document.getElementById('xe_library_barcode1').value = '';
+    }
+}
+
+function IssueClick() {
+    document.getElementById("mySelect").value = 'issue';
+    document.getElementById("xe_library_barcode").style.display = 'block'
+    document.getElementById("xe_library_barcode1").style.display = 'block'
+    document.getElementById("btn_issue").style.display = 'none'
+    document.getElementById("btn_return").style.display = 'none'
+    document.getElementById("btn_main_menu").style.display = 'block'
+    document.getElementById("xe_library_barcode").value = ''
+    document.getElementById("xe_library_barcode1").value = ''
+    document.getElementById("issue_text").style.display = 'block'
+    
+}
+
+function ReturnClick() {
+    document.getElementById("mySelect").value = 'return';
+    document.getElementById("xe_library_barcode").value = ''
+    document.getElementById("xe_library_barcode1").value = ''
+    document.getElementById("xe_library_barcode").style.display = 'block'
+    document.getElementById("xe_library_barcode1").style.display = 'none'
+    document.getElementById("btn_issue").style.display = 'none'
+    document.getElementById("btn_return").style.display = 'none'
+    document.getElementById("btn_main_menu").style.display = 'block'
+    document.getElementById("return_text").style.display = 'block'
+}
+
+function MainMenuClick() {
+    document.getElementById("mySelect").value = 'none';
+    document.getElementById("xe_library_barcode").value = ''
+    document.getElementById("xe_library_barcode1").value = ''
+    document.getElementById("btn_issue").style.display = 'block'
+    document.getElementById("btn_return").style.display = 'block'
+    document.getElementById("btn_main_menu").style.display = 'none'
+    document.getElementById("xe_library_barcode").style.display = 'none'
+    document.getElementById("xe_library_barcode1").style.display = 'none'
+    document.getElementById("issue_text").style.display = 'none'
+    document.getElementById("return_text").style.display = 'none'
+}
+</script>
+                </div>
+        </div>
+    </t>
+
+    <t t-name="xe_library_barcode_success">
+        <div class="o_notification o_library_success" t-translation="off">
+            <a t-if="widget.sticky" class="fa fa-times o_close" href="#"/>
+            <div class="o_notification_title">
+                <span class="o_icon fa fa-3x fa-thumbs-up"/>
+                <t t-raw="widget.title"/>
+            </div>
+        </div>
+    </t>
+
+</templates>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- Visitor Management Header and Footer -->
+        <template id="custom_layout_header">
+            <div class="header" style="font-size: 15px;border:0px solid blue;">
+                <div class="row">
+                    <div class="col-3">
+                        <img t-if="company.logo"
+                             t-att-src="'data:image/png;base64,%s' % to_text(company.logo)"
+                             style="max-height: 80px;max-width: 250px;"/>
+                    </div>
+                    <div class="col-6" align="center">
+                        <b>
+                            <span t-field="company.name" style="font-size:20px;"/>
+                        </b>
+                        <br/>
+                        <t t-if="company.street">
+                            <span t-field="company.street"/>
+                        </t>
+                        <t t-if="company.street2">
+                            <span t-field="company.street2"/>
+                        </t>
+                        <t t-if="company.city">
+                            <span t-field="company.city"/>
+                        </t>
+                        <t t-if="company.state_id">
+                            <span t-field="company.state_id.name"/>
+                        </t>
+                        <t t-if="company.country_id">
+                            <span t-field="company.country_id.name"/>
+                        </t>
+                        <br/>
+                        <span t-field="company.email"/>
+                    </div>
+                    <div class="col-3">
+                        <!--<b>
+                            <span t-field="company.report_header" style="margin-top:22px;font-size:14px;" name="moto" />
+                        </b>
+                        P.O.Box:
+                        <span t-field="company.zip" />
+                        <br />
+                        Tel:
+                        <span t-field="company.phone" />-->
+                    </div>
+                </div>
+                <div t-if="company.logo or company.report_header" class="row zero_min_height">
+                    <div class="col-xs-12">
+                        <div style="border-bottom: 1px solid black;"/>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template id="custom_layout_footer">
+            <div class="footer">
+                <div class="row">
+                </div>
+            </div>
+        </template>
+        <template id="visitor_management_external_layout">
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"/>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+            <div class="article">
+                <t t-call="xe_visitor_management.custom_layout_header"/>
+                <t t-raw="0"/>
+                <t t-call="xe_visitor_management.custom_layout_footer"/>
+            </div>
+        </template>
+
+        <record id="paperformat_pass" model="report.paperformat">
+            <field name="name">Pass A5</field>
+            <field name="default" eval="True"/>
+            <field name="format">A5</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">30.00</field>
+            <field name="margin_bottom">10.00</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">28</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_report_student_pass"
+                model="ir.actions.report">
+            <field name="name">Student Pass</field>
+            <field name="model">student.pass</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">xe_visitor_management.report_student_pass</field>
+            <field name="report_file">xe_visitor_management.report_student_pass</field>
+            <field name="print_report_name">'Student - %s' % (object.student_id.name)</field>
+            <field name="binding_model_id" ref="model_student_pass"/>
+            <field name="binding_type">report</field>
+            <field name="attachment"></field>
+            <field name="attachment_use" eval="False"/>
+            <field name="paperformat_id"
+                   ref="xe_visitor_management.paperformat_pass"/>
+        </record>
+
+        <record id="action_report_visitor_pass" model="ir.actions.report">
+            <field name="name">Gate Pass</field>
+            <field name="model">visitor.pass</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">xe_visitor_management.report_visitor_pass</field>
+            <field name="report_file">xe_visitor_management.report_visitor_pass</field>
+            <field name="print_report_name">'Visitor - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_visitor_pass"/>
+            <field name="binding_type">report</field>
+            <field name="attachment"></field>
+            <field name="attachment_use" eval="False"/>
+            <field name="paperformat_id"
+                   ref="xe_visitor_management.paperformat_pass"/>
+        </record>
+
+    </data>
+</odoo>

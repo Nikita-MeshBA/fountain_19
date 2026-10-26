@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="misbehaviour_type_form">
+            <field name="name">misbehaviour.type.form</field>
+            <field name="model">misbehaviour.type</field>
+            <field name="arch" type="xml">
+                <form string="Misbehaviour Type Wise">
+                    <group col="2" colspan="2">
+                        <field name="misbehaviour_type"/>
+                    </group>
+                    <group col="4" colspan="4">
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+                    </group>
+                    <footer>
+                        <span groups="base.group_user">
+                            <button string="Print"
+                                    type="object" name="print_report" class="oe_highlight"/>
+                            <button special="cancel" string="Close"
+                                    type="object"/>
+                        </span>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="misbehaviour_type_act">
+            <field name="name">Misbehaviour Type Wise</field>
+            <field name="res_model">misbehaviour.type</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="misbehaviour_type_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Misbehaviour Type Wise" id="misbehavetype_report_menu" parent="xe_discipline_management.discipline_report_root_menu" action="misbehaviour_type_act" sequence="1"/>
+    </data>
+</odoo>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="xe_schedule_interview_form" model="ir.ui.view">
+        <field name="name">Schedule Interview</field>
+        <field name="model">xe.schedule.interview</field>
+        <field name="arch" type="xml">
+            <form string="Schedule Interview">
+                <group>
+                    <group>
+                        <field name="interview_start_date" required="1"/>
+                    </group>
+
+                    <group>
+                        <field name="interview_end_date" required="1"/>
+                    </group>
+                </group>
+                <field name="description" placeholder="Notes..."/>
+                <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                <field name="all_email" invisible="1"/>
+                <footer>
+                    <button string="Send and Schedule" name="send_email"
+                            type="object" default_focus="1" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_xe_schedule_interview" model="ir.actions.act_window">
+        <field name="name">Schedule Interview</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">xe.schedule.interview</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="xe_admission_management.model_xe_admission_enquiry"/>
+        <field name="binding_view_types">list</field>
+    </record>
+</odoo>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="attendance_details_list">
+        <field name="name">xe.attendance.details.tree</field>
+        <field name="model">xe.attendance.details</field>
+        <field name="arch" type="xml">
+            <tree create="false" edit="false" delete="false">
+                <field name="student_id" readonly="1"/>
+                <field name="attendance_date"/>
+                <field name="attendance_id"/>
+                <field name="roll_number"/>
+                <field name="attendance"/>
+                <field name="remarks_type_id"/>
+                <field name="course_id" invisible="1"/>
+                <field name="term_id" invisible="1"/>
+                <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_attendance_details_filter" model="ir.ui.view">
+        <field name="name">xe.attendance.details.search</field>
+        <field name="model">xe.attendance.details</field>
+        <field name="arch" type="xml">
+            <search string="Search Attendance">
+                <field name="attendance_date"/>
+                <filter string="Today" name="attendance_today"
+                        domain="[('attendance_date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('attendance_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+            </search>
+        </field>
+    </record>
+</odoo>

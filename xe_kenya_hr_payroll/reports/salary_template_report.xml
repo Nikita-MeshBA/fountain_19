@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="report.paperformat" id="paperformat_salary_report">
+        <field name="name">paperformat.salary.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_right">5</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <template id="salary_report_view">
+        <style>.font{
+            font-size:14px;
+            font-family:"Helvetica"
+            }
+            @page{
+            margin-top:1%;
+            size: A4;
+            }
+        </style>
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div>
+                    <h3 class="text-center">Salary Template Report</h3>
+                    <h4 class="text-center">
+                        <strong>Employer Name:</strong>
+                        <t t-esc="res_company.name"/>
+                        <br/>
+                        <strong>Report For</strong>
+                        <t t-esc="date_start"/>
+                        <strong>,</strong>
+                        <t t-esc="date_end"/>
+                    </h4>
+                </div>
+                <table class="table table-condensed table-bordered" style="width: 100%">
+                    <thead>
+                        <th class="text-center" style="width: 10%">Payroll No</th>
+                        <th class="text-center" style="width: 20%">Employee</th>
+                        <th class="text-center" style="width: 10%">Bank Code</th>
+                        <th class="text-center" style="width: 10%">Branch Code</th>
+                        <th class="text-center" style="width: 10%">Credit Account</th>
+                        <th class="text-center" style="width: 10%">Debit Account</th>
+                        <th class="text-center" style="width: 10%">Amount</th>
+                        <th class="text-center" style="width: 10%">Reference</th>
+                        <th class="text-center" style="width: 10%">Payment Route</th>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="final_vals" t-as="line">
+                            <tr>
+                                <td class="text-center">
+                                    <t t-esc="line['payroll_no']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="line['employee']"/>
+                                </td>
+                                <td class="text-center">
+                                    <t t-esc="line['bic_id']"/>
+                                </td>
+                                <td class="text-center">
+                                    <t t-esc="line['branch_code']"/>
+                                </td>
+                                <td class="text-center">
+                                    <t t-esc="line['credit_account']"/>
+                                </td>
+                                <td class="text-center">
+                                    <t t-esc="line['debit_account']"/>
+                                </td>
+                                <td class="text-right">
+                                    <t t-esc="line['amount']"/>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </t>
+                        <tr>
+                            <td class="text-right" colspan="6">
+                                <b>TOTAL:</b>
+                            </td>
+                            <td class="text-right">
+                                <t t-esc="sum([o['amount'] for o in final_vals])"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+        </t>
+    </template>
+
+    <record id="salary_report" model="ir.actions.report">
+        <field name="name">Salary Template Report</field>
+        <field name="model">salary.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_kenya_hr_payroll.salary_report_view</field>
+        <field name="report_file">xe_kenya_hr_payroll.salary_report_view</field>
+    </record>
+</odoo>
+
+

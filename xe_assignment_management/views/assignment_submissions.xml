@@ -1,0 +1,141 @@
+<odoo>
+    <record model="ir.ui.view" id="xe_assignment_submission_list">
+        <field name="name">xe.assignment.submission.list</field>
+        <field name="model">xe.assignment.submission</field>
+        <field name="arch" type="xml">
+            <list delete="false">
+                <field name="name"/>
+                <field name="student_id"/>
+                <field name="assignment_id"/>
+                <field name="submit_date"/>
+                <field name="state" string="Status" decoration-info="state == 'draft'" decoration-warning="state == 'submitted'" decoration-success="state == 'accepted'" decoration-danger="state in ('cancel','rejected','change_request')" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="xe_assignment_submission_search" model="ir.ui.view">
+        <field name="name">xe.assignment.submission.search</field>
+        <field name="model">xe.assignment.submission</field>
+        <field name="arch" type="xml">
+<!--            <search string="Assignment Submission">-->
+<!--                <group expand="0" string="Group By" colspan="4">-->
+<!--                    <filter string="Accepted" name="accepted_states" domain="[('state', '=', 'accepted')]"/>-->
+<!--                    <filter string="Rejected" name="rejected_states" domain="[('state', '=', 'rejected')]"/>-->
+<!--                    <filter string="Change Request" name="change_request_states" domain="[('state', '=', 'change_request')]"/>-->
+<!--                </group>-->
+<!--            </search>-->
+            <search string="Assignment Submission">
+                <field name="name"/>
+                <field name="student_id"/>
+                <field name="assignment_id"/>
+                <field name="state"/>
+
+                <filter string="Accepted"
+                        name="accepted_states"
+                        domain="[('state', '=', 'accepted')]"/>
+
+                <filter string="Rejected"
+                        name="rejected_states"
+                        domain="[('state', '=', 'rejected')]"/>
+
+                <filter string="Change Request"
+                        name="change_request_states"
+                        domain="[('state', '=', 'change_request')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="xe_assignment_submit_form">
+        <field name="name">xe.assignment.submission.form</field>
+        <field name="model">xe.assignment.submission</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="submitted,accepted"/>
+                    <button name="submit" type="object" string="Submit" invisible="state not in ['draft','change_request']" class="oe_highlight"
+                    		groups="xenesis_school_base.group_xe_parent,xenesis_school_base.group_xe_student"/>
+                    <button name="accept" type="object" string="Accept" invisible="state not in ['submitted','late_submit']"
+                            class="oe_highlight"
+                            groups="xenesis_school_base.group_xe_admin,xenesis_school_base.group_xe_staff"/>
+                    <button name="cancel" type="object" string="Cancel" invisible="state not in ['draft']" class="oe_highlight"/>
+                    <button name="reset_to_draft" string="Reset to Draft" invisible="state not in ['cancel']" type="object"
+                            class="oe_highlight"/>
+					<button name="change_request" invisible="state not in ['draft','submitted','late_submit']"
+						string="Change Request" type="object" class="oe_highlight"
+						groups="xenesis_school_base.group_xe_admin,xenesis_school_base.group_xe_staff" />
+                    <button name="reject" invisible="state not in ['submitted', 'late_submit']" string="Reject" type="object"
+                            class="oe_highlight" 
+                            groups="xenesis_school_base.group_xe_admin,xenesis_school_base.group_xe_staff"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1 class="d-flex">
+                            <field name="name" readonly="1" force_save="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="assignment_id" readonly="state not in ['draft']" required="1" domain="[('state','=','assigned')]"/>
+                            <field name="create_student_id" readonly="1" force_save="1"/>
+                            <field name="student_id" readonly="1" force_save="1" invisible="1" options="{'no_open': True, 'no_create': True, 'no_edit': True}" domain="[('id', 'in', assigned_student_ids)]"/>
+                            <field name="assigned_student_ids" widget="many2many_tags" invisible="1"/>
+                            <field name="submit_date" readonly="1" force_save="1" invisible="state in ['draft','change_request']"/>
+                            <field name="marks_on_submit" readonly="1" force_save="1" required="1"/>
+                            <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                        </group>
+                        <field name="description" placeholder="Enter Description here..."
+                            readonly="state not in ['draft','submitted']"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="xe_assignment_submit_inherit_form_staff">
+        <field name="name">xe.assignment.submission.inherit.form</field>
+        <field name="model">xe.assignment.submission</field>
+        <field name="inherit_id" ref="xe_assignment_submit_form"/>
+        <field name="arch" type="xml">
+            <field name="student_id" position="attributes">
+                <t groups="xenesis_school_base.group_xe_staff">
+                    <attribute name="invisible">0</attribute>
+                    <attribute name="readonly">state not in ['draft']</attribute>
+                </t>
+            </field>
+            <field name="create_student_id" position="attributes">
+                <t groups="xenesis_school_base.group_xe_staff">
+                    <attribute name="string">Created By</attribute>
+                    <attribute name="invisible">1</attribute>
+                </t>
+            </field>
+        </field>
+    </record>
+    <record id="sequence_assignment_submits" model="ir.sequence">
+        <field name="name">Assignment Submissions</field>
+        <field name="code">xe.assignmentsubmit.seq</field>
+        <field name="active">TRUE</field>
+        <field name="prefix">SUBMT/%(year)s/</field>
+        <field name="padding">6</field>
+    </record>
+    <record model="ir.actions.act_window" id="xe_assignment_submit_act">
+        <field name="name">Assignment Submissions</field>
+        <field name="res_model">xe.assignment.submission</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_submissions" model="ir.actions.server">
+        <field name="sequence" eval="5"/>
+        <field name="state">code</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_xe_assignment_submission"/>
+        <field name="state">code</field>
+        <field name="code">action = model.assignment_submit_act()</field>
+        <field name="name">Assignment Submission Act</field>
+    </record>
+
+    <menuitem name="Assignment Submissions" id="xe_assignment_submit_menu"
+              groups="xe_assignment_management.group_assignment_manager,xe_assignment_management.group_assignment_user,xenesis_school_base.group_xe_student,xenesis_school_base.group_xe_parent,xenesis_school_base.group_xe_staff,xenesis_school_base.group_xe_admin"
+              parent="xe_assignment_management.xe_assignment_menu_root" action="action_submissions" sequence="3"/>
+</odoo>

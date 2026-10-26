@@ -1,0 +1,18 @@
+<odoo>
+	<record id="device_configuration_tree" model="ir.ui.view">
+        <field name="name">device.form.attributes.tree</field>
+        <field name="model">rfid.device.configuration</field>
+        <field name="arch" type="xml">
+            <list string="Device Configuration" editable="bottom">
+                <field name="device_name"/>
+                <field name="device_serial_number"/>
+            </list>
+        </field>
+    </record>
+    <record id="act_device_configuration" model="ir.actions.act_window">
+        <field name="name">Device Configuration Action</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">rfid.device.configuration</field>
+        <field name="view_id" ref="device_configuration_tree"/>
+    </record>
+</odoo>

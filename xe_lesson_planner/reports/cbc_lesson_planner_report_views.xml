@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- CBC Scheme of work report template -->
+  <template id="report_cbc_scheme_of_work">
+    <t t-call="web.html_container">
+      <t t-foreach="docs" t-as="o">
+        <t t-call="xe_lesson_planner.xen_custom_layout_header1">
+          <div claas="container">
+            <div class="page">
+              <div>
+                <center style="color:#203cd6s; font-size: 60px; !important;"><b>SCHEME OF WORK</b></center><br/>
+                          </div>
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td style="font-family: Times, Times New Roman, serif; background-color: #c3c4d6; font-size: 40px;text-align:right !important;">
+                        <b>NAME:</b>
+                      </td>
+                      <td style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 40px;text-align:left !important;">
+                        <span t-esc="o.employee_id.name"/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-family: Times, Times New Roman, serif; background-color: #c3c4d6; font-size: 40px;text-align:right !important;">
+                        <b>T.S.C. NO.:</b>
+                      </td>
+                      <td style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 40px;text-align:left !important;">
+                        <span t-esc="o.employee_id.tsc_no"/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-family: Times, Times New Roman, serif; background-color: #c3c4d6; font-size: 40px;text-align:right !important;">
+                        <b>LEARNING AREA:</b>
+                      </td>
+                      <td style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 40px;text-align:left !important;">
+                        <span t-esc="', '.join([rec.name for rec in o.assigned_sub_ids])"/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-family: Times, Times New Roman, serif; background-color: #c3c4d6; font-size: 40px;text-align:right !important;">
+                        <b>GRADE:</b>
+                      </td>
+                      <td style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 40px;text-align:left !important;">
+                        <span t-esc="o.class_id.name"/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-family: Times, Times New Roman, serif; background-color: #c3c4d6; font-size: 40px;text-align:right !important;">
+                        <b>TERM:</b>
+                      </td>
+                      <td style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 40px;text-align:left !important;">
+                        <span t-esc="o.term_id.name"/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-family: Times, Times New Roman, serif; background-color: #c3c4d6; font-size: 40px;text-align:right !important;">
+                        <b>YEAR:</b>
+                      </td>
+                      <td style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 40px;text-align:left !important;">
+                        <span t-esc="o.year_id.name"/>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="row" style="page-break-before:always;"></div>
+                <!-- <div class="pt-5"> -->
+                  
+                <table class="table table-bordered table-sm o_main_table">
+                    <thead>
+                      <tr style="background-color: #b9bdba">
+                        <th>WK</th>
+                        <th>LSN</th>
+                        <th>STRAND</th>
+                        <th>SUB STRAND</th>
+                        <th>SPECIFIC LEARNING OUTCOMES</th>
+                        <th>SUGGESTED LEARNING EXPERIENCES</th>
+                        <th>KEY INQUIRY QUESTION(S)</th>
+                        <th>LEARNING RESOURCES</th>
+                        <th>ASSESSMENT TECHNIQUES</th>
+                        <th>REFLECTION</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <t t-foreach="o.cbc_scheme_of_work_ids" t-as="work_id">
+                        <tr>
+                          <td><span t-esc="work_id.week"/></td>
+                          <td><span t-esc="work_id.lesson"/></td>
+                          <td><span t-esc="work_id.topic"/></td>
+                          <td><span t-esc="work_id.sub_topic"/></td>
+                          <td><span t-esc="work_id.objectives"/></td>
+                          <td><span t-esc="work_id.learning_activities"/></td>
+                          <td><span t-esc="work_id.key_inquiry_questions"/></td>
+                          <td><span t-esc="work_id.learning_resources"/></td>
+                          <td><span t-esc="work_id.assessment_methods"/></td>
+                          <td><span t-esc="work_id.remarks"/></td>
+                        </tr>
+                      </t>
+                  </tbody>
+                </table>
+                <!-- </div> -->
+            </div>
+          </div>
+        </t>
+      </t>
+    </t>
+  </template>
+  <!-- <template id="report_cbc_scheme_of_work">
+    <t t-call="web.html_container">
+      <t t-foreach="docs" t-as="o">
+        <t t-call="xe_lesson_planner.lesson_planner_external_layout">
+          <div claas="container">
+            <div class="page">
+              <div>
+                <h4><center><b>CBC SCHEME OF WORK</b></center></h4><br/>
+                          </div>
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 40px;text-align:left !important;">
+                      <b>NAME:</b>
+                      <span t-esc="o.employee_id.name"/>
+                    </td>
+                    <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                      <b>SCHOOL:</b>
+                      <span t-esc="o.company_id.name"/>
+                    </td>
+                    <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                      <b>EMPLOYEE NO:</b>
+                      <span t-esc="o.reg_no"/>
+                    </td>
+                    <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                      <b>PERIOD PER WEEK:</b>
+                      <span t-esc="o.period_per_week"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                      <b>CLASS:</b>
+                      <span t-esc="o.class_id.name"/>
+                    </td>
+                    <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                      <b>CLASS ROOM:</b>
+                      <span t-esc="o.classroom_id.name"/>
+                    </td>
+                    <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                      <b>DEPARTMENT HEAD:</b>
+                      <span t-esc="o.department_head_id.name"/>
+                    </td>
+                    <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                      <b>HEAD TEACHER:</b>
+                      <span t-esc="o.head_teacher_id.name"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                      <b>YEAR:</b> <span t-esc="o.year_id.name" />
+                    </td>
+                    <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                      <b>TERM: </b><span t-esc="o.term_id.name" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table table-bordered" style="border:1px solid black;border-collapse: collapse;width:100%" name="cbc_scheme_of_work">
+                        <thead >
+                            <tr >
+                              <th style="border:1px solid black; border-collapse: collapse;width:5%">WK</th>
+                              <th style="border:1px solid black; border-collapse: collapse;width:5%">LESSON</th>
+                              <th style="border:1px solid black; border-collapse: collapse;width:10%">STRAND/THEME</th>
+                    <th style="border:1px solid black; border-collapse: collapse;width:10%">SUB STRAND</th>
+                              <th style="border:1px solid black; border-collapse: collapse;width:10%">SPECIFIC LEARNING OUTCOMES</th>
+                              <th style="border:1px solid black; border-collapse: collapse;width:15%">LEARNING EXPERIENCE</th>
+                              <th style="border:1px solid black; border-collapse: collapse;width:15%">LEARNING RESOURCE</th>
+                    <th style="border:1px solid black; border-collapse: collapse;width:10%">KEY INQUIRY QUESTIONS</th>
+                    <th style="border:1px solid black; border-collapse: collapse;width:10%">ASSESSMENT METHODS</th>
+                              <th style="border:1px solid black; border-collapse: collapse;width:10%">REFLECTION</th>
+                            </tr>
+                        </thead>
+                <tbody>
+                  <tr t-foreach="o.cbc_scheme_of_work_ids" t-as="line">
+                    <td style="border:1px solid black; border-collapse: collapse;width:5%"><strong><span t-esc="line.week"/></strong> </td>
+                    <td style="border:1px solid black; border-collapse: collapse;width:5%"><strong><span t-esc="line.lesson"/></strong> </td>
+                    <td style="border:1px solid black; border-collapse: collapse;width:10%"><strong><span t-esc="line.topic"/></strong> </td>
+                    <td style="border:1px solid black; border-collapse: collapse;width:10%"><strong><span t-esc="line.sub_topic"/></strong> </td>
+                    <td style="border:1px solid black; border-collapse: collapse;width:10%"><strong><span t-esc="line.objectives"/></strong> </td>
+                    <td style="border:1px solid black;border-collapse: collapse;word-wrap: break-word;width: 15%"><strong><span t-esc="line.learning_activities"/></strong> </td>
+                    <td style="border:1px solid black;border-collapse: collapse;word-wrap: break-word;width: 15%"><strong><span t-esc="line.learning_resources"/></strong> </td>
+                    <td style="border:1px solid black;border-collapse: collapse;word-wrap: break-word;width:10%"><strong><span t-esc="line.key_inquiry_questions"/></strong> </td>
+                    <td style="border:1px solid black;border-collapse: collapse;word-wrap: break-word;width:10%"><strong><span t-esc="line.assessment_methods"/></strong> </td>
+                    <td style="border:1px solid black;border-collapse: collapse;word-wrap: break-word;width:10%"><strong><span t-esc="line.remarks"/></strong> </td>
+                  </tr>
+                </tbody>
+                      </table>
+            </div>
+          </div>
+        </t>
+      </t>
+    </t>
+  </template> -->
+
+  <!-- Lesson Plan Report Template -->
+  <template id="report_cbc_lesson_plan">
+    <t t-call="web.html_container">
+      <t t-foreach="docs" t-as="o">
+        <t t-call="xe_lesson_planner.xen_custom_layout_header1">
+          <div class="page">
+            <style>
+              .table, .th, .td {
+                border: 1px solid black;
+                border-collapse: collapse;
+              }
+            </style>
+            <div class="oe_structure"/>
+            <div>
+              <center style="color:rgb(40, 46, 79); font-size: 22px; !important;"><b><u>LESSON PLAN</u></b></center><br/>
+                        </div>
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>NAME:</b>
+                    <span t-esc="o.employee_id.name"/>
+                  </td>
+                  <td colspan="8" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>LEARNING AREA:</b>
+                    <span t-esc="o.subject_id.name"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>GRADE:</b>
+                    <span t-esc="o.class_id.name"/>
+                  </td>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>STREAM:</b>
+                    <span t-esc="o.classroom_id.name"/>
+                  </td>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>DATE:</b>
+                    <!-- <span t-esc="str(o.lesson_date[:10])"/> -->
+                    <span t-esc="o.lesson_date" t-options='{"widget": "date"}'/>
+                  </td>
+                </tr>
+                 <tr>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>ROLL:</b>
+                    <span t-esc="o.no_of_students"/>
+                  </td>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>AGE:</b>
+                    <span t-esc="o.age"/>
+                  </td>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>TIME:</b>
+                    <span t-esc="str(o.lesson_date)[10:]"/>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+            <br/>
+            <div class="row">
+              <div>
+                 <span><b>THEME:</b> <span t-esc="o.theme"/></span>
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                 <span><b>STRAND:</b> <span t-esc="o.topic"/></span>
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                 <span><b>SUB STRAND:</b> <span t-esc="o.sub_topic"/></span>
+              </div>
+            </div>
+
+
+            <br/>
+            <div class="row">
+              <div>
+                 <span><b>Specific Learning Outcomes</b></span>
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <table class="table table-bordered" style="width:100%">
+                  <tbody>
+                    <t t-set="count" t-value="1"/>
+                    <t t-foreach="o.learning_outcomes_ids" t-as="lo_id">
+                      <tr>
+                        <td style="width:7%">
+                          <center><t t-esc="count"/></center>
+                        </td>
+                        <td>
+                            <t t-esc="lo_id.name"/>
+                        </td>
+                      </tr>
+                      <t t-set="count" t-value="count + 1"/>
+                    </t>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+
+            <br/>
+            <div class="row">
+              <div>
+                 <span><b>Key Inquiry Questions:</b></span>
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <table class="table table-bordered" style="width:100%">
+                  <tbody>
+                    <t t-set="count" t-value="1"/>
+                    <t t-foreach="o.key_inquiry_questions_ids" t-as="kiq_id">
+                      <tr>
+                        <td style="width:7%">
+                          <center><t t-esc="count"/></center>
+                        </td>
+                        <td>
+                            <t t-esc="kiq_id.name"/>
+                        </td>
+                      </tr>
+                      <t t-set="count" t-value="count + 1"/>
+                    </t>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+
+            <br/>
+            <div class="row">
+              <div>
+                 <span><b>Learning Resources: </b></span>
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <table class="table table-bordered" style="width:100%">
+                  <tbody>
+                    <t t-set="count" t-value="1"/>
+                    <t t-foreach="o.learning_resources_ids" t-as="lr_id">
+                      <tr>
+                        <td style="width:7%">
+                          <center><t t-esc="count"/></center>
+                        </td>
+                        <td>
+                            <t t-esc="lr_id.name"/>
+                        </td>
+                      </tr>
+                      <t t-set="count" t-value="count + 1"/>
+                    </t>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+
+            <br/>
+            <div class="row">
+              <div>
+                 <span><b>Organization Of Learning: </b></span>
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <table class="table table-bordered" style="width:100%">
+                  <tbody>
+                    <tr>
+                      <th>TIME</th>
+                      <th>LEARNING EXPERIENCES</th>
+                    </tr>
+                    <t t-foreach="o.lesson_plan_ids" t-as="lp_id">
+                      <tr>
+                        <td style="width:20%">
+                          <center><t t-esc="lp_id.time"/></center>
+                        </td>
+                        <td style="width:80%; white-space: pre-wrap; word-wrap: break-word;">
+                            <t t-esc="lp_id.learning_experiences"/>
+                        </td>
+                      </tr>
+                    </t>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <br/>
+            <div class="row">
+              <div>
+                 <span><b>Reflection on the Lesson: </b> <t t-esc="o.reflection"/></span>
+              </div>
+            </div>
+
+
+
+          </div>
+        </t>
+      </t>
+    </t>
+  </template>
+  <!-- <template id="report_cbc_lesson_plan">
+    <t t-call="web.html_container">
+      <t t-foreach="docs" t-as="o">
+        <t t-call="xe_lesson_planner.lesson_planner_external_layout">">
+          <div class="page">
+            <div>
+              <h4><center><b>CBC LESSON PLAN</b></center></h4><br/>
+                        </div>
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>NAME</b>
+                    <span t-esc="o.employee_id.name"/>
+                  </td>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>SCHOOL:</b>
+                    <span t-esc="o.company_id.name"/>
+                  </td>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>EMPLOYEE NO</b>
+                    <span t-esc="o.reg_no"/>
+                  </td>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>PERIOD PER WEEK:</b>
+                    <span t-esc="o.week"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>CLASS</b>
+                    <span t-esc="o.class_id.name"/>
+                  </td>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>CLASS ROOM:</b>
+                    <span t-esc="o.classroom_id.name"/>
+                  </td>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>DEPARTMENT HEAD</b>
+                    <span t-esc="o.department_head_id.name"/>
+                  </td>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>HEAD TEACHER:</b>
+                    <span t-esc="o.head_teacher_id.name"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>NO OF PERSON:</b> <span t-esc="o.no_of_students" />
+                  </td>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>SUBJECTS:</b> <span t-esc="o.subject_id.name" />
+                  </td>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>LESSON: </b><span t-esc="o.lesson" />
+                  </td>
+                  <td colspan="4" style="font-family: Times, Times New Roman, serif; color: # 555; font-size: 12px;text-align:left !important;">
+                    <b>LESSON DATE:</b> <span t-esc="o.lesson_date" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br/>
+            <table class="table table-bordered" style="table-layout:fixed;border:1px solid black;border-collapse:collapse;width: 100%" name="cbc_lesson_plan">
+                      <thead>
+                <th style="border:1px solid black; border-collapse: collapse;width: 35%" colspan="6">LEARNING AREA</th>
+                <th style="border:1px solid black; border-collapse: collapse;" colspan="2">GRADE</th>
+                <th style="border:1px solid black; border-collapse: collapse;" colspan="2">DATE</th>
+                <th style="border:1px solid black; border-collapse: collapse;" colspan="2">TIME</th>
+                <th style="border:1px solid black; border-collapse: collapse;" colspan="2">ROLL</th>
+                      </thead>
+              <tbody>
+                <tr t-foreach="o.lesson_plan_ids" t-as="line">
+                  <td style="border:1px solid black; border-collapse: collapse;word-wrap: break-word;" colspan="6"><span t-esc="line.learning_activities"/> </td>
+                  <td style="border:1px solid black; border-collapse: collapse;" colspan="2"><span t-esc="o.class_id.name"/> </td>
+                  <td style="border:1px solid black; border-collapse: collapse;" colspan="2"><span t-esc="o.lesson_date"/> </td>
+                  <td style="border:1px solid black; border-collapse: collapse;" colspan="2"><span t-esc="line.time"/></td>
+                  <td style="border:1px solid black; border-collapse: collapse;" colspan="2"><span t-esc="line.roll"/></td>
+                </tr>
+              </tbody>
+                    </table>
+            <br/>
+            <t t-if="o.lesson_plan_header_ids">
+              <t t-foreach="o.lesson_plan_header_ids" t-as="header_line">
+                <t t-if="header_line.cbc_header_id">
+                    <span><b><t t-esc="header_line.cbc_header_id.name"/> :</b></span><br/>
+                    <t t-if="header_line.content">
+                      <span style="display:block;width:710px;word-wrap:break-word;" t-esc="header_line.content"/>
+                    </t>
+                </t>
+                <t t-if="not header_line.cbc_header_id and header_line.content">
+                  <span style="display:block;width:710px;word-wrap:break-word;" t-esc="header_line.content"/>
+                </t>
+              </t>
+            </t>
+          </div>
+        </t>
+      </t>
+    </t>
+  </template> -->
+</odoo>

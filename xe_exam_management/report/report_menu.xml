@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="paperformat_combine_marksheet" model="report.paperformat">
+        <field name="name">Combine Marksheet</field>
+        <field name="default" eval="True"/>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">40</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="dpi">96</field>
+    </record>
+
+    <record id="report_marksheet" model="ir.actions.report">
+        <field name="name">Marksheet</field>
+        <field name="model">xe.marksheet.register</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_exam_management.report_marksheet_report</field>
+        <field name="report_file">xe_exam_management.report_marksheet_report</field>
+        <field name="binding_model_id" ref="model_xe_marksheet_register"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_marksheetline" model="ir.actions.report">
+        <field name="name">Marksheet Line</field>
+        <field name="model">xe.marksheet.line</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_exam_management.report_marksheetline_report</field>
+        <field name="report_file">xe_exam_management.report_marksheetline_report</field>
+        <field name="binding_model_id" ref="model_xe_marksheet_line"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_combine_marksheetline" model="ir.actions.report">
+        <field name="name">Combine Marksheet Line</field>
+        <field name="model">xe.marksheet.line</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_exam_management.report_combine_marksheetline_report</field>
+        <field name="report_file">xe_exam_management.report_combine_marksheetline_report</field>
+        <field name="binding_model_id" ref="model_xe_marksheet_line"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_combine_marksheet"/>
+    </record>
+
+    <record id="action_student_hall_ticket_report" model="ir.actions.report">
+        <field name="name">Student Hall Ticket</field>
+        <field name="model">xe.exam.session</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_exam_management.report_ticket</field>
+        <field name="report_file">xe_exam_management.report_ticket</field>
+    </record>
+</odoo>

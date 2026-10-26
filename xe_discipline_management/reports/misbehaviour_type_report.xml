@@ -1,0 +1,57 @@
+<odoo>
+    <data>
+        <template id="misbehaviour_type_report">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <br/>
+                        <div class="text-center">
+                            <h3>
+                                <strong>Misbehaviour Type Details</strong>
+                            </h3>
+                        </div>
+                        <br/>
+                        <div class="text-center">
+                            <strong><span t-esc="get_data['misbehaviour_type'].title()" /> Offences</strong>
+                            <br/>
+                            <strong>From Date : <span t-esc="get_data['from_date']" /> </strong>
+                            to
+                            <strong>To Date : <span t-esc="get_data['to_date']" /> </strong>
+                        </div>
+                        <br/><br/>
+                        <table width="100%" class="table">
+                            <thead>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Category</th>
+                                <th class="text-center">Sub Category</th>
+                                <th class="text-center">Date</th>
+                                <th class="text-center">State</th>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="get_object" t-as="obj">
+                                    <tr t-foreach="obj['record']" t-as="l">
+                                        <td class="text-center">
+                                            <t t-esc="l['name']" />
+                                        </td>
+                                        <td class="text-center">
+                                            <t t-esc="l['misbehaviour_category_id']" />
+                                        </td>
+                                        <td class="text-center">
+                                            <t t-esc="l['misbehaviour_sub_category_id']" />
+                                        </td>
+                                        <td class="text-center">
+                                            <t t-esc="l['date']" />
+                                        </td>
+                                        <td class="text-center">
+                                            <t t-esc="l['state']" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

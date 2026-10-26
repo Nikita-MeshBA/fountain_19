@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_employee_no" model="ir.sequence">
+        <field name="name">Employee</field>
+        <field name="code">hr.emp.code</field>
+        <field name="prefix">EA</field>
+        <field name="padding">6</field>
+    </record>
+
+    <record id="view_employee_form_sclp" model="ir.ui.view">
+        <field name="name">hr.employee.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+<!--            <field name="coach_id" position="after">-->
+<!--                <field name="emp_salary_grade_id"/>-->
+<!--                <field name="salary_band" invisible="emp_salary_grade_id == False"/>-->
+<!--                <field name="emp_type" required="1"/>-->
+<!--                <field name="emp_belonging_id"/>-->
+<!--                <field name="contract_type"/>-->
+<!--            </field>-->
+               <xpath expr="//field[@name='work_email']" position="after">
+                <field name="emp_salary_grade_id"/>
+                <field name="salary_band" invisible="emp_salary_grade_id == False"/>
+                <field name="emp_type" required="1"/>
+                <field name="emp_belonging_id"/>
+                <field name="contract_type"/>
+            </xpath>
+            <xpath expr="//field[@name='job_id']" position="replace">
+            </xpath>
+
+            <xpath expr="//field[@name='department_id']" position="after">
+                <field name="job_id"/>
+            </xpath>
+
+<!--            <xpath expr="//page/group/group/field[@name='bank_account_id']" position="before">-->
+<!--                <field name="pin_no" required="0" string="KRA No"/>-->
+<!--                <field name="nssf_no" required="0"/>-->
+<!--                <field name="nhif_no" required="0"/>-->
+<!--                &lt;!&ndash; <field name="kra_pin" required="0"/> &ndash;&gt;-->
+<!--                <field name="nita_no" required="0"/>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//page/group/group/field[@name='bank_account_id']" position="after">-->
+<!--                <field name="bic_id"/>-->
+<!--                <field name="branch_code"/>-->
+<!--                <field name="swift_code"/>-->
+<!--                <field name="debit_account_id"/>-->
+<!--            </xpath>-->
+            <xpath expr="//page[@name='personal_information']//field[@name='bank_account_ids'][1]" position="before">
+            <field name="pin_no" required="0" string="KRA No"/>
+            <field name="nssf_no" required="0"/>
+            <field name="nhif_no" required="0"/>
+            <field name="nita_no" required="0"/>
+        </xpath>
+        <xpath expr="//page[@name='personal_information']//field[@name='bank_account_ids'][last()]" position="after">
+            <field name="bic_id"/>
+            <field name="branch_code"/>
+            <field name="swift_code"/>
+            <field name="debit_account_id"/>
+        </xpath>
+            <xpath expr="//page/group/group/field[@name='identification_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+<!--            <xpath expr="//page/group/group/field[@name='visa_expire']" position="after">-->
+<!--                <field name="qualification"/>-->
+<!--                <field name="tsc_no"/>-->
+<!--            </xpath>-->
+              <xpath expr="//field[@name='visa_expire']" position="after">
+                <field name="qualification"/>
+                <field name="tsc_no"/>
+            </xpath>
+            <xpath expr="//page[@name='personal_information']/group[1]" position="after">
+                <group string="Dependent Details">
+                    <field name="dependency_ids" string="Family">
+                        <list editable="bottom">
+                            <field name="name"/>
+                            <field name="relation"/>
+                            <field name="contact_no"/>
+                            <field name="dob"/>
+                        </list>
+                    </field>
+                </group>
+            </xpath>
+            <field name="work_email" position="attributes">
+                <attribute name="required">1</attribute>
+            </field>
+            <field name="work_email" position="after">
+                <field name="joining_date" required="0"/>
+                <field name="probation_end_date" required="0"/>
+                <field name="gratuity_date" required="0"/>
+                <field name="residential_status_id"/>
+                <field name="type_of_employee_id"/>
+            </field>
+<!--            <xpath expr="//page/group/group/field[@name='identification_id']" position="attributes">-->
+<!--                <attribute name="required">1</attribute>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//group[@name='emergency']" position="after">-->
+<!--                <group string="Insurance" name="insurance">-->
+<!--                    <field name="insurance_scheme_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>-->
+<!--                </group>-->
+<!--            </xpath>-->
+            <xpath expr="//field[@name='identification_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='visa_expire']" position="after">
+                <field name="qualification"/>
+                <field name="tsc_no"/>
+            </xpath>
+                        <xpath expr="//notebook" position="inside">
+                <page name="life_insurance" string="Life Insurance" groups="hr.group_hr_user">
+                    <field name="life_insurance_ids">
+                        <list string="Life Insurance" editable="top">
+                            <field name="employee_id" invisible="1"/>
+                            <field name="name"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="amount" required="1"/>
+                            <field name="duration" required="1"/>
+                            <field name="amount_premium"/>
+                            <field name="deduction_applied" readonly="1"/>
+                        </list>
+                    </field>
+                </page>
+                <page name="longterm_advance" string="Long Term Advance" groups="hr.group_hr_user">
+                    <field name="longterm_advance_ids">
+                        <list string="Long Term Advance" editable="top">
+                            <field name="employee_id" invisible="1"/>
+                            <field name="date" readonly="considered_in_payslip != False"/>
+                            <field name="name" readonly="considered_in_payslip != False"/>
+                            <field name="amount" required="1" readonly="considered_in_payslip != False"/>
+                            <field name="duration" required="1" readonly="considered_in_payslip != False"/>
+                            <field name="amount_deduct"/>
+                            <field name="considered_in_payslip" invisible="1"/>
+                        </list>
+                        <form edit="false">
+                            <group>
+                                <group>
+                                    <field name="employee_id" invisible="1"/>
+                                    <field name="date"/>
+                                    <field name="name"/>
+                                    <field name="amount" required="1"/>
+                                </group>
+                                <group>
+                                    <field name="duration" required="1"/>
+                                    <field name="amount_deduct"/>
+                                </group>
+                            </group>
+                            <field name="advance_sub_line_ids" readonly="1">
+                                <list string="Advance Subline" editable="top">
+                                    <field name="employee_id" invisible="0"/>
+                                    <field name="advance_id" invisible="1"/>
+                                    <field name="date"/>
+                                    <field name="mode"/>
+                                    <field name="amount" required="1"/>
+                                    <field name="payslip_id"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="hr_attendance.menu_hr_attendance_root" name="Employee Attendances"
+              groups="hr_attendance.group_hr_attendance_own_reader" sequence="20"/>
+    <menuitem id="hr.menu_hr_employee_payroll" name="Employees" parent="hr.menu_hr_root" groups="base.group_user"
+              sequence="3"/>
+    <menuitem id="new_employee_menu_msf" parent="hr.menu_hr_employee_payroll" name="Employees" sequence="0"
+              action="employee_server_action_msf"/>
+    <menuitem id="hr.menu_hr_employee_user" name="Employees" action="hr.open_view_employee_list_my"
+              parent="hr.menu_hr_employee_payroll" active="false" sequence="1"/>
+</odoo>

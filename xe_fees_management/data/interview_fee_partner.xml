@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <record id="interview_fee_partner" model="res.partner">
+        <field name="name">School Interview Fees Collection</field>
+        <field name="is_interview_fee">True</field>
+    </record>
+</odoo>

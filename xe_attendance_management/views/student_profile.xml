@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="student_form_inherit">
+        <field name="name">xe.student.form.inherit</field>
+        <field name="model">xe.student</field>
+        <field name="inherit_id" ref="xenesis_school_base.view_student_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_attendance" type="object" string="Attendance" class="oe_stat_button"
+                        icon="fa-list">
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

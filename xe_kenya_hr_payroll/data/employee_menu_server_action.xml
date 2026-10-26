@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="employee_server_action_msf" model="ir.actions.server">
+        <field name="name">Employee Menu Server Action</field>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="state">code</field>
+        <field name="code">action = model.sudo().employee_form_server_action()</field>
+    </record>
+</odoo>

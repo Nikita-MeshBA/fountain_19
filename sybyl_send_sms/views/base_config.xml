@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.base.setup.settings</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="100"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <div id="sms_gateway_settings" class="app_settings_block">
+                        <h2>Send SMS Settings</h2>
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-xs-12 col-md-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="is_invoice_paid"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="is_invoice_paid"/>
+                                    <div class="text-muted">
+                                        Send SMS while invoice is paid
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="is_inv_validate_manual"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="is_inv_validate_manual"/>
+                                    <div class="text-muted">
+                                        Send SMS Manually for invoice
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-xs-12 col-md-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="is_invoice_validate"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="is_invoice_validate"/>
+                                    <div class="text-muted">
+                                        Send SMS while invoice is confirm
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

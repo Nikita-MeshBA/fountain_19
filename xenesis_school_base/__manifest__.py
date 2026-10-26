@@ -20,6 +20,7 @@
     "license": "AGPL-3",
     "depends": [
         "base",
+        'stock',
         "web",
         "website",
         "mail",

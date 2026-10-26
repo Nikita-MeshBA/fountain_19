@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Media Barcode -->
+        <record id="action_report_media_barcode" model="ir.actions.report">
+            <field name="name">Media Barcode</field>
+            <field name="model">xe.media</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">xe_library_management.report_media_barcode</field>
+            <field name="report_file">xe_library_management.report_media_barcode</field>
+        </record>
+
+        <!-- Library Card Barcode -->
+        <record id="action_report_student_library_card_barcode" model="ir.actions.report">
+            <field name="name">Library Card Barcode</field>
+            <field name="model">xe.library.card</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">xe_library_management.report_library_card_barcode</field>
+            <field name="report_file">xe_library_management.report_library_card_barcode</field>
+        </record>
+
+        <!-- Student Library Card -->
+        <record id="action_report_student_library_card" model="ir.actions.report">
+            <field name="name">Library IdCard</field>
+            <field name="model">xe.student</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">xe_library_management.report_student_library_card</field>
+            <field name="report_file">xe_library_management.report_student_library_card</field>
+            <field name="group_ids" eval="[
+                (4, ref('xenesis_school_base.group_xe_admin')),
+                (4, ref('xenesis_school_base.group_xe_staff'))
+            ]"/>
+        </record>
+
+    </data>
+</odoo>

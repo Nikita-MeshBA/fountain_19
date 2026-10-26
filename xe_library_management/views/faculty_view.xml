@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_xe_staff_form_library_inherit" model="ir.ui.view">
+        <field name="name">xe.staff.form.library.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <!-- <field name="priority" eval="9"/>-->
+        <field name="arch" type="xml">
+            <xpath expr="//header[1]" position="inside">
+                <field name="library_card_id" invisible="1"/>
+                <button name="action_library_card" string="Create Library Card" class="oe_highlight" type="object"
+                        groups="xe_library_management.group_xe_library"
+                        invisible="library_card_id != False"/>
+            </xpath>
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button name="action_view_media_movement" type="object" string="Library" class="oe_stat_button"
+                        icon="fa-book">
+                </button>
+            </xpath>
+        </field>
+    </record>
+    <record id="action_create_lib_card_emp" model="ir.actions.server">
+        <field name="sequence" eval="5"/>
+        <field name="state">code</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="binding_model_id" ref="hr.model_hr_employee"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">model.create_card_act()</field>
+        <field name="name">Create Library Card</field>
+    </record>
+</odoo>

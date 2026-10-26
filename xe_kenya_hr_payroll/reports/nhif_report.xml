@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="report.paperformat" id="paperformat_nhif_report">
+        <field name="name">paperformat.nhif.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_right">5</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+    <record id="nhif_report" model="ir.actions.report">
+        <field name="name">NHIF Report</field>
+        <field name="model">nhif.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_kenya_hr_payroll.nhif_report_view</field>
+        <field name="report_file">xe_kenya_hr_payroll.nhif_report_view</field>
+    </record>
+    <template id="nhif_report_view">
+        <style>.font{
+            font-size:14px;
+            font-family:"Helvetica"
+            }
+            @page{
+            margin-top:1%;
+            size: A4;
+            }
+        </style>
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div>
+                    <h3 class="text-center">NHIF Report</h3>
+                    <h4 class="text-left">
+                        <strong>
+                            Employer No:
+                            <t t-esc="res_company.nhif_no"/>
+                        </strong>
+                        <br/>
+                        <strong>
+                            Employer Name:
+                            <t t-esc="res_company.name"/>
+                        </strong>
+                        <br/>
+                        <strong>Report For</strong>
+                        <t t-esc="yyyy_mm"/>
+
+
+                    </h4>
+                </div>
+                <table class="table table-condensed table-bordered" style="width: 100%">
+                    <thead>
+                        <th class="text-center" style="width: 17.5%">Payroll No</th>
+                        <th class="text-center" style="width: 30%">Last Name</th>
+                        <th class="text-center" style="width: 30%">First Name</th>
+                        <th class="text-center" style="width: 17.5%">ID No</th>
+                        <th class="text-center" style="width: 17.5%">NHIF No</th>
+                        <th class="text-center" style="width: 17.5%">Amount</th>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="final_val['docs']" t-as="line">
+                            <tr>
+                                <td class="text-center">
+                                    <span t-esc="line['payroll_no']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['last_names']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['sir_name']"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="line['id_no']"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="line['nhif_no']"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="line['amount']"/>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr>
+                            <td class="text-right" colspan="5">
+                                <b>TOTAL:</b>
+                            </td>
+                            <td class="text-right">
+                                <t t-esc="sum([o['amount'] for o in final_val['docs']])"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="page-break-after: always;"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="nhif_xlsx_report" model="ir.actions.report">
+        <field name="name">NHIF Report</field>
+        <field name="model">nhif.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">xe_kenya_hr_payroll.nhif_report_xlsx</field>
+        <field name="report_file">xe_kenya_hr_payroll.nhif_xlsx_report</field>
+    </record>
+
+    <record id="p9_xlsx_report" model="ir.actions.report">
+        <field name="name">P9 Report</field>
+        <field name="model">p9.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">xe_kenya_hr_payroll.p9_report_xlsx</field>
+        <field name="report_file">xe_kenya_hr_payroll.p9_xlsx_report</field>
+    </record>
+
+</odoo>
+
+

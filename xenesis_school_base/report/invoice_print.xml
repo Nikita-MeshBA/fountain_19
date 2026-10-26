@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <template id="external_layout_standard_header_inherit" inherit_id="web.external_layout_standard">
-            <xpath expr="//div/div[hasclass('row')][3]" position="replace">
-            </xpath>
+<!--        <template id="external_layout_standard_header_inherit" inherit_id="web.external_layout_standard">-->
+<!--            <xpath expr="//div/div[hasclass('row')][3]" position="replace">-->
+<!--            </xpath>-->
+<!--        </template>-->
+           <template id="external_layout_standard_header_inherit"
+                     inherit_id="web.external_layout_standard">
+            <xpath expr="//div[@name='company_address']" position="replace"/>
         </template>
         <template id="invoice_inherit_core_xenesis" inherit_id="account.report_invoice_document">
             <xpath expr="//div[@class='page mb-4']/div[1]" position="after">
@@ -102,7 +106,8 @@
                     </tr>
                 </t>
             </xpath>
-            <xpath expr="//div[@class='clearfix']" position="after">
+<!--            <xpath expr="//div[@class='clearfix']" position="after">-->
+            <xpath expr="//div[hasclass('clearfix') and hasclass('invoice_main')]" position="after">
                 <t t-if="o.display_on_invoice and o.pending_invoice_ids">
                     <div class="row">
                         <div class="col-6">

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="custom_layout_header">
+        <div class="header">
+            <div class="row">
+                <div class="col-3">
+                    <img t-if="company.logo" t-attf-src="data:image/png;base64,#{company.logo}" alt=""
+                         style="max-height: 120px;"/>
+                </div>
+                <div class="col-6" align="center">
+                    <t t-if="company.name">
+                        <b>
+                            <span t-field="company.name" style="font-size:20px;"/>
+                        </b>
+                        <br/>
+                    </t>
+                    <t t-if="company.street">
+                        <span t-esc="company.street"/>
+                        <span t-if="company.street2" t-esc="company.street2"/>
+                        <br/>
+                    </t>
+                    <t t-if="company.city">
+                        <span t-esc="company.city"/>
+                        <br/>
+                    </t>
+                    <t t-if="company.email">
+                        Email:
+                        <span t-esc="company.email"/>
+                        <br/>
+                    </t>
+                    <t t-if="company.phone">
+                        Tel:
+                        <span t-field="company.phone"/>
+                    </t>
+                </div>
+            </div>
+            <div t-if="company.logo or company.report_header" class="row zero_min_height">
+                <div class="col-xs-12">
+                    <div style="border-bottom: 1px solid black;"/>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="custom_layout_footer">
+        <div class="footer">
+            <div class="row">
+                <div class="col-12" align="center" style="border-top: 1px solid black;">
+                    <span>
+                        <b>END OF TERM REPORT</b>
+                    </span>
+                    <br/>
+                    <t t-if="company.zip">
+                        P.O. Box:<span t-field="company.zip"/>,
+                    </t>
+                    <t t-if="company.state_id">
+                        <span t-field="company.state_id.name"/>,
+                    </t>
+                    <t t-if="company.phone">
+                        Tel:
+                        <span t-field="company.phone"/>
+                    </t>
+                    <br/>
+                    <t t-if="company.email">
+                        Email:
+                        <span t-field="company.email"/>
+                    </t>
+                    <t t-if="company.website">
+                        Website:
+                        <span t-field="company.website"/>
+                    </t>
+                    <br/>
+                    <div class="text-muted">
+                        Page:
+                        <span class="page"/>
+                        /
+                        <span class="topage"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="exam_external_layout_marksheet">
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"/>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"/>
+        </t>
+        <div class="article">
+            <t t-call="xe_exam_management.custom_layout_header"/>
+            <t t-raw="0"/>
+            <t t-call="xe_exam_management.custom_layout_footer"/>
+        </div>
+    </template>
+</odoo>

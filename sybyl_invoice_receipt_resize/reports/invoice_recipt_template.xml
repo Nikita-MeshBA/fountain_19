@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="print_invoice_receipt">
+        <t t-call="web.html_container">z
+            <t t-foreach="datas" t-as="data">
+                <t t-call="sybyl_invoice_receipt_resize.receipt_external_layout">
+                    <div class="page" style="padding-top:7%;font-size:15px;">
+                        <div align="right">
+                            <strong>Invoice Receipt:
+                                <span t-field="data.name"/>
+                            </strong>
+                        </div>
+                        <br/>
+                        <div align="center">
+                            <img t-if="data.company_id.logo" t-att-src="image_data_uri(data.company_id.logo)" style="max-height: 45px;" alt="Logo"/>
+                        </div>
+                        <div align="center">
+                            <h3><span t-esc="data.company_id.name"/> </h3>
+                        </div>
+                        <div align="center">
+                            <strong>
+                            <t t-if="data.company_id.street">&#160;&#160;&#160;&#160;&#160;&#160;
+                                <span t-esc="data.company_id.street"/>
+                                <br/>
+                            </t>
+                            <t t-if="data.company_id.street2">&#160;&#160;&#160;&#160;&#160;&#160;
+                                <span t-esc="data.company_id.street2"/>
+                                <br/>
+                            </t>
+                            <t t-if="data.company_id.state_id">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span
+                                    t-esc="data.company_id.state_id.name"/>,
+                            </t>
+                            <t t-if="data.company_id.country_id">
+                                <t t-if="not data.company_id.state_id"> &#160;&#160;&#160;&#160;&#160;&#160;</t>
+                                <span t-esc="data.company_id.country_id.name"/>
+                                <br/>
+                            </t>
+                            <t t-if="data.company_id.phone">
+                                <span t-esc="data.company_id.phone"/>
+                            </t>
+                            <t t-if="data.company_id.email">
+                                <t t-if="not data.company_id.phone">-</t>
+                                <span t-esc="data.company_id.email"/>
+                                <br/>
+                            </t>
+                            </strong>
+                        </div>
+                        <br/>
+
+                        <div id="informations">
+                            <div t-if="data.partner_id" name="customer">
+                                <strong>Bill To: <span t-field="data.partner_id.name"/></strong>
+                            </div>
+                            <div t-if="data.roll_number" name="adm_no">
+                                <strong>Admission Number: <span t-field="data.roll_number"/></strong>
+                            </div>
+
+                            <div t-if="data.course_id" name="course_id">
+                                <strong>Class &#38; Classroom details: <span t-field="data.course_id.name"/> | <span t-field="data.class_room_id.name"/></strong>
+                            </div>
+
+                            <div t-if="data.user_id" name="cashier">
+                                <strong>Cashier:<span t-field="data.invoice_user_id.name"/></strong>
+                            </div>
+                            <div t-if="data.invoice_date" name="date">
+                                <strong>Invoice Date:<span  t-esc="data.invoice_date.strftime('%d/%m/%Y')"/></strong>
+                            </div>
+                            <div t-if="data.invoice_date_due" name="date_due">
+                                <strong>Due Date: <span t-esc="data.invoice_date_due.strftime('%d/%m/%Y')"/></strong>
+                            </div>
+                        </div>
+                        <br/>
+                        <div id="invoice_details" class="row">
+                        <table class="table table-sm" style="color:black !important;">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Item Name</strong></td>
+                                    <td><strong>Qty</strong></td>
+                                    <td><strong>Price</strong></td>
+                                    <td><strong>Amount</strong></td>
+                                </tr>
+                                <t t-foreach="data.invoice_line_ids" t-as="t">
+                                    <tr>
+                                        <td>
+                                            <strong><t t-esc="t.product_id.name"/></strong>
+                                        </td>
+                                        <td class="text-right">
+                                            <strong><t t-esc="t.quantity"/></strong>
+                                        </td>
+                                        <td class="text-right">
+                                            <strong><t t-esc="'{0:,.2f}'.format(t.price_unit)"/></strong>
+                                        </td>
+                                        <td class="text-right">
+                                            <strong><t t-esc="'{0:,.2f}'.format(t.price_subtotal)"/></strong>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        </div>
+                        <div id="total_details" class="row">
+                            <table class="table table-sm" style="width:100%;color:black !important;">
+                                <tr class="o_subtotal" style="">
+                                    <td class="text-right" style="width:60%;">
+                                        <strong>Subtotal</strong>
+                                    </td>
+                                    <td class="text-right" style="width:40%;">
+                                        <strong>
+                                        <span
+                                                t-esc="data.amount_untaxed"
+                                                t-options='{"widget": "monetary", "display_currency": data.currency_id}'
+                                        />
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr style="">
+                                    <td class="text-right"><strong>Tax Amount</strong></td>
+                                    <td class="text-right">
+                                        <strong><span
+                                                t-field="data.amount_tax"
+                                                t-options='{"widget": "monetary", "display_currency": data.currency_id}'
+                                        /></strong>
+                                    </td>
+                                </tr>
+                                <tr style="" t-if="data.state not in ['draft','cancel']">
+                                    <td class="text-right"><strong>Paid Amount</strong></td>
+                                    <td class="text-right">
+                                        <strong>
+                                        <span
+                                                t-esc="data.amount_total-data.amount_residual"
+                                                t-options='{"widget": "monetary", "display_currency": data.currency_id}'
+                                        />
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr  style="" t-if="data.state == 'draft'">
+                                    <td class="text-right"><strong>Receipt Total</strong></td>
+                                    <td class="text-right">
+                                        <strong>
+                                        <span
+                                                t-field="data.amount_total"
+                                                t-options='{"widget": "monetary", "display_currency": data.currency_id}'
+                                        />
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr  style="" t-if="data.state not in ['draft']">
+                                    <td class="text-right"><strong>Amount Pending</strong></td>
+                                    <td class="text-right">
+                                        <strong><span
+                                                t-field="data.amount_residual"
+                                                t-options='{"widget": "monetary", "display_currency": data.currency_id}'
+                                        /></strong>
+
+                                    </td>
+                                </tr>
+                                <tr/>
+                                <tr>
+                                    <td class="text-right"><strong>Final Balance</strong></td>
+                                    <td class="text-right">
+                                        <strong><span
+                                                t-esc="data._partner_balance_new(data.partner_id.id)"
+                                                t-options='{"widget": "monetary", "display_currency": data.currency_id}'
+                                        /></strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="mobile_property_mobile" model="mobile.property.config">
+        <field name="name">mobile</field>
+    </record>
+    <record id="mobile_property_phone" model="mobile.property.config">
+        <field name="name">phone</field>
+    </record>
+    <record id="mobile_property_msisdn" model="mobile.property.config">
+        <field name="name">MSISDN</field>
+    </record>
+    <record id="mobile_property_recipients" model="mobile.property.config">
+        <field name="name">recipients</field>
+    </record>
+    <record id="message_property_message" model="message.property.config">
+        <field name="name">message</field>
+    </record>
+    <record id="message_property_txtMessage" model="message.property.config">
+        <field name="name">txtMessage</field>
+    </record>
+    <record id="message_property_text" model="message.property.config">
+        <field name="name">text</field>
+    </record>
+</odoo>

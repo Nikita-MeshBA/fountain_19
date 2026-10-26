@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="menu_enquiry_form" model="website.menu">
+        <field name="name">Admission</field>
+        <field name="url">/enquiry/form</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">22</field>
+    </record>
+
+    <template id="tmp_enquiry_form_success" name="Enquiry Form Successfully Submitted">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container">
+                    <div class="col-md-12">
+                        <center>
+                            <h3 style="margin-top:15%;">Thanks for submitting admission enquiry, we will
+                                get back to you soon!
+                            </h3>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="tmp_enquiry_form" name="Enquiry Form">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <section>
+                    <div class="container" style="max-width:1650px !important;">
+                        <div class="row">
+                            <div class="col-md-2"/>
+                            <div class="col-md-8">
+                                <br/>
+                                <form action="/enquiry/form/submit" enctype="multipart/form-data" method="post">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <div class="row">
+                                        <h3 style="padding-left:10px;padding-bottom:15px;">Student's Details</h3>
+                                        <div class="from-group col-md-12">
+                                            <label for="name">Name<span style="color: red;">*</span></label>
+                                            <br/>
+                                            <input type="text" class="form-control" name="name"
+                                                   id="name" required="true"/>
+                                        </div>
+                                        <div class="from-group col-md-6"
+                                             style="padding-top:20px; display: none;">
+                                            <label for="email">Email<span style="color: red;">*</span></label>
+                                             style="padding-top:20px; display: none;">
+                                            <label for="email">Email</label>
+                                            <br/>
+                                            <input type="email" class="form-control" name="email"
+                                                   id="email"/>
+                                        </div>
+                                        <div class="from-group col-md-6"
+                                             style="padding-top:20px;">
+                                            <label class="control-label" for="nationality_id">Nationality<span style="color: red;">*</span></label>
+                                            <select name="nationality_id" class="form-control"
+                                                    required="1">
+                                                <option value="">Nationality...</option>
+                                                <t t-foreach="countries" t-as="c">
+                                                    <option t-att-value="c.id"
+                                                            t-att-selected="c.id == (country and country.id or -1)">
+                                                        <t t-esc="c.name"/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                        <div class="from-group col-md-6"
+                                             style="padding-top:20px;">
+                                            <label for="name">Date of Birth<span style="color: red;">*</span></label>
+                                            <input type="date" class="form-control"
+                                                   id="birth_date" name="birth_date" placeholder="mm/dd/yyyy"
+                                                   required="1"/>
+                                        </div>
+
+                                        <div class="from-group col-md-6"
+                                             style="padding-top:20px;">
+                                            <label for="gender">Gender<span style="color: red;">*</span></label>
+                                            <br/>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="gender" id="male" value="m"
+                                                       required="1" style="margin-right:8px;">Male
+                                                </input>
+                                            </label>
+                                            <label class="radio-inline" style="padding-left:10px;">
+                                                <input type="radio" name="gender" id="female"
+                                                       value="f" required="1" style="margin-right:8px;">Female
+                                                </input>
+                                            </label>
+                                        </div>
+                                        <div class="from-group col-md-6"
+                                             style="padding-top:20px;">
+                                            <label class="control-label" for="school_id">School<span style="color: red;">*</span></label>
+                                            <select name="school_id" class="form-control" id="school_id"
+                                                    required="1">
+                                                <t t-foreach="school_ids" t-as="school">
+                                                    <option t-att-value="school.id" t-if="school.id == default_school.id" selected="selected">
+                                                        <t t-esc="school.name"/>
+                                                    </option>
+                                                    <option t-att-value="school.id" t-if="school.id != default_school.id">
+                                                        <t t-esc="school.name"/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                        <div class="from-group col-md-6"
+                                             style="padding-top:20px;">
+                                            <label class="control-label" for="course_name">Class<span style="color: red;">*</span></label>
+                                            <select id="course_name" name="course_name" class="form-control"
+                                                    required="1">
+                                                <option value="">Class...</option>
+                                                <t t-foreach="course_ids" t-as="c">
+                                                    <option t-att-value="c.name" t-att-id="c.id">
+                                                        <t t-esc="c.name"/>
+                                                    </option>
+                                                </t>
+                                            </select>
+
+                                            <input type="text" class="form-control"
+                                                   name="course_id" id="course_id" hidden="hidden"/>
+                                        </div>
+                                        <div class="from-group col-md-6"
+                                             style="padding-top:20px;">
+                                            <label for="name">Previous School Attended</label>
+                                            <input type="text" class="form-control"
+                                                   name="previous_school" id="previous_school"/>
+                                        </div>
+                                        <div class="from-group col-md-6"
+                                             style="padding-top:20px;">
+                                            <label for="name">Previous School Grade(Marks)</label>
+                                            <input type="text" class="form-control"
+                                                   name="previous_school_marks" id="previous_school_marks"/>
+                                        </div>
+                                        <div class="from-group col-md-6"
+                                             style="padding-top:20px;">
+                                            <label for="name">Street</label>
+                                            <input type="text" class="form-control" name="street"
+                                                   id="street"/>
+                                        </div>
+                                        <div class="from-group col-md-6"
+                                             style="padding-top:20px;">
+                                            <label for="name">City</label>
+                                            <input type="text" class="form-control" name="city"
+                                                   id="city"/>
+                                        </div>
+                                        <div class="from-group col-md-6"
+                                             style="padding-top:20px;">
+                                            <label class="control-label" for="country_id">Country<span style="color: red;">*</span></label>
+                                            <select name="country_id" id="country_id"
+                                                    class="form-control" required="1">
+                                                <option value="">Country...</option>
+                                                <t t-foreach="countries" t-as="c">
+                                                    <option t-att-value="c.id"
+                                                            t-att-selected="c.id == (country and country.id or -1)">
+                                                        <t t-esc="c.name"/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                        <div class="from-group col-md-6"
+                                             style="padding-top:20px;">
+                                            <label for="name">County</label>
+                                            <input type="text" class="form-control" name="county"
+                                                   placeholder="County"
+                                                   id="county"/>
+                                        </div>
+                                        <div class="from-group col-md-6"
+                                             style="padding-top:20px;">
+                                            <label for="name">Postal Code</label>
+                                            <input type="text" class="form-control" name="zip"
+                                                   placeholder="Postal Code"
+                                                   id="zip"/>
+                                            <br/>
+                                        </div>
+                                        <div class="from-group col-md-6"
+                                             style="padding-top:20px;">
+                                            <label for="name">Existing Sibling</label>
+                                            <input type="checkbox" id="sibling_boolean" name="sibling_boolean"
+                                                   value="sibling"/>
+                                        </div>
+                                        <div class="from-group col-md-6" style="padding-top:20px;" id="sibling_div">
+                                            <label for="name">Sibling Admission Number</label>
+                                            <input type="text" class="form-control" name="sibling_admission"
+                                                   id="sibling_admission"/>
+                                            <br/>
+                                        </div>
+                                        <div class="col-md-12"/>
+                                        <h3 style="column-gap:200px;padding-left:10px;padding-top:15px;padding-bottom:15px;"
+                                            class="parent_div">Parent's Details 1
+                                        </h3>
+                                        <div class="from-group col-md-12 parent_div">
+                                            <label for="name">Name<span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" name="p1_name"
+                                                   id="p1_name" required="true"/>
+                                        </div>
+                                        <div class="from-group col-md-6 parent_div"
+                                             style="padding-top:20px;">
+                                            <label for="name">Email<span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control"
+                                                   name="p1_email" id="p1_email" required="true"/>
+                                        </div>
+                                        <div class="from-group col-md-6 parent_div"
+                                             style="padding-top:20px;">
+                                            <label for="name">Phone<span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" id="p1_phone"
+                                                   name="p1_phone" required="true"/>
+                                            <br/>
+                                        </div>
+                                        <div class="from-group col-md-6 parent_div"
+                                             style="padding-top:20px;">
+                                            <label for="name">Date of Birth</label>
+                                            <input type="date" class="form-control"
+                                                   id="p1_birth_date" name="p1_birth_date"
+                                                   placeholder="mm/dd/yyyy"/>
+                                        </div>
+                                        <div class="from-group col-md-6 parent_div"
+                                             style="padding-top:20px;">
+                                            <label for="gender">Gender<span style="color: red;">*</span></label>
+                                            <br/>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="p1_gender" id="p1_male"
+                                                       value="m" style="margin-right:8px;" required="true">Male
+                                                </input>
+                                            </label>
+                                            <label class="radio-inline" style="padding-left:10px;">
+                                                <input type="radio" name="p1_gender" id="p1_female"
+                                                       value="f" required="true" style="margin-right:8px;">Female
+                                                </input>
+                                            </label>
+                                        </div>
+                                        <div class="from-group col-md-6 parent_div"
+                                             style="padding-top:20px;">
+                                            <label for="name">Relation<span style="color: red;">*</span></label>
+                                            <select name="p1_relation" id="p1_relation"
+                                                    class="form-control" required="1">
+                                                <option value=""></option>
+                                                <option value="father">Father</option>
+                                                <option value="mother">Mother</option>
+                                                <option value="guardian">Guardian</option>
+                                            </select>
+                                            <!-- <input type="text" class="form-control"
+                                                   id="p1_relation" name="p1_relation" required="true"/> -->
+                                            <br/>
+                                        </div>
+                                        <div class="col-md-6"/>
+                                        <h3 style="column-gap:200px;padding-left:10px;padding-top:15px;padding-bottom:15px;"
+                                            class="parent_div">Parent's Details 2
+                                        </h3>
+                                        <div class="from-group col-md-12 parent_div">
+                                            <label for="name">Name</label>
+                                            <input type="text" class="form-control" name="p2_name"
+                                                   id="p2_name"/>
+                                        </div>
+                                        <div class="from-group col-md-6 parent_div"
+                                             style="padding-top:20px;">
+                                            <label for="name">Email</label>
+                                            <input type="text" class="form-control"
+                                                   name="p2_email" id="p2_email"/>
+                                        </div>
+                                        <div class="from-group col-md-6 parent_div"
+                                             style="padding-top:20px;">
+                                            <label for="name">Phone</label>
+                                            <input type="text" class="form-control" id="p2_phone"
+                                                   name="p2_phone"/>
+                                        </div>
+                                        <div class="from-group col-md-6 parent_div"
+                                             style="padding-top:20px;">
+                                            <label for="name">Date of Birth</label>
+                                            <input type="date" class="form-control"
+                                                   id="p2_birth_date" name="p2_birth_date"
+                                                   placeholder="mm/dd/yyyy"/>
+                                        </div>
+                                        <div class="from-group col-md-6 parent_div"
+                                             style="padding-top:20px;">
+                                            <label for="gender">Gender</label>
+                                            <br/>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="p2_gender" id="p2_male"
+                                                       value="m" style="margin-right:8px;">Male
+                                                </input>
+                                            </label>
+                                            <label class="radio-inline" style="padding-left:10px">
+                                                <input type="radio" name="p2_gender" id="p2_female"
+                                                       value="f" style="margin-right:8px;">Female
+                                                </input>
+                                            </label>
+                                        </div>
+                                        <div class="from-group col-md-6 parent_div"
+                                             style="padding-top:20px;">
+                                            <label for="name">Relation</label>
+                                            <select name="p2_relation" id="p2_relation"
+                                                    class="form-control">
+                                                <option value=""></option>
+                                                <option value="father">Father</option>
+                                                <option value="mother">Mother</option>
+                                                <option value="guardian">Guardian</option>
+                                            </select>
+                                            <!-- <input type="text" class="form-control"
+                                                   id="p2_relation" name="p2_relation"/> -->
+                                            <br/>
+                                        </div>
+                                        <div class="from-group col-md-6 parent_div"/>
+                                        <br/>
+                                        <h3 style="column-gap:200px;padding-left:10px;padding-top:15px;padding-bottom:15px;">
+                                            Documents
+                                        </h3>
+                                        <div class="col-md-12"/>
+                                        <div class="from-group col-md-6" style="padding-top:20px;">
+                                            <label class="control-label">Student's Date of Birth Certificate</label>
+                                            <input name="birth_certificate_new" type="file" class="form-control"/>
+                                        </div>
+                                        <div class="from-group col-md-6" style="padding-top:20px;">
+                                            <label class="control-label">Student Report Card</label>
+                                            <input type="file" id="report_card_copy" name="report_card_copy"
+                                                   class="form-control"/>
+                                        </div>
+                                        <div class="from-group col-md-6" style="padding-top:20px;">
+                                            <label class="control-label">Previous School Leaving Certificate</label>
+                                            <input type="file" id="leaving_certificate" name="leaving_certificate"
+                                                   class="form-control"/>
+                                        </div>
+                                        <div class="from-group col-md-6" style="padding-top:20px;">
+                                            <label class="control-label">National ID Parent 1</label>
+                                            <input type="file" id="national_parent1" name="national_parent1"
+                                                   class="form-control"/>
+                                        </div>
+                                        <div class="from-group col-md-6" style="padding-top:20px;">
+                                            <label class="control-label">National ID Parent 2</label>
+                                            <input type="file" id="national_parent2" name="national_parent2"
+                                                   class="form-control"/>
+                                        </div>
+                                        <div class="from-group col-md-6" style="padding-top:20px;">
+                                            <label class="control-label">Passport Copy Parent 1</label>
+                                            <input type="file" id="passportcopy_parent1" name="passportcopy_parent1"
+                                                   class="form-control"/>
+                                        </div>
+                                        <div class="from-group col-md-6" style="padding-top:20px;">
+                                            <label class="control-label">Passport Copy Parent 2</label>
+                                            <input type="file" id="passportcopy_parent2" name="passportcopy_parent2"
+                                                   class="form-control"/>
+                                        </div>
+                                        <div class="from-group col-md-12"
+                                             style="padding-top:20px;">
+                                            <button type="submit" class="btn btn-primary mb16 mt16 col-md-12">Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-2"/>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>
+
+

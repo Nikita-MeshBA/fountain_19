@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_xe_media_movement_enterprise_form" model="ir.ui.view">
+        <field name="name">xe.media.movement.form</field>
+        <field name="model">xe.media.movement</field>
+        <field name="inherit_id" ref="xe_library_management.view_xe_media_movement_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/header/field[@name='state']"
+                   position="before">
+                <button type="object" name="action_renew_media"
+                        string="Renew Media" invisible="state != 'issue'"
+                        groups="xe_library_management.group_xe_library"/>
+            </xpath>
+            <xpath expr="//form/sheet/group[3]" position="after">
+                <group string="Renew Details" invisible="is_renew == False">
+                    <field name="is_renew" invisible="1"/>
+                    <field name="renew_ids" readonly="1"
+                           colspan="4" nolabel="1">
+                        <list string="Media Renew Details"
+                              editable="top">
+                            <field name="librarian_id"/>
+                            <field name="renew_date"/>
+                        </list>
+                    </field>
+                </group>
+            </xpath>
+            <field name="media_id" position="after">
+                <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+            </field>
+            <xpath expr="//field[@name='media_type_id']"
+                   position="after">
+                <field name="queue_count"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_xe_media_movement_pivot" model="ir.ui.view">
+        <field name="name">xe.media.movement.pivot</field>
+        <field name="model">xe.media.movement</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <pivot string="Media Analysis">
+                <field name="media_id"/>
+                <field name="media_unit_id"/>
+                <field name="type"/>
+                <field name="student_id"/>
+                <field name="library_card_id"/>
+                <field name="issued_date"/>
+                <field name="return_date"/>
+                <field name="actual_return_date"/>
+                <field name="penalty"/>
+                <field name="invoice_id"/>
+                <field name="state"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="xe_library_management.act_open_xe_media_movement_view">
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+</odoo>

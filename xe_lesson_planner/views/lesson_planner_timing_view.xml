@@ -1,0 +1,22 @@
+<odoo>
+
+    <record id="lesson_planner_timing_tree_view" model="ir.ui.view">
+        <field name="name">lesson.planner.timing.tree.view</field>
+        <field name="model">lesson.planner.timing</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name" required="1"/>
+                <field name="start_time" required="1"/>
+                <field name="end_time" required="1"/>
+                <field name="duration" required="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_lesson_planner_timing" model="ir.actions.act_window">
+        <field name="name">Timing</field>
+        <field name="res_model">lesson.planner.timing</field>
+        <field name="view_mode">list</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,14 @@
+<odoo>
+	<menuitem name="RFID"
+        id="menu_rfid"
+        sequence="50">
+
+        <menuitem id="rfid_session" name="Session" action="open_session_dashboard_kanban" sequence="1"/>
+        <menuitem id="rfid_configuration" name="Configuration" sequence="2">
+	        <menuitem id="rfid_configuration_session" name="Session" action="act_session_configuration" sequence="1"/>
+	        <menuitem id="rfid_configuration_device" name="Device" action="act_device_configuration" sequence="2"/>
+	        <menuitem id="rfid_configuration_card" name="Card" action="action_card_form" sequence="3"/>
+        </menuitem>
+        <menuitem id="rfid_logs" name="Logs" action="rfid_log_action" sequence="3"/>
+    </menuitem>
+</odoo>

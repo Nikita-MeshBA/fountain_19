@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="module_category_assignment" model="ir.module.category">
+            <field name="name">Assignment</field>
+            <field name="description">Helps you to Manage Access Rights</field>
+            <field name="sequence">16</field>
+        </record>
+
+        <record id="group_assignment_user" model="res.groups">
+            <field name="name">User</field>
+<!--            <field name="category_id" ref="xe_assignment_management.module_category_assignment"/>-->
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_assignment_manager" model="res.groups">
+            <field name="name">Manager</field>
+<!--            <field name="category_id" ref="xe_assignment_management.module_category_assignment"/>-->
+           	<field name="implied_ids" eval="[(4, ref('xe_assignment_management.group_assignment_user'))]"/>
+        </record>
+
+        <!-- Show assignments Based on User -->
+        <record model="ir.rule" id="view_asssignment_user_access">
+            <field name="name">Show Assignments User Rule</field>
+            <field name="model_id" ref="xe_assignment_management.model_xe_assignment"></field>
+            <field name="groups" eval="[(4, ref('xe_assignment_management.group_assignment_user'))]"/>
+            <field name="domain_force">[('create_teacher_id','=',user.id)]</field>
+        </record>
+
+        <!-- Show Assignments Based On Manager Rule -->
+        <record model="ir.rule" id="view_asssignment_manager_access">
+            <field name="name">Show All Assingmentd Manager Rule</field>
+            <field name="model_id" ref="xe_assignment_management.model_xe_assignment"></field>
+            <field name="groups" eval="[(4, ref('xe_assignment_management.group_assignment_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record model="ir.rule" id="view_asssignment_submission_manager_access">
+            <field name="name">Show All Assingment Submissison Manager Rule</field>
+            <field name="model_id" ref="xe_assignment_management.model_xe_assignment_submission"></field>
+            <field name="groups" eval="[(4, ref('xe_assignment_management.group_assignment_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record model="ir.rule" id="student_assign_rule">
+            <field name="name">Student Rule on Assignment</field>
+            <field name="model_id" ref="xe_assignment_management.model_xe_assignment"/>
+            <field name="groups" eval="[(4, ref('xenesis_school_base.group_xe_student'))]"/>
+            <field name="domain_force">[('student_ids.user_id','in',[user.id]),('state','in',['assigned', 'done'])]
+            </field>
+        </record>
+
+         <record model="ir.rule" id="student_assign_submsn_rule">
+            <field name="name">Student rule on Assignment Submission</field>
+            <field name="model_id" ref="model_xe_assignment_submission"/>
+            <field name="groups" eval="[(4, ref('xenesis_school_base.group_xe_student'))]"/>
+            <field name="domain_force">[('student_id.user_id','=',user.id)]</field>
+        </record>
+
+        <record model="ir.rule" id="parent_assign_rule">
+            <field name="name">Parent Rule on Assignment</field>
+            <field name="model_id" ref="xe_assignment_management.model_xe_assignment"/>
+            <field name="groups" eval="[(4, ref('xenesis_school_base.group_xe_parent'))]"/>
+            <field name="domain_force">[('student_ids.parent_ids.user_id','in',[user.id]),('state','in',['assigned', 'done'])]</field>
+        </record>
+
+        <record model="ir.rule" id="parent_assign_submsn_rule">
+            <field name="name">Parent rule on Assignment Submission</field>
+            <field name="model_id" ref="model_xe_assignment_submission"/>
+            <field name="groups" eval="[(4, ref('xenesis_school_base.group_xe_parent'))]"/>
+            <field name="domain_force">[('student_id.parent_ids.user_id','in',[user.id])]</field>
+        </record>
+
+        <record model="ir.rule" id="teacher_assign_rule">
+            <field name="name">Teacher Rule on Assignment</field>
+            <field name="model_id" ref="model_xe_assignment"/>
+            <field name="groups" eval="[(4, ref('xenesis_school_base.group_xe_staff'))]"/>
+            <field name="domain_force">[('create_teacher_id','=',user.id)]</field>
+        </record>
+
+        <record model="ir.rule" id="admin_assign_rule">
+            <field name="name">Admin Rule on Assignment</field>
+            <field name="model_id" ref="model_xe_assignment"/>
+            <field name="groups" eval="[(4, ref('xenesis_school_base.group_xe_admin'))]"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+        </record>
+
+        <record model="ir.rule" id="admin_assign_sub_rule">
+            <field name="name">Admin Rule on Assignment Submission</field>
+            <field name="model_id" ref="model_xe_assignment_submission"/>
+            <field name="groups" eval="[(4, ref('xenesis_school_base.group_xe_admin'))]"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+        </record>
+
+        <record model="ir.rule" id="admin_asign_submsn_rule">
+            <field name="name">Teacher rule on Assignment Submission</field>
+            <field name="model_id" ref="model_xe_assignment_submission"/>
+            <field name="groups" eval="[(4, ref('xenesis_school_base.group_xe_staff'))]"/>
+            <field name="domain_force">[('assignment_id.create_teacher_id','=',user.id)]</field>
+        </record>
+        <record id="assignment_type_multi_company_rule" model="ir.rule">
+            <field name="name">multi-company assignment type rule</field>
+            <field name="model_id" ref="model_xe_assignment_type"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="assignment_multi_company_rule" model="ir.rule">
+            <field name="name">multi-company assignment rule</field>
+            <field name="model_id" ref="model_xe_assignment"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="assignment_submission_multi_company_rule" model="ir.rule">
+            <field name="name">multi-company assignment submission rule</field>
+            <field name="model_id" ref="model_xe_assignment_submission"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+
+    </data>
+</odoo>

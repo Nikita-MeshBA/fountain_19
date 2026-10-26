@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_expense_view_form_inherited" model="ir.ui.view">
+        <field name="name">hr.expense.form.inherited</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+        <field name="arch" type="xml">
+            <field name="currency_id" position="replace"/>
+            <field name="product_id" position="after">
+                <field name="currency_id" groups="base.group_multi_currency"/>
+            </field>
+            <!-- reference field remove from v17 -->
+            <!-- <field name="reference" position="replace">
+                <field name="reference" string="Expense Description" readonly="is_ref_editable == False"/>
+            </field> -->
+        </field>
+    </record>
+</odoo>

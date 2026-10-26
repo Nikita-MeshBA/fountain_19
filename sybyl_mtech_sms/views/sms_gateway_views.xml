@@ -1,0 +1,28 @@
+<odoo>
+
+    <record id="view_sms_gateway_form_inherit" model="ir.ui.view">
+        <field name="name">sms.gateway.config.from.view.inherit</field>
+        <field name="model">sms.gateway.config</field>
+        <field name="inherit_id" ref="sybyl_bulk_sms.view_sms_gateway_from"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="button_mtech_balance" string="Mtech Balance" type="object" invisible="id == False or is_mtech_sms == False"/>
+            </xpath>
+            <xpath expr="//field[@name='url']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="is_mtech_sms" string="Is Mtech Sms"/>
+                <field name="mtech_user_name" string="Mtech API Username" invisible="is_mtech_sms == False" required="is_mtech_sms"/>
+                <field name="mtech_password" string="Mtech API Key" invisible="is_mtech_sms == False" required="is_mtech_sms"/>
+                <field name="url" string="URL" required="is_mtech_sms"/>
+                <field name="auth_url" string="Auth URL" invisible="is_mtech_sms == False" required="is_mtech_sms"/>
+                <field name="callback_url" string="Callback URL" invisible="is_mtech_sms == False" required="is_mtech_sms"/>
+                <field name="sender_id" string="Sender ID" invisible="is_mtech_sms == False" required="is_mtech_sms"/>
+                <field name="mtech_balance" string="Mtech Balance(KES)" readonly="1" invisible="is_mtech_sms == False"/>
+                <field name="auth_token" string="Authentication Token" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sms_template_view_form" model="ir.ui.view">
+            <field name="name">send.sms.template.view.form</field>
+            <field name="model">send.sms.template</field>
+            <field name="arch" type="xml">
+                <form string="Templates">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                            <group>
+                                <field name="model_id" required="1" options="{'no_create': True}"/>
+                                <field name="model" invisible="1"/>
+                                <field name="sms_account_gateway_id" required="1" options="{'no_create': True}"/>
+                                <field name="msg_to"/>
+                            </group>
+                        </div>
+                        <notebook>
+                            <page string="Content">
+                                <field name="template_body"/>
+                            </page>
+                            <page string="Dynamic Placeholder Generator">
+                                <group>
+                                    <field name="model_object_field_id"
+                                           domain="[('model_id','=',model_id),('ttype','!=','one2many'),('ttype','!=','many2many')]"/>
+                                    <field name="sub_object_id" readonly="1"/>
+                                    <field name="sub_model_object_field_id"
+                                           domain="[('model_id','=',sub_object_id),('ttype','!=','one2many'),('ttype','!=','many2many')]"
+                                           readonly="sub_object_id == False" required="sub_object_id != False"/>
+                                    <field name="null_value"/>
+                                    <field name="copyvalue"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="sms_template_view_tree" model="ir.ui.view">
+            <field name="name">send.sms.template.view.tree</field>
+            <field name="model">send.sms.template</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="model"/>
+                    <field name="msg_to"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="sms_template_action" model="ir.actions.act_window">
+            <field name="name">Sms Template</field>
+            <field name="res_model">send.sms.template</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create an SMS template</p>
+            </field>
+        </record>
+
+        <menuitem id="sms_template_menu"
+                  name="Templates"
+                  parent="sms_parent_menu"
+                  action="sms_template_action"
+                  sequence="40"/>
+
+    </data>
+</odoo>

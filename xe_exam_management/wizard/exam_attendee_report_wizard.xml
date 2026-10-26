@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="exam_attendee_report_form">
+        <field name="name">exam.attendee.report.wizard.form</field>
+        <field name="model">exam.attendee.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <sheet>
+                    <group>
+                        <field name="exam_id"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="print_attendance_report_excel" type="object" class="oe_highlight"
+                            string="Print Excel"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="exam_attendee_report_wizard" model="ir.actions.act_window">
+        <field name="name">Exam Attendee Report</field>
+        <field name="res_model">exam.attendee.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

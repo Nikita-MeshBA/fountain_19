@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="assignment_submit_wizard" model="ir.ui.view">
+        <field name="name">submission.report.wizard.form</field>
+        <field name="model">submission.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="from_date"/>
+                            <field name="course_id" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="state"/>
+                        </group>
+                        <group>
+                            <field name="to_date"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="print_report" type="object" class="oe_highlight" string="Print"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="assignmnt_submt_wizard_act">
+        <field name="name">Assignment Submission Report</field>
+        <field name="res_model">submission.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem name="Assignment Submission" id="xe_assignment_sub_report" parent="xe_assignment_report_menu"
+              action="assignmnt_submt_wizard_act" sequence="1"
+              groups="xenesis_school_base.group_xe_admin,xe_assignment_management.group_assignment_manager,xenesis_school_base.group_xe_staff"/>
+</odoo>

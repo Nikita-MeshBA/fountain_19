@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record forcecreate="True" id="ir_cron_assignment_scheduler" model="ir.cron">
+            <field name="name">Set Assignment as Done</field>
+            <field name="model_id" ref="model_xe_assignment"/>
+            <field name="state">code</field>
+            <field name="code">model._set_assignment_as_done()</field>
+            <field eval="True" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+<!--            <field name="numbercall">-1</field>-->
+<!--            <field name="doall" eval="False"/>-->
+        </record>
+</odoo>
+

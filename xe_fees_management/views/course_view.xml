@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="xe_view_course_form_inherit" model="ir.ui.view">
+        <field name="name">xe.course.inherit.form</field>
+        <field name="model">xe.course</field>
+        <field name="inherit_id" ref="xenesis_school_base.view_course_form"/>
+        <field name="arch" type="xml">
+            <!-- <field name="section" position="after">
+                <field name="fees_term_id" readonly="1"/>
+            </field> -->
+            <field name="attendance" position="after">
+                <field name="is_add_interview_fee"/>
+                <field name="interview_pdt_id" invisible="is_add_interview_fee == False"/>
+            </field>
+        </field>
+    </record>
+</odoo>

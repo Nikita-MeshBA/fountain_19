@@ -1,0 +1,38 @@
+<odoo>
+    <record model="ir.ui.view" id="ms_report_wizard">
+        <field name="name">Monthly Salary Report</field>
+        <field name="model">ms.report.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Monthly Salary Report">
+                <group>
+                    <group>
+                        <field name="month" required="1"/>
+                        <field name="state"/>
+                    </group>
+                    <group>
+                        <field name="year" required="1"/>
+                        <field name="salary_structure_id" widget='selection' required="1"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="get_xlsx_report" string="Get Report" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ms_report_wizard" model="ir.actions.act_window">
+        <field name="name">Monthly Salary Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ms.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem action="action_ms_report_wizard"
+              id="menu_ms_report_wizard"
+              parent="payroll_report"
+              sequence="300"/>
+</odoo>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_assignment_submit">
+        <t t-call="web.html_container">
+            <!--            <t t-foreach="docs" t-as="o">-->
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <center>
+                        <h2>Assignment Submission Report</h2>
+                    </center>
+                    <br/>
+                    <div>
+                        <table width="100%;">
+                            <tr style="padding:5px;">
+                                <th width="25%;">
+                                    Start Date:
+                                </th>
+                                <th width="25%;">
+                                    <span t-esc="data['from_date']"/>
+                                </th>
+                                <th width="25%;">
+                                    End Date:
+                                </th>
+                                <th width="25%;">
+                                    <span t-esc="data['to_date']"/>
+                                </th>
+                            </tr>
+                            <tr style="padding:5px;">
+                                <th t-if="data['course']" width="25%;">
+                                    Class:
+                                </th>
+                                <th t-if="data['course']" width="25%;">
+                                    <span t-esc="data['course']"/>
+                                </th>
+                            </tr>
+                            <tr style="padding:5px;">
+                                <th t-if="data['state_name']" style="padding-bottom:4%;" width="25%;">
+                                    State:
+                                </th>
+                                <th t-if="data['state_name']" style="padding-bottom:4%;" width="25%;">
+                                    <span t-esc="data['state_name']"/>
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <table class="table table-condensed" width="100%;">
+                            <tr>
+                                <th>Name</th>
+                                <th>GRN</th>
+                                <th>Assignment</th>
+                                <th>Subject</th>
+                                <th>Teacher</th>
+                                <th>Last Date</th>
+                                <th>Submitted Date</th>
+                                <th>Total Marks</th>
+                                <th>Marks Given</th>
+                                <th>State</th>
+                            </tr>
+                            <tr t-foreach="docs" t-as="doc">
+                                <td>
+                                    <span t-esc="doc.student_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc.student_id.roll_number"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc.assignment_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc.assignment_id.subject_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc.assignment_id.teacher_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc.assignment_id.submit_date"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc.submit_date"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="doc.assignment_id.total_marks"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="doc.marks_on_submit"/>
+                                </td>
+                                <td>
+                                    <t t-esc="dict (doc.fields_get (allfields = ['state']) ['state'] ['selection']) [doc.state]"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+    <record id="action_asgnmnt_submsn" model="ir.actions.report">
+        <field name="name">Assignment Submission Report</field>
+        <field name="model">xe.assignment.submission</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_assignment_management.report_assignment_submit</field>
+        <field name="report_file">xe_assignment_management.report_assignment_submit</field>
+        <field name="print_report_name">'Assignment Submission'</field>
+        <field name="binding_model_id" eval="False"/>
+    </record>
+</odoo>

@@ -4,13 +4,13 @@
         <field name="name">xe.academic.year.tree</field>
         <field name="model">xe.academic.year</field>
         <field name="arch" type="xml">
-            <tree string="Academic Year" editable="bottom">
+            <list string="Academic Year" editable="bottom">
                 <field name="name" string="Name" required="1"/>
                 <field name="code"/>
                 <field name="start_date" required="1"/>
                 <field name="end_date" required="1"/>
                 <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_xe_academic_year_search" model="ir.ui.view">
@@ -40,13 +40,13 @@
         <field name="name">xe.academic.terms.tree</field>
         <field name="model">xe.academic.terms</field>
         <field name="arch" type="xml">
-            <tree string="Academic Year Terms">
+            <list string="Academic Year Terms">
                 <field name="academic_year_id"/>
                 <field name="name"/>
                 <field name="code"/>
                 <field name="start_date" required="1"/>
                 <field name="end_date" required="1"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_xe_academic_year_terms_search" model="ir.ui.view">
@@ -95,7 +95,7 @@
     <record id="act_academic_year_terms" model="ir.actions.act_window">
         <field name="name">Academic Year Terms</field>
         <field name="res_model">xe.academic.terms</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="search_view_id" ref="view_xe_academic_year_terms_search"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">Add a new Academic Year Terms</p>

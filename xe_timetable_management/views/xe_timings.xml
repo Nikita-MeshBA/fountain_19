@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="xe_timing_list">
+              <field name="name">xe.timings.list</field>
+              <field name="model">xe.timings</field>
+              <field name="arch" type="xml">
+                <list>
+                  <field name="name"/>
+                  <field name="start_time" widget="float_time"/>
+                  <field name="end_time" widget="float_time"/>
+                  <field name="duration" widget="float_time"/>
+                </list>
+              </field>
+        </record>
+        <record model="ir.ui.view" id="xe_timing_form">
+              <field name="name">xe.timings.form</field>
+              <field name="model">xe.timings</field>
+              <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                         <div class="oe_title">
+                                  <h1 class="d-flex">
+                                      <field name="name"/>
+                                  </h1>
+                        </div>
+                        <group>
+                            <group>
+                                 <field name="start_time" widget="float_time"/>
+                                <field name="duration" widget="float_time"/>
+                            </group>
+                            <group>
+                                <field name="end_time" widget="float_time"/>
+                                <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+
+                </form>
+              </field>
+        </record>
+        <record model="ir.actions.act_window" id="xe_timings_act">
+          <field name="name">Timings</field>
+          <field name="res_model">xe.timings</field>
+          <field name="view_mode">list,form</field>
+        </record>
+         <menuitem name="Timings" id="xe_timings_menu" parent="xe_timetable_management.xe_config_menu" action="xe_timings_act"/>
+    </data>
+</odoo>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_stud_id_card" model="report.paperformat">
+        <field name="name">Student ID CARD</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">70</field>
+        <field name="page_width">50</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">10</field>
+        <field name="dpi">200</field>
+    </record>
+
+    <record id="student_id_print" model="ir.actions.report">
+        <field name="name">Print Student ID</field>
+        <field name="model">xe.student</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_kenya_hr_payroll.print_student_id</field>
+        <field name="report_file">xe_kenya_hr_payroll.print_student_id</field>
+        <field name="binding_model_id" ref="xenesis_school_base.model_xe_student"/>
+        <field name="paperformat_id"
+               ref="xe_kenya_hr_payroll.paperformat_stud_id_card"/>
+        <field name="binding_type">report</field>
+        <field name="group_ids"
+               eval="[(4, ref('xenesis_school_base.group_xe_admin')),(4, ref('xenesis_school_base.group_xe_staff'))]"/>
+    </record>
+
+    <template id="stud_front_side_report">
+        <div class="page">
+            <div class="row">
+                <table style="width:100%;height:100%">
+                    <tr
+                            style="border: 0px solid black;background-color:#a52a2a;width:20%;height:20%">
+                        <td>
+                            <img t-if="stud.company_id.logo" width="80" height="80"
+                                 style="padding:25px;"
+                                 t-att-src="image_data_uri(stud.company_id.logo)"
+                                 alt="Company Logo"/>
+                        </td>
+                        <td align="center" colspan="2" style="font-size:20px;width:80%;height:20%">
+                            <span t-esc="stud.company_id.name"
+                                  style="font-size:22px"></span>
+                            <br/>
+                            <span t-esc="stud.company_id.street"></span>
+                            <br/>
+                            <span t-esc="stud.company_id.city"></span>
+                            ,
+                            <span t-esc="stud.company_id.state_id.name">-</span>
+                            <span t-esc="stud.company_id.zip"></span>
+                            <br/>
+                            <span t-esc="stud.company_id.country_id.name"></span>
+                        </td>
+                    </tr>
+                    <tr style="border: 0px solid red;width:100%;height:60%">
+                        <td style="width:30%;height:60%">
+                            <img t-if="stud.image_1920" t-att-src="image_data_uri(stud.image_1920)"
+                                 width="100" height="170" alt="Student Image"
+                                 style="padding:5px;"/>
+                        </td>
+                        <td align="left" style="font-size:17px;width:30%;height:60%;line-height: 16px">
+                            <p>
+                                <b>Student Name</b>
+                            </p>
+                            <br/>
+                            <p>
+                                <b>Class/Section</b>
+                            </p>
+                            <br/>
+                            <p>
+                                <b>Principal Signature</b>
+                            </p>
+                        </td>
+                        <td align="left" style="font-size:17px;width:40%;height:60%;line-height: 16px">
+                            <p>
+                                <b>:
+                                    <t t-esc="stud.name"/>
+                                </b>
+                            </p>
+                            <br/>
+                            <p>
+                                <b>:
+                                    <t t-esc="stud.classroom_id.name"/>
+                                </b>
+                            </p>
+                            <br/>
+                            <p>
+                                <img t-if="stud.company_id.signature"
+                                     t-att-src="image_data_uri(stud.company_id.signature)"
+                                     width="140" height="40" alt="Signature"/>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr align="center"
+                        style="border: 1px solid blue;width:100%;height:50%">
+                        <td colspan="3">
+                            <t t-if="stud.roll_number">
+                                <div t-field="stud.roll_number"
+                                     t-options="{'widget': 'barcode', 'width': 400, 'height': 80, 'img_align': 'center'}"/>
+                            </t>
+                            <br/>
+                        </td>
+                    </tr>
+                    <tr
+                            style="border: 0px solid green;background-color:#a52a2a;width:100%;height:49px">
+                        <td colspan="3"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </template>
+
+
+    <template id="stud_back_side_report">
+        <div class="page">
+            <div class="row">
+                <table style="width:100%;height:100%">
+                    <tr
+                            style="border: 0px solid black;background-color:#a52a2a;width:20%;height:20%">
+                        <td>
+                            <img t-if="stud.company_id.logo" width="80" height="80"
+                                 style="padding:25px;"
+                                 t-att-src="image_data_uri(stud.company_id.logo)"
+                                 alt="Company Logo"/>
+                        </td>
+                        <td align="center" colspan="2" style="font-size:20px;width:80%;height:20%">
+                            <span t-esc="stud.company_id.name"
+                                  style="font-size:22px"></span>
+                            <br/>
+                            <span t-esc="stud.company_id.street"></span>
+                            <br/>
+                            <span t-esc="stud.company_id.city"></span>
+                            ,
+                            <span t-esc="stud.company_id.state_id.name">-</span>
+                            <span t-esc="stud.company_id.zip"></span>
+                            <br/>
+                            <span t-esc="stud.company_id.country_id.name"></span>
+                        </td>
+                    </tr>
+                    <tr style="border: 0px solid red;width:100%;height:100%;margin-top:-100pt;">
+                        <td align="left" colspan="3" style="font-size:16px;">
+                            <p style="line-height: 32px">
+                                <b>Resident Address:</b>
+                                <br/>
+                                <span style="margin-left:104pt;">
+                                    <b>
+                                        <t t-esc="stud.street"/>
+                                    </b>
+                                </span>
+                                <br/>
+                                <span style="margin-left:104pt;">
+                                    <b>
+                                        <t t-esc="stud.city"/>
+                                    </b>
+                                </span>
+                                <br/>
+                                <span style="margin-left:104pt;">
+                                    <b>
+                                        <t t-esc="stud.state_id.name"/>
+                                    </b>
+                                </span>
+                                <br/>
+                                <span style="margin-left:104pt;">
+                                    <b>
+                                        <t t-esc="stud.zip"/>
+                                    </b>
+                                </span>
+                                <br/>
+                                <span style="margin-left:104pt;">
+                                    <b>
+                                        <t t-esc="stud.country_id.name"/>
+                                    </b>
+                                </span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr align="center"
+                        style="border: 0px solid blue;width:100%;height:50%">
+                        <td colspan="3" align="center">
+                            <p style="line-height: 29px;">
+                                <span style="font-size:18px;">
+                                    <b>Contact Information</b>
+                                </span>
+                                <br/>
+                                <span style="font-size:16px;">
+                                    <b>Emergency:</b>
+                                    <t t-esc="stud.partner_id.phone"/>
+                                </span>
+                                <br/>
+                                <span style="font-size:16px;">
+                                    <b>Official:</b>
+                                    <t t-esc="stud.partner_id.phone"/>
+                                </span>
+                                <br/>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr
+                            style="border: 0px solid green;background-color:#a52a2a;width:100%;height:49px">
+                        <td colspan="3"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </template>
+
+    <template id="print_student_id">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="stud">
+                <t t-if="stud.company_id.type_select_std == 'both'">
+                    <t t-call="xe_kenya_hr_payroll.stud_front_side_report"/>
+                    <t t-call="xe_kenya_hr_payroll.stud_back_side_report"/>
+                </t>
+                <t t-elif="stud.company_id.type_select_std == 'front'">
+                    <t t-call="xe_kenya_hr_payroll.stud_front_side_report"/>
+                </t>
+                <t t-elif="stud.company_id.type_select_std == 'back'">
+                    <t t-call="xe_kenya_hr_payroll.stud_back_side_report"/>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

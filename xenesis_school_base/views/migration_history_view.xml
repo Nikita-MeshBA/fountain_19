@@ -4,7 +4,7 @@
         <field name="name">xe.migration.history.tree</field>
         <field name="model">xe.migration.history</field>
         <field name="arch" type="xml">
-            <tree string="Migration History" create="false">
+            <list string="Migration History" create="false">
                 <field name="date"/>
                 <field name="from_company_id" groups="base.group_multi_company"/>
                 <field name="to_company_id" groups="base.group_multi_company"/>
@@ -15,7 +15,7 @@
                 <field name="from_classroom_id" domain="[('course_id','=',from_course_id)]"/>
                 <field name="to_classroom_id" domain="[('course_id','=',to_course_id)]"/>
                 <field name="user_id"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_migration_history_form" model="ir.ui.view">

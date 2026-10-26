@@ -28,11 +28,11 @@
                     <page string="API Data Type" name="data_type"
                          invisible="ks_is_external_api == False">
                         <field name="ks_api_data_lines">
-                            <tree editable="bottom" create="0" delete="0">
+                            <list editable="bottom" create="0" delete="0">
                                 <field name="name"/>
                                 <field name="ttype"/>
                                 <field name="ks_dashboard_datatype_id" column_invisible="True"/>
-                            </tree>
+                            </list>
                         </field>
                         <button name="api_create_table" type="object" string="Create Table" class="oe_highlight"
                             invisible = "(ks_url == False) or (ks_api_data_lines == []) or (ks_model_id != False)"/>

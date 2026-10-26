@@ -1,0 +1,95 @@
+<odoo>
+
+
+    <record id="action_view_dashboard" model="ir.actions.client">
+        <field name="name">Studen Fee Dashboad</field>
+        <field name="tag">student_dialog</field>
+    </record>
+
+    <record id="view_rfid_session_kanban" model="ir.ui.view">
+	    <field name="name">rfid.session.kanban.view</field>
+	    <field name="model">rfid.session.configuration</field>
+	    <field name="arch" type="xml">
+	        <kanban create="false" class="o_kanban_dashboard o_session_kanban">
+	            <field name="session_id" />
+	            <field name="session_name"/>
+	            <field name="device_id"/>
+                <field name="current_session_state"/>
+	            <templates>
+	                <t t-name="kanban-menu">
+	                    <div class="container dropdown-pos-config">
+	                        <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
+	                            <div role="menuitem" class="col-12">
+	                                <a name="action_pos_config_modal_edit" type="object">Edit</a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </t>
+	                <t t-name="kanban-box">
+	                    <div>
+	                        <div class="o_kanban_card_header flex-grow-inf">
+	                            <div class="o_kanban_card_header_title mb16">
+	                                <div class="o_primary o_kanban_card_header_title_name">
+	                                    <t t-esc="record.session_id.value"/><br/>
+	                                    <span><t t-esc="record.session_name.value"/></span>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <div class="container o_kanban_card_content">
+	                            <div class="row">
+	                                <div class="col-6 o_kanban_primary_left">
+	                                    <button class="btn btn-primary" name="open_ui" type="object">
+	                                        Open Session
+	                                    </button>
+	                                </div>
+	                                <div class="col-6 o_kanban_primary_right">
+	                                    <div class="row">
+	                                        <div class="col-6">
+	                                            <span>Device ID</span>
+	                                        </div>
+	                                        <div class="col-6">
+	                                            <span><field name="device_id"/></span>
+	                                        </div>
+	                                    </div>
+	                                    <!-- <div class="row" t-if="record.current_session_state.raw_value == 'open'">
+	                                        <div class="col-6">
+	                                            <span>Opening Date:</span>
+	                                        </div>
+	                                        <div class="col-6">
+	                                            <span><field name="start_at"/></span>
+	                                        </div>
+	                                    </div> -->
+	                                    <div class="row">
+	                                        <div class="col-6">
+	                                            <span>Last Closing Date:</span>
+	                                        </div>
+	                                        <div class="col-6">
+	                                            <span><field name="stop_at"/></span>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </t>
+	            </templates>
+	        </kanban>
+	    </field>
+	</record>
+
+    <record id="open_session_dashboard_kanban" model="ir.actions.act_window">
+        <field name="name">Session Dashboard</field>
+        <field name="res_model">rfid.session.configuration</field>
+        <field name="view_mode">kanban</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Session
+            </p><p>
+                Configure at least one Session.
+            </p>
+        </field>
+    </record>
+
+
+
+</odoo>

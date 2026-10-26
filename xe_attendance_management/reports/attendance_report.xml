@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_student_attendance">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <center>
+                        <h2>Student Attendance Report</h2>
+                    </center>
+                    <br/>
+                    <div>
+                        <table width="100%">
+                            <tr style="padding:5px;">
+                                <th width="25%;">
+                                    Date From:
+                                </th>
+                                <th width="25%;">
+                                    <span t-esc="data['formatted_from_date']"/>
+                                </th>
+                                <th width="25%;">
+                                    Date To:
+                                </th>
+                                <th width="25%;">
+                                    <span t-esc="data['formatted_to_date']"/>
+                                </th>
+                            </tr>
+                            <tr style="padding:5px;">
+                                <th style="padding-bottom:4%;" t-if="'course_id' in data" width="25%;">
+                                    Class:
+                                </th>
+                                <th style="padding-bottom:4%;" t-if="'course_id' in data" width="25%;">
+                                    <span t-esc="data['course']"/>
+                                </th>
+                                <th t-if="'class_room_id' in data" style="padding-bottom:4%;" width="25%;">
+                                    Class Room:
+                                </th>
+                                <th t-if="'class_room_id' in data" style="padding-bottom:4%;" width="25%;">
+                                    <span t-esc="data['class_room']"/>
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+                    <br/>
+                    <t t-if="date_dict_docs">
+                        <t t-foreach="date_dict_docs" t-as="data_row">
+                            <t t-set="last_attendance" t-value="False"/>
+                            <t t-set="last_attendance_obj" t-value="False"/>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>Admission Number</th>
+                                    <th>Student Name</th>
+                                    <th>Class</th>
+                                    <th>Classroom</th>
+                                    <th>Attendance Sheet</th>
+                                    <th>Attendance Date</th>
+                                    <th>Status</th>
+                                </tr>
+                                <t t-set="total_male_present_morning" t-value="0"/>
+                                <t t-set="total_male_absent_morning" t-value="0"/>
+                                <t t-set="total_female_present_morning" t-value="0"/>
+                                <t t-set="total_female_absent_morning" t-value="0"/>
+                                <t t-set="total_male_present_afternoon" t-value="0"/>
+                                <t t-set="total_male_absent_afternoon" t-value="0"/>
+                                <t t-set="total_female_present_afternoon" t-value="0"/>
+                                <t t-set="total_female_absent_afternoon" t-value="0"/>
+
+                                <tr t-foreach="date_dict_docs[data_row]" t-as="line">
+                                    <td t-esc="line.roll_number"/>
+                                    <td>
+                                        <span t-esc="line.student_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.attendance_id.attendance_register_id.course_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.attendance_id.attendance_register_id.class_room_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.attendance_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.attendance_date.strftime('%d-%m-%Y')"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="dict(line.fields_get(allfields=['attendance'])['attendance']['selection'])[line.attendance]"/>
+                                    </td>
+                                    <t t-set="last_attendance" t-value="line.attendance_date"/>
+                                    <t t-set="last_attendance_obj" t-value="line.attendance_id"/>
+                                    <t t-if="line.attendance_id.attendance_session=='morning'">
+                                        <t t-if="line.attendance=='present' and line.student_id.gender=='male'">
+                                            <t t-set="total_male_present_morning"
+                                               t-value="total_male_present_morning+1"/>
+                                        </t>
+                                        <t t-if="line.attendance=='absent' and line.student_id.gender=='male'">
+                                            <t t-set="total_male_absent_morning" t-value="total_male_absent_morning+1"/>
+                                        </t>
+                                        <t t-if="line.attendance=='present' and line.student_id.gender=='female'">
+                                            <t t-set="total_female_present_morning"
+                                               t-value="total_female_present_morning+1"/>
+                                        </t>
+                                        <t t-if="line.attendance=='absent' and line.student_id.gender=='female'">
+                                            <t t-set="total_female_absent_morning"
+                                               t-value="total_female_absent_morning+1"/>
+                                        </t>
+                                    </t>
+                                    <t t-if="line.attendance_id.attendance_session=='afternoon'">
+                                        <t t-if="line.attendance=='present' and line.student_id.gender=='male'">
+                                            <t t-set="total_male_present_afternoon"
+                                               t-value="total_male_present_afternoon+1"/>
+                                        </t>
+                                        <t t-if="line.attendance=='absent' and line.student_id.gender=='male'">
+                                            <t t-set="total_male_absent_afternoon"
+                                               t-value="total_male_absent_afternoon+1"/>
+                                        </t>
+                                        <t t-if="line.attendance=='present' and line.student_id.gender=='female'">
+                                            <t t-set="total_female_present_afternoon"
+                                               t-value="total_female_present_afternoon+1"/>
+                                        </t>
+                                        <t t-if="line.attendance=='absent' and line.student_id.gender=='female'">
+                                            <t t-set="total_female_absent_afternoon"
+                                               t-value="total_female_absent_afternoon+1"/>
+                                        </t>
+                                    </t>
+                                </tr>
+                            </table>
+                            <br/>
+                            <t t-if="last_attendance_obj">
+                                <table class="table table-condensed table-bordered" width="100%;">
+                                    <t t-set="total_data"
+                                       t-value="last_attendance_obj.get_total_data(last_attendance,data)"/>
+                                    <t t-if="total_data['attendance_type'] == 'daily_2'">
+                                        <tr>
+                                            <td>
+                                                <b>Total Students:</b>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left:7px;" t-esc="total_data['total_students']"/>
+                                            </td>
+                                            <td>
+                                                <b>Total Present Morning:</b>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left:7px;"
+                                                      t-esc="total_data['total_present_morning']"/>
+                                            </td>
+                                            <td>
+                                                <b>Total Absent Morning:</b>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left:7px;"
+                                                      t-esc="total_data['total_absent_morning']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Total Present Afternoon:</b>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left:7px;"
+                                                      t-esc="total_data['total_present_afternoon']"/>
+                                            </td>
+                                            <td colspan="3">
+                                                <b>Total Absent Afternoon:</b>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left:7px;"
+                                                      t-esc="total_data['total_absent_afternoon']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Total Male Present Morning:</b>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left:7px;" t-esc="total_male_present_morning"/>
+                                            </td>
+                                            <td colspan="3">
+                                                <b>Total Male Absent Morning:</b>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left:7px;" t-esc="total_male_absent_morning"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Total Female Present Morning:</b>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left:7px;" t-esc="total_female_present_morning"/>
+                                            </td>
+                                            <td colspan="3">
+                                                <b>Total Female Absent Morning:</b>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left:7px;" t-esc="total_female_absent_morning"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Total Male Present Afternoon:</b>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left:7px;" t-esc="total_male_present_afternoon"/>
+                                            </td>
+                                            <td colspan="3">
+                                                <b>Total Male Absent Afternoon:</b>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left:7px;" t-esc="total_male_absent_afternoon"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Total Female Present Afternoon:</b>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left:7px;" t-esc="total_female_present_afternoon"/>
+                                            </td>
+                                            <td colspan="3">
+                                                <b>Total Female Absent Afternoon:</b>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left:7px;" t-esc="total_female_absent_afternoon"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <t t-if="total_data['attendance_type'] == 'daily_1'">
+                                        <tr>
+                                            <td colspan="2">
+                                                <b>Total Students:</b>
+                                                <span t-esc="total_data['total_students']"/>
+                                            </td>
+                                            <td colspan="3">
+                                                <b>Total Present:</b>
+                                                <span t-esc="total_data['total_present']"/>
+                                            </td>
+                                            <td colspan="2">
+                                                <b>Total Absent:</b>
+                                                <span t-esc="total_data['total_absent']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Total Male Present:</b>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left:7px;" t-esc="total_male_present"/>
+                                            </td>
+                                            <td>
+                                                <b>Total Male Absent:</b>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left:7px;" t-esc="total_male_absent"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Total Female Present:</b>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left:7px;" t-esc="total_female_present"/>
+                                            </td>
+                                            <td>
+                                                <b>Total Female Absent:</b>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left:7px;" t-esc="total_female_absent"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                            </t>
+                            <br/>
+                            <br/>
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+    <record id="action_student_attendance" model="ir.actions.report">
+        <field name="name">Student Attendance</field>
+        <field name="model">xe.attendance.details</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xe_attendance_management.report_student_attendance</field>
+        <field name="report_file">xe_attendance_management.report_student_attendance</field>
+        <field name="print_report_name">'Student Attendance'</field>
+        <field name="binding_model_id" eval="False"/>
+    </record>
+</odoo>

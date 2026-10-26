@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_library_barcode_scan" name="Library Barcode"
+              action="library_barcode_action_main_view" sequence="85"
+              groups="xe_library_management.group_xe_library"
+              web_icon="xe_library_barcode,static/description/icon.png"/>
+</odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="confirm_exam_wizard">
+        <field name="name">exam.confirm.wizard.form</field>
+        <field name="model">exam.confirm.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="exam_session_id" invisible="1"/>
+                    <strong>
+                        <br/>
+                        <p>
+                            Ensure you have configured the Rubrics for all the subjects;if you would like to
+                            proceed, click the OK button..
+                        </p>
+                        <p>
+                        </p>
+                    </strong>
+                </sheet>
+                <footer>
+                    <button name="action_ok" type="object" class="oe_highlight" string="OK"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

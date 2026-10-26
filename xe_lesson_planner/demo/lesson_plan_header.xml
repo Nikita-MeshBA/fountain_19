@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Lesson Plan Header Data    -->
+        <record id="header_1" model="cbc.lp.header">
+            <field name="name">Specific Learning Outcomes</field>
+        </record>
+        <record id="header_2" model="cbc.lp.header">
+            <field name="name">Key Inquiry Questions (s)</field>
+        </record>
+        <record id="header_3" model="cbc.lp.header">
+            <field name="name">Core competencies to be developed</field>
+        </record>
+        <record id="header_4" model="cbc.lp.header">
+            <field name="name">Links to Pertinent and Contemporary Issues (PC/s)</field>
+        </record>
+        <record id="header_5" model="cbc.lp.header">
+            <field name="name">(I) Introduction / Getting started</field>
+        </record>
+        <record id="header_6" model="cbc.lp.header">
+            <field name="name">(II) Exploration / Lesson Development</field>
+        </record>
+        <record id="header_7" model="cbc.lp.header">
+            <field name="name">(III) Reflection</field>
+        </record>
+        <record id="header_8" model="cbc.lp.header">
+            <field name="name">(IV) Extension or Parental Involvement</field>
+        </record>
+        <record id="header_9" model="cbc.lp.header">
+            <field name="name">Links to values</field>
+        </record>
+        <record id="header_10" model="cbc.lp.header">
+            <field name="name">Learning Resources</field>
+        </record>
+        <record id="header_11" model="cbc.lp.header">
+            <field name="name">Suggested Learning Experiences</field>
+        </record>
+        <record id="header_12" model="cbc.lp.header">
+            <field name="name">Strand</field>
+        </record>
+        <record id="header_13" model="cbc.lp.header">
+            <field name="name">Sub Strand</field>
+        </record>
+    </data>
+</odoo>

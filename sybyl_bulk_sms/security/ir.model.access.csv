@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sms_gateway_config,sms.gateway.config.all,model_sms_gateway_config,,1,1,1,1
+access_sms_gateway_attributes,sms.gateway.attributes.all,model_sms_gateway_attributes,,1,1,1,1
+access_send_sms_template,send.sms.template.all,model_send_sms_template_new,,1,1,1,1
+access_bulk_sms_send_log,bulk.sms.send.log.all,model_bulk_sms_send_log,,1,1,1,1
+access_sms_header_attributes,sms.header.attributes.all,model_sms_header_attributes,,1,1,1,1
+access_mobile_property_config,mobile.property.config.all,model_mobile_property_config,,1,1,1,1
+access_message_property_config,message.property.config.all,model_message_property_config,,1,1,1,1

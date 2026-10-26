@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_xe_media_tree" model="ir.ui.view">
+        <field name="name">xe.media.tree</field>
+        <field name="model">xe.media</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <list string="Media">
+                <field name="name"/>
+                <field name="isbn"/>
+                <field name="media_type_id"/>
+                <field name="tags_ids" widget="many2many_tags"/>
+                <field name="author_ids" widget="many2many_tags"/>
+                <field name="edition"/>
+                <field name="publisher_ids" widget="many2many_tags"/>
+                <field name="course_ids" widget="many2many_tags"/>
+                <field name="internal_code"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_xe_media_form" model="ir.ui.view">
+        <field name="name">xe.media.form</field>
+        <field name="model">xe.media</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Media">
+                <header>
+                    <button name="act_gen_media_units" string="Generate Media Units" class="oe_highlight"
+                            type="object" groups="xe_library_management.group_xe_library"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Media Name"/>
+                        </h1>
+                    </div>
+                    <!-- <group>
+                    <group>
+                        <h1>
+                            <field name="name" placeholder="Media Name"/>
+                        </h1>
+                    </group>
+                    </group> -->
+                    <group>
+                        <newline/>
+                        <group col="4">
+                            <field name="author_ids" widget="many2many_tags"/>
+                            <field name="publisher_ids" widget="many2many_tags"/>
+                            <field name="isbn" required="1"/>
+                            <field name="internal_code"/>
+                            <field name="edition"/>
+                            <field name="tags_ids" widget="many2many_tags"/>
+                            <field name="media_type_id" required="1"/>
+                            <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook colspan="4">
+                        <page name="units" string="Units">
+                            <field name="unit_ids" colspan="4" nolabel="1"/>
+                        </page>
+                        <page name="description" string="Description">
+                            <field name="description" colspan="4"/>
+                        </page>
+                        <page name="education_details" string="Education Details">
+                            <!-- <group> -->
+                            <separator string="Classes"/>
+                            <field name="course_ids" nolabel="1" widget="many2many_tags"/>
+                            <separator string="Subjects"/>
+                            <field name="subject_ids" nolabel="1" widget="many2many_tags"/>
+                            <!-- </group> -->
+                        </page>
+                        <page name="movements" string="Movements"
+                              groups="xenesis_school_base.group_xe_admin,xe_library_management.group_xe_library,xenesis_school_base.group_xe_admin">
+                            <field name="movement_line_ids" colspan="4" nolabel="1"/>
+                        </page>
+                        <page name="media_queue_requests" string="Media Queue Requests">
+                            <field name="queue_ids" colspan="4" nolabel="1">
+                                <list string="Media Queue Request">
+                                    <field name="partner_id"/>
+                                    <field name="date_from"/>
+                                    <field name="date_to"/>
+                                    <field name="state"/>
+                                    <button name="action_accept" string="Accept" type="object"
+                                            invisible="state == 'request'" icon="gtk-go-forward"
+                                            groups="xe_library_management.group_xe_library"/>
+                                    <button name="action_reject" string="Reject" type="object"
+                                            invisible="state not in ('request','accept')" icon="terp-dialog-close"
+                                            groups="xe_library_management.group_xe_library"/>
+                                    <button name="action_request" string="Request Again"
+                                            invisible="state == 'reject'" type="object" icon="STOCK_GO_BACK"
+                                            groups="xe_library_management.group_xe_library"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_xe_media_search" model="ir.ui.view">
+        <field name="name">xe.media.search</field>
+        <field name="model">xe.media</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Media">
+                <field name="name"/>
+                <field name="isbn"/>
+                <field name="tags_ids"/>
+                <field name="unit_ids"/>
+                <field name="author_ids"/>
+                <field name="edition"/>
+                <field name="publisher_ids"/>
+                <field name="course_ids"/>
+                <field name="subject_ids"/>
+                <field name="internal_code"/>
+                <newline/>
+                <group>
+                    <filter string="Edition" name="edition" domain="[]" context="{'group_by':'edition'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="act_open_xe_media_view">
+        <field name="name">All Media</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">xe.media</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_xe_media_search"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_open_xe_media_view_form">
+        <field name="act_window_id" ref="act_open_xe_media_view"/>
+        <field name="sequence" eval="20"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_xe_media_form"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_open_xe_media_view_tree">
+        <field name="act_window_id" ref="act_open_xe_media_view"/>
+        <field name="sequence" eval="10"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_xe_media_tree"/>
+    </record>
+</odoo>
