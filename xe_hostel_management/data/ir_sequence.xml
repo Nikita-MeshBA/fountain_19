@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_hostel_member_leaves" model="ir.sequence">
+            <field name="name">Member leaves sequence</field>
+            <field name="code">xe.hostel.member_leaves</field>
+            <field name="prefix">LR</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

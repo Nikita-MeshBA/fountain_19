@@ -1,0 +1,345 @@
+<odoo>
+    <template id="progress_book_report_format_2">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <style>
+                    .report-container {
+                    max-width: 800px;
+                    margin: 0 auto;
+                    }
+
+                    .student-header {
+                    text-align: center;
+                    margin-bottom: 20px;
+                    }
+
+                    .main-table {
+                    border-collapse: collapse;
+                    width: 100%;
+                    margin-top: 20px;
+                    table-layout: fixed;
+                    }
+                    .main-table tr td{
+                    padding: 2px;
+                    }
+                </style>
+                <div class="student-header">
+                    <h1 style="font-size: 25px;text-decoration: underline;">
+                        <b>
+                            <span t-esc="class"/>
+                        </b>
+                    </h1>
+                    <h1 style="font-size: 25px;text-decoration: underline;">
+                        <b>
+                            <span t-esc="term"/>
+                        </b>
+                    </h1>
+                </div>
+                <div class="page">
+                    <div class="report-container">
+                        <t t-foreach="marking_ids.subject_id" t-as="subject">
+                            <h2 class="subject-heading" style="text-align: center">
+                                <span t-esc="subject.name"/>
+                            </h2>
+                            <div>
+                                <b>Key:</b>
+                                Performance Level: EE - Exceeding Expectations (4 points) ME - Meeting Expectations (3
+                                points) AE - Approaching Expectations (2 points) BE - Below Expectations (1 point)
+                            </div>
+                            <table class="table table-bordered main-table"
+                                   style="width: 100%; border-collapse: collapse;">
+                                <tr>
+                                    <td width="10%" style="border-color: black"></td>
+                                    <td width="36%" style="border-color: black">
+                                        <b>Tick appropriately under each category to rate the learner’s ability.</b>
+                                    </td>
+                                    <td class="text-center" width="7%" style="border-color: black">
+                                        <b>EE</b>
+                                    </td>
+                                    <td class="text-center" width="7%" style="border-color: black">
+                                        <b>ME</b>
+                                    </td>
+                                    <td class="text-center" width="7%" style="border-color: black">
+                                        <b>AE</b>
+                                    </td>
+                                    <td class="text-center" width="7%" style="border-color: black">
+                                        <b>BE</b>
+                                    </td>
+                                    <td class="text-center" width="11%" style="border-color: black">
+                                        <b>POINTS</b>
+                                    </td>
+                                    <td class="text-center" width="15%" style="border-color: black">
+                                        <b>COMMENTS</b>
+                                    </td>
+                                </tr>
+                                <t t-if="subject.theme_ids">
+                                    <t t-foreach="subject.theme_ids" t-as="theme">
+                                        <tr>
+                                            <td style="border-color: black">
+                                                <b>
+                                                    <span t-esc="theme.code"/>
+                                                </b>
+                                            </td>
+                                            <td style="border-color: black">
+                                                <b>
+                                                    <span t-esc="theme.name"/>
+                                                </b>
+                                            </td>
+                                            <td style="border-color: black"></td>
+                                            <td style="border-color: black"></td>
+                                            <td style="border-color: black"></td>
+                                            <td style="border-color: black"></td>
+                                            <td style="border-color: black"></td>
+                                            <td style="border-color: black"></td>
+                                        </tr>
+                                        <t t-foreach="theme.strand_ids" t-as="strand">
+                                            <t t-set="substrand_ids"
+                                               t-value="marking_ids.mapped('rubric_id.substrand_id.id')"/>
+                                            <t t-set="comment_row_span" t-value="1"/>
+                                            <tr>
+                                                <td style="border-color: black">
+                                                    <b>
+                                                        <span t-esc="strand.code"/>
+                                                    </b>
+                                                </td>
+                                                <td style="border-color: black">
+                                                    <b>
+                                                        <span t-esc="strand.name"/>
+                                                    </b>
+                                                </td>
+                                                <td style="border-color: black"></td>
+                                                <td style="border-color: black"></td>
+                                                <td style="border-color: black"></td>
+                                                <td style="border-color: black"></td>
+                                                <td style="border-color: black"></td>
+                                                <td style="border-color: black"></td>
+                                            </tr>
+                                            <t t-foreach="substrand_ids" t-as="substrand">
+                                                <t t-set="sub"
+                                                   t-value="marking_ids.filtered(lambda r: r.rubric_id.substrand_id.id==substrand and r.subject_id == subject and r.strand_id == strand)"/>
+                                                <t t-set="concate_comment_list"
+                                                   t-value="marking_ids.filtered(lambda r: r.rubric_id.substrand_id.id==substrand and r.subject_id == subject and r.strand_id == strand).mapped('comment')"/>
+                                                <t t-if="sub">
+                                                    <tr>
+                                                        <td style="border-color: black">
+                                                            <b>
+                                                                <span t-esc="sub[0].rubric_id.substrand_id.code"/>
+                                                            </b>
+                                                        </td>
+                                                        <td style="border-color: black">
+                                                            <b>
+                                                                <span t-esc="sub[0].rubric_id.name"/>
+                                                            </b>
+                                                        </td>
+                                                        <td style="border-color: black"></td>
+                                                        <td style="border-color: black"></td>
+                                                        <td style="border-color: black"></td>
+                                                        <td style="border-color: black"></td>
+                                                        <td style="border-color: black"></td>
+                                                        <td style="border-color: black" class="text-left"
+                                                            t-att-rowspan="len(sub) + 1">
+                                                            <span t-esc="' '.join([cc for cc in concate_comment_list if cc])"/>
+                                                        </td>
+                                                    </tr>
+                                                    <t t-set="count" t-value="1"/>
+                                                    <tr t-foreach="marking_ids.filtered(lambda r: r.rubric_id.substrand_id.id==substrand and r.subject_id == subject and r.strand_id == strand)"
+                                                        t-as="marking">
+                                                        <t t-if="count==1">
+                                                            <td style="border-color: black"
+                                                                t-att-rowspan="len(sub)"></td>
+                                                        </t>
+                                                        <td style="border-color: black">
+                                                            <span t-esc="marking.rubric_activity"/>
+                                                        </td>
+                                                        <t t-if="marking.grade=='EE'">
+                                                            <td style="border-color: black">
+                                                                <input class="form-control" type="checkbox" value="True"
+                                                                       checked="checked"/>
+                                                            </td>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <td style="border-color: black"></td>
+                                                        </t>
+                                                        <t t-if="marking.grade=='ME'">
+                                                            <td style="border-color: black">
+                                                                <input class="form-control" type="checkbox" value="True"
+                                                                       checked="checked"/>
+                                                            </td>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <td style="border-color: black"></td>
+                                                        </t>
+                                                        <t t-if="marking.grade=='AE'">
+                                                            <td style="border-color: black">
+                                                                <input class="form-control" type="checkbox" value="True"
+                                                                       checked="checked"/>
+                                                            </td>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <td style="border-color: black"></td>
+                                                        </t>
+                                                        <t t-if="marking.grade=='BE'">
+                                                            <td style="border-color: black">
+                                                                <input class="form-control" type="checkbox" value="True"
+                                                                       checked="checked"/>
+                                                            </td>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <td style="border-color: black"></td>
+                                                        </t>
+                                                        <t t-if="marking.grade=='EE'">
+                                                            <td style="border-color: black" class="text-center">4</td>
+                                                        </t>
+                                                        <t t-elif="marking.grade=='ME'">
+                                                            <td style="border-color: black" class="text-center">3</td>
+                                                        </t>
+                                                        <t t-elif="marking.grade=='AE'">
+                                                            <td style="border-color: black" class="text-center">2</td>
+                                                        </t>
+                                                        <t t-elif="marking.grade=='BE'">
+                                                            <td style="border-color: black" class="text-center">1</td>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <td style="border-color: black"></td>
+                                                        </t>
+                                                        <t t-set="count" t-value="count + 1"/>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <t t-foreach="subject.strand_ids" t-as="strand">
+                                        <t t-set="substrand_ids"
+                                           t-value="marking_ids.mapped('rubric_id.substrand_id.id')"/>
+                                        <t t-set="comment_row_span" t-value="1"/>
+                                        <tr>
+                                            <td style="border-color: black">
+                                                <b>
+                                                    <span t-esc="strand.code"/>
+                                                </b>
+                                            </td>
+                                            <td style="border-color: black">
+                                                <b>
+                                                    <span t-esc="strand.name"/>
+                                                </b>
+                                            </td>
+                                            <td style="border-color: black"></td>
+                                            <td style="border-color: black"></td>
+                                            <td style="border-color: black"></td>
+                                            <td style="border-color: black"></td>
+                                            <td style="border-color: black"></td>
+                                            <td style="border-color: black"></td>
+                                        </tr>
+                                        <t t-foreach="substrand_ids" t-as="substrand">
+                                            <t t-set="sub"
+                                               t-value="marking_ids.filtered(lambda r: r.rubric_id.substrand_id.id==substrand and r.subject_id == subject and r.strand_id == strand)"/>
+                                            <t t-set="concate_comment_list"
+                                               t-value="marking_ids.filtered(lambda r: r.rubric_id.substrand_id.id==substrand and r.subject_id == subject and r.strand_id == strand).mapped('comment')"/>
+                                            <t t-if="sub">
+                                                <tr>
+                                                    <td style="border-color: black">
+                                                        <b>
+                                                            <span t-esc="sub[0].rubric_id.substrand_id.code"/>
+                                                        </b>
+                                                    </td>
+                                                    <td style="border-color: black">
+                                                        <b>
+                                                            <span t-esc="sub[0].rubric_id.name"/>
+                                                        </b>
+                                                    </td>
+                                                    <td style="border-color: black"></td>
+                                                    <td style="border-color: black"></td>
+                                                    <td style="border-color: black"></td>
+                                                    <td style="border-color: black"></td>
+                                                    <td style="border-color: black"></td>
+                                                    <td style="border-color: black" class="text-left"
+                                                        t-att-rowspan="len(sub) + 1">
+                                                        <span t-esc="' '.join([cc for cc in concate_comment_list if cc])"/>
+                                                    </td>
+                                                </tr>
+                                                <t t-set="count" t-value="1"/>
+                                                <tr t-foreach="marking_ids.filtered(lambda r: r.rubric_id.substrand_id.id==substrand and r.subject_id == subject and r.strand_id == strand)"
+                                                    t-as="marking">
+                                                    <t t-if="count==1">
+                                                        <td style="border-color: black" t-att-rowspan="len(sub)"></td>
+                                                    </t>
+                                                    <td style="border-color: black">
+                                                        <span t-esc="marking.rubric_activity"/>
+                                                    </td>
+                                                    <t t-if="marking.grade=='EE'">
+                                                        <td style="border-color: black">
+                                                            <input class="form-control" type="checkbox" value="True"
+                                                                   checked="checked"/>
+                                                        </td>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <td style="border-color: black"></td>
+                                                    </t>
+                                                    <t t-if="marking.grade=='ME'">
+                                                        <td style="border-color: black">
+                                                            <input class="form-control" type="checkbox" value="True"
+                                                                   checked="checked"/>
+                                                        </td>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <td style="border-color: black"></td>
+                                                    </t>
+                                                    <t t-if="marking.grade=='AE'">
+                                                        <td style="border-color: black">
+                                                            <input class="form-control" type="checkbox" value="True"
+                                                                   checked="checked"/>
+                                                        </td>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <td style="border-color: black"></td>
+                                                    </t>
+                                                    <t t-if="marking.grade=='BE'">
+                                                        <td style="border-color: black">
+                                                            <input class="form-control" type="checkbox" value="True"
+                                                                   checked="checked"/>
+                                                        </td>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <td style="border-color: black"></td>
+                                                    </t>
+                                                    <t t-if="marking.grade=='EE'">
+                                                        <td style="border-color: black" class="text-center">4</td>
+                                                    </t>
+                                                    <t t-elif="marking.grade=='ME'">
+                                                        <td style="border-color: black" class="text-center">3</td>
+                                                    </t>
+                                                    <t t-elif="marking.grade=='AE'">
+                                                        <td style="border-color: black" class="text-center">2</td>
+                                                    </t>
+                                                    <t t-elif="marking.grade=='BE'">
+                                                        <td style="border-color: black" class="text-center">1</td>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <td style="border-color: black"></td>
+                                                    </t>
+                                                    <t t-set="count" t-value="count + 1"/>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </t>
+                            </table>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_student_progress_report_format_2" model="ir.actions.report">
+        <field name="name">Student Progress Book</field>
+        <field name="model">xe.progress.book.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="attachment"></field>
+        <field name="report_name">sybyl_kenya_progess_book.progress_book_report_format_2</field>
+        <field name="report_file">sybyl_kenya_progess_book.progress_book_report_format_2</field>
+        <field name="print_report_name">'Student Progress Book - %s' % (object.student_id.name)</field>
+    </record>
+</odoo>

@@ -13,7 +13,7 @@ import {
     normalizeValue,
     formatValue as toSring,
 } from "@advanced_web_domain_widget/core/domain_tree";
-import { useLoadFieldInfo, useLoadPathDescription } from "@web/core/model_field_selector/utils";
+// import { useLoadFieldInfo, useLoadPathDescription } from "@web/core/model_field_selector/utils";
 import { getOperatorInfo } from "@advanced_web_domain_widget/core/domain_selector/domain_selector_operators";
 
 /**
@@ -391,8 +391,13 @@ export function getDomainTreeDescription(
 export function useGetDomainTreeDescription(fieldService, nameService) {
     fieldService ||= useService("field");
     nameService ||= useService("name");
-    const loadFieldInfo = useLoadFieldInfo(fieldService);
-    const loadPathDescription = useLoadPathDescription(fieldService);
+    // const loadFieldInfo = useLoadFieldInfo(fieldService);
+    // const loadPathDescription = useLoadPathDescription(fieldService);
+    const loadFieldInfo = (resModel, path) =>
+    fieldService.loadFieldInfo(resModel, path);
+
+const loadPathDescription = (resModel, path) =>
+    fieldService.loadPathDescription(resModel, path);
     const loadDisplayNames = useLoadDisplayNames(nameService);
     return async (resModel, tree) => {
         tree = simplifyTree(tree);

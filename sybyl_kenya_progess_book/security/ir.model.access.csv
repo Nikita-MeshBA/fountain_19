@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_xe_progress_book,access_xe_progress_book,model_xe_progress_book,,1,1,1,1
+access_xe_progress_book_line,access_xe_progress_book_line,model_xe_progress_book_line,,1,1,1,1
+access_xe_theme,access_xe_theme,model_xe_theme,,1,1,1,1
+access_xe_strand,access_xe_strand,model_xe_strand,,1,1,1,1
+access_xe_substrand,access_xe_substrand,model_xe_substrand,,1,1,1,1
+access_xe_rubric,access_xe_rubric,model_xe_rubric,,1,1,1,1
+access_xe_marking,access_xe_marking,model_xe_marking,,1,1,1,1
+access_xe_marking_wizard,access_xe_marking_wizard,model_xe_marking_wizard,,1,1,1,1
+access_xe_marking_wizard_line,access_xe_marking_wizard_line,model_xe_marking_wizard_line,,1,1,1,1
+access_xe_progress_book_wizard,access_xe_progress_book_wizard,model_xe_progress_book_wizard,,1,1,1,1
+access_xe_progress_book_report_wizard,access_xe_progress_book_report_wizard,sybyl_kenya_progess_book.model_xe_progress_book_report_wizard,base.group_user,1,1,1,0

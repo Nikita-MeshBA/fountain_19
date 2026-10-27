@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="transport_wizard_form" model="ir.ui.view">
+        <field name="name">xe.transport.report.wizard.form</field>
+        <field name="model">xe.transport.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Transportation Details Report">
+                <group>
+                    <group>
+                        <field name="route_ids" widget="many2many_tags" options="{'no_open': True, 'no_create': True}"/>
+                    </group>
+                    <group>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_report_pdf" string="Print PDF" type="object" default_focus="1" class="oe_highlight"/>
+                    <button name="print_report_excel" string="Print Excel" type="object" default_focus="1" class="oe_highlight"/>
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_transport_wizard_form" model="ir.actions.act_window">
+        <field name="name">Transportation Details</field>
+        <field name="res_model">xe.transport.report.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="transport_wizard_form"/>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+            id="menu_base_transport_report"
+            name="Reports"
+            parent="menu_xe_transportations_main"
+            groups="xe_transportation_management.group_xe_transport_manager" sequence="99"/>
+
+    <menuitem
+            id="menu_transportation_report"
+            name="Transportation Details"
+            action="action_transport_wizard_form"
+            parent="menu_base_transport_report"
+            sequence="75"
+            groups="xe_transportation_management.group_xe_transport_manager"/>
+</odoo>

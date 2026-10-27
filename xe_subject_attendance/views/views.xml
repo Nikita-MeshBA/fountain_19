@@ -1,0 +1,44 @@
+<odoo>
+    <record model="ir.ui.view" id="xe_course_inherit_subject_wise">
+        <field name="name">xxe.course.inherit.subject.wise</field>
+        <field name="model">xe.course</field>
+        <field name="inherit_id" ref="xenesis_school_base.view_course_form"/>
+        <field name="arch" type="xml">
+            <field name="section" position="after">
+                <field name="is_attendance_subject_wise"/>
+                <field name="max_subject_registration" invisible="is_attendance_subject_wise == False"/>
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="xe_attendance_register_inherit_subject_wise">
+        <field name="name">xe.attendance.register.inherit.subject.wise</field>
+        <field name="model">xe.attendance.register</field>
+        <field name="inherit_id" ref="xe_attendance_management.view_xe_attendance_register_form"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="is_attendance_subject_wise"/>
+            </field>
+            <field name="class_room_id" position="replace">
+                <field name="class_room_id" domain="[('course_id','=',course_id)]"
+                       required="is_attendance_subject_wise == False"/>
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="xe_attendance_sheet_inherit_subject_wise">
+        <field name="name">xe.student.attendance.inherit.subject.wise</field>
+        <field name="model">xe.student.attendance</field>
+        <field name="inherit_id" ref="xe_attendance_management.student_attendance_form"/>
+        <field name="arch" type="xml">
+            <field name="attendance_session" position="replace">
+                <field name="is_attendance_subject_wise" invisible="1"/>
+                <field name="attendance_session"
+                       invisible="attendance_type != 'daily_2' or is_attendance_subject_wise"/>
+            </field>
+            <field name="subject_id" position="replace">
+                <field name="course_id" invisible="1"/>
+                <field name="subject_id" invisible="is_attendance_subject_wise == False"
+                       domain="[('course_ids','in',[course_id])]"/>
+            </field>
+        </field>
+    </record>
+</odoo>

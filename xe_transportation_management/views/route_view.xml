@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_xe_route_tree" model="ir.ui.view">
+            <field name="name">xe.route.tree</field>
+            <field name="model">xe.route</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <list string="Routes">
+                    <field name="name" />
+                    <field name="vehicle_id" />
+                    <field name="cost" />
+                    <field name="stop_ids" />
+                </list>
+            </field>
+        </record>
+        <record id="view_xe_route_form" model="ir.ui.view">
+            <field name="name">xe.route.form</field>
+            <field name="model">xe.route</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string="Routes">
+                    <sheet>
+                        <group col="4">
+                            <field name="name" />
+                            <field name="vehicle_id" />
+                            <field name="cost" />
+                            <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Stop(s)">
+                            <field name="stop_ids">
+                                <list>
+                                    <field name="sequence" />
+                                    <field name="name" />
+                                </list>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_xe_route_search" model="ir.ui.view">
+            <field name="name">xe.route.search</field>
+            <field name="model">xe.route</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <search string="Routes">
+                    <field name="name" />
+                    <field name="stop_ids" />
+                    <field name="vehicle_id" />
+                    <field name="cost" />
+                    <newline />
+                </search>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="act_open_xe_route_view">
+            <field name="name">Routes</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">xe.route</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_xe_route_search" />
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_xe_route_view_form">
+            <field name="act_window_id" ref="act_open_xe_route_view" />
+            <field name="sequence" eval="20" />
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_xe_route_form" />
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_xe_route_view_tree">
+            <field name="act_window_id" ref="act_open_xe_route_view" />
+            <field name="sequence" eval="10" />
+            <field name="view_mode">list</field>
+            <field name="view_id" ref="view_xe_route_tree" />
+        </record>
+    </data>
+</odoo>

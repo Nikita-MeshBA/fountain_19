@@ -1,0 +1,113 @@
+<odoo>
+	<data>
+		<record id="action_export_bank_statement_reconciliation" model="ir.actions.report">
+			<field name="name">Export Bank Statement Lines</field>
+			<field name="model">bank.statement.reconciliation</field>
+			<field name="report_type">xlsx</field>
+			<field name="report_name">bi_bank_statement_reconciliation.export_bank_lines_xlsx</field>
+			<field name="report_file">bi_bank_statement_reconciliation.export_bank_lines_xlsx</field>
+			<field name="print_report_name">"Purchase Order Line Import Template"</field>
+		</record>
+		<template id="bankstatment_view">
+			<t t-call="web.html_container">
+				<t t-call="web.external_layout">
+					<div class="page" style="margin-top:5px !important;padding-top:5px;" />
+					<table width="100%">
+						<tbody>
+							<tr>
+								<td  width="50%">
+                        Name :    
+									<span t-esc="statement_id.name" />
+								</td>
+								<td  width="50%">
+                        Opening Balance :  
+									
+									<span t-esc="'{0:,.2f}'.format(statement_id.opening_balance)" />
+								</td>
+							</tr>
+							<tr>
+								<td  width="50%">
+                        Start Date :    
+                        
+									<span t-esc="statement_id.start_date.strftime('%d-%m-%Y')" t-if="statement_id.start_date"/>
+								</td>
+								<td  width="50%">
+                        Book Closing Balance :  
+									
+									<span t-esc="'{0:,.2f}'.format(statement_id.book_closing_balance)" />
+								</td>
+							</tr>
+							<tr>
+								<td  width="50%">
+                       
+                       End Date : 
+									<span t-esc="statement_id.end_date.strftime('%d-%m-%Y')" t-if="statement_id.end_date"/>
+								</td>
+								<td  width="50%">
+                        Difference
+ :  
+									
+									<span t-esc="'{0:,.2f}'.format(statement_id.difference)" />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<br/>
+					<br/>
+					<table class="table table-condensed table-bordered" style="width: 100%">
+						<thead>
+							<th class="text-left">Date</th>
+							<th class="text-left">Number</th>
+							<th class="text-left">Label</th>
+							<th class="text-left">Partner</th>
+							<th class="text-left">Debit</th>
+							<th class="text-left">Credit</th>
+							<th class="text-left">Currency</th>
+							<th class="text-left">Reference
+</th>
+						</thead>
+						<tbody>
+							<t t-foreach="statement_id.line_ids" t-as="line">
+								<tr>
+									<td class="text-left" width="20%">
+										<span t-esc="line.date.strftime('%d-%m-%Y')" t-if="line.date"/>
+									</td>
+									<td class="text-left">
+										<span t-esc="line.move_name" />
+									</td>
+									<td class="text-left">
+										<span t-esc="line.name" />
+									</td>
+									<td class="text-left">
+										<span t-esc="line.partner_id.name" />
+									</td>
+									<td class="text-right">
+										
+										<span t-esc="'{0:,.2f}'.format(line.debit)" />
+									</td>
+									<td class="text-right">
+										
+										<span t-esc="'{0:,.2f}'.format(line.credit)" />
+									</td>
+									<td class="text-left">
+										<span t-esc="line.currency_id.name" />
+									</td>
+									<td class="text-left">
+										<span t-esc="line.reference" />
+									</td>
+								</tr>
+							</t>
+						</tbody>
+					</table>
+				</t>
+			</t>
+		</template>
+		<record id="action_export_bank_statement_reco_pdf" model="ir.actions.report">
+			<field name="name">Bank Statement Report</field>
+			<field name="model">bank.statement.reconciliation</field>
+			<field name="report_type">qweb-pdf</field>
+			<field name="report_name">bi_bank_statement_reconciliation.bankstatment_view</field>
+			<field name="report_file">bi_bank_statement_reconciliation.bankstatment_view</field>
+		</record>
+	</data>
+</odoo>

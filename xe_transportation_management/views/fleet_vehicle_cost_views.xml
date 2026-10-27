@@ -1,0 +1,54 @@
+<odoo>
+
+    <record id='fleet_vehicle_log_services_view_form_inherit' model='ir.ui.view'>
+        <field name="name">fleet.vehicle.log.services.form.inherit</field>
+        <field name="model">fleet.vehicle.log.services</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='service_type_id']" position='after'>
+                <field name="product_id"/>
+                <field name="product_description"/>
+            </xpath>
+            <xpath expr="//field[@name='vendor_id']" position='attributes'>
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='vendor_id']" position='after'>
+                <field name="move_id" readonly="1" string="Invoice"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_fleet_vehicle_cost_invoicing_wizard" model="ir.ui.view">
+        <field name="name">Invoice Vehicle Costs</field>
+        <field name="model">fleet.vehicle.cost.invoicing.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Invoice Fleet Cost">
+                <p class="oe_grey">
+                    Invoices will be created in draft so that you can review
+                    them before validation.
+                </p>
+                <footer>
+                    <button name="create_invoices" string="Create and View Invoices"
+                        type="object"
+                        context="{'open_invoices': True, 'created_from_vehicle_cost': True, 'journal_type': 'purchase'}"
+                        class="btn-primary" />
+                    <button name="create_invoices" string="Create Invoices"
+                        type="object" class="btn-primary"
+                        context="{'created_from_vehicle_cost': True, 'journal_type': 'purchase'}" />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_view_fleet_vehicle_cost_invoicing_wizard" model="ir.actions.act_window">
+        <field name="name">Invoice Vehicle Costs</field>
+        <field name="res_model">fleet.vehicle.cost.invoicing.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_type':'in_invoice'}</field>
+        <field name="binding_model_id" ref="fleet.model_fleet_vehicle_log_services"/>
+        <field name="binding_view_types">form</field>
+    </record>
+
+</odoo>

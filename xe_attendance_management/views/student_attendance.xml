@@ -3,13 +3,13 @@
         <field name="name">xe.student.attendance.list</field>
         <field name="model">xe.student.attendance</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name"/>
                 <field name="attendance_register_id"/>
                 <field name="attendance_date"/>
                 <field name="teacher_user_id"/>
                 <field name="state"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -57,7 +57,7 @@
                         <page name="attendance_details" string="Attendance Details"
                               invisible="fetch_students == False">
                             <field name="attendance_details_ids" readonly="state not in ['draft']">
-                                <tree editable="bottom" create="false">
+                                <list editable="bottom" create="false">
                                     <field name="student_id" readonly="1"/>
                                     <field name="roll_number"/>
                                     <field name="attendance" string="Status"/>
@@ -66,7 +66,7 @@
                                     <field name="course_id" column_invisible="1"/>
                                     <field name="term_id" column_invisible="1"/>
                                     <field name="attendance_date" column_invisible="1"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                     </notebook>
@@ -106,7 +106,7 @@
     <record model="ir.actions.act_window" id="attendance_action_window">
         <field name="name">Attendance Sheet</field>
         <field name="res_model">xe.student.attendance</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <menuitem name="Student Attendance" id="xe_attendance_menu_root" sequence="11"

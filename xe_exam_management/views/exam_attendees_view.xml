@@ -71,26 +71,36 @@
             </form>
         </field>
     </record>
-    <record id="view_xe_exam_attendees_search" model="ir.ui.view">
-        <field name="name">xe.exam.attendees.search</field>
-        <field name="model">xe.exam.attendees</field>
-        <field name="priority" eval="8"/>
-        <field name="arch" type="xml">
-            <search string="Exam Attendees">
-                <field name="student_id"/>
-                <field name="status"/>
-                <field name="marks"/>
-                <field name="exam_id"/>
-                <newline/>
-                <group expand="0" string="Group By...">
-                    <filter string="Student" name="student" domain="[]" context="{'group_by':'student_id'}"/>
-                    <filter string="Status" name="status" domain="[]" context="{'group_by':'status'}"/>
-                    <filter string="Exam" name="exam" domain="[]" context="{'group_by':'exam_id'}"/>
-                </group>
-            </search>
-        </field>
-    </record>
-    <record model="ir.actions.act_window" id="act_open_xe_exam_attendees_view">
+<!--    <record id="view_xe_exam_attendees_search" model="ir.ui.view">-->
+<!--        <field name="name">xe.exam.attendees.search</field>-->
+<!--        <field name="model">xe.exam.attendees</field>-->
+<!--        <field name="priority" eval="8"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <search string="Exam Attendees">-->
+<!--                <field name="student_id"/>-->
+<!--                <field name="status"/>-->
+<!--                <field name="marks"/>-->
+<!--                <field name="exam_id"/>-->
+<!--                <newline/>-->
+<!--                <group expand="0" string="Group By...">-->
+<!--                    <filter string="Student" name="student" domain="[]" context="{'group_by':'student_id'}"/>-->
+<!--                    <filter string="Status" name="status" domain="[]" context="{'group_by':'status'}"/>-->
+<!--                    <filter string="Exam" name="exam" domain="[]" context="{'group_by':'exam_id'}"/>-->
+<!--                </group>-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
+<record id="view_xe_exam_attendees_search" model="ir.ui.view">
+    <field name="name">xe.exam.attendees.search</field>
+    <field name="model">xe.exam.attendees</field>
+    <field name="arch" type="xml">
+        <search string="Exam Attendees">
+            <field name="student_id"/>
+            <field name="status"/>
+            <field name="exam_id"/>
+        </search>
+    </field>
+</record>    <record model="ir.actions.act_window" id="act_open_xe_exam_attendees_view">
         <field name="name">Exam Attendees</field>
         <field name="res_model">xe.exam.attendees</field>
         <field name="view_mode">list,form</field>

@@ -1,0 +1,30 @@
+# -*- coding: utf-8 -*-
+{
+    "name": "Xenesis Mobile API",
+    "summary": "API for Integration with Mobile App",
+    "version": "19.0.0.0.0",
+    "license": "AGPL-3",
+    "category": "Web",
+    "website": "www.sybyl.com, www.sybylcloud.com",
+    "author": "Sybyl",
+    "depends": [
+        "website",
+        "xenesis_school_base",
+        "xe_timetable_management",
+        "xe_exam_management",
+        "xe_assignment_management",
+        "xe_kenya_hr_payroll",
+        "xe_attendance_management",
+        "fleet",
+        "event_crm",
+        "sh_notice_board",
+        "xe_library_management",
+        "website_event",
+        "mail"
+    ],
+    "data": ["views/website_template.xml"],
+    "qweb": [],
+    "installable": True,
+    "auto_install": True,
+    "application": True,
+}

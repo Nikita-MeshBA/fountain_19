@@ -61,7 +61,7 @@ class SendEmailWizard(models.TransientModel):
             ):
                 report_domain.append(
                     (
-                        "groups_id",
+                        "group_ids",
                         "in",
                         self.env.ref(
                             "xe_exam_management.group_rubrics_configurations"
@@ -73,7 +73,7 @@ class SendEmailWizard(models.TransientModel):
             ):
                 report_domain.append(
                     (
-                        "groups_id",
+                        "group_ids",
                         "in",
                         self.env.ref(
                             "xe_exam_management.group_subject_rubrics_configuration"

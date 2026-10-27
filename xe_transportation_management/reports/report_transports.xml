@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <template id="report_transports">
+      <t t-call="web.html_container">
+         <t t-call="web.external_layout">
+            <div class="font">
+               <center><h2>Transportation Details</h2></center>
+                  <table class="table">
+                     <thead>
+                        <tr>
+                           <th>Route</th>
+                           <th>Stop</th>
+                           <th>Admission Number</th>
+                           <th>Passenger</th>
+                        </tr>
+                     </thead>
+                     <t t-foreach="docs" t-as="doc">
+                        <tbody>
+                           <t t-foreach="doc.stop_ids" t-as="stop_line">
+                              <tr t-foreach="stop_line.partner_ids" t-as="partner">
+                                 <td><span t-esc="doc.name"/></td>
+                                 <td><span t-esc="stop_line.name"/></td>
+                                 <td><span t-esc="partner.roll_number"/></td>
+                                 <td><span t-esc="partner.name"/></td>
+                              </tr>
+                           </t>
+                        </tbody>
+                     </t>
+                  </table>
+
+            </div>
+         </t>
+      </t>
+   </template>
+</odoo>
+
+

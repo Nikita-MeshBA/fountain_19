@@ -1,0 +1,81 @@
+<odoo>
+
+    <record id="xe_hostel_member_leaves_tree_view" model="ir.ui.view">
+        <field name="name">xe.hostel.member_leaves.tree.view</field>
+        <field name="model">xe.hostel.member_leaves</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="request_id" string="Request Id"/>
+                <field name="hostel_admission_id" string="Member"/>
+                <field name="days" string="Number of Days"/>
+                <field name="state" string="Status" widget="badge"
+                    decoration-info="state == 'draft'" 
+                    decoration-warning="state == 'confirm'" 
+                    decoration-success="state == 'validate'" 
+                    decoration-danger="state == 'refuse'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="xe_hostel_member_leaves_form_view" model="ir.ui.view">
+        <field name="name">xe.hostel.member.leaves.form.view</field>
+        <field name="model">xe.hostel.member_leaves</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="button_submit" string="Submit" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="button_approve" string="Approve" type="object" class="oe_highlight" invisible="state != 'confirm'"/>
+                    <button name="button_refuse" string="Refuse" type="object" invisible="state != 'confirm'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                       <h1><field name="request_id" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group class="col_left">
+                            <field name="hostel_admission_id" domain="[('state', '=', 'allocated')]" string="Member" required="1"/>
+                            <field name="hostel_id" string="Hostel"/>
+                            <label for="date_from" string="Dates" />
+                            <div class="o_row">
+                                <field
+                                    name="date_from"
+                                    widget="daterange"
+                                    required="1"
+                                    options="{'end_date_field': 'date_to'}"/>
+                                <field name="date_to" invisible="1" />
+                            </div>
+                        </group>
+                        <group>
+                            <field name="days" string="Number of Days" readonly="1"/>
+                            <field name="reason" string="Description" required="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="xe_hostel_member_leaves_search_view" model="ir.ui.view">
+        <field name="name">xe.hostel.member.leaves.search.view</field>
+        <field name="model">xe.hostel.member_leaves</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter string="To Approve" name="filter_to_approve_state"
+                    domain="[('state', '=', 'confirm')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hostel_member_leaves" model="ir.actions.act_window">
+        <field name="name">Leave Requests</field>
+        <field name="res_model">xe.hostel.member_leaves</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="xe_hostel_member_leaves_search_view"/>
+        <field name="context">{'search_default_filter_to_approve_state': 1}</field>
+    </record>
+</odoo>

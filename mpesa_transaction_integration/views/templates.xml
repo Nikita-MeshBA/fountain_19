@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <!--		<template id="assets_backend_mpesa_transaction_integration" name="mpesa_transaction_integration assets" inherit_id="web.assets_backend">-->
+        <!--            <xpath expr="." position="inside">-->
+        <!--                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"/>-->
+        <!--                <link rel="stylesheet" href="/mpesa_transaction_integration/static/src/lib/daterangepicker/daterangepicker.css"/>-->
+        <!--                <link rel="stylesheet" href="/mpesa_transaction_integration/static/src/lib/datatables/datatables.css"/>-->
+        <!--                <link rel="stylesheet" href="/mpesa_transaction_integration/static/src/css/mpesacash_payment.css"/>-->
+        <!--                <script type="text/javascript" src="/mpesa_transaction_integration/static/src/lib/Chart/Chart.js"></script>-->
+        <!--                <script type="text/javascript" src="/mpesa_transaction_integration/static/src/lib/datatables/datatables.js"></script>-->
+        <!--                <script type="text/javascript" src="/mpesa_transaction_integration/static/src/lib/daterangepicker/daterangepicker.js"></script>-->
+        <!--                <script type="text/javascript" src="/mpesa_transaction_integration/static/src/js/mpesacash_payment.js"></script>-->
+        <!--            </xpath>-->
+        <!--        </template>-->
+
+        <record id="mpesacash_payment_dashboard_action" model="ir.actions.client">
+            <field name="name">MPesa Dashboard</field>
+            <field name="tag">mpesa-cash-dashboard</field>
+        </record>
+
+    </data>
+</odoo>

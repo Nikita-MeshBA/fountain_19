@@ -4,13 +4,13 @@
         <field name="model">xe.attendance.register</field>
         <field name="priority" eval="8"/>
         <field name="arch" type="xml">
-            <tree string="Attendance Register">
+            <list string="Attendance Register">
                 <field name="name"/>
                 <field name="code"/>
                 <field name="course_id"/>
                 <field name="class_room_id"/>
                 <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_xe_attendance_register_form" model="ir.ui.view">
@@ -46,7 +46,7 @@
         <field name="name">Attendance Registers</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">xe.attendance.register</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <menuitem name="Attendance Register" id="xe_attendance_register" parent="xe_attendance_menu_root"
               action="attendance_register_act" sequence="1"

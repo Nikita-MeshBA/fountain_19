@@ -1,0 +1,32 @@
+<odoo>
+    <record id="xe_subject_form_inherit" model="ir.ui.view">
+        <field name="name">xe.subject.form.view.inherit</field>
+        <field name="model">xe.subject</field>
+        <field name="inherit_id" ref="xenesis_school_base.view_subject_form"/>
+        <field name="arch" type="xml">
+            <field name="course_ids" position="before">
+                <field name="is_theme" string="Has Theme"/>
+            </field>
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page string="Theme">
+                        <field name="theme_ids">
+                            <list>
+                                <field name="code"/>
+                                <field name="name"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page string="Strand">
+                        <field name="strand_ids">
+                            <list>
+                                <field name="code"/>
+                                <field name="name"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+</odoo>

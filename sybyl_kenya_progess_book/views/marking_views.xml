@@ -1,0 +1,50 @@
+<odoo>
+    <record model="ir.ui.view" id="xe_marking_form_view">
+        <field name="name">xe.marking.form.view</field>
+        <field name="model">xe.marking</field>
+        <field name="arch" type="xml">
+            <form string="Marking">
+                <sheet>
+                    <group>
+                        <field name="student_id"/>
+                        <field name="rubric_id"/>
+                        <field name="rubric_activity"/>
+                        <field name="grade"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="xe_marking_tree_view">
+        <field name="name">xe.marking.tree.view</field>
+        <field name="model">xe.marking</field>
+        <field name="arch" type="xml">
+            <list string="Markings" editable="bottom">
+                <field name="marking_id" readonly="1"/>
+                <field name="student_id" readonly="1"/>
+                <field name="course_id" readonly="1" optional="show"/>
+                <field name="classroom_id" readonly="1" optional="show"/>
+                <field name="academic_term_id" readonly="1" optional="show"/>
+                <field name="rubric_id" readonly="1" optional="show"/>
+                <field name="subject_id" optional="show"/>
+                <field name="substrand_id" optional="show"/>
+                <field name="rubric_activity" readonly="1" optional="show"/>
+                <field name="grade"/>
+                <field name="comment" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_xe_marking">
+        <field name="name">Markings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">xe.marking</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Marking Record
+            </p>
+        </field>
+    </record>
+</odoo>

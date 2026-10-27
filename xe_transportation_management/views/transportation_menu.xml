@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_xe_transportations_main" name="Transportation"
+            web_icon="xe_transportation_management,static/description/icon.png"
+            groups="xe_transportation_management.group_xe_transport_manager,xenesis_school_base.group_xe_staff"
+            sequence="100" />
+
+        <menuitem id="menu_xe_route_sub" name="Routes"
+            parent="menu_xe_transportations_main" sequence="10"
+            action="act_open_xe_route_view"/>
+
+        <menuitem id="menu_xe_stop_sub" name="Stops"
+            parent="menu_xe_transportations_main" sequence="20"
+            action="act_open_xe_stop_view"/>
+
+        <menuitem id="menu_xe_route_line_sub" name="Trips"
+            parent="menu_xe_transportations_main" sequence="30"
+            action="act_open_xe_route_line_view"/>
+
+        <menuitem id="menu_xe_vehicle_sub" name="Vehicles"
+            parent="menu_xe_transportations_main" sequence="40"
+            action="act_open_xe_vehicle_view"/>
+    </data>
+</odoo>

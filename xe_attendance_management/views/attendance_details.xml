@@ -4,7 +4,7 @@
         <field name="name">xe.attendance.details.tree</field>
         <field name="model">xe.attendance.details</field>
         <field name="arch" type="xml">
-            <tree create="false" edit="false" delete="false">
+            <list create="false" edit="false" delete="false">
                 <field name="student_id" readonly="1"/>
                 <field name="attendance_date"/>
                 <field name="attendance_id"/>
@@ -14,7 +14,7 @@
                 <field name="course_id" invisible="1"/>
                 <field name="term_id" invisible="1"/>
                 <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_attendance_details_filter" model="ir.ui.view">

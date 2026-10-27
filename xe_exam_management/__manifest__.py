@@ -11,7 +11,7 @@
 ##################################################################
 {
     "name": "Xenesis Exam Management",
-    "version": "17.0.0.0.0",
+    "version": "19.0.0.0.0",
     "license": "AGPL-3",
     "category": "Education",
     "sequence": 3,

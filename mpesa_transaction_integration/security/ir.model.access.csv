@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mpesa_payment_transaction_admin,mpesa.payment.transaction.admin,mpesa_transaction_integration.model_mpesa_payment_transaction,base.group_erp_manager,1,1,1,0
+access_mpesa_payment_transaction_user,mpesa.payment.transaction.user,mpesa_transaction_integration.model_mpesa_payment_transaction,,1,1,0,0
+access_mpesa_payment_manual_reconcile_user,mpesa.payment.manual.reconcile.user,model_mpesa_payment_manual_reconcile,,1,1,1,1
+access_mpesa_transaction_report_wizard_user,mpesa.transaction.report.wizard.user,model_mpesa_transaction_report_wizard,,1,1,1,1

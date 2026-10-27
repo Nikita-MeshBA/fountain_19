@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="progress_book_report_wizard_form" model="ir.ui.view">
+        <field name="name">xe.progress.book.report.wizard.form</field>
+        <field name="model">xe.progress.book.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="course_id" required="1"
+                               options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                        <field name="classroom_id" required="1"
+                               options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                    </group>
+                    <group>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_pdf_report" string="Print PDF" type="object" default_focus="1"
+                            class="oe_highlight"/>
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_progress_book_report" model="ir.actions.act_window">
+        <field name="name">Progress Book Report Wizard</field>
+        <field name="res_model">xe.progress.book.report.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="progress_book_report_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+    <menuitem
+            id="progress_book_report"
+            name="Progress Book Report"
+            action="action_progress_book_report"
+            parent="xenesis_school_base.menu_base_report"
+            sequence="90"/>
+</odoo>

@@ -12,22 +12,41 @@
             </list>
         </field>
     </record>
+<!--    <record id="view_xe_exam_type_search" model="ir.ui.view">-->
+<!--        <field name="name">xe.exam.type.search</field>-->
+<!--        <field name="model">xe.exam.type</field>-->
+<!--        <field name="priority" eval="8"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <search string="Exam Type">-->
+<!--                <field name="name"/>-->
+<!--                <field name="code"/>-->
+<!--                <newline/>-->
+<!--                <group expand="0" string="Group By...">-->
+<!--                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}"/>-->
+<!--                    <filter string="Code" name="code" domain="[]" context="{'group_by':'code'}"/>-->
+<!--                </group>-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
     <record id="view_xe_exam_type_search" model="ir.ui.view">
-        <field name="name">xe.exam.type.search</field>
-        <field name="model">xe.exam.type</field>
-        <field name="priority" eval="8"/>
-        <field name="arch" type="xml">
-            <search string="Exam Type">
-                <field name="name"/>
-                <field name="code"/>
-                <newline/>
-                <group expand="0" string="Group By...">
-                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}"/>
-                    <filter string="Code" name="code" domain="[]" context="{'group_by':'code'}"/>
-                </group>
-            </search>
-        </field>
-    </record>
+    <field name="name">xe.exam.type.search</field>
+    <field name="model">xe.exam.type</field>
+    <field name="arch" type="xml">
+        <search string="Exam Type">
+            <field name="name"/>
+            <field name="code"/>
+
+            <group>
+                <filter string="Name"
+                        name="group_by_name"
+                        context="{'group_by': 'name'}"/>
+                <filter string="Code"
+                        name="group_by_code"
+                        context="{'group_by': 'code'}"/>
+            </group>
+        </search>
+    </field>
+</record>
     <record model="ir.actions.act_window" id="act_open_xe_exam_type_view">
         <field name="name">Exam Types</field>
         <field name="res_model">xe.exam.type</field>

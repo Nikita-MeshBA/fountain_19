@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="xe_hostel_assets_tree_view" model="ir.ui.view">
+        <field name="name">xe.hostel.assets.tree.view</field>
+        <field name="model">xe.hostel.assets</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="hostel_id"/>
+                <field name="room_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="xe_hostel_assets_form_view" model="ir.ui.view">
+        <field name="name">xe.hostel.assets.form.view</field>
+        <field name="model">xe.hostel.assets</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="product_image" widget="image" class="oe_avatar" readonly="1"
+                           options="{&quot;zoom&quot;: true, &quot;preview_image&quot;:&quot;product_image&quot;}"
+                           force_save="True"/>
+                    <group>
+                        <group>
+                            <field name="product_id" string="Product" required="1" options="{'no_create': true, 'no_edit': true}"/>
+                            <field name="name"/>
+                            <field name="product_categ_id" string="Category" options="{'no_create': true, 'no_edit': true}"/>
+                            <field name="product_uom_id" string="Unit of measure" options="{'no_create': true, 'no_edit': true}"/>
+                            <field name="product_type" string="Type" options="{'no_create': true, 'no_edit': true}"/>
+                        </group>
+                        <group>
+                            <field name="hostel_id" options="{'no_create': true, 'no_edit': true}"/>
+                            <field name="room_id" options="{'no_create': true, 'no_edit': true}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hostel_assets" model="ir.actions.act_window">
+        <field name="name">Hostel Assets</field>
+        <field name="res_model">xe.hostel.assets</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,74 @@
+<odoo>
+    <data>
+        <record id="view_account_journal_form_inherited_mpesa" model="ir.ui.view">
+            <field name="name">account.journal.form.inherited.mpesa</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <field name="code" position="after">
+                    <field name="is_mpesa_journal"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_account_payment_form_inherit_mpesa" model="ir.ui.view">
+            <field name="name">account.payment.form</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_bank_id" position="after">
+                    <field name="company_id" readonly="0"/>
+                </field>
+            </field>
+        </record>
+
+        <!--  Jounral Entry Role Inherit-->
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                        eval="[('module', '=', 'account'), ('name', '=', 'journal_comp_rule')]"/>
+            </function>
+            <value eval="{'noupdate': False}"/>
+        </function>
+
+        <record id="account.journal_comp_rule" model="ir.rule">
+            <field name="domain_force">
+                ['|','|',('company_id','=',False),('company_id','child_of',[user.company_id.id]),('company_id','child_of',[x.id
+                for x in user.company_ids])]
+            </field>
+        </record>
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                        eval="[('module', '=', 'account'), ('name', '=', 'journal_comp_rule')]"/>
+            </function>
+            <value eval="{'noupdate': True}"/>
+        </function>
+
+        <!--  Account Move Role Inherit-->
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                        eval="[('module', '=', 'account'), ('name', '=', 'account_move_comp_rule')]"/>
+            </function>
+            <value eval="{'noupdate': False}"/>
+        </function>
+
+        <record id="account.account_move_comp_rule" model="ir.rule">
+            <field name="domain_force">
+                ['|','|',('company_id','=',False),('company_id','child_of',[user.company_id.id]),('company_id','child_of',[x.id
+                for x in user.company_ids])]
+            </field>
+        </record>
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                        eval="[('module', '=', 'account'), ('name', '=', 'account_move_comp_rule')]"/>
+            </function>
+            <value eval="{'noupdate': True}"/>
+        </function>
+
+    </data>
+</odoo>

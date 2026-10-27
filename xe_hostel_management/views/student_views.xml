@@ -1,0 +1,27 @@
+<odoo>
+
+    <record id="student_form_view_inherit" model="ir.ui.view">
+        <field name="name">xe.student.form.view.inherit</field>
+        <field name="model">xe.student</field>
+        <field name="inherit_id" ref="xenesis_school_base.view_student_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='general_detail']" position="after">
+                <group string="Hostel">
+                    <field name="is_hostel_facility" string="Need Hostel Facility"/>
+                </group>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Hostel Details" invisible="is_hostel_facility == False">
+                    <group>
+                        <group>
+                            <field name="hostel_id" string="Hostel" options="{'no_create': true, 'no_edit': true}" readonly="1"/>
+                            <field name="room_id" string="Room" options="{'no_create': true, 'no_edit': true}" readonly="1"/>
+                            <field name="bed_id" string="Bed" options="{'no_create': true, 'no_edit': true}" readonly="1"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

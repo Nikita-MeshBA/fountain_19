@@ -1,0 +1,25 @@
+<odoo>
+    <menuitem name="Assesment" id="menu_root_assesment" sequence="10"/>
+    <menuitem name="Subjects" id="menu_main_subject" parent="sybyl_kenya_progess_book.menu_root_assesment"
+              sequence="101"/>
+    <menuitem name="Markings" id="menu_main_marking" parent="sybyl_kenya_progess_book.menu_root_assesment"
+              sequence="201"/>
+    <menuitem name="Report" id="menu_reports" parent="sybyl_kenya_progess_book.menu_root_assesment" sequence="301"/>
+
+    <menuitem name="Theme" id="menu_xe_theme" parent="sybyl_kenya_progess_book.menu_main_subject"
+              action="sybyl_kenya_progess_book.action_xe_theme" sequence="111"/>
+    <menuitem name="Strand" id="menu_xe_strand" parent="sybyl_kenya_progess_book.menu_main_subject"
+              action="sybyl_kenya_progess_book.action_xe_strand" sequence="112"/>
+    <menuitem name="Substrand" id="menu_xe_substrand" parent="sybyl_kenya_progess_book.menu_main_subject"
+              action="sybyl_kenya_progess_book.action_xe_substrand" sequence="113"/>
+    <menuitem name="Rubric" id="menu_xe_rubric" parent="sybyl_kenya_progess_book.menu_main_subject"
+              action="sybyl_kenya_progess_book.action_xe_rubric" sequence="114"/>
+
+    <menuitem name="Marking" id="menu_xe_marking" parent="sybyl_kenya_progess_book.menu_main_marking"
+              action="sybyl_kenya_progess_book.action_xe_marking" sequence="211"/>
+    <menuitem name="Marking Wizard" id="menu_xe_marking_wizard" parent="sybyl_kenya_progess_book.menu_main_marking"
+              action="sybyl_kenya_progess_book.action_xe_marking_wizard" sequence="212"/>
+
+    <menuitem name="Progress Book" id="menu_xe_progress_book_wizard" parent="sybyl_kenya_progess_book.menu_reports"
+              action="sybyl_kenya_progess_book.action_xe_progress_book_wizard" sequence="311"/>
+</odoo>

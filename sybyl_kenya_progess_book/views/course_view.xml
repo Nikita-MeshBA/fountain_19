@@ -1,0 +1,12 @@
+<odoo>
+    <record id="view_course_form_view_inherit" model="ir.ui.view">
+        <field name="name">view.course.form.view.inherit</field>
+        <field name="model">xe.course</field>
+        <field name="inherit_id" ref="xenesis_school_base.view_course_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="progress_book_pdf_format"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

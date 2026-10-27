@@ -15,9 +15,14 @@
                     <field name="policy_ids"/>
                 </page>
             </xpath>
-            <xpath expr="//field[@name='coach_id']" position="after">
+<!--            <xpath expr="//field[@name='coach_id']" position="after">-->
+<!--                <field name="allow_multiple_loan"/>-->
+<!--            </xpath>-->
+            <xpath expr="//page[@name='hr_settings']" position="inside">
+            <group string="Loan Settings">
                 <field name="allow_multiple_loan"/>
-            </xpath>
+            </group>
+        </xpath>
         </field>
     </record>
 

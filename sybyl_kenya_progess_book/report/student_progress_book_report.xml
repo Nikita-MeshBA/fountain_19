@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="inherit_external_layout_standard_header" inherit_id="web.external_layout_standard">
+        <!-- <xpath expr="//div[contains(@t-attf-class, 'header')]//div[@class='row'][2]" position="replace">-->
+        <!-- </xpath>-->
+        <xpath expr="//div[contains(@t-attf-class, 'footer')]" position="replace">
+        </xpath>
+    </template>
+
+    <template id="student_progress_book_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <style>
+                    .report-container {
+                    max-width: 800px;
+                    margin: 0 auto;
+                    }
+
+                    .student-header {
+                    text-align: center;
+                    margin-bottom: 20px;
+                    }
+
+                    .student-name {
+                    font-size: 30px;
+                    font-weight: bold;
+                    <!-- padding-top: 20px; -->
+                    }
+
+                    .subject-heading {
+                    font-size: 24px;
+                    font-weight: bold;
+                    margin-top: 30px;
+                    margin-bottom: 10px;
+                    page-break-inside: avoid;
+                    }
+
+                    .theme-table {
+                    border-collapse: collapse;
+                    width: 100%;
+                    margin-top: 20px;
+                    }
+
+                    .theme-heading {
+                    font-size: 16px;
+                    font-weight: bold;
+                    text-align: center;
+                    background-color: #333;
+                    color: #fff;
+                    padding: 10px;
+                    }
+
+                    .strand-table {
+                    border-collapse: collapse;
+                    width: 100%;
+                    margin-top: 15px;
+                    }
+
+                    .strand-heading {
+                    font-size: 14px;
+                    font-weight: bold;
+                    text-align: center;
+                    background-color: #666;
+                    color: #fff;
+                    padding: 10px;
+                    }
+
+                    .report-table {
+                    border-collapse: collapse;
+                    width: 100%;
+                    }
+
+                    .report-table tbody {
+                    font-size: 12px;
+                    }
+
+                    .report-table th,
+                    .report-table td {
+                    padding: 8px;
+                    border: 1px solid #ccc;
+                    text-align: center;
+                    }
+
+                    .report-table th {
+                    background-color: #f0f0f0;
+                    font-weight: bold;
+                    }
+                </style>
+                <div class="student-header">
+                    <h1 style="font-size: 25px;">Student Reports</h1>
+                    <h2 style="font-size: 25px;" class="student-name">
+                        <span t-esc="name"/>
+                    </h2>
+                </div>
+                <!-- <t t-foreach="docs" t-as="doc"> -->
+                <div class="page">
+                    <div class="report-container">
+                        <t t-set="header_count" t-value="0"/>
+                        <t t-foreach="marking_ids.subject_id" t-as="subject">
+                            <!-- <div class="page"> -->
+                            <!-- <t t-set="skip_if_statement" t-value="False"/>
+                            <t t-set="Head Teacher" t-value="'Specific Group Name'"/>
+                            <t t-set="user_groups" t-value="user.groups_id.mapped('name')"/>
+                            <t t-if="specific_group_name in user_groups">
+                                <t t-set="skip_if_statement" t-value="True"/>
+                            </t> -->
+                            <!-- <t t-if="not skip_if_statement or (skip_if_statement and user.id in subject.class_teacher.user_id.ids)"> -->
+                            <h2 class="subject-heading">
+                                <span t-esc="subject.name"/>
+                            </h2>
+                            <t t-if="subject.theme_ids">
+                                <t t-foreach="subject.theme_ids" t-as="theme">
+                                    <table class="theme-table">
+                                        <tr>
+                                            <td colspan="4" class="theme-heading">
+                                                <span t-esc="theme.name"/>
+                                            </td>
+                                        </tr>
+                                        <t t-foreach="theme.strand_ids" t-as="strand">
+                                            <table class="strand-table">
+                                                <tr>
+                                                    <td colspan="4" class="strand-heading">
+                                                        <span t-esc="strand.name"/>
+                                                    </td>
+                                                </tr>
+                                                <table class="report-table">
+                                                    <t t-if="header_count==0">
+                                                        <tr>
+                                                            <th style="color: #af021e; width: 14%; word-wrap: break-word; word-break: break-all; white-space: normal;">
+                                                                SUBSTAND
+                                                            </th>
+                                                            <th style="color: #af021e; width: 14%; word-wrap: break-word; word-break: break-all; white-space: normal;">
+                                                                PERFORMANCE<br></br>INDICATORS
+                                                            </th>
+                                                            <th style="color: #af021e; width: 50%; word-wrap: break-word; word-break: break-all; white-space: normal;">
+                                                                LEVEL OF PERFORMANCE
+                                                            </th>
+                                                            <th style="color: #af021e; width: 8%; word-wrap: break-word; word-break: break-all; white-space: normal;">
+                                                                SCORE
+                                                            </th>
+                                                            <th style="color: #af021e; width: 14%; word-wrap: break-word; word-break: break-all; white-space: normal;">
+                                                                COMMENT
+                                                            </th>
+                                                        </tr>
+                                                        <t t-set="header_count" t-value="header_count+1"/>
+                                                    </t>
+                                                    <tbody>
+                                                        <t t-set="substrand_ids"
+                                                           t-value="marking_ids.mapped('rubric_id.substrand_id.id')"/>
+
+                                                        <t t-foreach="substrand_ids" t-as="substrand">
+                                                            <t t-set="sub"
+                                                               t-value="marking_ids.filtered(lambda r: r.rubric_id.substrand_id.id==substrand and r.subject_id == subject and r.theme_id == theme and r.strand_id == strand)"/>
+                                                            <t t-set="count" t-value="0"/>
+
+                                                            <t t-if="sub">
+                                                                <td style="vertical-align: top; width: 14%;"
+                                                                    class="text-left" t-att-rowspan="len(sub)+1">
+                                                                    <span t-field="sub[0].rubric_id.name"/>
+                                                                </td>
+                                                                <td style="vertical-align: top; width: 14%;"
+                                                                    class="text-left" t-att-rowspan="len(sub)+1">
+                                                                    <span t-field="sub[0].rubric_id.substrand_id.performance_indicator"/>
+                                                                </td>
+                                                            </t>
+
+                                                            <tr t-foreach="marking_ids.filtered(lambda r: r.rubric_id.substrand_id.id==substrand and r.subject_id == subject and r.theme_id == theme and r.strand_id == strand)"
+                                                                t-as="marking">
+                                                                <td class="text-left" style="width: 50%;">
+                                                                    <span t-field="marking.rubric_activity"/>
+                                                                </td>
+                                                                <td style="vertical-align: top; width: 8%;">
+                                                                    <span t-field="marking.grade"/>
+                                                                </td>
+
+                                                                <t t-if="count==0">
+                                                                    <t t-set="concate_comment_list"
+                                                                       t-value="marking_ids.filtered(lambda r: r.rubric_id.substrand_id.id==substrand and r.subject_id == subject and r.theme_id == theme and r.strand_id == strand).mapped('comment')"/>
+                                                                    <td class="text-left" style="width: 14%;"
+                                                                        t-att-rowspan="len(sub)+1">
+                                                                        <span t-esc="' '.join([cc for cc in concate_comment_list if cc])"/>
+                                                                    </td>
+                                                                    <t t-set="count" t-value="count+1"/>
+                                                                </t>
+                                                            </tr>
+                                                        </t>
+                                                    </tbody>
+                                                </table>
+                                            </table>
+                                        </t>
+                                    </table>
+                                </t>
+                            </t>
+                            <t t-else="">
+                                <t t-foreach="subject.strand_ids" t-as="strand">
+                                    <table class="strand-table">
+                                        <tr>
+                                            <td colspan="4" class="strand-heading">
+                                                <span t-esc="strand.name"/>
+                                            </td>
+                                        </tr>
+                                        <table class="report-table">
+                                            <t t-if="header_count==0">
+                                                <tr>
+                                                    <th style="color: #af021e; width: 14%; word-wrap: break-word; word-break: break-all; white-space: normal;">
+                                                        SUBSTAND
+                                                    </th>
+                                                    <th style="color: #af021e; width: 14%; word-wrap: break-word; word-break: break-all; white-space: normal;">
+                                                        PERFORMANCE<br></br>INDICATORS
+                                                    </th>
+                                                    <th style="color: #af021e; width: 50%; word-wrap: break-word; word-break: break-all; white-space: normal;">
+                                                        LEVEL OF PERFORMANCE
+                                                    </th>
+                                                    <th style="color: #af021e; width: 8%; word-wrap: break-word; word-break: break-all; white-space: normal;">
+                                                        SCORE
+                                                    </th>
+                                                    <th style="color: #af021e; width: 14%; word-wrap: break-word; word-break: break-all; white-space: normal;">
+                                                        COMMENT
+                                                    </th>
+                                                </tr>
+                                                <t t-set="header_count" t-value="header_count+1"/>
+                                            </t>
+                                            <tbody>
+                                                <t t-set="substrand_ids"
+                                                   t-value="marking_ids.mapped('rubric_id.substrand_id.id')"/>
+
+                                                <t t-foreach="substrand_ids" t-as="substrand">
+                                                    <t t-set="sub"
+                                                       t-value="marking_ids.filtered(lambda r: r.rubric_id.substrand_id.id==substrand and r.subject_id == subject and r.strand_id == strand)"/>
+                                                    <t t-set="count" t-value="0"/>
+
+                                                    <t t-if="sub">
+                                                        <td style="vertical-align: top; width: 14%;" class="text-left"
+                                                            t-att-rowspan="len(sub)+1">
+                                                            <span t-field="sub[0].rubric_id.name"/>
+                                                        </td>
+                                                        <td style="vertical-align: top; width: 14%;" class="text-left"
+                                                            t-att-rowspan="len(sub)+1">
+                                                            <span t-field="sub[0].rubric_id.substrand_id.performance_indicator"/>
+                                                        </td>
+                                                    </t>
+
+                                                    <tr t-foreach="marking_ids.filtered(lambda r: r.rubric_id.substrand_id.id==substrand and r.subject_id == subject and r.strand_id == strand)"
+                                                        t-as="marking">
+                                                        <td class="text-left" style="width: 50%;">
+                                                            <span t-field="marking.rubric_activity"/>
+                                                        </td>
+                                                        <td style="vertical-align: top; width: 8%;">
+                                                            <span t-field="marking.grade"/>
+                                                        </td>
+
+                                                        <t t-if="count==0">
+                                                            <t t-set="concate_comment_list"
+                                                               t-value="marking_ids.filtered(lambda r: r.rubric_id.substrand_id.id==substrand and r.subject_id == subject and r.strand_id == strand).mapped('comment')"/>
+
+                                                            <td class="text-left" style="width: 14%;"
+                                                                t-att-rowspan="len(sub)+1">
+                                                                <span t-esc="' '.join([cc for cc in concate_comment_list if cc])"/>
+                                                            </td>
+                                                            <t t-set="count" t-value="count+1"/>
+                                                        </t>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </table>
+                                </t>
+                            </t>
+                            <!-- </t> -->
+                            <!-- </div> -->
+                        </t>
+                    </div>
+                </div>
+                <div class="footer text-center">
+                    Page:<span class="page"/>/
+                    <span class="topage"/>
+                </div>
+                <!-- </t> -->
+            </t>
+        </t>
+    </template>
+
+    <record id="action_student_progress_report_format_1" model="ir.actions.report">
+        <field name="name">Student Progress Book</field>
+        <field name="model">xe.progress.book.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="attachment"></field>
+        <field name="report_name">sybyl_kenya_progess_book.student_progress_book_report</field>
+        <field name="report_file">sybyl_kenya_progess_book.student_progress_book_report</field>
+        <field name="print_report_name">'Student Progress Book - %s' % (object.student_id.name)</field>
+    </record>
+</odoo>

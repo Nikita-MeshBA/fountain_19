@@ -1,0 +1,89 @@
+<odoo>
+    <record id="xe_marking_wizard_form_view" model="ir.ui.view">
+        <field name="name">xe.marking.wizard.form.view</field>
+        <field name="model">xe.marking.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="course_id" string="Class" required="1"
+                               options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+                        <field name="classroom_id"
+                               options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+                        <field name="academic_term_id" string="Term" required="1"
+                               options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+                        <field name="subject_id" required="1"
+                               options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+                    </group>
+                    <footer>
+                        <button name="generate_summary" string="Generate Summary" type="object" class="btn-primary"/>
+                        <button special='cancel' string="Cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_xe_marking_wizard">
+        <field name="name">Markings Wizard</field>
+        <field name="res_model">xe.marking.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="xe_marking_wizard_form_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="xe_marking_wizard_line_tree_view" model="ir.ui.view">
+        <field name="name">xe.marking.wizard.line.tree.view</field>
+        <field name="model">xe.marking.wizard.line</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="student_id" readonly="1"/>
+                <field name="course_id" string="Class"/>
+                <field name="classroom_id"/>
+                <field name="academic_term_id"/>
+                <field name="subject_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="xe_marking_wizard_line_form_view" model="ir.ui.view">
+        <field name="name">xe.marking.wizard.line.form.view</field>
+        <field name="model">xe.marking.wizard.line</field>
+        <field name="arch" type="xml">
+            <form string="Marking Summary">
+                <sheet>
+                    <field name="student_id" style="font-size:40pt;" readonly="1"/>
+                    <group>
+                        <field name="course_id" string="Class" readonly="1"/>
+                        <field name="classroom_id" readonly="1"/>
+                        <field name="academic_term_id" readonly="1"/>
+                        <field name="subject_id" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Rubric">
+                            <field name="marking_ids" mode="tree">
+                                <list create="false" editable="bottom" options="{'no_create_edit': True}">
+                                    <!-- <field name="marking_id" readonly="1"/> -->
+                                    <field name="theme_id" readonly="1"/>
+                                    <field name="strand_id" readonly="1"/>
+                                    <field name="substrand_id" readonly="1"/>
+                                    <field name="rubric_id" readonly="1"/>
+                                    <field name="rubric_activity" readonly="1"/>
+                                    <field name="grade"/>
+                                    <field name="comment"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_xe_marking_wizard_line" model="ir.actions.act_window">
+        <field name="name">Marking Wizard Line</field>
+        <field name="res_model">xe.marking.wizard.line</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="xe_marking_wizard_line_form_view"/>
+    </record>
+</odoo>

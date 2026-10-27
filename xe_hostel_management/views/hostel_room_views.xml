@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="xe_hostel__room_tree_view" model="ir.ui.view">
+        <field name="name">xe.hostel.room.tree.view</field>
+        <field name="model">xe.hostel.room</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" string="Room Name"/>
+                <field name="code" string="Room Code"/>
+                <field name="hostel_id" string="Hostel"/>
+                <field name="allocated_students" string="Allocated Students"/>
+                <field name="vacancy" string="Vacancy"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="xe_hostel_room_form_view" model="ir.ui.view">
+        <field name="name">xe.hostel.room.form.view</field>
+        <field name="model">xe.hostel.room</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" string="Room Name" required="1"/>
+                            <field name="code" string="Room Code"/>
+                            <field name="capacity" string="Capacity"/>
+                        </group>
+                        <group>
+                            <field name="hostel_id" string="Hostel"/>
+                            <field name="floor_id" string="Floor" domain="[('hostel_id', '=', hostel_id)]"/>
+                            <field name="allocated_students" string="Allocated Students" invisible="1"/>
+                            <field name="vacancy" string="Vacancy" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page id="beds" string="Beds">
+                            <field name="bed_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="bed_category_id" options="{'no_create': true, 'no_edit': true}"/>
+                                    <field name="product_id" options="{'no_create': true, 'no_edit': true}"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page id="assets" string="Assets">
+                            <field name="asset_ids">
+                                <list editable="bottom">
+                                    <field name="name" required="1"/>
+                                    <field name="hostel_id" options="{'no_create': true, 'no_edit': true}"/>
+                                    <field name="product_id" required="1" options="{'no_create': true, 'no_edit': true}"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hostel_room" model="ir.actions.act_window">
+        <field name="name">Hostel Room</field>
+        <field name="res_model">xe.hostel.room</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

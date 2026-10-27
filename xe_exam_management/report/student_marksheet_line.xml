@@ -228,41 +228,70 @@
         </t>
     </template>
 
-    <template id="external_layout_standard_inherit" inherit_id="web.external_layout_standard">
-        <xpath expr="//div[hasclass('row')][1]/div[1]" position="attributes">
-            <t t-if="doc_model=='xe.marksheet.line'">
-                <attribute name="class" remove="col-3 mb4" add="col-4 mb4" separator=" "/>
-            </t>
-        </xpath>
-        <xpath expr="//div[hasclass('row')][1]/div[1]" position="attributes">
-            <t t-if="doc_model=='xe.marksheet.line'">
-                <attribute name="t-attf-style" add="position:relative;" separator=" "/>
-            </t>
-        </xpath>
-        <xpath expr="//div[hasclass('row')][1]/div[1]/img" position="attributes">
-            <t t-if="doc_model=='xe.marksheet.line'">
-                <attribute name="t-attf-style" add="max-height: 110px;" separator=" "/>
-            </t>
-        </xpath>
-        <xpath expr="//div[hasclass('row')][1]/div[2]" position="replace">
-            <div class="col-4 text-center mb4" t-if="doc_model == 'xe.marksheet.line'">
-                <strong>
-                    <span style="position:absolute;bottom:0;margin-left:80px;">Student MarkSheet</span>
-                </strong>
-            </div>
-            <div t-else="" class="col-9 text-right" style="margin-top:22px;" t-field="company.report_header"
-                 name="moto"/>
-        </xpath>
-        <xpath expr="//div[hasclass('row')][1]" position="inside">
-            <div class="col-4 text-right mb4" style="padding-left: 110px;" t-if="doc_model == 'xe.marksheet.line'">
-                <b>
-                    <span style="font-size:small;text-align:left;" t-if="company.company_details"
-                          t-field="company.company_details"></span>
-                </b>
-            </div>
-        </xpath>
-    </template>
+<!--    <template id="external_layout_standard_inherit" inherit_id="web.external_layout_standard">-->
+<!--        <xpath expr="//div[hasclass('row')][1]/div[1]" position="attributes">-->
+<!--            <t t-if="doc_model=='xe.marksheet.line'">-->
+<!--                <attribute name="class" remove="col-3 mb4" add="col-4 mb4" separator=" "/>-->
+<!--            </t>-->
+<!--        </xpath>-->
+<!--        <xpath expr="//div[hasclass('row')][1]/div[1]" position="attributes">-->
+<!--            <t t-if="doc_model=='xe.marksheet.line'">-->
+<!--                <attribute name="t-attf-style" add="position:relative;" separator=" "/>-->
+<!--            </t>-->
+<!--        </xpath>-->
+<!--        <xpath expr="//div[hasclass('row')][1]/div[1]/img" position="attributes">-->
+<!--            <t t-if="doc_model=='xe.marksheet.line'">-->
+<!--                <attribute name="t-attf-style" add="max-height: 110px;" separator=" "/>-->
+<!--            </t>-->
+<!--        </xpath>-->
+<!--        <xpath expr="//div[hasclass('row')][1]/div[2]" position="replace">-->
+<!--            <div class="col-4 text-center mb4" t-if="doc_model == 'xe.marksheet.line'">-->
+<!--                <strong>-->
+<!--                    <span style="position:absolute;bottom:0;margin-left:80px;">Student MarkSheet</span>-->
+<!--                </strong>-->
+<!--            </div>-->
+<!--            <div t-else="" class="col-9 text-right" style="margin-top:22px;" t-field="company.report_header"-->
+<!--                 name="moto"/>-->
+<!--        </xpath>-->
+<!--        <xpath expr="//div[hasclass('row')][1]" position="inside">-->
+<!--            <div class="col-4 text-right mb4" style="padding-left: 110px;" t-if="doc_model == 'xe.marksheet.line'">-->
+<!--                <b>-->
+<!--                    <span style="font-size:small;text-align:left;" t-if="company.company_details"-->
+<!--                          t-field="company.company_details"></span>-->
+<!--                </b>-->
+<!--            </div>-->
+<!--        </xpath>-->
+<!--    </template>-->
+   <template id="external_layout_standard_inherit" inherit_id="web.external_layout_standard">
 
+    <!-- Adjust the logo and header layout for marksheet reports -->
+<!--    <xpath expr="//div[hasclass('header')]/div[1]/img" position="attributes">-->
+       <xpath expr="//div[contains(@t-attf-class, 'header')]/div[1]/img" position="attributes">
+        <attribute name="t-attf-style" add="max-height: 110px;" separator=" "/>
+    </xpath>
+
+    <!-- Replace the company tagline with the marksheet title -->
+<!--    <xpath expr="//div[hasclass('header')]/div[1]/div[@t-field='company.report_header']" position="replace">-->
+       <xpath expr="//div[contains(@t-attf-class, 'header')]/div[1]/div[@t-field='company.report_header']" position="replace">
+        <div t-if="doc_model == 'xe.marksheet.line'"
+             class="o_company_tagline mw-50 fw-bold text-center">
+            <strong>Student MarkSheet</strong>
+        </div>
+        <div t-else=""
+             t-field="company.report_header"
+             class="o_company_tagline mw-50 fw-bold"/>
+    </xpath>
+
+    <!-- Add company details to the header for marksheet reports -->
+<!--    <xpath expr="//div[hasclass('header')]/div[hasclass('row')]" position="inside">-->
+       <xpath expr="//div[contains(@t-attf-class, 'header')]/div[@class='row']" position="inside">
+        <div class="col-6 text-end"
+             t-if="doc_model == 'xe.marksheet.line' and company.company_details">
+            <span t-field="company.company_details"/>
+        </div>
+    </xpath>
+
+</template>
     <template id="report_combine_marksheetline_report">
         <style>
             .font{

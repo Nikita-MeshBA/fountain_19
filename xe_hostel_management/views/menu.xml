@@ -1,0 +1,20 @@
+<odoo>
+
+    <menuitem name="Hostel" id="hostel_root_menu" sequence="14" groups="xe_hostel_management.group_hostel_warden"/>
+
+    <menuitem name="Hostel" id="hostel_menu" parent="xe_hostel_management.hostel_root_menu" sequence="1"/>
+    <menuitem name="Configuration" id="hostel_configuration_menu" parent="xe_hostel_management.hostel_root_menu" sequence="2"/>
+
+    <menuitem name="Hostel" id="hostel_sub_menu" action="xe_hostel_management.action_hostel" parent="xe_hostel_management.hostel_menu" sequence="11"/>
+    <menuitem name="Admissions" id="hostel_admission_menu" action="xe_hostel_management.action_hostel_admission" parent="xe_hostel_management.hostel_menu" sequence="12"/>
+    <menuitem name="Leaves" id="hostel_member_leaves_menu" action="xe_hostel_management.action_hostel_member_leaves" parent="xe_hostel_management.hostel_menu" sequence="13"/>
+
+    <menuitem name="Room" id="hostel_room_menu" action="action_hostel_room" parent="xe_hostel_management.hostel_configuration_menu" sequence="21"/>
+    <menuitem name="Floor" id="hostel_floor_menu" action="action_hostel_floor" parent="xe_hostel_management.hostel_configuration_menu" sequence="22"/>
+    <menuitem name="Assets" id="hostel_assets_menu" action="action_hostel_assets" parent="xe_hostel_management.hostel_configuration_menu" sequence="23"/>
+
+    <menuitem name="Bed Management" id="hostel_bed_management_menu" parent="xe_hostel_management.hostel_configuration_menu" sequence="50"/>
+        <menuitem name="Beds" id="hostel_beds_menu" parent="xe_hostel_management.hostel_bed_management_menu" action="xe_hostel_management.action_hostel_beds" sequence="51"/>
+        <menuitem name="Bed Categories" id="hostel_bed_categories_menu" parent="xe_hostel_management.hostel_bed_management_menu" action="xe_hostel_management.action_hostel_bed_category" sequence="52"/>
+
+</odoo>

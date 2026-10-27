@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_xe_vehicle_tree" model="ir.ui.view">
+            <field name="name">fleet.vehicle.tree</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <list string="Vehicle">
+                    <field name="name" />
+                    <field name="license_plate" />
+                    <field name="capacity" />
+                    <field name="driver_id"/>
+                </list>
+            </field>
+        </record>
+        <record id="view_xe_vehicle_form" model="ir.ui.view">
+            <field name="name">fleet.vehicle.form.inherit</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+            <field name="arch" type="xml">
+                <field name="driver_id" position="after">
+                    <field name="capacity"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_xe_vehicle_search" model="ir.ui.view">
+            <field name="name">fleet.vehicle.search</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <search string="Vehicle">
+                    <field name="name" />
+                    <field name="license_plate" />
+                    <field name="capacity" />
+                    <newline />
+                </search>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="act_open_xe_vehicle_view">
+            <field name="name">Vehicles</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">fleet.vehicle</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_xe_vehicle_search" />
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_xe_vehicle_view_tree">
+            <field name="act_window_id" ref="act_open_xe_vehicle_view" />
+            <field name="sequence" eval="10" />
+            <field name="view_mode">list</field>
+            <field name="view_id" ref="view_xe_vehicle_tree" />
+        </record>
+    </data>
+</odoo>

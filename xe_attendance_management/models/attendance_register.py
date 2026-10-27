@@ -12,7 +12,8 @@ class StudentAttendanceRegister(models.Model):
     name = fields.Char("Attendance Register", tracking=True)
     code = fields.Char(tracking=True)
     course_id = fields.Many2one("xe.course", string="Class", tracking=True)
-    batch_id = fields.Many2one("xe.batch", string="Batch", tracking=True)
+    # batch_id = fields.Many2one("xe.batch", string="Batch", tracking=True)
+    batch_id = fields.Many2one("xe.term", string="Batch", tracking=True)
     class_room_id = fields.Many2one("xe.classroom", string="Classroom", tracking=True)
     subject_id = fields.Many2one("xe.subject", string="Subject", tracking=True)
     company_id = fields.Many2one(

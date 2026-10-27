@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_xe_hostel_assets,xe_hostel_management.xe_hostel_assets,model_xe_hostel_assets,base.group_user,1,1,1,1
+access_xe_hostel,xe_hostel_management.xe_hostel,model_xe_hostel,base.group_user,1,1,1,1
+access_xe_hostel_floor,xe_hostel_management.xe_hostel_floor,model_xe_hostel_floor,base.group_user,1,1,1,1
+access_xe_hostel_room,xe_hostel_management.xe_hostel_room,model_xe_hostel_room,base.group_user,1,1,1,1
+access_xe_hostel_admission,xe_hostel_management.xe_hostel_admission,model_xe_hostel_admission,base.group_user,1,1,1,1
+access_xe_hostel_room_member,xe_hostel_management.xe_hostel_room_member,model_xe_hostel_room_member,base.group_user,1,1,1,1
+access_xe_hostel_member_leaves,xe_hostel_management.xe_hostel_member_leaves,model_xe_hostel_member_leaves,base.group_user,1,1,1,1
+access_xe_hostel_bed,xe_hostel_management.xe_hostel_bed,model_xe_hostel_bed,base.group_user,1,1,1,1
+access_xe_hostel_bed_category,xe_hostel_management.xe_hostel_bed_category,model_xe_hostel_bed_category,base.group_user,1,1,1,1

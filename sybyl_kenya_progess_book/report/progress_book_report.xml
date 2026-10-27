@@ -1,0 +1,25 @@
+<odoo>
+    <template id="report_progress_book">
+        <style>.font{
+            font-size:14px;
+            font-family:"Helvetica"
+            }
+            @page{
+            margin-top:1%;
+            size: A4;
+            }
+        </style>
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_progress_book" model="ir.actions.report">
+        <field name="name">Progress Book Report</field>
+        <field name="model">xe.progress.book</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sybyl_kenya_progess_book.report_progress_book</field>
+        <field name="report_file">sybyl_kenya_progess_book.report_progress_book</field>
+    </record>
+</odoo>

@@ -1,0 +1,14 @@
+<odoo>
+
+    <record id="xe_application_form_view_inherit" model="ir.ui.view">
+        <field name="name">xe.application.form.view.inherit</field>
+        <field name="model">xe.application</field>
+        <field name="inherit_id" ref="xe_admission_management.view_application_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='assigned_id']" position="after">
+                <field name="is_hostel_facility" string="Need Hostel Facility"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

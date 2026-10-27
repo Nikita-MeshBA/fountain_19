@@ -1,0 +1,50 @@
+<odoo>
+    <record id="xe_substrand_view_form" model="ir.ui.view">
+        <field name="name">xe.substrand.form.view</field>
+        <field name="model">xe.substrand</field>
+        <field name="arch" type="xml">
+            <form string="School">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="strand_id"/>
+                            <field name="term_id"/>
+                            <field name="performance_indicator"/>
+                            <field name="theme_id" string="Theme" invisible="1"/>
+                            <field name="subject_id" string="Subject" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="xe_substrand_view_tree" model="ir.ui.view">
+        <field name="name">xe.substrand.tree.view</field>
+        <field name="model">xe.substrand</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code" string="ID" required="1"/>
+                <field name="name" string="Substrand Name" required="1"/>
+                <field name="strand_id" string="Strand" required="1"/>
+                <field name="theme_id" string="Theme" required="1"/>
+                <field name="subject_id" string="Subject" required="1"/>
+                <field name="term_id" string="Term" required="0"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_xe_substrand" model="ir.actions.act_window">
+        <field name="name">Substrand</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">xe.substrand</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Substrand Record
+            </p>
+        </field>
+    </record>
+</odoo>

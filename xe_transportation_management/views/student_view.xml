@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_student_form_transport_inherit" model="ir.ui.view">
+        <field name="name">xe.student.transport.form.inherit</field>
+        <field name="model">xe.student</field>
+        <field name="inherit_id" ref="xe_fees_management.fees_student_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <field name="fees_to_zone_id" position="after">
+                <field name="stop_ids" invisible="is_transport == False"/>
+            </field>
+        </field>
+    </record>
+</odoo>

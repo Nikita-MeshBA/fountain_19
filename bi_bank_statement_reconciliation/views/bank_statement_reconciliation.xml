@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_bank_statement_reconciliation_tree" model="ir.ui.view">
+            <field name="name">bank.statement.reconciliation.tree</field>
+            <field name="model">bank.statement.reconciliation</field>
+            <field name="arch" type="xml">
+                <list string="Bank Statement Reconciliation">
+                    <field name="name"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="account_id"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_bank_statement_reconciliation_form" model="ir.ui.view">
+            <field name="name">bank.statement.reconciliation.form</field>
+            <field name="model">bank.statement.reconciliation</field>
+            <field name="arch" type="xml">
+                <form string="Bank Statement Reconciliation">
+                    <header>
+                        <!-- <button string="Confirm" name="action_confirm" states="draft" type="object" class="oe_highlight"/> -->
+                        <button string="Confirm" name="action_confirm" invisible="state != 'draft'" type="object" class="oe_highlight"/>
+                        <button string="Export XLSX" name="export_bank_statement" type="object" class="oe_highlight"/>
+                        
+                         <button string="Export PDF" name="export_bank_statement_pdf" type="object" class="oe_highlight"/>                       
+                        
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                              <field name="name" readonly="state != 'draft'"/>
+                              <!-- <field name="account_id" readonly="state != 'draft'" domain="[('user_type_id.name', '=', 'Bank and Cash')]"/> -->
+                              <field name="account_id" readonly="state != 'draft'" domain="[('account_type', '=', 'asset_cash')]"/>
+                              <field name="currency_id" required="1" readonly="state != 'draft'"/>
+                              <field name="remarks" readonly="state != 'draft'"/>
+                            </group>
+                            <group>
+                              <field name="start_date" readonly="state != 'draft'"/>
+                              <field name="end_date" readonly="state != 'draft'"/>
+                              <field name="opening_balance" readonly="1"/>
+                              <button string="Refresh" name="action_refresh" type="object" class="oe_highlight"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="statement_lines" string="Bank Statement Reconciliation">
+                                <field name="line_ids" options="{'no_create': True}">
+                                    <list string="Bank Statement Reconciliation" default_order="date" editable="bottom">
+                                        <field name="date" readonly="1"/>
+                                        <field name="move_name" readonly="1"/>
+                                        <field name="name" readonly="1"/>
+                                        <field name="partner_id" readonly="1"/>
+                                        <field name="debit" readonly="1"/>
+                                        <field name="credit" readonly="1"/>
+                                        <field name="currency_id" readonly="1" invisible="0"/>
+                                        <field name="display_amount" force_save="1" />
+                                        <field name="display_currency" force_save="1" />
+
+                                        <field name="reference" readonly="0"/>
+                                        <field name="is_present_bank_statement" string="Present in Bank Statement" readonly="0"/>
+                                        <field name="transaction_date"/>
+                                        <button name="action_view_journal_entry" string="Journal Entry" type="object" class="oe_highlight"/>
+                                    </list>
+                                </field>
+                                <group>
+                                    <group>
+
+                                    </group>
+                                    <group  readonly="state != 'draft'">
+                                        <field name="book_closing_balance" readonly="1"/>
+                                        <field name="reconciled_balance"/>
+                                        <field name="actual_closing_balance"/>
+                                        <field name="difference" readonly="1" force_save="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="bank_statement_reconciliation_action" model="ir.actions.act_window">
+            <field name="name">Bank Reconcilation</field>
+            <field name="res_model">bank.statement.reconciliation</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                </p>
+                <p>
+                   Create a New Bank Statement Reconciliation
+                </p>
+            </field>
+        </record>
+
+        <menuitem
+            id="bank_statement_reconciliation_menuitem"
+            name="Bank Statement Reconciliation"
+            action="bank_statement_reconciliation_action"
+            parent="account.menu_finance_entries"
+            />
+    </data>
+</odoo>

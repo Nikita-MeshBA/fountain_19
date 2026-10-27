@@ -1,0 +1,55 @@
+<odoo>
+    <record id="xe_theme_view_form" model="ir.ui.view">
+        <field name="name">xe.theme.form.view</field>
+        <field name="model">xe.theme</field>
+        <field name="arch" type="xml">
+            <form string="School">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="code"/>
+                            <field name="subject_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Strands">
+                            <list editable="bottom">
+                                <field name="strand_ids"/>
+                            </list>
+                        </page>
+                        <page string="Students">
+                            <list editable="bottom">
+                                <field name="student_ids" multi_edit="1"/>
+                            </list>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="xe_theme_view_tree" model="ir.ui.view">
+        <field name="name">xe.theme.tree.view</field>
+        <field name="model">xe.theme</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code" string="ID" required="1"/>
+                <field name="name" string="Theme Name" required="1"/>
+                <field name="subject_id" string="Subject" required="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_xe_theme" model="ir.actions.act_window">
+        <field name="name">Theme</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">xe.theme</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Theme Record
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="xe_hostel_bed_category_tree_view" model="ir.ui.view">
+        <field name="name">xe.hostel.bed.category.tree.view</field>
+        <field name="model">xe.hostel.bed.category</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name" required="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_hostel_bed_category" model="ir.actions.act_window">
+        <field name="name">Bed Categories</field>
+        <field name="res_model">xe.hostel.bed.category</field>
+        <field name="view_mode">list</field>
+    </record>
+
+</odoo>

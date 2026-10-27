@@ -28,7 +28,7 @@ import {
   getEditorInfo,
 } from "@advanced_web_domain_widget/core/domain_selector/domain_selector_fields";
 import { ModelFieldSelector } from "@web/core/model_field_selector/model_field_selector";
-import { useLoadFieldInfo } from "@web/core/model_field_selector/utils";
+// import { useLoadFieldInfo } from "@web/core/model_field_selector/utils";
 import { formatValue } from "@advanced_web_domain_widget/core/domain_tree";
 import { deepEqual } from "@web/core/utils/objects";
 import { useService } from "@web/core/utils/hooks";
@@ -125,7 +125,9 @@ export class DomainSelector extends Component {
     this.getDefaultLeafDomain = useGetDefaultLeafDomain();
     this.loadDisplayNames = useLoadDisplayNames();
     this.fieldService = useService("field");
-    this.loadFieldInfo = useLoadFieldInfo(this.fieldService);
+    // this.loadFieldInfo = useLoadFieldInfo(this.fieldService);
+    this.loadFieldInfo = (resModel, path) =>
+    this.fieldService.loadFieldInfo(resModel, path);
     this.tree = null;
     this.previousTree = null;
     this.includeArchived = false;

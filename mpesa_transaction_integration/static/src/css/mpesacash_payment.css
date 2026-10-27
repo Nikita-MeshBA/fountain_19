@@ -1,0 +1,172 @@
+.oe_background_grey {
+    background-color: #F9F9F9 !important;
+}
+.mpesa_dashboard_main .o_transaction_card {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+    margin-top: 60px;
+}
+
+.mpesa_dashboard_main .o_transaction_card .card {
+    margin-bottom: 30px;
+    border: 0;
+    box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);
+}
+
+.mpesa_dashboard_main .o_transaction_card .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    border: 1px solid rgba(0, 0, 0, .05);
+    border-radius: .375rem;
+    background-color: #fff;
+    background-clip: border-box;
+}
+
+.mpesa_dashboard_main .o_transaction_card .card-stats .card-body {
+    padding: 1rem 1.5rem;
+}
+
+.mpesa_dashboard_main .o_transaction_card .card-body {
+    min-height: 1px;
+    padding: 1.5rem;
+    flex: 1 1 auto;
+}
+.mpesa_dashboard_main .o_transaction_card .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+.mpesa_dashboard_main .o_transaction_card .text-muted {
+    color: #8898aa !important;
+}
+.mpesa_dashboard_main .o_transaction_card .text-uppercase {
+    text-transform: uppercase !important;
+}
+.mpesa_dashboard_main .o_transaction_card .mb-0, .my-0 {
+    margin-bottom: 0 !important;
+}
+.mpesa_dashboard_main .o_transaction_card .card-title {
+    margin-bottom: 1.25rem;
+}
+.mpesa_dashboard_main .o_transaction_card h5, .h5 {
+    
+    font-size: 1.8125rem;
+}
+.mpesa_dashboard_main .o_transaction_card h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: inherit;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: .5rem;
+    color: #32325d;
+}
+.mpesa_dashboard_main .o_transaction_card h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: .5rem;
+}
+.mpesa_dashboard_main .o_transaction_card .font-weight-bold {
+    font-weight: 600 !important;
+}
+.mpesa_dashboard_main .o_transaction_card .mb-0, .my-0 {
+    margin-bottom: 0 !important;
+}
+.mpesa_dashboard_main .o_transaction_card h2, .h2 {
+    font-size: 2.5rem;
+}
+.mpesa_dashboard_main .o_transaction_card .col-auto {
+    width: auto;
+    max-width: 100%;
+    flex: 0 0 auto;
+}
+.mpesa_dashboard_main .o_transaction_card .text-white {
+    color: #fff !important;
+}
+.mpesa_dashboard_main .o_transaction_card [class*='shadow'] {
+    transition: all .15s ease;
+}
+.mpesa_dashboard_main .o_transaction_card .bg-gradient-red {
+    background: linear-gradient(87deg, #f5365c 0, #f56036 100%) !important;
+}
+.mpesa_dashboard_main .o_transaction_card .icon-shape {
+    display: inline-flex;
+    padding: 12px;
+    text-align: center;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+}
+.mpesa_dashboard_main .o_transaction_card .icon {
+    width: 3rem;
+    height: 3rem;
+}
+.mpesa_dashboard_main .o_transaction_card .shadow {
+    box-shadow: 0 0 2rem 0 rgba(136, 152, 170, .15) !important;
+}
+.mpesa_dashboard_main .o_transaction_card .rounded-circle, .avatar.rounded-circle img {
+    border-radius: 50% !important;
+}
+.mpesa_dashboard_main .o_transaction_card .icon-shape i, .icon-shape svg {
+    font-size: 1.25rem;
+}
+.mpesa_dashboard_main .o_transaction_card .icon i, .icon svg {
+    font-size: 2.25rem;
+}
+.mpesa_dashboard_main .o_transaction_card .text-sm {
+    font-size: 1.875rem !important;
+}
+.mpesa_dashboard_main .o_transaction_card .mt-3, .my-3 {
+    margin-top: 1rem !important;
+}
+.mpesa_dashboard_main .o_transaction_card .mb-0, .my-0 {
+    margin-bottom: 0 !important;
+}
+.mpesa_dashboard_main .o_transaction_card p {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+}
+.mpesa_dashboard_main .o_transaction_card .text-success {
+    color: #2dce89 !important;
+}
+.mpesa_dashboard_main .o_transaction_card .mr-2, .mx-2 {
+    margin-right: .5rem !important;
+}
+.mpesa_dashboard_main .o_transaction_card .text-nowrap {
+    white-space: nowrap !important;
+}
+.mpesa_dashboard_main .o_transaction_card .col {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.mpesa_dashboard_main .o_transaction_chart {
+    background: #fff;
+    overflow: hidden;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+.mpesa_dashboard_main .chart.row {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+}
+.mpesa_dashboard_main .mode {
+    float: right;
+    color: #2a6496;
+    font-size: 15px;
+    line-height: 30px;
+}
+
+.mpesa_dashboard_main .o_table {
+    margin-top: 100px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.mpesa_dashboard_main .mode span {
+    margin:5px;
+    cursor: pointer;
+}
+
+.mpesa_dashboard_main .mode i {
+    margin:5px;
+}

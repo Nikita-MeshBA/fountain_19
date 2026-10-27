@@ -1,0 +1,89 @@
+<odoo>
+    <record model="ir.ui.view" id="xe_subject_registration_list">
+        <field name="name">xe.subject.register.list</field>
+        <field name="model">xe.subject.registration</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="student_id"/>
+                <field name="subject_ids" widget="many2many_tags"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="xe_subject_registration_form">
+        <field name="name">xe.subject.register.form</field>
+        <field name="model">xe.subject.registration</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submit,approve"/>
+                    <button name="action_submit" string="Submit" class="oe_highlight" type="object"
+                            invisible="state != 'draft'"/>
+                    <button name="action_approve" string="Approve" class="oe_highlight" type="object"
+                            invisible="state != 'submit'" groups="xenesis_school_base.group_xe_admin"/>
+                    <button name="action_cancel" string="Cancel" class="oe_highlight" type="object"
+                            invisible="state not in ['draft','submit']"/>
+                    <button name="reset_to_draft" string="Reset to Draft" class="oe_highlight" type="object"
+                            invisible="state != 'cancel'"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1 class="d-flex">
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="student_id" readonly="1" force_save="1" required="1"/>
+                            <field name="course_id" readonly="1" force_save="1" required="1"/>
+                        </group>
+                        <group>
+                            <field name="roll_number"/>
+                            <field name="create_user_id" invisible="1"/>
+                        </group>
+                        <field name="subject_ids" readonly="state != 'draft'">
+                            <list editable="bottom">
+                                <field name="name"/>
+                                <field name="code"/>
+                                <!-- <field name="subject_type"/> -->
+                                <field name="subject_mode"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="seq_subject_registration" model="ir.sequence">
+        <field name="name">Subject Registration</field>
+        <field name="code">sub.registration.seq</field>
+        <field name="prefix">SUB/REG/</field>
+        <field name="padding">5</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="subject_registration_act">
+        <field name="name">Subject Registration</field>
+        <field name="res_model">xe.subject.registration</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="view_subject_registration_search" model="ir.ui.view">
+        <field name="name">xe.subject.registration.search</field>
+        <field name="model">xe.subject.registration</field>
+        <field name="arch" type="xml">
+            <search string="Subject Registration">
+                <filter string="Submitted Registration" name="submitted" domain="[('state','=','submit')]"
+                        help="Submitted Registration"/>
+            </search>
+        </field>
+    </record>
+
+    <menuitem name="Subject Registration" id="subject_register_menu_root"/>
+    <menuitem name="Subject Registration" id="subject_register_sub_menu" parent="subject_register_menu_root"
+              action="subject_registration_act"/>
+</odoo>

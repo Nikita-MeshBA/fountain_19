@@ -79,27 +79,54 @@
             </form>
         </field>
     </record>
+<!--    <record id="view_xe_marksheet_line_search" model="ir.ui.view">-->
+<!--        <field name="name">xe.marksheet.line.search</field>-->
+<!--        <field name="model">xe.marksheet.line</field>-->
+<!--        <field name="priority" eval="8"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <search string="Marksheet Line">-->
+<!--                <field name="marksheet_reg_id"/>-->
+<!--                <field name="student_id"/>-->
+<!--                <field name="total_marks"/>-->
+<!--                <field name="percentage"/>-->
+<!--                <newline/>-->
+<!--                <group expand="0" string="Group By...">-->
+<!--                    <filter string="Marksheet Register" name="marksheet_register" domain="[]"-->
+<!--                            context="{'group_by':'marksheet_reg_id'}"/>-->
+<!--                    <filter string="Student" name="student" domain="[]" context="{'group_by':'student_id'}"/>-->
+<!--                    <filter string="Class" name="class" domain="[]" context="{'group_by':'course_id'}"/>-->
+<!--                    <filter string="Classroom" name="classroom" domain="[]" context="{'group_by':'classroom_id'}"/>-->
+<!--                </group>-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
     <record id="view_xe_marksheet_line_search" model="ir.ui.view">
-        <field name="name">xe.marksheet.line.search</field>
-        <field name="model">xe.marksheet.line</field>
-        <field name="priority" eval="8"/>
-        <field name="arch" type="xml">
-            <search string="Marksheet Line">
-                <field name="marksheet_reg_id"/>
-                <field name="student_id"/>
-                <field name="total_marks"/>
-                <field name="percentage"/>
-                <newline/>
-                <group expand="0" string="Group By...">
-                    <filter string="Marksheet Register" name="marksheet_register" domain="[]"
-                            context="{'group_by':'marksheet_reg_id'}"/>
-                    <filter string="Student" name="student" domain="[]" context="{'group_by':'student_id'}"/>
-                    <filter string="Class" name="class" domain="[]" context="{'group_by':'course_id'}"/>
-                    <filter string="Classroom" name="classroom" domain="[]" context="{'group_by':'classroom_id'}"/>
-                </group>
-            </search>
-        </field>
-    </record>
+    <field name="name">xe.marksheet.line.search</field>
+    <field name="model">xe.marksheet.line</field>
+    <field name="arch" type="xml">
+        <search string="Marksheet Line">
+            <field name="marksheet_reg_id"/>
+            <field name="student_id"/>
+            <field name="total_marks"/>
+            <field name="percentage"/>
+
+            <group>
+                <filter string="Marksheet Register"
+                        name="group_by_marksheet_register"
+                        context="{'group_by': 'marksheet_reg_id'}"/>
+                <filter string="Student"
+                        name="group_by_student"
+                        context="{'group_by': 'student_id'}"/>
+                <filter string="Class"
+                        name="group_by_class"
+                        context="{'group_by': 'course_id'}"/>
+                <filter string="Classroom"
+                        name="group_by_classroom"
+                        context="{'group_by': 'classroom_id'}"/>
+            </group>
+        </search>
+    </field>
+</record>
     <record model="ir.actions.act_window" id="act_open_xe_marksheet_line_view">
         <field name="name">Marksheet Lines</field>
         <field name="res_model">xe.marksheet.line</field>

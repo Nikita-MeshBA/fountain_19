@@ -139,32 +139,64 @@
             </xpath>
         </field>
     </record>
+<!--    <record id="view_xe_exam_search" model="ir.ui.view">-->
+<!--        <field name="name">xe.exam.search</field>-->
+<!--        <field name="model">xe.exam</field>-->
+<!--        <field name="priority" eval="8"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <search string="Exam">-->
+<!--                <field name="session_id"/>-->
+<!--                <field name="name"/>-->
+<!--                <field name="subject_id"/>-->
+<!--                <field name="exam_code"/>-->
+<!--                <field name="start_time"/>-->
+<!--                <field name="end_time"/>-->
+<!--                <field name="state"/>-->
+<!--                &lt;!&ndash; <field name="note"/> &ndash;&gt;-->
+<!--                <field name="total_marks"/>-->
+<!--                <field name="min_marks"/>-->
+<!--                <newline/>-->
+<!--                <group expand="0" string="Group By...">-->
+<!--                    <filter string="Subject" name="subject" domain="[]" context="{'group_by':'subject_id'}"/>-->
+<!--                    <filter string="Exam Code" name="exam_code" domain="[]" context="{'group_by':'exam_code'}"/>-->
+<!--                    <filter string="State" name="state" domain="[]" context="{'group_by':'state'}"/>-->
+<!--                    <filter string="Exam" name="exam" domain="[]" context="{'group_by':'name'}"/>-->
+<!--                </group>-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
     <record id="view_xe_exam_search" model="ir.ui.view">
-        <field name="name">xe.exam.search</field>
-        <field name="model">xe.exam</field>
-        <field name="priority" eval="8"/>
-        <field name="arch" type="xml">
-            <search string="Exam">
-                <field name="session_id"/>
-                <field name="name"/>
-                <field name="subject_id"/>
-                <field name="exam_code"/>
-                <field name="start_time"/>
-                <field name="end_time"/>
-                <field name="state"/>
-                <!-- <field name="note"/> -->
-                <field name="total_marks"/>
-                <field name="min_marks"/>
-                <newline/>
-                <group expand="0" string="Group By...">
-                    <filter string="Subject" name="subject" domain="[]" context="{'group_by':'subject_id'}"/>
-                    <filter string="Exam Code" name="exam_code" domain="[]" context="{'group_by':'exam_code'}"/>
-                    <filter string="State" name="state" domain="[]" context="{'group_by':'state'}"/>
-                    <filter string="Exam" name="exam" domain="[]" context="{'group_by':'name'}"/>
-                </group>
-            </search>
-        </field>
-    </record>
+    <field name="name">xe.exam.search</field>
+    <field name="model">xe.exam</field>
+    <field name="arch" type="xml">
+        <search string="Exam">
+            <field name="session_id"/>
+            <field name="name"/>
+            <field name="subject_id"/>
+            <field name="exam_code"/>
+            <field name="start_time"/>
+            <field name="end_time"/>
+            <field name="state"/>
+            <field name="total_marks"/>
+            <field name="min_marks"/>
+
+            <group>
+                <filter string="Subject"
+                        name="group_by_subject"
+                        context="{'group_by': 'subject_id'}"/>
+                <filter string="Exam Code"
+                        name="group_by_exam_code"
+                        context="{'group_by': 'exam_code'}"/>
+                <filter string="State"
+                        name="group_by_state"
+                        context="{'group_by': 'state'}"/>
+                <filter string="Exam"
+                        name="group_by_exam"
+                        context="{'group_by': 'name'}"/>
+            </group>
+        </search>
+    </field>
+</record>
     <record model="ir.actions.act_window" id="act_open_xe_exam_view">
         <field name="name">Exams</field>
         <field name="res_model">xe.exam</field>

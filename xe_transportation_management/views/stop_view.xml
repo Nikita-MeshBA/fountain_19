@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_xe_stop_tree" model="ir.ui.view">
+            <field name="name">xe.stops.tree</field>
+            <field name="model">xe.stop</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <list string="Stop">
+                    <field name="sequence" />
+                    <field name="name" />
+                    <field name="route_id" />
+                </list>
+            </field>
+        </record>
+        <record id="view_xe_stop_form" model="ir.ui.view">
+            <field name="name">xe.stop.form</field>
+            <field name="model">xe.stop</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string="Stop">
+                    <sheet>
+                        <group col="4">
+                            <field name="sequence" required="1" />
+                            <field name="name" />
+                            <field name="route_id" />
+                            <field name="estimated_arrival_conf" required="1" widget="float_time" />
+                            <field name="company_id" options="{'no_create':True}" groups="base.group_multi_company"/>
+                        </group>
+                        <notebook>
+                            <page string="Person(s)">
+                                <group>
+                                    <field name="partner_ids"
+                                        nolabel="1">
+                                        <list>
+<!--                                            <field name="title" />-->
+                                            <field name="roll_number"/>
+                                            <field name="name" />
+                                        </list>
+                                    </field>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_xe_stop_view">
+            <field name="name">Stops</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">xe.stop</field>
+            <field name="view_mode">list,form</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_xe_stop_view_form">
+            <field name="act_window_id" ref="act_open_xe_stop_view" />
+            <field name="sequence" eval="20" />
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_xe_stop_form" />
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_xe_stop_view_tree">
+            <field name="act_window_id" ref="act_open_xe_stop_view" />
+            <field name="sequence" eval="10" />
+            <field name="view_mode">list</field>
+            <field name="view_id" ref="view_xe_stop_tree" />
+        </record>
+    </data>
+</odoo>

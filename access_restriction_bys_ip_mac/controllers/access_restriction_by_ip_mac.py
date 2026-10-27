@@ -69,6 +69,11 @@ class AccessHome(Home):
                                     "type": "password",
                                 },
                             )
+                            # request.params["login_success"] = True
+                            # return redirect_with_hash(
+                            #     self._login_redirect(uid, redirect=redirect)
+                            # )
+                            uid = auth_info["uid"]
                             request.params["login_success"] = True
                             return redirect_with_hash(
                                 self._login_redirect(uid, redirect=redirect)
@@ -120,6 +125,11 @@ class AccessHome(Home):
                                     "type": "password",
                                 },
                             )
+                            # request.params["login_success"] = True
+                            # return redirect_with_hash(
+                            #     self._login_redirect(uid, redirect=redirect)
+                            # )
+                            uid = auth_info["uid"]
                             request.params["login_success"] = True
                             return redirect_with_hash(
                                 self._login_redirect(uid, redirect=redirect)
@@ -145,6 +155,11 @@ class AccessHome(Home):
                                 "type": "password",
                             },
                         )
+                        # request.params["login_success"] = True
+                        # return redirect_with_hash(
+                        #     self._login_redirect(uid, redirect=redirect)
+                        # )
+                        uid = auth_info["uid"]
                         request.params["login_success"] = True
                         return redirect_with_hash(
                             self._login_redirect(uid, redirect=redirect)

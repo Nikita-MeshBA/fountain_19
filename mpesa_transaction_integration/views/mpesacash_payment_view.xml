@@ -1,0 +1,190 @@
+<odoo>
+    <record id="mpesa_payment_transaction_from_view" model="ir.ui.view">
+        <field name="name">mpesa.payment.transaction.form.view</field>
+        <field name="model">mpesa.payment.transaction</field>
+        <field name="arch" type="xml">
+            <form string="Mpesa Payment Transaction" create="false" edit="false">
+                <header>
+                    <button name="validate_invoice_payment" type="object" string="Reconcile" class="oe_highlight"
+                            invisible="state in ['done', 'cancel']"/>
+                    <button name="button_manual_reconcile_payment" type="object" string="Manual Reconcile" invisible="state in ['done', 'cancel']"/>
+                    <button name="state_cancel" type="object" string="Cancel" invisible="state in ['cancel', 'done']"/>
+                    <button name="state_draft" type="object" string="Set to Draft"
+                            invisible="state in ['draft', 'done']"/>
+                    <field name='state' widget="statusbar" statusbar_visible='draft,done,cancel'/>
+                </header>
+                <sheet>
+                    <h1 class="mt0">
+                        <div>
+                            <field name="invoice_name" readonly="1" class="oe_inline"/>
+                        </div>
+                    </h1>
+                    <field name="invoice_id"/>
+                    <group>
+                        <group>
+                            <field name="first_name"/>
+                            <field name="middle_name"/>
+                            <field name="last_name"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="transaction_type"/>
+                            <field name="trans_id"/>
+                            <field name="trans_time"/>
+                            <field name="trans_amount"/>
+                            <field name="business_shortcode"/>
+                            <field name="bill_ref_number"/>
+                        </group>
+                        <group>
+                            <field name="invoice_number"/>
+                            <field name="org_account_balance"/>
+                            <field name="third_party_transid"/>
+                            <field name="msisdn"/>
+                            <field name="org_account_balance"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="payment_ids" widget="many2many_tags"/>
+                    </group>
+                    <group>
+                        <field name="datas"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="mpesa_payment_transaction_tree_view" model="ir.ui.view">
+        <field name="name">mpesa.payment.transaction.form.view</field>
+        <field name="model">mpesa.payment.transaction</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false"
+                  decoration-info="state == 'draft'"
+                  decoration-success="state == 'done'"
+                  decoration-muted="state == 'cancel'">
+                <field name="state" column_invisible="1"/>
+                <field name="first_name"/>
+                <field name="middle_name"/>
+                <field name="last_name"/>
+                <field name="transaction_type" string="Type"/>
+                <field name="date"/>
+                <field name="business_shortcode"/>
+                <field name="bill_ref_number" string="Bill Reference"/>
+                <field name="invoice_id" string="Invoice"/>
+                <field name="trans_amount" string="Amount"/>
+                <button name="validate_invoice_payment" string="Reconcile" type="object"
+                        invisible="state in ['done', 'cancel']"/>
+                <button name="state_cancel" string="Cancel" type="object"
+                        invisible="state in ['done', 'cancel']"/>
+            </list>
+        </field>
+    </record>
+
+<!--    <record id="view_mpesa_payment_transaction_filter" model="ir.ui.view">-->
+<!--        <field name="name">mpesa.payment.transaction.select</field>-->
+<!--        <field name="model">mpesa.payment.transaction</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <search string="Search Mpesa Transaction">-->
+<!--                <field name="bill_ref_number" string="Bill Reference Number"-->
+<!--                       filter_domain="[('bill_ref_number','ilike',self)]"/>-->
+<!--                <field name="first_name" string="First Name" filter_domain="[('first_name','ilike',self)]"/>-->
+<!--                <field name="middle_name" string="Middle Name" filter_domain="[('middle_name','ilike',self)]"/>-->
+<!--                <field name="last_name" string="Last Name" filter_domain="[('last_name','ilike',self)]"/>-->
+<!--&lt;!&ndash;                <filter&ndash;&gt;-->
+<!--&lt;!&ndash;                        icon="terp-go-today"&ndash;&gt;-->
+<!--&lt;!&ndash;                        name="Today"&ndash;&gt;-->
+<!--&lt;!&ndash;                        domain="[('date','=', datetime.date.today())]"&ndash;&gt;-->
+<!--&lt;!&ndash;                        help="Today"&ndash;&gt;-->
+<!--&lt;!&ndash;                />&ndash;&gt;-->
+<!--                <filter-->
+<!--                    name="Today"-->
+<!--                    string="Today"-->
+<!--                    domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"-->
+<!--                    help="Today"-->
+<!--                />-->
+<!--                <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>-->
+<!--                <filter name="paid" string="Reconciled" domain="[('state', '=', 'done')]"/>-->
+<!--                <filter name="cancel" string="Cancelled" domain="[('state', '=', 'cancel')]"/>-->
+<!--                <separator/>-->
+<!--                <field name="date" string="Period"/>-->
+<!--                <separator/>-->
+<!--                <group expand="0" string="Group By">-->
+<!--                    <filter string="Status"-->
+<!--                            name="filter_state"-->
+<!--                            domain=""-->
+<!--                            context="{'group_by':'state'}"/>-->
+<!--                    <filter string="Date"-->
+<!--                            name="filter_date"-->
+<!--                            domain=""-->
+<!--                            context="{'group_by':'date'}"/>-->
+<!--                </group>-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
+        <record id="view_mpesa_payment_transaction_filter" model="ir.ui.view">
+        <field name="name">mpesa.payment.transaction.select</field>
+        <field name="model">mpesa.payment.transaction</field>
+        <field name="arch" type="xml">
+            <search string="Search Mpesa Transaction">
+                <field name="bill_ref_number"/>
+                <field name="first_name"/>
+                <field name="middle_name"/>
+                <field name="last_name"/>
+                <field name="date"/>
+
+                <filter name="draft"
+                        string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+
+                <filter name="paid"
+                        string="Reconciled"
+                        domain="[('state', '=', 'done')]"/>
+
+                <filter name="cancel"
+                        string="Cancelled"
+                        domain="[('state', '=', 'cancel')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="action_mpesa_payment_transaction_form" model="ir.actions.act_window">
+        <field name="name">Mpesa Transactions</field>
+        <field name="res_model">mpesa.payment.transaction</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="mpesa_payment_transaction_tree_view"/>
+        <!-- <field name="search_view_id" ref="view_mpesa_payment_transaction_filter"/>-->
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Transaction are not empty.
+            </p>
+        </field>
+    </record>
+
+    <record id="mpesa_payment_creation_cron" model="ir.cron">
+        <field name="name">Mpesa Automatic Payment Creation Cron</field>
+        <field name="model_id" ref="account.model_account_payment"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_mpesa_payment_creation()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+<!--        <field name="numbercall">-1</field>-->
+<!--        <field name="doall" eval="False"/>-->
+    </record>
+
+    <menuitem id="menu_mpesa_payment_root" parent="account.menu_finance_receivables" sequence="3"
+              name="Mpesa Transactions"/>
+    <!-- <menuitem id="menu_mpesa_payment_dashboard"-->
+    <!-- name="Dashboard"-->
+    <!-- parent="menu_mpesa_payment_root"-->
+    <!-- action="mpesacash_payment_dashboard_action"-->
+    <!-- sequence="1"-->
+    <!-- groups="account.group_account_manager"/>-->
+    <menuitem id="menu_mpesa_payment_transaction"
+              name="Transaction Details"
+              parent="menu_mpesa_payment_root"
+              sequence="2"
+              action="action_mpesa_payment_transaction_form"
+              groups="account.group_account_manager"/>
+</odoo>

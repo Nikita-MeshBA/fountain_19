@@ -1,0 +1,36 @@
+<odoo>
+    <record model="ir.ui.view" id="xe_progress_book_wizard_form_view">
+        <field name="name">xe.progress.book.wizard.form.view</field>
+        <field name="model">xe.progress.book.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="student_id" required="1"
+                                   options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                            <field name="academic_year_id" required="1"
+                                   options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                            <field name="academic_term_id" required="1"
+                                   options="{'no_create': True, 'no_edit': True, 'no_open': True}"
+                                   domain="[('academic_year_id', '=', academic_year_id)]"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Generate Summary" name="generate_summary" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_xe_progress_book_wizard">
+        <field name="name">Progress Book Wizard</field>
+        <field name="res_model">xe.progress.book.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

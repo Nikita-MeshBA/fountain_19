@@ -38,27 +38,56 @@
             </form>
         </field>
     </record>
+<!--    <record id="view_xe_result_line_search" model="ir.ui.view">-->
+<!--        <field name="name">xe.result.line.search</field>-->
+<!--        <field name="model">xe.result.line</field>-->
+<!--        <field name="priority" eval="8"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <search string="Result Line">-->
+<!--                <field name="marksheet_line_id"/>-->
+<!--                <field name="exam_id"/>-->
+<!--                <field name="marks"/>-->
+<!--                <newline/>-->
+<!--                <group expand="0" string="Group By...">-->
+<!--                    <filter string="Marksheet Line" name="marksheet_line" domain="[]"-->
+<!--                            context="{'group_by':'marksheet_line_id'}"/>-->
+<!--                    <filter string="Exam" name="exam" domain="[]" context="{'group_by':'exam_id'}"/>-->
+<!--                    <filter string="Marks" name="marks" domain="[]" context="{'group_by':'marks'}"/>-->
+<!--                    <filter string="Students" name="students" domain="[]" context="{'group_by':'student_id'}"/>-->
+<!--                    <filter string="Status" name="status" domain="[]" context="{'group_by':'status'}"/>-->
+<!--                </group>-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
     <record id="view_xe_result_line_search" model="ir.ui.view">
-        <field name="name">xe.result.line.search</field>
-        <field name="model">xe.result.line</field>
-        <field name="priority" eval="8"/>
-        <field name="arch" type="xml">
-            <search string="Result Line">
-                <field name="marksheet_line_id"/>
-                <field name="exam_id"/>
-                <field name="marks"/>
-                <newline/>
-                <group expand="0" string="Group By...">
-                    <filter string="Marksheet Line" name="marksheet_line" domain="[]"
-                            context="{'group_by':'marksheet_line_id'}"/>
-                    <filter string="Exam" name="exam" domain="[]" context="{'group_by':'exam_id'}"/>
-                    <filter string="Marks" name="marks" domain="[]" context="{'group_by':'marks'}"/>
-                    <filter string="Students" name="students" domain="[]" context="{'group_by':'student_id'}"/>
-                    <filter string="Status" name="status" domain="[]" context="{'group_by':'status'}"/>
-                </group>
-            </search>
-        </field>
-    </record>
+    <field name="name">xe.result.line.search</field>
+    <field name="model">xe.result.line</field>
+    <field name="arch" type="xml">
+        <search string="Result Line">
+            <field name="marksheet_line_id"/>
+            <field name="exam_id"/>
+            <field name="marks"/>
+
+            <group>
+                <filter string="Marksheet Line"
+                        name="group_by_marksheet_line"
+                        context="{'group_by': 'marksheet_line_id'}"/>
+                <filter string="Exam"
+                        name="group_by_exam"
+                        context="{'group_by': 'exam_id'}"/>
+                <filter string="Marks"
+                        name="group_by_marks"
+                        context="{'group_by': 'marks'}"/>
+                <filter string="Students"
+                        name="group_by_student"
+                        context="{'group_by': 'student_id'}"/>
+                <filter string="Status"
+                        name="group_by_status"
+                        context="{'group_by': 'status'}"/>
+            </group>
+        </search>
+    </field>
+</record>
     <record model="ir.actions.act_window" id="act_open_xe_result_line_view">
         <field name="name">Result Lines</field>
         <field name="res_model">xe.result.line</field>

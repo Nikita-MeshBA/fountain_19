@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="mpesatrans_report_view">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="font">
+                    <div class="page">
+                        <br/>
+                        <br/>
+                        <div class="text-center">
+                            <center>
+                                <h3>
+                                    <strong>MPesa Transactions &amp; Paybill</strong>
+                                </h3>
+                            </center>
+                        </div>
+                        <br/>
+                        <table width="100%;">
+                            <tr style="padding:5px;">
+                                <th width="25%;">Start Date:</th>
+                                <th width="25%;">
+                                    <t t-esc="date_start"/>
+                                </th>
+                                <th width="25%;">End Date:</th>
+                                <th width="25%;">
+                                    <t t-esc="date_end"/>
+                                </th>
+                            </tr>
+                        </table>
+                        <br/>
+                        <br/>
+                        <table class="table table-condensed" width="100%;">
+                            <thead>
+                                <th class="text-left">Name</th>
+                                <th>Type</th>
+                                <th>Date</th>
+                                <th>Bill Reference</th>
+                                <th>Invoice</th>
+                                <th class="text-right">Amount</th>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="transaction_details" t-as="transaction">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="transaction['name']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="transaction['transaction_type']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="transaction['date']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="transaction['bill_ref_number']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="transaction['invoice_name']"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <t t-esc="transaction['trans_amount']"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+    <template id="report_transactiondetails">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>MPesa Transaction</h2>
+                        <p t-field="o.trans_id"/>
+                        <table class="table table-condensed table-bordered">
+                            <tr>
+                                <td>
+                                    <strong>First Name</strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.first_name"/>
+                                </td>
+                                <td>
+                                    <strong>Last Name</strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.last_name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Transaction Type</strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.transaction_type"/>
+                                </td>
+                                <td>
+                                    <strong>Transaction ID</strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.trans_id"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Invoice</strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.invoice_id.name"/>
+                                </td>
+                                <td>
+                                    <strong>Date</strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.date"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Transaction Amount</strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.trans_amount"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="mpesa_transaction_xlsx_report" model="ir.actions.report">
+        <field name="name">Fee Analysis Report</field>
+        <field name="model">mpesa.transaction.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">mpesa_transaction_integration.mpesa_transaction_xlsx</field>
+        <field name="report_file">mpesa_transaction_integration.mpesa_transaction_xlsx</field>
+    </record>
+    <record id="mpesatrans_report" model="ir.actions.report">
+        <field name="name">MPesa Transaction</field>
+        <field name="model">mpesa.transaction.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">mpesa_transaction_integration.mpesatrans_report_view</field>
+        <field name="report_file">mpesa_transaction_integration.mpesatrans_report_view</field>
+    </record>
+    <report id="mpesatrans_report" model="mpesa.transaction.report.wizard" string="MPesa Transaction"
+            report_type="qweb-pdf" name="mpesa_transaction_integration.mpesatrans_report_view"
+            file="mpesa_transaction_integration.mpesatrans_report_view"/>
+
+    <!--
+    <report id="mpesa_transaction_xlsx_report" model="mpesa.transaction.report.wizard" string="Fee Analysis Report" report_type="xlsx" name="mpesa_transaction_integration.mpesa_transaction_xlsx" file="mpesa_transaction_integration.mpesa_transaction_xlsx" attachment_use="False" /> -->
+    <report id="action_report_transactiondetails" model="mpesa.payment.transaction" string="MPesa Transaction"
+            report_type="qweb-pdf" name="mpesa_transaction_integration.report_transactiondetails"
+            file="mpesa_transaction_integration.report_transactiondetails"
+            print_report_name="'Transaction - %s' % (object.invoice_name)"/>
+    <record id="report_transactiondetails_report" model="ir.actions.report">
+        <field name="name">MPesa Transaction</field>
+        <field name="model">mpesa.payment.transaction</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">mpesa_transaction_integration.report_transactiondetails</field>
+        <field name="print_report_name">'Transaction - %s' % (object.invoice_name)</field>
+    </record>
+</odoo>

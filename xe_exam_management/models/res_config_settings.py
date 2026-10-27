@@ -60,7 +60,7 @@ class ResconfigInherit(models.TransientModel):
                     self.env.ref("xe_exam_management.group_rubrics_configurations").id,
                 )
             ]
-            users.write({"groups_id": to_add})
+            users.write({"group_ids": to_add})
         else:
             if params.get_param(
                 "xe_exam_management.group_subject_rubrics_configuration"
@@ -69,7 +69,7 @@ class ResconfigInherit(models.TransientModel):
             ):
                 rubric_group_id.users.write(
                     {
-                        "groups_id": [
+                        "group_ids": [
                             (
                                 3,
                                 self.env.ref(

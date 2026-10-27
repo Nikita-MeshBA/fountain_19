@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+{
+    "name": "Sybyl Kenya Progress Book",
+    "version": "19.0.0.0.1",
+    "summary": "Sybyl Kenya Progress Book",
+    "sequence": 1,
+    "category": "",
+    "website": "",
+    "depends": ["web", "xenesis_school_base", "xe_admission_management"],
+    "data": [
+        "security/ir.model.access.csv",
+        "data/sequence.xml",
+        "views/theme_views.xml",
+        "views/subject_views.xml",
+        "views/strand_views.xml",
+        "views/substrand_views.xml",
+        "views/rubric_views.xml",
+        "views/marking_views.xml",
+        "views/ir_action_server.xml",
+        "views/course_view.xml",
+        "wizard/marking_wizard_views.xml",
+        "wizard/progress_book_wizard_view.xml",
+        "views/menu.xml",
+        "report/student_progress_book_report.xml",
+        "report/student_progress_book_report_format_2.xml"
+        # 'views/progress_book_views.xml',
+        # 'report/progress_book_report.xml',
+    ],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
+}

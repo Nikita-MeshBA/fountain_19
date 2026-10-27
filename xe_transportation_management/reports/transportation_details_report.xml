@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="action_report_transport_details" model="ir.actions.report">
+            <field name="name">Transportation Details</field>
+            <field name="model">xe.route</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">xe_transportation_management.report_transports</field>
+            <field name="report_file">xe_transportation_management.report_transports</field>
+        </record>
+        <report id="transport_xlsx_report"
+                model="xe.route"
+                string="Transportation Details Report"
+                report_type="xlsx"
+                name="xe_transportation_management.transport_report_xlsx"
+                file="xe_transportation_management.transport_report_xlsx" />
+    </data>
+</odoo>
