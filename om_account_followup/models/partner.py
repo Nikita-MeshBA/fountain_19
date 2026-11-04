@@ -337,7 +337,7 @@ class ResPartner(models.Model):
                 _("There is no followup plan defined for the current company.")
             )
         data = {
-            "date": fields.date.today(),
+            "date": fields.Date.today(),
             "followup_id": followup_ids[0].id,
         }
         return self.do_partner_print(wizard_partner_ids, data)

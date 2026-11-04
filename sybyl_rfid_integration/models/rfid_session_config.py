@@ -50,8 +50,13 @@ class RFIDSessionConfiguration(models.Model):
 
         return data
     
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._sybyl_rfid_integration_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _sybyl_rfid_integration_create_single(self, vals):
         """Create new Sequence"""
         if vals.get("name", "New") == "New":
             vals["session_id"] = self.env["ir.sequence"].next_by_code("rfid.sessionid.seq") or "New"

@@ -37,7 +37,7 @@ class CBCSchemeOfWork(models.Model):
         return self.employee_id.parent_id.id
 
     def _default_year(self):
-        current_date = fields.date.today()
+        current_date = fields.Date.today()
         academic_record = (
             self.env["xe.academic.year"]
             .sudo()
@@ -223,16 +223,21 @@ class CBCSchemeOfWork(models.Model):
                 _("Please update the Employee Profile Manager Field Value...")
             )
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_lesson_planner_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xe_lesson_planner_create_single(self, vals):
         if vals:
             x = self.env["ir.sequence"].next_by_code("cbc.scheme.of.work") or "/"
             vals["seq_name"] = x
             vals["is_scheme_of_work"] = True
-            lesson_plan_user = self.user_has_groups(
+            lesson_plan_user = self.env.user.has_group(
                 "xe_lesson_planner.group_lesson_plan_user"
             )
-            lesson_plan_admin = self.user_has_groups(
+            lesson_plan_admin = self.env.user.has_group(
                 "xe_lesson_planner.group_lesson_plan_manager"
             )
             if lesson_plan_user and lesson_plan_admin == False:
@@ -242,10 +247,10 @@ class CBCSchemeOfWork(models.Model):
 
     def write(self, vals):
         if vals:
-            lesson_plan_user = self.user_has_groups(
+            lesson_plan_user = self.env.user.has_group(
                 "xe_lesson_planner.group_lesson_plan_user"
             )
-            lesson_plan_admin = self.user_has_groups(
+            lesson_plan_admin = self.env.user.has_group(
                 "xe_lesson_planner.group_lesson_plan_manager"
             )
             if lesson_plan_admin or lesson_plan_user:
@@ -329,7 +334,7 @@ class CBCLessonPlan(models.Model):
         return employee_ids.ids
 
     def _default_year(self):
-        current_date = fields.date.today()
+        current_date = fields.Date.today()
         academic_record = (
             self.env["xe.academic.year"]
             .sudo()
@@ -461,17 +466,22 @@ class CBCLessonPlan(models.Model):
     def button_rejected(self):
         self.status = "rejected"
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_lesson_planner_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xe_lesson_planner_create_single(self, vals):
         if vals:
             vals["seq_name_lp"] = (
                 self.env["ir.sequence"].next_by_code("cbc.lesson.plan") or "/"
             )
             vals["is_lesson_plan"] = True
-            lesson_plan_user = self.user_has_groups(
+            lesson_plan_user = self.env.user.has_group(
                 "xe_lesson_planner.group_lesson_plan_user"
             )
-            lesson_plan_admin = self.user_has_groups(
+            lesson_plan_admin = self.env.user.has_group(
                 "xe_lesson_planner.group_lesson_plan_manager"
             )
             if lesson_plan_user and lesson_plan_admin == False:
@@ -481,10 +491,10 @@ class CBCLessonPlan(models.Model):
 
     def write(self, vals):
         if vals:
-            lesson_plan_user = self.user_has_groups(
+            lesson_plan_user = self.env.user.has_group(
                 "xe_lesson_planner.group_lesson_plan_user"
             )
-            lesson_plan_admin = self.user_has_groups(
+            lesson_plan_admin = self.env.user.has_group(
                 "xe_lesson_planner.group_lesson_plan_manager"
             )
             if lesson_plan_admin or lesson_plan_user:

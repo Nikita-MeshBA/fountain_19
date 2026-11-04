@@ -14,6 +14,7 @@ import { SelectCreateDialog } from "@web/views/view_dialogs/select_create_dialog
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
 import { useBus, useService, useOwnedDialogs } from "@web/core/utils/hooks";
 import { toTree } from "@advanced_web_domain_widget/core/domain_tree";
+import { rpc } from "@web/core/network/rpc";
 import {
   useGetDomainTreeDescription,
   useGetDefaultLeafDomain,
@@ -217,7 +218,7 @@ export class DomainFieldBits extends Component {
   };
 
   setup() {
-    this.rpc = useService("rpc");
+    this.rpc = rpc;
     this.orm = useService("orm");
     this.getDomainTreeDescription = useGetDomainTreeDescription();
     this.getDefaultLeafDomain = useGetDefaultLeafDomain();

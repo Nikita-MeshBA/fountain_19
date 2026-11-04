@@ -80,13 +80,13 @@ class OpMediaType(models.Model):
     def get_bar_graph_datas(self):
         for record in self:
             data = []
-            for d in range(1, (fields.date.today().day) + 1):
+            for d in range(1, (fields.Date.today().day) + 1):
                 label = str(d)
                 value = self.env["xe.media.movement"].search_count(
                     [
                         ("media_type_id", "=", record.id),
                         ("state", "in", ["issue"]),
-                        ("issued_date", "=", fields.date.today().replace(day=d)),
+                        ("issued_date", "=", fields.Date.today().replace(day=d)),
                     ]
                 )
                 data.append({"label": label, "value": value and value or 0})

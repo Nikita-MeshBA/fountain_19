@@ -3,31 +3,30 @@
     <t t-name="ks_tax_report_lines" owl="1">
         <ControlPanel display="display">
             <t t-set-slot="control-panel-create-button">
-                <Dropdown togglerClass="'btn btn-primary'" showCaret="true">
-                    <t t-set-slot="toggler">
+                <Dropdown>
+                    <button type="button" class="btn btn-primary dropdown-toggle">
                         <span t-on-click="OnPrintPdf" type="button">Print
                             (Pdf)
                         </span>
-                    </t>
-                    <DropdownItem>
-                        <button t-on-click="ksPrintReportXlsx" type="button" class="btn btn-primary"
-                                style="position: relative;">
+                    </button>
+                    <t t-set-slot="content">
+                        <DropdownItem>
+                        <button t-on-click="ksPrintReportXlsx" type="button" class="btn btn-primary" style="position: relative;">
                             Export (XLSX)
                         </button>
                     </DropdownItem>
                     <DropdownItem>
-                        <button type="button" t-on-click="ksReportSendEmail" class="btn btn-primary"
-                                style="position: relative;">
+                        <button type="button" t-on-click="ksReportSendEmail" class="btn btn-primary" style="position: relative;">
                             Send Email
                         </button>
                     </DropdownItem>
+                </t>
                 </Dropdown>
             </t>
             <t t-set-slot="layout-actions">
                 <t t-set="ks_df_informations" t-value="props.ks_master_value.ks_df_informations"/>
                 <t t-set="new_ks_df_reports_ids" t-value="props.ks_master_value.new_ks_df_reports_ids"/>
-                <t t-call="ks_report_filters"
-                   t-props="{ks_df_informations:ks_df_informations,ks_df_reports_ids:ks_df_reports_ids}"/>
+                <t t-call="ks_report_filters" t-props="{ks_df_informations:ks_df_informations,ks_df_reports_ids:ks_df_reports_ids}"/>
             </t>
         </ControlPanel>
         <!--        tax report-->
@@ -37,7 +36,7 @@
                 <table id="data-bs-lines" class="table ks_table_tax_report " cellspacing="0" width="100%">
                     <thead class="ks_thead">
                         <tr>
-                            <th colspan="1"></th>
+                            <th colspan="1"/>
                             <t t-if="ks_df_report_opt['ks_diff_filter']['ks_debit_credit_visibility']">
 
                                 <th class="" colspan="1">
@@ -52,29 +51,27 @@
 
                                 <th class="" colspan="1">
                                     <span>Net Amount
-                                        <br></br>
+                                        <br/>
                                         <t t-esc="ks_df_report_opt['date']['ks_string']"/>
                                     </span>
 
                                 </th>
                                 <th class="" colspan="1">
                                     <span>Net Tax
-                                        <br></br>
+                                        <br/>
                                         <t t-esc="ks_df_report_opt['date']['ks_string']"/>
                                     </span>
                                 </th>
-                                <t t-foreach="ks_df_report_opt['ks_differ']['ks_intervals']"
-                                   t-as="current_interval"
-                                   t-key="current_interval.ks_string">
+                                <t t-foreach="ks_df_report_opt['ks_differ']['ks_intervals']" t-as="current_interval" t-key="current_interval.ks_string">
                                     <th class="" colspan="1">
                                         <span>Net Amount
-                                            <br></br>
+                                            <br/>
                                             <t t-esc="current_interval['ks_string']"/>
                                         </span>
                                     </th>
                                     <th class="" colspan="1">
                                         <span>Net Tax
-                                            <br></br>
+                                            <br/>
                                             <t t-esc="current_interval['ks_string']"/>
                                         </span>
                                     </th>
@@ -94,36 +91,30 @@
                                 <t t-set="style_td" t-value="style + ''"/>
                             </t>
                             <t t-if="a['ks_level'] == 1">
-                                <t t-set="style_td"
-                                   t-value="style + ''"/>
+                                <t t-set="style_td" t-value="style + ''"/>
                             </t>
                             <t t-if="a['ks_level'] != 0 and a['ks_level'] != 1">
                                 <t t-set="style_td" t-value="style + ''"/>
                             </t>
-                            <tr
-                                    t-att-style="style"
-                                    t-attf-class="ks_py-mline row-toggle a{{a['parent']}}"
-                                    t-on-click="event => this.ksGetMoveLines(event)">
+                            <tr t-att-style="style" t-attf-class="ks_py-mline row-toggle a{{a['parent']}}" t-on-click="event =&gt; this.ksGetMoveLines(event)">
                                 <td t-att-data-bs-account-id="a['account']" t-att-style="style_td">
                                     <div class="dropdown">
                                         <t t-if="a['list_len']">
                                             <t t-foreach="a['list_len']" t-as="i" t-key="i_index">
-                                                <span class="left-space"></span>
-                                                <span class="left-space"></span>
+                                                <span class="left-space"/>
+                                                <span class="left-space"/>
                                             </t>
                                         </t>
 
                                         <t t-if="a['ks_df_report_account_type'] == 'account_report' and (a['account_type'] == 'ks_coa_type')">
-                                            <i class="fa fa-caret-down" role="img" aria-label="Unfolded"
-                                               title="Unfolded"/>
+                                            <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"/>
                                         </t>
                                         <a>
                                             <span t-att-data-bs-account-id="a['account']">
                                                 <span t-att-style="style" t-esc="a['ks_name']"/>
                                             </span>
                                             <t t-if="a['account']">
-                                                <i class="fa fa-caret-right" role="img" aria-label="Unfolded"
-                                                   title="Unfolded"/>
+                                                <i class="fa fa-caret-right" role="img" aria-label="Unfolded" title="Unfolded"/>
                                             </t>
                                         </a>
                                         <span t-att-data-bs-account-id="a['account']"/>
@@ -131,18 +122,12 @@
 
                                             <t t-if="a['account']">
                                                 <li role="presentation">
-                                                    <a role="menuitem" class="ks_view-source" tabindex="-1"
-                                                       action="ks_show_df_journal_items"
-                                                       t-on-click="event => self.ksgetaction(event)"
-                                                       t-att-data-bs-account-id="a['account']">
+                                                    <a role="menuitem" class="ks_view-source" tabindex="-1" action="ks_show_df_journal_items" t-on-click="event =&gt; self.ksgetaction(event)" t-att-data-bs-account-id="a['account']">
                                                         Journal Items
                                                     </a>
                                                 </li>
                                                 <li role="presentation">
-                                                    <a role="menuitem" class="ks_view-source" tabindex="1"
-                                                       action="ks_show_df_general_ledger"
-                                                       t-on-click="event => self.ksgetaction(event)"
-                                                       t-att-data-bs-account-id="a['account']">
+                                                    <a role="menuitem" class="ks_view-source" tabindex="1" action="ks_show_df_general_ledger" t-on-click="event =&gt; self.ksgetaction(event)" t-att-data-bs-account-id="a['account']">
                                                         General Ledger
                                                     </a>
                                                 </li>
@@ -197,13 +182,9 @@
                         <t t-foreach="props.ks_master_value.ks_partner_dict" t-as="partner" t-key="partner">
                             <t t-if="partner != 'Total'">
                                 <t t-set="common_id" t-value=""/>
-                                <tr class="ks-mline ks_pr-py-mline" data-bs-toggle="collapse"
-                                    t-att-data-bs-partner-id="partner"
-                                    t-attf-data-bs-target=".a{{partner}}"
-                                    t-on-click="event => this.ksGetAgedLinesInfo(event)">
+                                <tr class="ks-mline ks_pr-py-mline" data-bs-toggle="collapse" t-att-data-bs-partner-id="partner" t-attf-data-bs-target=".a{{partner}}" t-on-click="event =&gt; this.ksGetAgedLinesInfo(event)">
                                     <td colspan="4">
-                                        <i class="fa fa-caret-right" role="img" aria-label="Unfolded"
-                                           title="Unfolded"></i>
+                                        <i class="fa fa-caret-right" role="img" aria-label="Unfolded" title="Unfolded"/>
                                         <span>
                                             <t t-esc="ks_partner_dict[partner]['partner_name']"/>
                                         </span>
@@ -224,10 +205,7 @@
                                             <t t-if="!ks_partner_dict[partner]['single_page']">
                                                 <t t-foreach="ks_partner_dict[partner]['pages']" t-as="i" t-key="i">
                                                     <li>
-                                                        <a class="ks_py-mline-page"
-                                                           t-att-data-bs-page-number="i"
-                                                           t-att-data-bs-count="ks_partner_dict[partner]['count']"
-                                                           t-att-data-bs-partner-id="partner">
+                                                        <a class="ks_py-mline-page" t-att-data-bs-page-number="i" t-att-data-bs-count="ks_partner_dict[partner]['count']" t-att-data-bs-partner-id="partner">
                                                             <t t-esc="i"/>
                                                         </a>
                                                     </li>
@@ -267,21 +245,17 @@
                             <th class="">Debit</th>
                             <th class="">Credit</th>
                             <th class="">Balance</th>
-                            <th class=""></th>
+                            <th class=""/>
                         </tr>
                     </thead>
                     <tbody>
                         <t t-foreach="props.ks_report_lines" t-as="account" t-key="account['id']">
                             <t t-if="account['id'] != 'total' and account['name']!='Details Per Month'">
                                 <t t-set="common_id" t-value=""/>
-                                <tr class="ks_cj-py-mline" data-bs-toggle="collapse"
-                                    t-att-data-bs-journal-id="account['id']"
-                                    t-attf-data-bs-target=".a{{account['id']}}"
-                                    t-on-click="event => this.ksGetConsolidateInfo(event)">
+                                <tr class="ks_cj-py-mline" data-bs-toggle="collapse" t-att-data-bs-journal-id="account['id']" t-attf-data-bs-target=".a{{account['id']}}" t-on-click="event =&gt; this.ksGetConsolidateInfo(event)">
                                     <!--                            <t t-if="account['id']!='total'">-->
                                     <td colspan="8">
-                                        <i class="fa fa-caret-down" role="img" aria-label="Unfolded"
-                                           title="Unfolded"></i>
+                                        <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"/>
                                         <span>
                                             <t t-esc="props.lang !== undefined &amp;&amp; account['name'][props.lang] || account['name']"/>
                                         </span>
@@ -296,7 +270,7 @@
                                     <td class="ks_amt">
                                         <t t-raw="account['balance']"/>
                                     </td>
-                                    <td class="ks_amt"></td>
+                                    <td class="ks_amt"/>
 
                                     <t t-set="common_id" t-value="'a'+account['id']"/>
 
@@ -307,10 +281,7 @@
                                             <t t-if="!account['single_page']">
                                                 <t t-foreach="account['pages']" t-as="i" t-key="i">
                                                     <li>
-                                                        <a class="ks_py-mline-page"
-                                                           t-att-data-bs-page-number="i"
-                                                           t-att-data-bs-count="account['count']"
-                                                           t-att-data-bs-account-id="account['id']">
+                                                        <a class="ks_py-mline-page" t-att-data-bs-page-number="i" t-att-data-bs-count="account['count']" t-att-data-bs-account-id="account['id']">
                                                             <t t-esc="i"/>
                                                         </a>
                                                     </li>
@@ -335,7 +306,7 @@
                                     <td class="bld ks_amt">
                                         <t t-raw="account['balance']"/>
                                     </td>
-                                    <td class="ks_amt bld"></td>
+                                    <td class="ks_amt bld"/>
 
                                 </tr>
                             </t>
@@ -354,7 +325,7 @@
                                     <td class="ks_amt bld">
                                         <t t-raw="account['balance']"/>
                                     </td>
-                                    <td class="ks_amt bld"></td>
+                                    <td class="ks_amt bld"/>
                                 </tr>
 
                             </t>
@@ -376,7 +347,7 @@
                                 <td class="ks_amt bld">
                                     <t t-raw="monthly['balance']"/>
                                 </td>
-                                <td class="ks_amt bld"></td>
+                                <td class="ks_amt bld"/>
                             </tr>
                         </t>
                     </tbody>
@@ -395,7 +366,7 @@
                 <table id="data-bs-lines" class=" ks_table_4 table border" cellspacing="0" width="100%">
                     <thead class="ks_thead">
                         <tr>
-                            <th colspan="1"></th>
+                            <th colspan="1"/>
                             <th class="ks_in_bal" colspan="3">
                                 <span>Initial Balance</span>
                             </th>
@@ -427,8 +398,7 @@
                     <tbody class="border">
 
                         <t t-foreach="account_data" t-as="account" t-key="account">
-                            <tr class="" data-bs-toggle="collapse"
-                                t-attf-data-bs-id=".a{{account_data[account]['id']}}">
+                            <tr class="" data-bs-toggle="collapse" t-attf-data-bs-id=".a{{account_data[account]['id']}}">
                                 <td class="bld ks_color_td_1" t-att-data-bs-account-id="account_data[account]['id']">
                                     <div class="dropdown">
                                         <a data-bs-toggle="dropdown" href="#">
@@ -437,26 +407,19 @@
                                                 -
                                                 <t t-esc="account_data[account]['name']"/>
                                             </span>
-                                            <i class="fa fa-angle-down" role="img" aria-label="Unfolded"
-                                               title="Unfolded"></i>
+                                            <i class="fa fa-angle-down" role="img" aria-label="Unfolded" title="Unfolded"/>
 
                                         </a>
-                                        <span t-att-data-bs-account-id="account_data[account]['id']"></span>
+                                        <span t-att-data-bs-account-id="account_data[account]['id']"/>
                                         <ul class="dropdown-menu p-2" role="menu">
                                             <t t-if="account_data[account]['id']">
                                                 <li role="presentation">
-                                                    <a role="menuitem" class="ks_view-source" tabindex="-1"
-                                                       action="ks_show_df_journal_items"
-                                                       t-on-click="event => this.ksgetaction(event)"
-                                                       t-att-data-bs-account-id="account_data[account]['id']">
+                                                    <a role="menuitem" class="ks_view-source" tabindex="-1" action="ks_show_df_journal_items" t-on-click="event =&gt; this.ksgetaction(event)" t-att-data-bs-account-id="account_data[account]['id']">
                                                         Journal Items
                                                     </a>
                                                 </li>
                                                 <li role="presentation">
-                                                    <a role="menuitem" class="ks_view-source" tabindex="1"
-                                                       action="ks_show_df_general_ledger"
-                                                       t-on-click="event => this.ksgetaction(event)"
-                                                       t-att-data-bs-account-id="account_data[account]['id']">
+                                                    <a role="menuitem" class="ks_view-source" tabindex="1" action="ks_show_df_general_ledger" t-on-click="event =&gt; this.ksgetaction(event)" t-att-data-bs-account-id="account_data[account]['id']">
                                                         General Ledger
                                                     </a>
                                                 </li>
@@ -494,9 +457,7 @@
                             </tr>
                         </t>
                         <t t-foreach="subtotal" t-as="account" t-key="account">
-                            <tr class="ks_py-mline" data-bs-toggle="collapse"
-                                t-attf-data-bs-id=".a{{subtotal[account]['id']}}"
-                                t-on-click="event => this.ksGetMoveLines(event)">
+                            <tr class="ks_py-mline" data-bs-toggle="collapse" t-attf-data-bs-id=".a{{subtotal[account]['id']}}" t-on-click="event =&gt; this.ksGetMoveLines(event)">
                                 <td class="bld">
                                     <t t-esc="subtotal[account]['name']"/>
                                 </td>
@@ -557,8 +518,7 @@
                                         <t t-esc="props.ks_df_report_opt['date']['ks_string']"/>
                                     </span>
                                 </th>
-                                <t t-foreach="props.ks_df_report_opt['ks_differ']['ks_intervals']"
-                                   t-as="current_interval" t-key="current_interval_index">
+                                <t t-foreach="props.ks_df_report_opt['ks_differ']['ks_intervals']" t-as="current_interval" t-key="current_interval_index">
                                     <th class="" colspan="1">
                                         <span>
                                             <t t-esc="current_interval['ks_string']"/>
@@ -588,55 +548,44 @@
                                 <t t-set="style_td" t-value="style + ''"/>
                             </t>
                             <t t-if="a['ks_level'] == 1">
-                                <t t-set="style_td"
-                                   t-value="style + ''"/>
+                                <t t-set="style_td" t-value="style + ''"/>
                             </t>
                             <t t-if="a['ks_level'] != 0 and a['ks_level'] != 1">
                                 <t t-set="style_td" t-value="style + ''"/>
                             </t>
-                            <tr t-att-style="style"
-                                t-attf-class="ks_py-mline ks_level_{{a['ks_level']}} row-toggle"
-                                t-on-click="event => this.ksGetMoveLines(event)">
+                            <tr t-att-style="style" t-attf-class="ks_py-mline ks_level_{{a['ks_level']}} row-toggle" t-on-click="event =&gt; this.ksGetMoveLines(event)">
                                 <td t-att-data-bs-account-id="a['account']" t-att-style="style_td">
                                     <div class="dropdown">
                                         <t t-if="a['list_len']">
                                             <t t-set="a_count" t-value="111"/>
                                             <t t-foreach="a['list_len']" t-as="i" t-key="a_count">
                                                 <t t-set="a_count" t-value="a_count+2"/>
-                                                <span class="left-space"></span>
-                                                <span class="left-space"></span>
+                                                <span class="left-space"/>
+                                                <span class="left-space"/>
                                             </t>
                                         </t>
 
                                         <t t-if="a['ks_df_report_account_type'] == 'account_report' and (a['account_type'] == 'ks_coa_type')">
-                                            <i class="fa fa-caret-down" role="img" aria-label="Unfolded"
-                                               title="Unfolded"/>
+                                            <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"/>
                                         </t>
                                         <a>
                                             <span t-att-data-bs-account-id="a['account']">
                                                 <span t-att-style="style" t-esc="a['ks_name']"/>
                                             </span>
                                             <t t-if="a['account']">
-                                                <i class="fa fa-caret-right" role="img" aria-label="Unfolded"
-                                                   title="Unfolded"/>
+                                                <i class="fa fa-caret-right" role="img" aria-label="Unfolded" title="Unfolded"/>
                                             </t>
                                         </a>
                                         <span t-att-data-bs-account-id="a['account']"/>
                                         <ul class="dropdown-menu p-2" role="menu">
                                             <t t-if="a['account']">
                                                 <li role="presentation">
-                                                    <a role="menuitem" class="ks_view-source" tabindex="-1"
-                                                       action="ks_show_df_journal_items"
-                                                       t-on-click="event => self.ksgetaction(event)"
-                                                       t-att-data-bs-account-id="a['account']">
+                                                    <a role="menuitem" class="ks_view-source" tabindex="-1" action="ks_show_df_journal_items" t-on-click="event =&gt; self.ksgetaction(event)" t-att-data-bs-account-id="a['account']">
                                                         Journal Items
                                                     </a>
                                                 </li>
                                                 <li role="presentation">
-                                                    <a role="menuitem" class="ks_view-source" tabindex="1"
-                                                       action="ks_show_df_general_ledger"
-                                                       t-on-click="event => self.ksgetaction(event)"
-                                                       t-att-data-bs-account-id="a['account']">
+                                                    <a role="menuitem" class="ks_view-source" tabindex="1" action="ks_show_df_general_ledger" t-on-click="event =&gt; self.ksgetaction(event)" t-att-data-bs-account-id="a['account']">
                                                         General Ledger
                                                     </a>
                                                 </li>
@@ -672,8 +621,7 @@
                                     </t>
                                 </t>
                                 <t t-if="a['balance']">
-                                    <t t-if="a['balance']" t-foreach="a['balance']" t-as="current_interval"
-                                       t-key="current_interval">
+                                    <t t-if="a['balance']" t-foreach="a['balance']" t-as="current_interval" t-key="current_interval">
                                         <td t-att-style="style_td" class="ks_amt">
                                             <span t-raw="a['balance'][current_interval]"/>
                                         </td>
@@ -734,18 +682,15 @@
                             <th class="">Debit</th>
                             <th class="">Credit</th>
                             <th class="">Balance</th>
-                            <th class=""></th>
+                            <th class=""/>
                         </tr>
                     </thead>
                     <tbody>
                         <t t-foreach="ks_report_lines" t-as="account" t-key="account">
                             <t t-set="common_id" t-value=""/>
-                            <tr style="background:#efefef" class="ks_py-mline ks_row_first " data-bs-toggle="collapse"
-                                t-att-data-bs-account-id="ks_report_lines[account]['id']"
-                                t-attf-data-bs-target=".a{{ks_report_lines[account]['id']}}"
-                                t-on-click="event => this.ksGetMoveLines(event)">
+                            <tr style="background:#efefef" class="ks_py-mline ks_row_first " data-bs-toggle="collapse" t-att-data-bs-account-id="ks_report_lines[account]['id']" t-attf-data-bs-target=".a{{ks_report_lines[account]['id']}}" t-on-click="event =&gt; this.ksGetMoveLines(event)">
                                 <td colspan="8">
-                                    <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"></i>
+                                    <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"/>
                                     <span>
                                         <t t-esc="ks_report_lines[account]['code']"/>
                                         -
@@ -766,7 +711,7 @@
                                 <td colspan="1" class="ks_amt">
                                     <t t-raw="ks_report_lines[account]['balance']"/>
                                 </td>
-                                <td colspan="1" class="ks_amt"></td>
+                                <td colspan="1" class="ks_amt"/>
                                 <t t-set="common_id" t-value="'a'+ks_report_lines[account]['id']"/>
                             </tr>
                             <tr t-attf-class="collapse a{{ks_report_lines[account]['id']}}">
@@ -775,10 +720,7 @@
                                         <t t-if="!ks_report_lines[account]['single_page']">
                                             <t t-foreach="ks_report_lines[account]['pages']" t-as="i" t-key="i">
                                                 <li>
-                                                    <a class="ks_py-mline-page"
-                                                       t-att-data-bs-page-number="i"
-                                                       t-att-data-bs-count="ks_report_lines[account]['count']"
-                                                       t-att-data-bs-account-id="ks_report_lines[account]['id']">
+                                                    <a class="ks_py-mline-page" t-att-data-bs-page-number="i" t-att-data-bs-count="ks_report_lines[account]['count']" t-att-data-bs-account-id="ks_report_lines[account]['id']">
                                                         <t t-esc="i"/>
                                                     </a>
                                                 </li>
@@ -808,19 +750,16 @@
                             <th class="">Debit</th>
                             <th class="">Credit</th>
                             <th class="">Balance</th>
-                            <th class=""></th>
+                            <th class=""/>
                         </tr>
                     </thead>
                     <tbody>
                         <t t-foreach="ks_report_lines" t-as="account" t-key="account">
                             <t t-set="common_id" t-value=""/>
-                            <tr class="ks_pl-py-mline" data-bs-toggle="collapse"
-                                t-on-click="event => this.ksGetPlMoveLines(event)"
-                                t-att-data-bs-account-id="ks_report_lines[account]['id']"
-                                t-attf-data-bs-target=".a{{ks_report_lines[account]['id']}}">
+                            <tr class="ks_pl-py-mline" data-bs-toggle="collapse" t-on-click="event =&gt; this.ksGetPlMoveLines(event)" t-att-data-bs-account-id="ks_report_lines[account]['id']" t-attf-data-bs-target=".a{{ks_report_lines[account]['id']}}">
 
                                 <td colspan="6">
-                                    <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"></i>
+                                    <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"/>
                                     <span>
                                         <t t-esc="ks_report_lines[account]['name']"/>
                                     </span>
@@ -839,7 +778,7 @@
                                 <td class="ks_amt">
                                     <t t-raw="ks_report_lines[account]['balance']"/>
                                 </td>
-                                <td class="ks_amt"></td>
+                                <td class="ks_amt"/>
 
                                 <t t-set="common_id" t-value="'a'+ks_report_lines[account]['id']"/>
 
@@ -850,10 +789,7 @@
                                         <t t-if="!ks_report_lines[account]['single_page']">
                                             <t t-foreach="ks_report_lines[account]['pages']" t-as="i" t-key="i">
                                                 <li>
-                                                    <a class="ks_py-mline-page"
-                                                       t-att-data-bs-page-number="i"
-                                                       t-att-data-bs-count="ks_report_lines[account]['count']"
-                                                       t-att-data-bs-account-id="ks_report_lines[account]['id']">
+                                                    <a class="ks_py-mline-page" t-att-data-bs-page-number="i" t-att-data-bs-count="ks_report_lines[account]['count']" t-att-data-bs-account-id="ks_report_lines[account]['id']">
                                                         <t t-esc="i"/>
                                                     </a>
                                                 </li>
@@ -887,8 +823,7 @@
                                 </th>
                             </t>
                             <t t-if="ks_df_report_opt['ks_diff_filter']['ks_diff_filter_enablity']">
-                                <t t-foreach="ks_report_lines[0]['balance_cmp']" t-as="current_interval"
-                                   t-key="current_interval">
+                                <t t-foreach="ks_report_lines[0]['balance_cmp']" t-as="current_interval" t-key="current_interval">
                                     <th class="" colspan="1">
                                         <span>
                                             <t t-esc="current_interval.split('comp_bal_')[1]"/>
@@ -918,30 +853,25 @@
                                 <t t-set="style_td" t-value="style + ''"/>
                             </t>
                             <t t-if="a['ks_level'] == 1">
-                                <t t-set="style_td"
-                                   t-value="style + ''"/>
+                                <t t-set="style_td" t-value="style + ''"/>
                             </t>
                             <t t-if="a['ks_level'] != 0 and a['ks_level'] != 1">
                                 <t t-set="style_td" t-value="style + ''"/>
                             </t>
-                            <tr t-on-click="event => this.ksGetMoveLines(event)"
-                                t-att-style="style"
-                                t-attf-class="ks_py-mline ks_level_{{a['ks_level']}} row-toggle a{{a['parent']}} "
-                                t-attf-data-bs-target=".a{{a['self_id']}}" data-bs-toggle="collapse">
+                            <tr t-on-click="event =&gt; this.ksGetMoveLines(event)" t-att-style="style" t-attf-class="ks_py-mline ks_level_{{a['ks_level']}} row-toggle a{{a['parent']}} " t-attf-data-bs-target=".a{{a['self_id']}}" data-bs-toggle="collapse">
 
                                 <t t-if="a['account']">
                                     <td t-att-data-bs-account-id="a['account']" t-att-style="style_td">
                                         <div class="dropdown">
                                             <t t-if="a['list_len']">
                                                 <t t-foreach="a['list_len']" t-as="i" t-key="i">
-                                                    <span class="left-space"></span>
-                                                    <span class="left-space"></span>
+                                                    <span class="left-space"/>
+                                                    <span class="left-space"/>
                                                 </t>
                                             </t>
 
                                             <t t-if="a['ks_df_report_account_type'] == 'account_report' and (a['account_type'] == 'ks_coa_type')">
-                                                <i class="fa fa-caret-down" role="img" aria-label="Unfolded"
-                                                   title="Unfolded"></i>
+                                                <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"/>
                                             </t>
                                             <a data-bs-toggle="dropdown" href="#">
                                                 <span t-att-data-bs-account-id="a['account']">
@@ -949,27 +879,20 @@
                                                     <span t-att-style="style" t-esc="a['ks_name']"/>
                                                 </span>
                                                 <t t-if="a['account']">
-                                                    <i class="fa fa-caret-right" role="img" aria-label="Unfolded"
-                                                       title="Unfolded"></i>
+                                                    <i class="fa fa-caret-right" role="img" aria-label="Unfolded" title="Unfolded"/>
                                                 </t>
                                             </a>
-                                            <span t-att-data-bs-account-id="a['account']"></span>
+                                            <span t-att-data-bs-account-id="a['account']"/>
                                             <t t-if="a['account']">
                                                 <ul class="dropdown-menu  p-2" role="menu">
                                                     <t t-if="a['account']">
                                                         <li role="presentation">
-                                                            <a role="menuitem" class="ks_view-source" tabindex="-1"
-                                                               action="ks_show_df_journal_items"
-                                                               t-on-click="event => this.ksgetaction(event)"
-                                                               t-att-data-bs-account-id="a['account']">
+                                                            <a role="menuitem" class="ks_view-source" tabindex="-1" action="ks_show_df_journal_items" t-on-click="event =&gt; this.ksgetaction(event)" t-att-data-bs-account-id="a['account']">
                                                                 Journal Items
                                                             </a>
                                                         </li>
                                                         <li role="presentation">
-                                                            <a role="menuitem" class="ks_view-source" tabindex="1"
-                                                               action="ks_show_df_general_ledger"
-                                                               t-on-click="event => this.ksgetaction(event)"
-                                                               t-att-data-bs-account-id="a['account']">
+                                                            <a role="menuitem" class="ks_view-source" tabindex="1" action="ks_show_df_general_ledger" t-on-click="event =&gt; this.ksgetaction(event)" t-att-data-bs-account-id="a['account']">
                                                                 General Ledger
                                                             </a>
                                                         </li>
@@ -984,41 +907,33 @@
                                         <div>
                                             <t t-if="a['list_len']">
                                                 <t t-foreach="a['list_len']" t-as="i" t-key="i">
-                                                    <span class="left-space"></span>
-                                                    <span class="left-space"></span>
+                                                    <span class="left-space"/>
+                                                    <span class="left-space"/>
                                                 </t>
                                             </t>
 
                                             <t t-if="a['ks_df_report_account_type'] == 'account_report' and (a['account_type'] == 'ks_coa_type')">
-                                                <i class="fa fa-caret-down" role="img" aria-label="Unfolded"
-                                                   title="Unfolded"></i>
+                                                <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"/>
                                             </t>
                                             <a>
                                                 <span t-att-data-bs-account-id="a['account']">
                                                     <span t-att-style="style" t-esc="a['ks_name']"/>
                                                 </span>
                                                 <t t-if="a['account']">
-                                                    <i class="fa fa-caret-right" role="img" aria-label="Unfolded"
-                                                       title="Unfolded"></i>
+                                                    <i class="fa fa-caret-right" role="img" aria-label="Unfolded" title="Unfolded"/>
                                                 </t>
                                             </a>
-                                            <span t-att-data-bs-account-id="a['account']"></span>
+                                            <span t-att-data-bs-account-id="a['account']"/>
                                             <t t-if="a['account']">
                                                 <ul class="dropdown-menu p-2" role="menu">
                                                     <t t-if="a['account']">
                                                         <li role="presentation">
-                                                            <a role="menuitem" class="ks_view-source" tabindex="-1"
-                                                               action="ks_show_df_journal_items"
-                                                               t-on-click="event => this.ksgetaction(event)"
-                                                               t-att-data-bs-account-id="a['account']">
+                                                            <a role="menuitem" class="ks_view-source" tabindex="-1" action="ks_show_df_journal_items" t-on-click="event =&gt; this.ksgetaction(event)" t-att-data-bs-account-id="a['account']">
                                                                 Journal Items
                                                             </a>
                                                         </li>
                                                         <li role="presentation">
-                                                            <a role="menuitem" class="ks_view-source" tabindex="1"
-                                                               action="ks_show_df_general_ledger"
-                                                               t-on-click="event => this.ksgetaction(event)"
-                                                               t-att-data-bs-account-id="a['account']">
+                                                            <a role="menuitem" class="ks_view-source" tabindex="1" action="ks_show_df_general_ledger" t-on-click="event =&gt; this.ksgetaction(event)" t-att-data-bs-account-id="a['account']">
                                                                 General Ledger
                                                             </a>
                                                         </li>
@@ -1124,24 +1039,22 @@
     </t>
 
     <t t-name="ks_searchview_extra_ks_account_information">
-        <Dropdown togglerClass="'btn btn-secondary'">
-            <t t-set-slot="toggler">
+        <Dropdown>
+            <button type="button" class="btn btn-secondary dropdown-toggle">
                 <i class="fa fa-book"/>
                 Account
-                <t t-set="selected_account"
-                   t-value="ks_df_informations['account'].filter(account => account.selected).map(account => account.name).join(', ')"/>
+                <t t-set="selected_account" t-value="ks_df_informations['account'].filter(account =&gt; account.selected).map(account =&gt; account.name).join(', ')"/>
                 <t t-if="selected_account">
                     <t t-esc="selected_account"/>
                 </t>
-            </t>
-
-            <t t-if="ks_df_informations.ks_account_enable">
+            </button>
+            <t t-set-slot="content">
+                <t t-if="ks_df_informations.ks_account_enable">
                 <!--                <div class="dropdown-menu o_filter_menu p-3 ks_d_block" role="menu"-->
                 <!--                     style="height: auto;max-height: 300px; overflow-x: hidden;">-->
                 <t t-foreach="ks_df_informations['account']" t-as="a" t-key="a_index">
                     <!--                        data-bs-id="a.id" data-bs-filter="account"-->
-                    <DropdownItem class="{'selected': a.selected}"
-                                  onSelected="()=>this.js_account_report_choice_filter(a.id,'account')">
+                    <DropdownItem class="{'selected': a.selected}" onSelected="()=&gt;this.js_account_report_choice_filter(a.id,'account')">
                         <t t-esc="a.name"/>
                     </DropdownItem>
                 </t>
@@ -1153,21 +1066,21 @@
                 <!--                     style="height: auto;max-height: 300px; overflow-x: hidden;">-->
                 <t t-foreach="ks_df_informations['account']" t-as="a" t-key="a_index">
                     <!--                        data-bs-id="a.id" data-bs-filter="account"-->
-                    <DropdownItem class="{'selected': a.selected}"
-                                  onSelected="()=>this.js_account_report_choice_filter(a.id,'account')">
+                    <DropdownItem class="{'selected': a.selected}" onSelected="()=&gt;this.js_account_report_choice_filter(a.id,'account')">
                         <t t-esc="a.name"/>
                     </DropdownItem>
                 </t>
                 <!--                </div>-->
             </t>
 
+        </t>
         </Dropdown>
 
     </t>
 
     <t t-name="ks_searchview_extra_ks_df_informations">
-        <Dropdown togglerClass="'btn btn-secondary'">
-            <t t-set-slot="toggler">
+        <Dropdown>
+            <button type="button" class="btn btn-secondary dropdown-toggle">
                 <span class="fa fa-filter"/>
                 Options:
                 <t t-if="ks_df_informations.ks_posted_entries !== undefined">
@@ -1183,98 +1096,69 @@
                         <t>Posted Entries,Draft Entries</t>
                     </t>
                 </t>
-            </t>
-
-            <t t-if="ks_df_informations.ks_option_enable">
+            </button>
+            <t t-set-slot="content">
+                <t t-if="ks_df_informations.ks_option_enable">
                 <!--data-bs-filter="ks_posted_entries"-->
 
-                <DropdownItem class="{'selected': ks_df_informations.ks_posted_entries}"
-                              t-if="ks_df_informations.ks_posted_entries != Undefined"
-                              onSelected="() => this.OnClickDate('ks_posted_entries')"
-                >Posted Entries
+                <DropdownItem class="{'selected': ks_df_informations.ks_posted_entries}" t-if="ks_df_informations.ks_posted_entries != Undefined" onSelected="() =&gt; this.OnClickDate('ks_posted_entries')">Posted Entries
                 </DropdownItem>
                 <!--data-bs-filter="ks_unposted_entries"-->
-                <DropdownItem class="{'selected': ks_df_informations.ks_unposted_entries}"
-                              onSelected="() => this.OnClickDate('ks_unposted_entries')"
-                              t-if="ks_df_informations.ks_unposted_entries != Undefined"
-                >UnPosted Entries(Draft)
+                <DropdownItem class="{'selected': ks_df_informations.ks_unposted_entries}" onSelected="() =&gt; this.OnClickDate('ks_unposted_entries')" t-if="ks_df_informations.ks_unposted_entries != Undefined">UnPosted Entries(Draft)
                 </DropdownItem>
                 <!--data-bs-filter="ks_reconciled"-->
-                <DropdownItem class="{'selected': new_ks_df_reports_ids=='Partner Ledger'}"
-                              onSelected="() => this.OnClickDate('ks_reconciled')"
-                              t-if="new_ks_df_reports_ids=='Partner Ledger'">Show
+                <DropdownItem class="{'selected': new_ks_df_reports_ids=='Partner Ledger'}" onSelected="() =&gt; this.OnClickDate('ks_reconciled')" t-if="new_ks_df_reports_ids=='Partner Ledger'">Show
                     reconciled Entriess
                 </DropdownItem>
                 <!--data-bs-filter="ks_unreconciled"-->
-                <DropdownItem class="{'selected': new_ks_df_reports_ids=='Partner Ledger'}"
-                              onSelected="() => this.OnClickDate('ks_unreconciled')"
-                              t-if="new_ks_df_reports_ids=='Partner Ledger'">Show
+                <DropdownItem class="{'selected': new_ks_df_reports_ids=='Partner Ledger'}" onSelected="() =&gt; this.OnClickDate('ks_unreconciled')" t-if="new_ks_df_reports_ids=='Partner Ledger'">Show
                     Unreconciled Entries
                 </DropdownItem>
 
                 <!--data-bs-filter="ks_comparison_range"-->
-                <DropdownItem onSelected="() => this.OnClickDate('ks_comparison_range')"
-                              t-if="!['Age Receivable', 'Age Payable'].includes(new_ks_df_reports_ids)"
-                >To change date range
+                <DropdownItem onSelected="() =&gt; this.OnClickDate('ks_comparison_range')" t-if="!['Age Receivable', 'Age Payable'].includes(new_ks_df_reports_ids)">To change date range
                 </DropdownItem>
                 <!--                data-bs-filter="ks_report_with_lines"-->
-                <DropdownItem class="{'selected': ks_df_informations.print_detailed_view}"
-                              onSelected="() => this.OnClickDate('ks_report_with_lines')"
-                              t-if="!['Balance Sheet', 'Profit and Loss', 'Cash Flow Statement', 'Executive Summary', 'Tax Report', 'Trial Balance'].includes(new_ks_df_reports_ids)">
+                <DropdownItem class="{'selected': ks_df_informations.print_detailed_view}" onSelected="() =&gt; this.OnClickDate('ks_report_with_lines')" t-if="!['Balance Sheet', 'Profit and Loss', 'Cash Flow Statement', 'Executive Summary', 'Tax Report', 'Trial Balance'].includes(new_ks_df_reports_ids)">
                     To Print Report With Details
                 </DropdownItem>
-                <DropdownItem class="{'selected': !ks_df_informations.ks_diff_filter.ks_debit_credit_visibility}"
-                    onSelected="() => this.OnClickHideDebitCredit()"
-                    t-if="['Balance Sheet', 'Profit and Loss'].includes(new_ks_df_reports_ids)">
+                <DropdownItem class="{'selected': !ks_df_informations.ks_diff_filter.ks_debit_credit_visibility}" onSelected="() =&gt; this.OnClickHideDebitCredit()" t-if="['Balance Sheet', 'Profit and Loss'].includes(new_ks_df_reports_ids)">
                     Hide Debit &amp; Credit
                 </DropdownItem>
             </t>
             <t t-else="">
                 <!--                data-bs-filter="ks_posted_entries"-->
-                <DropdownItem class="{'selected': ks_df_informations.ks_posted_entries}"
-                              t-if="ks_df_informations.ks_posted_entries != Undefined"
-                              onSelected="() => this.OnClickDate('ks_posted_entries')"
-                >Posted Entries
+                <DropdownItem class="{'selected': ks_df_informations.ks_posted_entries}" t-if="ks_df_informations.ks_posted_entries != Undefined" onSelected="() =&gt; this.OnClickDate('ks_posted_entries')">Posted Entries
                 </DropdownItem>
                 <!--                data-bs-filter="ks_unposted_entries"-->
-                <DropdownItem class="{'selected': ks_df_informations.ks_unposted_entries}"
-                              onSelected="() => this.OnClickDate('ks_unposted_entries')"
-                              t-if="ks_df_informations.ks_unposted_entries != Undefined"
-                >UnPosted Entries(Draft)
+                <DropdownItem class="{'selected': ks_df_informations.ks_unposted_entries}" onSelected="() =&gt; this.OnClickDate('ks_unposted_entries')" t-if="ks_df_informations.ks_unposted_entries != Undefined">UnPosted Entries(Draft)
                 </DropdownItem>
                 <!--data-bs-filter="ks_reconciled"-->
-                <DropdownItem onSelected="() => this.OnClickDate('ks_reconciled')"
-                              t-if="new_ks_df_reports_ids=='Partner Ledger'">Show
+                <DropdownItem onSelected="() =&gt; this.OnClickDate('ks_reconciled')" t-if="new_ks_df_reports_ids=='Partner Ledger'">Show
                     reconciled Entriess
                 </DropdownItem>
                 <!--                data-bs-filter="ks_unreconciled"-->
-                <DropdownItem onSelected="() => this.OnClickDate('ks_unreconciled')"
-                              t-if="new_ks_df_reports_ids=='Partner Ledger'">Show
+                <DropdownItem onSelected="() =&gt; this.OnClickDate('ks_unreconciled')" t-if="new_ks_df_reports_ids=='Partner Ledger'">Show
                     Unreconciled Entries
                 </DropdownItem>
                 <!--                data-bs-filter="ks_comparison_range"-->
-                <DropdownItem onSelected="() => this.OnClickDate('ks_comparison_range')"
-                              t-if="!['Age Receivable', 'Age Payable'].includes(new_ks_df_reports_ids)"
-                >To change date range
+                <DropdownItem onSelected="() =&gt; this.OnClickDate('ks_comparison_range')" t-if="!['Age Receivable', 'Age Payable'].includes(new_ks_df_reports_ids)">To change date range
                 </DropdownItem>
                 <!--                data-bs-filter="ks_report_with_lines"-->
 
-                <DropdownItem class="{'selected': ks_df_informations.print_detailed_view}"
-                              onSelected="() => this.OnClickDate('ks_report_with_lines')"
-                              t-if="!['Balance Sheet', 'Profit and Loss', 'Cash Flow Statement', 'Executive Summary', 'Tax Report', 'Trial Balance'].includes(new_ks_df_reports_ids)">
+                <DropdownItem class="{'selected': ks_df_informations.print_detailed_view}" onSelected="() =&gt; this.OnClickDate('ks_report_with_lines')" t-if="!['Balance Sheet', 'Profit and Loss', 'Cash Flow Statement', 'Executive Summary', 'Tax Report', 'Trial Balance'].includes(new_ks_df_reports_ids)">
                     To Print Report With Details
                 </DropdownItem>
-                <DropdownItem class="{'selected': !ks_df_informations.ks_diff_filter.ks_debit_credit_visibility}"
-                    onSelected="() => this.OnClickHideDebitCredit()"
-                    t-if="['Balance Sheet', 'Profit and Loss'].includes(new_ks_df_reports_ids)">
+                <DropdownItem class="{'selected': !ks_df_informations.ks_diff_filter.ks_debit_credit_visibility}" onSelected="() =&gt; this.OnClickHideDebitCredit()" t-if="['Balance Sheet', 'Profit and Loss'].includes(new_ks_df_reports_ids)">
                     Hide Debit &amp; Credit
                 </DropdownItem>
             </t>
+        </t>
         </Dropdown>
     </t>
     <t t-name="ks_searchview_account_filter">
-        <Dropdown togglerClass="'btn btn-secondary'">
-            <t t-set-slot="toggler">
+        <Dropdown>
+            <button type="button" class="btn btn-secondary dropdown-toggle">
                 <span class="fa fa-user"/>
                 Account:
                 <t t-set="account_value">Both</t>
@@ -1285,13 +1169,12 @@
                     </t>
                 </t>
                 <t t-esc="account_value"/>
-            </t>
-
-            <t t-if="ks_df_informations['ks_account_both_enable']">
+            </button>
+            <t t-set-slot="content">
+                <t t-if="ks_df_informations['ks_account_both_enable']">
                 <t t-foreach="ks_df_informations['account_type']" t-as="a" t-key="a['name']">
                     <!--                        title="a['name']" data-bs-id="a['id']" data-bs-filter="account_type"-->
-                    <DropdownItem class="{'selected': a.selected}"
-                                  onSelected="()=>this.js_account_report_choice_filter(a.id,'account_type')">
+                    <DropdownItem class="{'selected': a.selected}" onSelected="()=&gt;this.js_account_report_choice_filter(a.id,'account_type')">
                         <t t-esc="a['name']"/>
                     </DropdownItem>
                 </t>
@@ -1299,61 +1182,63 @@
             <t t-else="">
                 <t t-foreach="ks_df_informations['account_type']" t-as="a" t-key="a_index">
                     <!--                        title="a['name']" data-bs-id="a['id']" data-bs-filter="account_type"-->
-                    <DropdownItem class="{'selected': a.selected}"
-                                  onSelected="()=>this.js_account_report_choice_filter(a.id,'account_type')">
+                    <DropdownItem class="{'selected': a.selected}" onSelected="()=&gt;this.js_account_report_choice_filter(a.id,'account_type')">
                         <t t-esc="a['name']"/>
                     </DropdownItem>
                 </t>
             </t>
+        </t>
         </Dropdown>
     </t>
 
     <t t-name="ks_searchview_analytic_filter">
-        <Dropdown togglerClass="'btn btn-secondary'">
-            <t t-set-slot="toggler">
+        <Dropdown>
+            <button type="button" class="btn btn-secondary dropdown-toggle">
                 <span class="fa fa-folder-open"/>
                 Analytic
-            </t>
-            <div class="dropdown-item">
+            </button>
+            <t t-set-slot="content">
+                <div class="dropdown-item">
                 <label>Analytic Account</label>
-                <MultiRecordSelector
-                        t-props="getMultiRecordSelectoraccount('account.analytic.account', 'analytic_accounts')"/>
+                <MultiRecordSelector t-props="getMultiRecordSelectoraccount('account.analytic.account', 'analytic_accounts')"/>
             </div>
             <!--            <ul class="dropdown-menu o_filter_menu p-3" role="menu">-->
             <!--                <li class="o_account_report_search js_account_analytic_m2m"/>-->
             <!--            </ul>-->
+        </t>
         </Dropdown>
     </t>
 
     <t t-name="ks_searchview_partner_filter">
-        <Dropdown t-if="ks_df_informations['ks_partner']" togglerClass="'btn btn-secondary'"
-        >
-            <t t-set-slot="toggler">
+        <Dropdown t-if="ks_df_informations['ks_partner']">
+            <button type="button" class="btn btn-secondary dropdown-toggle">
                 <span class="fa fa-folder-open"/>
                 Partners
-            </t>
-            <div class="dropdown-item">
+            </button>
+            <t t-set-slot="content">
+                <div class="dropdown-item">
                 <label>Partners</label>
                 <MultiRecordSelector t-props="getMultiRecordSelectorProps('res.partner', 'partner_ids')"/>
             </div>
+        </t>
         </Dropdown>
 
     </t>
 
     <t t-name="ks_searchview_journals_filter" owl="1">
-        <Dropdown togglerClass="'btn btn-secondary'">
-            <t t-set-slot="toggler">
+        <Dropdown>
+            <button type="button" class="btn btn-secondary dropdown-toggle">
                 <i class="fa fa-book"/>journals
-                <t t-set="selected_journals"
-                   t-value="ks_df_informations['name_journal_group'] || ks_df_informations['journals'].filter(journal => journal['selected']).map(journal => journal['code']).join(', ')"/>
+                <t t-set="selected_journals" t-value="ks_df_informations['name_journal_group'] || ks_df_informations['journals'].filter(journal =&gt; journal['selected']).map(journal =&gt; journal['code']).join(', ')"/>
                 <t t-if="selected_journals">
                     <t t-esc="selected_journals"/>
                 </t>
                 <t t-else="">
                     All
                 </t>
-            </t>
-            <t t-if="ks_df_informations['ks_journal_enable']">
+            </button>
+            <t t-set-slot="content">
+                <t t-if="ks_df_informations['ks_journal_enable']">
                 <t t-foreach="ks_df_informations['journals']" t-as="j" t-key="j_index">
                     <t t-if="j['id'] == 'divider'">
                         <div role="separator" class="dropdown-divider"/>
@@ -1368,16 +1253,14 @@
                         <t t-if="j['id'] == 'group'">
                             <!--                            data-bs-filter="journals" data-bs-id="j['id']"-->
                             <!--                                    data-bs-member-ids="j['ids']"-->
-                            <DropdownItem class="{'selected': j.selected}"
-                                          onSelected="()=>this.js_account_report_group_choice_filter('journals',j.ids)">
+                            <DropdownItem class="{'selected': j.selected}" onSelected="()=&gt;this.js_account_report_group_choice_filter('journals',j.ids)">
                                 <t t-esc="j['name']"/>
                             </DropdownItem>
                         </t>
                         <t t-else="">
                             <!--                            title="j['name']+ '-' + j['code']" data-bs-id="j['id']"-->
                             <!--                                    data-bs-filter="journals"-->
-                            <DropdownItem class="{'selected': j.selected}"
-                                          onSelected="()=>this.js_account_report_choice_filter(j.id,'journals')">
+                            <DropdownItem class="{'selected': j.selected}" onSelected="()=&gt;this.js_account_report_choice_filter(j.id,'journals')">
                                 <t t-esc="j['name']"/>
                             </DropdownItem>
                         </t>
@@ -1399,24 +1282,21 @@
                         <t t-if="j['id'] == 'group'">
                             <!--                            data-bs-filter="journals" data-bs-id="j['id']"-->
                             <!--                                    data-bs-member-ids="j['ids']"-->
-                            <DropdownItem class="{'selected': j.selected}"
-                                          onSelected="()=>this.js_account_report_group_choice_filter('journals',j.ids)"
-                            >
+                            <DropdownItem class="{'selected': j.selected}" onSelected="()=&gt;this.js_account_report_group_choice_filter('journals',j.ids)">
                                 <t t-esc="j['name']"/>
                             </DropdownItem>
                         </t>
                         <t t-else="">
                             <!--                            title="j['name']+ '-' + j['code']" data-bs-id="j['id']"-->
                             <!--                                    data-bs-filter="journals"-->
-                            <DropdownItem class="{'selected': j.selected}"
-                                          onSelected="()=>this.js_account_report_choice_filter(j.id,'journals')"
-                            >
+                            <DropdownItem class="{'selected': j.selected}" onSelected="()=&gt;this.js_account_report_choice_filter(j.id,'journals')">
                                 <t t-esc="j['name']"/>
                             </DropdownItem>
                         </t>
                     </t>
                 </t>
             </t>
+        </t>
         </Dropdown>
     </t>
 
@@ -1447,17 +1327,13 @@
                                                 <span t-att-data-bs-move-id="account_line.move_id">
                                                     <t t-esc="account_line.move_name"/>
                                                 </span>
-                                                <i class="fa fa-caret-down" role="img" aria-label="Unfolded"
-                                                   title="Unfolded"></i>
+                                                <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"/>
                                             </a>
-                                            <span t-att-data-bs-move-id="account_line.move_id"></span>
+                                            <span t-att-data-bs-move-id="account_line.move_id"/>
                                             <ul class="dropdown-menu" role="menu">
                                                 <t t-if="account_line.move_name">
                                                     <li role="presentation">
-                                                        <a role="menuitem" class="ks_view-source" tabindex="-1"
-                                                           action="ks_df_show_move_line"
-                                                           t-on-click="event => self.ksgetaction(event)"
-                                                           t-att-data-bs-move-id="account_line.move_id">
+                                                        <a role="menuitem" class="ks_view-source" tabindex="-1" action="ks_df_show_move_line" t-on-click="event =&gt; self.ksgetaction(event)" t-att-data-bs-move-id="account_line.move_id">
                                                             Move line
                                                         </a>
                                                     </li>
@@ -1505,9 +1381,8 @@
     </t>
     <t t-name="ks_searchview_date_filter" owl="1">
 
-        <Dropdown togglerClass="'btn btn-secondary'">
-            <t t-set="ks_df_informations" t-value="props.ks_master_value.ks_df_informations"/>
-            <t t-set-slot="toggler">
+        <Dropdown>
+            <button type="button" class="btn btn-secondary dropdown-toggle">
                 <i class="fa fa-calendar me-1"/>
                 <t t-if="ks_df_informations['date']['ks_string'] and ks_df_informations['date']['ks_filter'] != 'custom'">
                     <t t-esc="ks_df_informations['date']['ks_string']"/>
@@ -1530,71 +1405,62 @@
                         </span>
                     </t>
                 </t>
-            </t>
+            </button>
+            <t t-set-slot="content">
+                <t t-set="ks_df_informations" t-value="props.ks_master_value.ks_df_informations"/>
             <t t-if="ks_df_informations['date']['ks_process'] == 'single'">
-                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'today')}"
-                              onSelected="() => this.updateFilter('today')">
+                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'today')}" onSelected="() =&gt; this.updateFilter('today')">
                     Today
                 </DropdownItem>
-                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'last_month') }"
-                              onSelected="() => this.updateFilter('last_month')">
+                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'last_month') }" onSelected="() =&gt; this.updateFilter('last_month')">
                     End of Last Month
                 </DropdownItem>
-                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'last_quarter') }"
-                              onSelected="() => this.updateFilter('last_quarter')">
+                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'last_quarter') }" onSelected="() =&gt; this.updateFilter('last_quarter')">
                     End of Last Quarter
                 </DropdownItem>
-                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'last_year') }"
-                              onSelected="() => this.updateFilter('last_year')">
+                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'last_year') }" onSelected="() =&gt; this.updateFilter('last_year')">
                     End of Financial Year
                 </DropdownItem>
             </t>
             <t t-if="ks_df_informations['date']['ks_process'] == 'range'">
-                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'this_month') }"
-                              onSelected="() => this.updateFilter('this_month')">
+                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'this_month') }" onSelected="() =&gt; this.updateFilter('this_month')">
                     This Month
                 </DropdownItem>
 
-                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'this_quarter') }"
-                              onSelected="() => this.updateFilter('this_quarter')">
+                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'this_quarter') }" onSelected="() =&gt; this.updateFilter('this_quarter')">
                     This Quarter
                 </DropdownItem>
 
-                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'this_year') }"
-                              onSelected="() => this.updateFilter('this_year')">This Financial Year
+                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'this_year') }" onSelected="() =&gt; this.updateFilter('this_year')">This Financial Year
                 </DropdownItem>
-                <div role="separator" class="dropdown-divider"></div>
-                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'last_month') }"
-                              onSelected="() => this.updateFilter('last_month')">Last Month
+                <div role="separator" class="dropdown-divider"/>
+                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'last_month') }" onSelected="() =&gt; this.updateFilter('last_month')">Last Month
                 </DropdownItem>
 
-                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'last_quarter') }"
-                              onSelected="() => this.updateFilter('last_quarter')">Last Quarter
+                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'last_quarter') }" onSelected="() =&gt; this.updateFilter('last_quarter')">Last Quarter
                 </DropdownItem>
 
-                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'last_year') }"
-                              onSelected="() => this.updateFilter('last_year')">Last Financial Year
+                <DropdownItem class="{'selected': (ks_df_informations.date.ks_filter == 'last_year') }" onSelected="() =&gt; this.updateFilter('last_year')">Last Financial Year
                 </DropdownItem>
 
             </t>
-            <div role="separator" class="dropdown-divider"></div>
-            <div class="dropdown-item date"
-                 t-att-class="(ks_df_informations['date']['ks_process'] == 'custom') ? 'selected' : ''">
+            <div role="separator" class="dropdown-divider"/>
+            <div class="dropdown-item date" t-att-class="(ks_df_informations['date']['ks_process'] == 'custom') ? 'selected' : ''">
                 <label class="d-flex align-items-center">
                     End Date:
                 </label>
-                <DateTimeInput value="typeof props.ks_end_date === 'string' ? null : props.ks_end_date" type="'date'"
-                               onChange="(date) => this.onDateTimeChanged(date)"/>
-                <button class="btn btn-sm btn-primary mt-2" t-on-click="() => this.updateFilter('custom')">
+                <DateTimeInput value="typeof props.ks_end_date === 'string' ? null : props.ks_end_date" type="'date'" onChange="(date) =&gt; this.onDateTimeChanged(date)"/>
+                <button class="btn btn-sm btn-primary mt-2" t-on-click="() =&gt; this.updateFilter('custom')">
                     Apply
                 </button>
             </div>
+        </t>
         </Dropdown>
     </t>
 
     <t t-name="ks_searchview_differentiate_filter" owl="1">
-        <Dropdown togglerClass="'btn btn-secondary'">
-            <t t-set-slot="toggler">
+        <Dropdown>
+            <button type="button" class="btn btn-secondary dropdown-toggle">
                 <span class="fa fa-bar-chart"/>
                 Differentiate:
                 <t t-if="ks_df_informations['ks_differ']['string'] and ks_df_informations['ks_differ']['ks_differentiate_filter'] != 'custom'">
@@ -1620,38 +1486,33 @@
                     </t>
                 </t>
                 -
-            </t>
-            <DropdownItem onSelected="() => this.OnChangeComp('no_differentiation')">No Comparison
+            </button>
+            <t t-set-slot="content">
+                <DropdownItem onSelected="() =&gt; this.OnChangeComp('no_differentiation')">No Comparison
             </DropdownItem>
             <!--            data-bs-filter="no_differentiation"-->
             <div role="separator" class="dropdown-divider"/>
-            <div class="dropdown-item date"
-                 data-bs-filter='earlier_interval_filter'>
+            <div class="dropdown-item date" data-bs-filter="earlier_interval_filter">
                 <label for="periods_number">Number of Previous periods :</label>
                 <input type="number" name="periods_number" value="0"/>
-                <button type="button" class="btn-sm btn btn-primary js_account_report_date_cmp_filter"
-                        data-bs-filter='earlier_interval' t-on-click="() => this.OnChangeComp('earlier_interval')">Apply
+                <button type="button" class="btn-sm btn btn-primary js_account_report_date_cmp_filter" data-bs-filter="earlier_interval" t-on-click="() =&gt; this.OnChangeComp('earlier_interval')">Apply
                 </button>
             </div>
-            <div role="separator" class="dropdown-divider"></div>
+            <div role="separator" class="dropdown-divider"/>
 
-            <div class="dropdown-item date" data-bs-filter='custom_cmp_filter'>
+            <div class="dropdown-item date" data-bs-filter="custom_cmp_filter">
                 <t>
                     <label class="d-flex align-items-center">Start Date :</label>
-                    <DateTimeInput value="typeof props.date_from_cmp === 'string' ? null : props.date_from_cmp"
-                                   type="'date'" onChange="(date) => this.fdate_from_cmp(date)"
-                    />
+                    <DateTimeInput value="typeof props.date_from_cmp === 'string' ? null : props.date_from_cmp" type="'date'" onChange="(date) =&gt; this.fdate_from_cmp(date)"/>
                 </t>
                 <label class="d-flex align-items-center">End Date :
                 </label>
-                <DateTimeInput value="typeof props.date_to_cmp === 'string' ? null : props.date_to_cmp"
-                               type="'date'" onChange="(date) => this.fdate_to_cmp(date)"
-                />
-                <button type="button" class="btn btn-sm btn-primary js_account_report_date_cmp_filter"
-                        data-bs-filter='custom' t-on-click="() => this.OnChangeComp('custom')">Apply
+                <DateTimeInput value="typeof props.date_to_cmp === 'string' ? null : props.date_to_cmp" type="'date'" onChange="(date) =&gt; this.fdate_to_cmp(date)"/>
+                <button type="button" class="btn btn-sm btn-primary js_account_report_date_cmp_filter" data-bs-filter="custom" t-on-click="() =&gt; this.OnChangeComp('custom')">Apply
                 </button>
             </div>
 
+        </t>
         </Dropdown>
     </t>
 
@@ -1678,25 +1539,18 @@
                                             <span t-att-data-bs-move-id="account_line.id">
                                                 <t t-esc="account_line.name"/>
                                             </span>
-                                            <i class="fa fa-caret-down" role="img" aria-label="Unfolded"
-                                               title="Unfolded"/>
+                                            <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"/>
                                         </a>
                                         <span t-att-data-bs-move-id="account_line.id"/>
                                         <t t-if="account_line.name">
                                             <ul class="dropdown-menu p-2" role="menu">
                                                 <li role="presentation">
-                                                    <a role="menuitem" class="ks_ks_view-source" tabindex="-1"
-                                                       action="ks_show_df_journal_items"
-                                                       t-on-click="event => self.ksgetaction(event)"
-                                                       t-att-data-bs-account-id="account_line.id">
+                                                    <a role="menuitem" class="ks_ks_view-source" tabindex="-1" action="ks_show_df_journal_items" t-on-click="event =&gt; self.ksgetaction(event)" t-att-data-bs-account-id="account_line.id">
                                                         Journal Items
                                                     </a>
                                                 </li>
                                                 <li role="presentation">
-                                                    <a role="menuitem" class="ks_ks_view-source" tabindex="1"
-                                                       action="ks_show_df_general_ledger"
-                                                       t-on-click="event => self.ksgetaction(event)"
-                                                       t-att-data-bs-account-id="account_line.id">
+                                                    <a role="menuitem" class="ks_ks_view-source" tabindex="1" action="ks_show_df_general_ledger" t-on-click="event =&gt; self.ksgetaction(event)" t-att-data-bs-account-id="account_line.id">
 
                                                         General Ledger
                                                     </a>
@@ -1772,17 +1626,13 @@
                                             <span t-att-data-bs-move-id="account_line.move_id">
                                                 <t t-esc="account_line.ldate"/>
                                             </span>
-                                            <i class="fa fa-caret-down" role="img" aria-label="Unfolded"
-                                               title="Unfolded"/>
+                                            <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"/>
                                         </a>
                                         <span t-att-data-bs-move-id="account_line.move_id"/>
                                         <ul class="dropdown-menu p-2" role="menu">
                                             <t t-if="account_line.move_name">
                                                 <li role="presentation">
-                                                    <a role="menuitem" class="ks_view-source" tabindex="-1"
-                                                       action="ks_df_show_move_line"
-                                                       t-on-click="event => self.ksgetaction(event)"
-                                                       t-att-data-bs-move-id="account_line.move_id">
+                                                    <a role="menuitem" class="ks_view-source" tabindex="-1" action="ks_df_show_move_line" t-on-click="event =&gt; self.ksgetaction(event)" t-att-data-bs-move-id="account_line.move_id">
                                                         Move Line
                                                     </a>
                                                 </li>
@@ -1876,17 +1726,13 @@
                                             <span t-att-data-bs-move-id="account_line.move_id">
                                                 <t t-esc="account_line.ldate"/>
                                             </span>
-                                            <i class="fa fa-caret-down" role="img" aria-label="Unfolded"
-                                               title="Unfolded"/>
+                                            <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"/>
                                         </a>
                                         <span t-att-data-bs-move-id="account_line.move_id"/>
                                         <ul class="dropdown-menu p-2" role="menu">
                                             <t t-if="account_line.move_name">
                                                 <li role="presentation">
-                                                    <a role="menuitem" class="ks_view-source" tabindex="-1"
-                                                       action="ks_df_show_move_line"
-                                                       t-on-click="event => self.ksgetaction(event)"
-                                                       t-att-data-bs-move-id="account_line.move_id">
+                                                    <a role="menuitem" class="ks_view-source" tabindex="-1" action="ks_df_show_move_line" t-on-click="event =&gt; self.ksgetaction(event)" t-att-data-bs-move-id="account_line.move_id">
                                                         Move Line
                                                     </a>
                                                 </li>

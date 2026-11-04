@@ -23,7 +23,7 @@ class SchemeOfWork(models.Model):
         return self.employee_id.parent_id.id
 
     def _default_year(self):
-        current_date = fields.date.today()
+        current_date = fields.Date.today()
         academic_record = (
             self.env["xe.academic.year"]
             .sudo()
@@ -157,17 +157,22 @@ class SchemeOfWork(models.Model):
     def reset_draft(self):
         self.status = "draft"
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_lesson_planner_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xe_lesson_planner_create_single(self, vals):
         if vals:
             vals["seq_name"] = (
                 self.env["ir.sequence"].next_by_code("scheme.of.work") or "/"
             )
             vals["is_scheme_of_work"] = True
-            lesson_plan_user = self.user_has_groups(
+            lesson_plan_user = self.env.user.has_group(
                 "xe_lesson_planner.group_lesson_plan_user"
             )
-            lesson_plan_admin = self.user_has_groups(
+            lesson_plan_admin = self.env.user.has_group(
                 "xe_lesson_planner.group_lesson_plan_manager"
             )
             if lesson_plan_user and lesson_plan_admin == False:
@@ -177,10 +182,10 @@ class SchemeOfWork(models.Model):
 
     def write(self, vals):
         if vals:
-            lesson_plan_user = self.user_has_groups(
+            lesson_plan_user = self.env.user.has_group(
                 "xe_lesson_planner.group_lesson_plan_user"
             )
-            lesson_plan_admin = self.user_has_groups(
+            lesson_plan_admin = self.env.user.has_group(
                 "xe_lesson_planner.group_lesson_plan_manager"
             )
             if lesson_plan_admin or lesson_plan_user:
@@ -236,7 +241,7 @@ class LessonPlan(models.Model):
         return self.employee_id.parent_id.id
 
     def _default_year(self):
-        current_date = fields.date.today()
+        current_date = fields.Date.today()
         academic_record = (
             self.env["xe.academic.year"]
             .sudo()
@@ -298,17 +303,22 @@ class LessonPlan(models.Model):
                 if students:
                     rec.no_of_students = students
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_lesson_planner_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xe_lesson_planner_create_single(self, vals):
         if vals:
             vals["seq_name_lp"] = (
                 self.env["ir.sequence"].next_by_code("lesson.plan") or "/"
             )
             vals["is_lesson_plan"] = True
-            lesson_plan_user = self.user_has_groups(
+            lesson_plan_user = self.env.user.has_group(
                 "xe_lesson_planner.group_lesson_plan_user"
             )
-            lesson_plan_admin = self.user_has_groups(
+            lesson_plan_admin = self.env.user.has_group(
                 "xe_lesson_planner.group_lesson_plan_manager"
             )
             if lesson_plan_user and lesson_plan_admin == False:
@@ -318,10 +328,10 @@ class LessonPlan(models.Model):
 
     def write(self, vals):
         if vals:
-            lesson_plan_user = self.user_has_groups(
+            lesson_plan_user = self.env.user.has_group(
                 "xe_lesson_planner.group_lesson_plan_user"
             )
-            lesson_plan_admin = self.user_has_groups(
+            lesson_plan_admin = self.env.user.has_group(
                 "xe_lesson_planner.group_lesson_plan_manager"
             )
             if lesson_plan_admin or lesson_plan_user:

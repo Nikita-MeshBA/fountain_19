@@ -107,8 +107,13 @@ class AssignmentSubmission(models.Model):
     def change_request(self):
         self.sudo().state = "change_request"
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_assignment_management_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, values):
+    def _xe_assignment_management_create_single(self, values):
         if "student_id" not in values:
             values["student_id"] = (
                 self.env["xe.student"].search([("user_id", "=", self.env.user.id)]).id
@@ -132,7 +137,7 @@ class AssignmentSubmission(models.Model):
     def assignment_submit_act(self):
         action = {
             "name": _("Assignment Submissions"),
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "res_model": "xe.assignment.submission",
             "type": "ir.actions.act_window",
         }

@@ -341,11 +341,11 @@ class StudentProfile(models.Model):
         value = {
             "domain": str([("id", "in", stud_rec.ids)]),
             "view_type": "form",
-            "view_mode": "tree, form",
+            "view_mode": "list,form",
             "res_model": "xe.student",
             "view_id": False,
             "views": [
-                (tree_view and tree_view.id or False, "tree"),
+                (tree_view and tree_view.id or False, "list"),
                 (form_view and form_view.id or False, "form"),
             ],
             "type": "ir.actions.act_window",
@@ -354,8 +354,13 @@ class StudentProfile(models.Model):
         }
         return value
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xenesis_school_base_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xenesis_school_base_create_single(self, vals):
         class_admission_no_automatic = (
             self.env["ir.config_parameter"]
             .sudo()
@@ -582,7 +587,7 @@ class StudentProfile(models.Model):
         #     AND m.state='posted' AND l.full_reconcile_id IS NULL GROUP BY l.date, \
         #     l.name, l.ref, l.date_maturity, l.partner_id, at.type, l.blocked, \
         #     l.amount_currency, l.currency_id, l.move_id, m.name",
-        #     ((fields.date.today(),) + (tuple(partner_ids),)),
+        #     ((fields.Date.today(),) + (tuple(partner_ids),)),
         # )
         # result = self.env.cr.dictfetchall()
         # return result
@@ -608,7 +613,7 @@ class StudentProfile(models.Model):
             AND m.state='posted' AND l.full_reconcile_id IS NULL GROUP BY l.date, \
             l.name, l.ref, l.date_maturity, l.partner_id, aa.account_type, l.blocked, \
             l.amount_currency, l.currency_id, l.move_id, m.name",
-            ((fields.date.today(),) + (tuple(partner_ids),)),
+            ((fields.Date.today(),) + (tuple(partner_ids),)),
         )
         result = self.env.cr.dictfetchall()
         return result

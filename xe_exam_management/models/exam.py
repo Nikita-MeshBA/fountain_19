@@ -11,9 +11,7 @@ class XeExam(models.Model):
     _inherit = "mail.thread"
     _description = "Exam"
 
-    _sql_constraints = [
-        ("unique_exam_code", "unique(exam_code)", "Code should be unique per exam!")
-    ]
+    _unique_exam_code = models.Constraint('unique(exam_code)', 'Code should be unique per exam!')
 
     session_id = fields.Many2one("xe.exam.session", "Exam Session")
     course_id = fields.Many2one(

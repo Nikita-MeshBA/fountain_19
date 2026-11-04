@@ -25,7 +25,7 @@
 	                        </div>
 	                    </div>
 	                </t>
-	                <t t-name="kanban-box">
+	                <t t-name="card">
 	                    <div>
 	                        <div class="o_kanban_card_header flex-grow-inf">
 	                            <div class="o_kanban_card_header_title mb16">

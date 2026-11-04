@@ -68,8 +68,13 @@ class DTBBankTransaction(models.Model):
             return ""
         return string.replace(" ", "")
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._sybyl_dtb_service_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _sybyl_dtb_service_create_single(self, vals):
         if (
             vals.get("bill_ref_no")
             and vals.get("debit_credit_indicator")

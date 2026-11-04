@@ -7,7 +7,7 @@
     "category": "Education",
     "version": "19.0.0.0.0",
     "license": "AGPL-3",
-    "depends": ["base", "mail", "xenesis_school_base", "sybyl_bulk_sms"],
+    "depends": ["base", "mail", "xenesis_school_base", "sybyl_bulk_sms", "xe_accounting_sms"],
     "data": [
         "security/ir.model.access.csv",
         "security/security.xml",

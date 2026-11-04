@@ -4,14 +4,14 @@ import {globalfunction } from '@ks_dashboard_ninja/js/ks_global_functions';
 import { formatFloat } from "@web/core/utils/numbers";
 import { formatInteger } from "@web/views/fields/formatters";
 import { useService } from "@web/core/utils/hooks";
-import { jsonrpc } from "@web/core/network/rpc_service";
+import { rpc } from "@web/core/network/rpc";
 import { _t } from "@web/core/l10n/translation";
 
 export class Ksdashboardkpiview extends Component{
         file_type_magic_word= {'/': 'jpg','R': 'gif','i': 'png','P': 'svg+xml'}
     setup(){
         var self = this;
-        this._rpc = useService("rpc");
+        this._rpc = rpc;
         this.actionService = useService("action");
         this.ks_kpi = useRef('ks_kpi')
         this.state = useState({item_info_kpi1:{},item_info_kpi2:{},item_info_kpi3:{}})
@@ -43,7 +43,7 @@ export class Ksdashboardkpiview extends Component{
     }
     ksFetchUpdateItem(item_id) {
             var self = this;
-            return jsonrpc("/web/dataset/call_kw",{
+            return rpc("/web/dataset/call_kw",{
                 model: 'ks_dashboard_ninja.board',
                 method: 'ks_fetch_item',
                 args: [

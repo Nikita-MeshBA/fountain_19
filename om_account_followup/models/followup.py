@@ -17,13 +17,7 @@ class FollowupFollowup(models.Model):
         "res.company", "Company", required=True, default=lambda self: self.env.company
     )
 
-    _sql_constraints = [
-        (
-            "company_uniq",
-            "unique(company_id)",
-            "Only one follow-up per company is allowed",
-        )
-    ]
+    _company_uniq = models.Constraint('unique(company_id)', 'Only one follow-up per company is allowed')
 
 
 class FollowupLine(models.Model):
@@ -100,13 +94,7 @@ Best Regards,
         "mail.template", "Email Template", ondelete="set null"
     )
 
-    _sql_constraints = [
-        (
-            "days_uniq",
-            "unique(followup_id, delay)",
-            "Days of the follow-up levels must be different",
-        )
-    ]
+    _days_uniq = models.Constraint('unique(followup_id, delay)', 'Days of the follow-up levels must be different')
 
     @api.constrains("description")
     def _check_description(self):

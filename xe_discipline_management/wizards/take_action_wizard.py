@@ -85,7 +85,7 @@ class TakeAction(models.TransientModel):
             {
                 "partner_id": discipline.student_id.partner_id.id,
                 "move_type": "out_invoice",
-                "invoice_date": fields.date.today(),
+                "invoice_date": fields.Date.today(),
                 "invoice_line_ids": invoice_line_ids,
             }
         )

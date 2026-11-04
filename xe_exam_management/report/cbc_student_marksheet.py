@@ -17,7 +17,7 @@ class ReportCBCMarksheetReport(models.AbstractModel):
 
     def get_lines(self, obj, marksheet_line_id):
         data = []
-        marksheet_line = obj.marksheet_line
+        marksheet_line = obj.marksheet_line_ids
         if marksheet_line_id:
             marksheet_line = self.env["xe.marksheet.line"].browse(marksheet_line_id)
 

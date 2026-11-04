@@ -1,5 +1,5 @@
 # pylint: disable=E0401,C0114,C0115,C0116
-from odoo import models, fields, _
+from odoo import api, models, fields, _
 
 
 class XeSessionDetailedLines(models.Model):
@@ -65,9 +65,7 @@ class XeSessionDetailedLines(models.Model):
         }
         return action
 
-    def name_get(self):
-        result = []
+    @api.depends('name', 'session_date')
+    def _compute_display_name(self):
         for obj in self:
-            name = obj.name + "(" + str(obj.session_date) + ")"
-            result.append((obj.id, name))
-        return result
+            obj.display_name = (obj.name or "") + "(" + str(obj.session_date) + ")"

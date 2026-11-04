@@ -57,8 +57,8 @@
                 <field name="id"/>
                 <field name="name"/>
                 <templates>
-                    <t t-name="kanban-box">
-                        <div t-attf-class="#{kanban_color(0)}">
+                    <t t-name="card">
+                        <div t-attf-class="o_kanban_color_0">
                             <div class="o_kanban_card_header">
                                 <div class="o_kanban_card_header_title">
                                     <div class="o_primary mt8">

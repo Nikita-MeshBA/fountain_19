@@ -68,7 +68,7 @@ class StudentUser(models.TransientModel):
                     str(its) for its in sorted(school_category_ids.ids)
                 )
 
-                for i in self.env.user.groups_id.category_id:
+                for i in self.env.user.group_ids.category_id:
                     groups = (
                         self.env["res.groups"]
                         .sudo()
@@ -89,6 +89,6 @@ class StudentUser(models.TransientModel):
 
                 user_id = self.env["res.users"].create(vals)
                 stud.user_id = user_id
-                stud_user_group.users = stud_user_group.users + user_id
+                stud_user_group.user_ids = stud_user_group.user_ids + user_id
                 for parent_id in self.student_ids.parent_ids:
                     parent_id.write({"student_user_ids": [(6, 0, user_id.ids)]})

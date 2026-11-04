@@ -366,7 +366,7 @@ class XeExamApi(http.Controller):
         marksheet_register = request.env["xe.marksheet.register"].search(
             [("exam_session_id", "=", exam_session_id)]
         )
-        same_obj = marksheet_register.marksheet_line
+        same_obj = marksheet_register.marksheet_line_ids
         for obj in same_obj:
             position_tuple = (obj.student_id.id, obj.total_marks)
 

@@ -152,9 +152,7 @@ class LoanType(models.Model):
             else:
                 type_id.loan_ids = []
 
-    _sql_constraints = [
-        ("name_uniq", "unique (code)", _("The code must be unique !")),
-    ]
+    _name_uniq = models.Constraint('unique (code)', 'The code must be unique !')
 
 
 class LoanPolicies(models.Model):
@@ -189,9 +187,7 @@ class LoanPolicies(models.Model):
         "hr.employee", "rel_hr_employee_policies_id", string="Employees"
     )
 
-    _sql_constraints = [
-        ("name_uniq", "unique (code)", _("The code must be unique !")),
-    ]
+    _name_uniq = models.Constraint('unique (code)', 'The code must be unique !')
 
     @api.onchange("employee_category_ids")
     def _onchange_employee_category(self):

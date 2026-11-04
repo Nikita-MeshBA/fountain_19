@@ -38,7 +38,7 @@ class ResConfigSettings(models.TransientModel):
     )
 
     def generate_academic_year(self):
-        current_date = fields.date.today()
+        current_date = fields.Date.today()
         academic_record = (
             self.env["xe.academic.year"]
             .sudo()

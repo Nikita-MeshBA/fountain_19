@@ -83,6 +83,8 @@ class CrossoveredBudgetLines(models.Model):
     _name = "crossovered.budget.lines"
     _description = "Budget Line"
 
+    _rec_names_search = ['crossovered_budget_id.name', 'general_budget_id.name', 'analytic_account_id.name']
+
     name = fields.Char(compute='_compute_line_name')
     crossovered_budget_id = fields.Many2one('crossovered.budget', 'Budget', ondelete='cascade', index=True, required=True)
     analytic_account_id = fields.Many2one('account.analytic.account', 'Analytic Account')

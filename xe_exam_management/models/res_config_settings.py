@@ -53,7 +53,7 @@ class ResconfigInherit(models.TransientModel):
             "xe_exam_management.group_subject_rubrics_configuration"
         ):
             res.update(group_rubrics_configurations=True)
-            users -= rubric_group_id.users
+            users -= rubric_group_id.user_ids
             to_add = [
                 (
                     4,
@@ -67,7 +67,7 @@ class ResconfigInherit(models.TransientModel):
             ) and self.env.user.has_group(
                 "xe_exam_management.group_rubrics_configurations"
             ):
-                rubric_group_id.users.write(
+                rubric_group_id.user_ids.write(
                     {
                         "group_ids": [
                             (

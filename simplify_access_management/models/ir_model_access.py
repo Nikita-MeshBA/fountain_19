@@ -132,10 +132,11 @@ class ir_model_access(models.Model):
             if data and data[0] != 'installed':
                 read_value = False
             if self.env.user.id and read_value and request.httprequest.cookies.get('cids'):
-                a = "select access_management_id from access_management_comapnay_rel where company_id = " + str(
-                    request.httprequest.cookies.get('cids') and request.httprequest.cookies.get('cids').split(',')[
-                        0] or request.env.company.id)
-                self._cr.execute(a)
+                # cids is "1-2" since Odoo 18 ("1,2" before); never put the raw cookie in the SQL
+                cids = request.httprequest.cookies.get('cids').replace('-', ',').split(',')[0]
+                company_id = int(cids) if cids.isdigit() else request.env.company.id
+                a = "select access_management_id from access_management_comapnay_rel where company_id = %s"
+                self._cr.execute(a, (company_id,))
                 a = self._cr.fetchall()
                 if a:
                     a = "select access_management_id from access_management_users_rel_ah where user_id = " + str(

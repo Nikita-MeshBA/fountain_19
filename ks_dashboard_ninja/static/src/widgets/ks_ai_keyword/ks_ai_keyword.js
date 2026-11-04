@@ -1,6 +1,7 @@
 /** @odoo-module **/
 import {registry} from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
+import { rpc } from "@web/core/network/rpc";
 const {Component,useRef,useState,onWillStart} = owl;
 
 export class KsKeywordSelection extends Component {
@@ -12,7 +13,7 @@ export class KsKeywordSelection extends Component {
         this.search = useRef('ks_search');
         this.ks_sample_final_data = [];
         this.state = useState({ values: []});
-        this._rpc = useService("rpc");
+        this._rpc = rpc;
 
     }
 

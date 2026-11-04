@@ -68,7 +68,7 @@
                                     </t>
                                     <t t-foreach="get_lines['rubrics_details']" t-as="rubric">
                                         <th style="border: 1px solid black;" class="text-center">
-                                            <span t-out="'%s' % rubric.name.upper()"/>
+                                            <span t-out="'%s' % (rubric.name or '').upper()"/>
                                         </th>
                                     </t>
                                 </tr>

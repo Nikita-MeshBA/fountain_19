@@ -11,7 +11,7 @@ class Student(models.Model):
         return {
             "name": _("Attendance Details"),
             "type": "ir.actions.act_window",
-            "view_mode": "tree",
+            "view_mode": "list",
             "res_model": "xe.attendance.details",
             "target": "current",
             "domain": [

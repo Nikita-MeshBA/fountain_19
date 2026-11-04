@@ -8,8 +8,13 @@ class FeesType(models.Model):
     _description = "Fees Type Form"
     _rec_name = "fee_type"
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_fees_management_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xe_fees_management_create_single(self, vals):
         result = super(FeesType, self).create(vals)
         if result.type == "transport":
             result.is_transport_fees = True
@@ -41,7 +46,7 @@ class FeesType(models.Model):
                 {
                     "name": fee_type,
                     "is_fee": True,
-                    "detailed_type": "service",
+                    "type": "service",
                     "company_id": self.env.company.id,
                 }
             )
@@ -62,7 +67,7 @@ class FeesType(models.Model):
             )
             if not product:
                 product = product_template_obj.create(
-                    {"name": fee_type, "is_fee": True, "detailed_type": "service"}
+                    {"name": fee_type, "is_fee": True, "type": "service"}
                 )
 
             values["product_id"] = product.id
@@ -119,7 +124,7 @@ class FeesType(models.Model):
                     {
                         "name": self.fee_type,
                         "is_fee": True,
-                        "detailed_type": "service",
+                        "type": "service",
                         "company_id": self.company_id.id,
                     }
                 )

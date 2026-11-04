@@ -17,7 +17,7 @@ class ReportMarksheetReport(models.AbstractModel):
 
     def get_lines(self, obj):
         lines = []
-        for line in obj.marksheet_line:
+        for line in obj.marksheet_line_ids:
             lines.extend(line)
         return lines
 

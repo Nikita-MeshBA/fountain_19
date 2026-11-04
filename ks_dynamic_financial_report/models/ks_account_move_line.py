@@ -5,7 +5,7 @@ class KsAccountMoveLine(models.Model):
     _inherit = "account.move.line"
     @api.model
     def _query_get(self, domain=None):
-            self.check_access_rights('read')
+            self.check_access('read')
 
             context = dict(self._context or {})
             domain = domain or []
@@ -19,7 +19,7 @@ class KsAccountMoveLine(models.Model):
                 domain += [(date_field, '<=', context['date_to'])]
             if context.get('date_from'):
                 if not context.get('strict_range'):
-                    domain += ['|', (date_field, '>=', context['date_from']), ('account_id.account_type.include_initial_balance', '=', True)]
+                    domain += ['|', (date_field, '>=', context['date_from']), ('account_id.include_initial_balance', '=', True)]
                 elif context.get('initial_bal'):
                     domain += [(date_field, '<', context['date_from'])]
                 else:
@@ -68,12 +68,11 @@ class KsAccountMoveLine(models.Model):
                 domain.append(('display_type', 'not in', ('line_section', 'line_note')))
                 domain.append(('parent_state', '!=', 'cancel'))
 
-                query = self._where_calc(domain)
-
-                # Wrap the query with 'company_id IN (...)' to avoid bypassing company access rights.
-                self._apply_ir_rules(query)
-
-                tables, where_clause, where_clause_params = query.get_sql()
+                # _search applies the record rules (company access) like _where_calc + _apply_ir_rules did
+                query = self._search(domain)
+                tables = query.from_clause.code
+                where_clause = query.where_clause.code
+                where_clause_params = list(query.from_clause.params) + list(query.where_clause.params)
             return tables, where_clause, where_clause_params
 
 

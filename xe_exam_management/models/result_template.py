@@ -98,8 +98,13 @@ class XeResultTemplate(models.Model):
                     result_line.marksheet_line_id = marksheet_line_id
             record.state = "result_generated"
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_exam_management_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, values):
+    def _xe_exam_management_create_single(self, values):
         result = super(XeResultTemplate, self).create(values)
         result.exam_session_id.state = "done"
         return result

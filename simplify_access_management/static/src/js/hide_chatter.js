@@ -5,7 +5,7 @@ import { ListController } from "@web/views/list/list_controller";
 import { FormController } from "@web/views/form/form_controller";
 import { session } from "@web/session";
 import { patch } from "@web/core/utils/patch";
-import { jsonrpc } from "@web/core/network/rpc_service";
+import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
 
 import { onMounted } from "@odoo/owl";

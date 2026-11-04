@@ -42,7 +42,7 @@ class Student(models.Model):
         )
         return {
             "name": _("Marksheet Lines"),
-            "view_mode": "tree",
+            "view_mode": "list",
             "res_model": "xe.marksheet.line",
             "view_id": False,
             "type": "ir.actions.act_window",

@@ -10,8 +10,13 @@ class GradeCategory(models.Model):
     grade_category_line_ids = fields.One2many("xe.grade.category.line", "grade_category_id")
     company_id = fields.Many2one("res.company", default=lambda self: self.env.company)
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_exam_management_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xe_exam_management_create_single(self, vals):
         self.check_category_exists(vals)
         if not vals.get("grade_category_line_ids", False):
             raise ValidationError(_("Atleast one subject need to be configure."))

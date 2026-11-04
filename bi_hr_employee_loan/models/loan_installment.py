@@ -87,7 +87,7 @@ class LoanInstallment(models.Model):
 
         jounral = res.create(
             {
-                "date": fields.datetime.now(),
+                "date": fields.Datetime.now(),
                 "journal_id": self.loan_id.interest_journal_id.id,
                 "ref": str(self.installment_number),
                 "loan_ids": self.loan_id,
@@ -125,7 +125,7 @@ class LoanInstallment(models.Model):
 
         jounral = res.create(
             {
-                "date": fields.datetime.now(),
+                "date": fields.Datetime.now(),
                 "journal_id": self.loan_id.disburse_journal_id.id,
                 "ref": str(self.installment_number),
                 "loan_ids": self.loan_id,

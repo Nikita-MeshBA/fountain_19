@@ -76,7 +76,7 @@
                                     <td>
                                         <b>Signature:</b>
                                         <img t-if="o.course_id.head_teacher_signature"
-										t-att-src="image_data_uri(o.course_id.head_teacher_signature)"
+										t-att-src="image_data_uri(o.course_id.head_teacher_signature) if o.course_id.head_teacher_signature else ''"
 										width="140" height="60" alt="Signature" />
                                        
                                     </td>

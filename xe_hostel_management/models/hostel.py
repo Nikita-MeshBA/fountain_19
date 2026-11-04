@@ -47,8 +47,8 @@ class Hostel(models.Model):
             "name": "Hostel Admission",
             "type": "ir.actions.act_window",
             "view_type": "form",
-            "view_mode": "tree,form",
-            "view_ids": [(tree_view_id, "tree"), (form_view_id, "form")],
+            "view_mode": "list,form",
+            "view_ids": [(tree_view_id, "list"), (form_view_id, "form")],
             "res_model": "xe.hostel.admission",
             "target": "current",
             "domain": [

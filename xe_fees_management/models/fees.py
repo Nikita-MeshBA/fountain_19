@@ -8,8 +8,13 @@ class FeesTerm(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "Fees Term Form"
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_fees_management_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xe_fees_management_create_single(self, vals):
         result = super(FeesTerm, self).create(vals)
         course = result.course_id
         course.sudo().write({"fees_term_id": result.id})

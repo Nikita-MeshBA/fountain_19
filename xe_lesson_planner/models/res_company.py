@@ -25,11 +25,11 @@ class HrEmployee(models.Model):
         value = {
             "domain": str([("id", "in", scheme_of_work_ids)]),
             "view_type": "form",
-            "view_mode": "tree, form",
+            "view_mode": "list,form",
             "res_model": "scheme.of.work",
             "view_id": False,
             "views": [
-                (tree_view and tree_view.id or False, "tree"),
+                (tree_view and tree_view.id or False, "list"),
                 (form_view and form_view.id or False, "form"),
             ],
             "type": "ir.actions.act_window",
@@ -49,11 +49,11 @@ class HrEmployee(models.Model):
         value = {
             "domain": str([("id", "in", scheme_of_work_ids)]),
             "view_type": "form",
-            "view_mode": "tree, form",
+            "view_mode": "list,form",
             "res_model": "lesson.plan",
             "view_id": False,
             "views": [
-                (tree_view and tree_view.id or False, "tree"),
+                (tree_view and tree_view.id or False, "list"),
                 (form_view and form_view.id or False, "form"),
             ],
             "type": "ir.actions.act_window",

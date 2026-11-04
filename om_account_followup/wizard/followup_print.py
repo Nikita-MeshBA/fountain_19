@@ -191,7 +191,7 @@ class FollowupPrint(models.TransientModel):
             "name": _("Send Letters and Emails: Actions Summary"),
             "view_type": "form",
             "context": context,
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "res_model": "followup.sending.results",
             "views": [(resource_id.id, "form")],
             "type": "ir.actions.act_window",

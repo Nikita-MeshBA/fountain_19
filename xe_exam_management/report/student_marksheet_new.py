@@ -360,7 +360,7 @@ class ReportMarksheetReport(models.AbstractModel):
 
     def get_lines_default_format(self, obj, marksheet_line_id):
         lines = []
-        marksheet_line = obj.marksheet_line
+        marksheet_line = obj.marksheet_line_ids
         if marksheet_line_id:
             marksheet_line = self.env["xe.marksheet.line"].browse(marksheet_line_id)
         for line in marksheet_line:
@@ -369,7 +369,7 @@ class ReportMarksheetReport(models.AbstractModel):
 
     def get_lines(self, obj, marksheet_line_id):
         data = []
-        marksheet_line = obj.marksheet_line
+        marksheet_line = obj.marksheet_line_ids
         date = str(datetime.now())[:10]
         if marksheet_line_id:
             marksheet_line = self.env["xe.marksheet.line"].browse(marksheet_line_id)
@@ -535,7 +535,7 @@ class ReportMarksheetReport(models.AbstractModel):
 
     def get_lines_k_p_p(self, obj, marksheet_line_id):
         data = []
-        marksheet_line = obj.marksheet_line
+        marksheet_line = obj.marksheet_line_ids
         if marksheet_line_id:
             marksheet_line = self.env["xe.marksheet.line"].browse(marksheet_line_id)
         for line in marksheet_line:

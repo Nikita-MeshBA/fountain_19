@@ -15,7 +15,7 @@
                                     <tr>
                                         <td>
                                             <img class="image"
-                                                 t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)"
+                                                 t-att-src="image_data_uri(res_company.logo) if res_company.logo else ''"
                                                  style="max-height:2.5cm; max-width:4cm; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
                                         </td>
                                         <td style="vertical-align: top;">
@@ -43,7 +43,7 @@
                                     <tr>
                                         <td>
                                             <img class="image"
-                                                 t-att-src="'data:image/png;base64,%s' % to_text(o.image_1920)"
+                                                 t-att-src="image_data_uri(o.image_1920) if o.image_1920 else ''"
                                                  style="max-height:2.5cm; max-width:4cm; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
                                         </td>
                                         <td style="vertical-align: top;">

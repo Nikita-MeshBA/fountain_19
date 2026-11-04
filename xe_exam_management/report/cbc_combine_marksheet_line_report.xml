@@ -243,7 +243,7 @@
                                     <h5>Teacher Signature:</h5>
                                     <t t-if="get_lines['teacher_signature']">
                                         <img class="image"
-                                             t-att-src="'data:image/png;base64,%s' % to_text(get_lines['teacher_signature'])"
+                                             t-att-src="image_data_uri(get_lines['teacher_signature']) if get_lines['teacher_signature'] else ''"
                                              style="max-height:2.5cm; max-width:4cm; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
                                     </t>
                                 </div>
@@ -251,7 +251,7 @@
                                     <h5>Head Teacher Signature:</h5>
                                     <t t-if="get_lines['head_teacher_signature']">
                                         <img class="image"
-                                             t-att-src="'data:image/png;base64,%s' % to_text(get_lines['head_teacher_signature'])"
+                                             t-att-src="image_data_uri(get_lines['head_teacher_signature']) if get_lines['head_teacher_signature'] else ''"
                                              style="max-height:2.5cm; max-width:4cm; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;"/>
                                     </t>
                                 </div>

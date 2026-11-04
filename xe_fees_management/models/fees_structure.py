@@ -162,7 +162,7 @@ class FeesStructure(models.Model):
 
     # Invoice Generation Odoo
     def generate_fees_lines1(self):
-        current_date = fields.date.today()
+        current_date = fields.Date.today()
         fees_details_rec = (
             self.env["xe.fees.details"]
             .sudo()

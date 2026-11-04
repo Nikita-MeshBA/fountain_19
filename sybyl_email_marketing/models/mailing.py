@@ -46,8 +46,13 @@ class MassMailingListInherit(models.Model):
                             partners.append(parent.partner_id)
         return partners
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._sybyl_email_marketing_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _sybyl_email_marketing_create_single(self, vals):
         result = super(MassMailingListInherit, self).create(vals)
 
         # Class

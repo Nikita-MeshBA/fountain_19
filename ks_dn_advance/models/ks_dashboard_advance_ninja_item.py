@@ -397,6 +397,11 @@ class KsDashboardNinjaItemAdvance(models.Model):
     @api.depends('ks_custom_query', 'ks_data_calculation_type', 'ks_query_start_date', 'ks_query_end_date',
                  'ks_is_date_ranges', 'ks_dashboard_item_type', 'ks_is_external_db')
     def ks_run_query(self):
+        # the body below reads self.<field> as a single record: run it once per record
+        for rec in self:
+            rec._ks_run_query_single()
+
+    def _ks_run_query_single(self):
         selected_start_date = False
         selected_end_date = False
         ks_start_date = False
@@ -1038,10 +1043,10 @@ class KsDashboardNinjaItemAdvance(models.Model):
             ks_date_filter_selection = self._context['ksDateFilterSelection']
             if ks_date_filter_selection == 'l_custom':
                 self = self.with_context(
-                    ksDateFilterStartDate=fields.datetime.strptime(self._context['ksDateFilterStartDate'],
+                    ksDateFilterStartDate=datetime.strptime(self._context['ksDateFilterStartDate'],
                                                                    "%Y-%m-%d %H:%M:%S"))
                 self = self.with_context(
-                    ksDateFilterEndDate=fields.datetime.strptime(self._context['ksDateFilterEndDate'],
+                    ksDateFilterEndDate=datetime.strptime(self._context['ksDateFilterEndDate'],
                                                                  "%Y-%m-%d %H:%M:%S"))
                 self = self.with_context(ksIsDefultCustomDateFilter=False)
         else:

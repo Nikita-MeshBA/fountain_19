@@ -50,8 +50,13 @@ class XeRouteLine(models.Model):
     def end_trip(self):
         self.state = "end"
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_transportation_management_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xe_transportation_management_create_single(self, vals):
         route = self.env["xe.route"].browse([vals["route_id"]])
         x = self.env["ir.sequence"].next_by_code("xe.route.line") or ""
         seq = " (%s)" % x

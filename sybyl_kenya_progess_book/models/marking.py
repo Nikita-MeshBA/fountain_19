@@ -41,6 +41,4 @@ class XeMarking(models.Model):
     )
     comment = fields.Text()
 
-    _sql_constraints = [
-        ("marking_id_uniq", "unique (marking_id)", "Marking ID must be unique!")
-    ]
+    _marking_id_uniq = models.Constraint('unique (marking_id)', 'Marking ID must be unique!')

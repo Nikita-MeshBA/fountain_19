@@ -183,7 +183,7 @@ class LoanRequest(models.Model):
         return {
             "name": "Move Details",
             "type": "ir.actions.act_window",
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "res_model": "account.move",
             "domain": [("id", "in", [x.id for x in self.move_entries])],
         }
@@ -325,7 +325,7 @@ class LoanRequest(models.Model):
         for user in self.env["res.users"].search([]):
             if (
                 self.env.ref("bi_hr_employee_loan.hr_loan_department_id")
-                in user.groups_id
+                in user.group_ids
             ):
                 user_ids.append(user.partner_id.id)
         users = set(user_ids)
@@ -354,7 +354,7 @@ class LoanRequest(models.Model):
             msg_id = mail_mail_obj.sudo().create(values[self.id])
             if msg_id:
                 mail_mail_obj.send([msg_id])
-        self.write({"stage": "applied", "applied_date": fields.datetime.now()})
+        self.write({"stage": "applied", "applied_date": fields.Datetime.now()})
 
     def action_department_approve(self):
         if self.policy_id:
@@ -364,7 +364,7 @@ class LoanRequest(models.Model):
                     max_days = self.policy_id.days
             if max_days > 0:
                 end_date = self.applied_date + relativedelta(days=+max_days)
-                if end_date > fields.datetime.today().date():
+                if end_date > fields.Datetime.now().date():
                     raise ValidationError(
                         _("You can approve this loan after  %s ") % end_date
                     )
@@ -376,7 +376,7 @@ class LoanRequest(models.Model):
         self.write({"department_employee_id": self.env.user.employee_id.id})
         user_ids = []
         for user in self.env["res.users"].search([]):
-            if self.env.ref("bi_hr_employee_loan.hr_loan_manager_id") in user.groups_id:
+            if self.env.ref("bi_hr_employee_loan.hr_loan_manager_id") in user.group_ids:
                 user_ids.append(user.partner_id.id)
         users = set(user_ids)
         user_ids = list(users)
@@ -404,7 +404,7 @@ class LoanRequest(models.Model):
             msg_id = mail_mail_obj.sudo().create(values[self.id])
             if msg_id:
                 mail_mail_obj.send([msg_id])
-        self.write({"stage": "waiting_depart", "approve_date": fields.datetime.now()})
+        self.write({"stage": "waiting_depart", "approve_date": fields.Datetime.now()})
 
     def action_approve(self):
         request_id = self
@@ -416,7 +416,7 @@ class LoanRequest(models.Model):
 
             if max_days > 0:
                 end_date = self.applied_date + relativedelta(days=+max_days)
-                if end_date > fields.datetime.today().date():
+                if end_date > fields.Datetime.now().date():
                     raise ValidationError(
                         _("You can approve this loan after  %s ") % end_date
                     )
@@ -429,7 +429,7 @@ class LoanRequest(models.Model):
         for user in self.env["res.users"].search([]):
             if (
                 self.env.ref("bi_hr_employee_loan.hr_loan_accountant_id")
-                in user.groups_id
+                in user.group_ids
             ):
                 user_ids.append(user.partner_id.id)
         users = set(user_ids)
@@ -459,7 +459,7 @@ class LoanRequest(models.Model):
             if msg_id:
                 mail_mail_obj.send([msg_id])
 
-        request_id.write({"stage": "waiting", "approve_date": fields.datetime.now()})
+        request_id.write({"stage": "waiting", "approve_date": fields.Datetime.now()})
 
     def action_cancel_dep(self):
         ctx = {}
@@ -497,8 +497,13 @@ class LoanRequest(models.Model):
             "target": "new",
         }
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._bi_hr_employee_loan_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _bi_hr_employee_loan_create_single(self, vals):
         if "employee_id" in vals:
             emp = self.env["hr.employee"].browse(vals.get("employee_id"))
             count = 0
@@ -694,7 +699,7 @@ class LoanRequest(models.Model):
         move_line = [debit_line, credit_line]
         jounral = res.create(
             {
-                "date": fields.datetime.now(),
+                "date": fields.Datetime.now(),
                 "journal_id": self.disburse_journal_id.id,
                 "ref": str(self.name),
                 "loan_ids": self,
@@ -785,7 +790,7 @@ class LoanRequest(models.Model):
         move_line = [debit_line, credit_line]
         jounral = res.create(
             {
-                "date": fields.datetime.now(),
+                "date": fields.Datetime.now(),
                 "journal_id": self.disburse_journal_id.id,
                 "ref": str(self.name),
                 "loan_ids": self,
@@ -824,7 +829,7 @@ class LoanRequest(models.Model):
             {
                 "stage": "disbursed",
                 "account_entery_id": jounral.id,
-                "disbursement_date": fields.datetime.now(),
+                "disbursement_date": fields.Datetime.now(),
             }
         )
 

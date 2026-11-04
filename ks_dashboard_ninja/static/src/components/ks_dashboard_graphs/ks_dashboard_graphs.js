@@ -1,7 +1,7 @@
 /** @odoo-module **/
 import { Component, onWillStart, useState ,useEffect,onMounted, onWillUpdateProps,useRef,} from "@odoo/owl";
 import {globalfunction } from '@ks_dashboard_ninja/js/ks_global_functions';
-import { jsonrpc } from "@web/core/network/rpc_service";
+import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
 import { formatFloat } from "@web/core/utils/numbers";
 import { _t } from "@web/core/l10n/translation";
@@ -14,7 +14,7 @@ export class Ksdashboardgraph extends Component{
     setup(){
         this.chart_container = {};
         this.actionService = useService("action");
-        this._rpc = useService("rpc");
+        this._rpc = rpc;
         this.state = useState({item_data:"",list_view_data:""})
         onMounted(() => this._update_view());
         this.item = this.props.item
@@ -51,7 +51,7 @@ export class Ksdashboardgraph extends Component{
     }
     async ksFetchUpdateItem(item_id) {
             var self = this;
-            await jsonrpc("/web/dataset/call_kw",{
+            await rpc("/web/dataset/call_kw",{
                 model: 'ks_dashboard_ninja.board',
                 method: 'ks_fetch_item',
                 args: [

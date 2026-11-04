@@ -11,6 +11,4 @@ class FeeReceipt(models.Model):
     notes = fields.Text()
     company_id = fields.Many2one("res.company", default=lambda self: self.env.company)
 
-    _sql_constraints = [
-        ("unique_receipt_name_id", "unique(name)", "Name should be unique per Receipt!")
-    ]
+    _unique_receipt_name_id = models.Constraint('unique(name)', 'Name should be unique per Receipt!')

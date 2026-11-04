@@ -141,8 +141,13 @@ class HostelAdmission(models.Model):
     def button_reallocate(self):
         self.state = "draft"
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_hostel_management_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, values):
+    def _xe_hostel_management_create_single(self, values):
         if values.get("student_id", False):
             admission_id = self.search([("student_id", "=", values.get("student_id"))])
             if admission_id:

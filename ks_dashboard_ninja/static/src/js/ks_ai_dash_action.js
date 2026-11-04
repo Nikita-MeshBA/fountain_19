@@ -4,7 +4,7 @@ import { _t } from "@web/core/l10n/translation";
 import { Component, onWillStart, useState ,onMounted, onWillRender, useRef, onWillPatch } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
-import { useSetupAction } from "@web/webclient/actions/action_hook";
+import { useSetupAction } from "@web/search/action_hook";
 import { localization } from "@web/core/l10n/localization";
 import { browser } from '@web/core/browser/browser';
 import { strftimeToLuxonFormat } from "@web/core/l10n/dates";
@@ -24,13 +24,14 @@ import { Ksdashboardkpiview } from '@ks_dashboard_ninja/components/ks_dashboard_
 import { Ksdashboardgraph } from '@ks_dashboard_ninja/components/ks_dashboard_graphs/ks_dashboard_graphs';
 
 
+import { rpc } from "@web/core/network/rpc";
 export class KsAIDashboardNinja extends Component {
 
     setup() {
         this.actionService = useService("action");
         this.dialogService = useService("dialog");
         this.notification = useService("notification");
-        this._rpc = useService("rpc");
+        this._rpc = rpc;
         this.dialogService = useService("dialog");
         this.header =  useRef("ks_dashboard_header");
         this.main_body = useRef("ks_main_body");

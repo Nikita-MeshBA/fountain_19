@@ -11,10 +11,4 @@ class XeExamType(models.Model):
     code = fields.Char(size=16, required=True)
     company_id = fields.Many2one("res.company", default=lambda self: self.env.company)
 
-    _sql_constraints = [
-        (
-            "unique_exam_type_code",
-            "unique(code)",
-            "Code should be unique per exam type!",
-        )
-    ]
+    _unique_exam_type_code = models.Constraint('unique(code)', 'Code should be unique per exam type!')

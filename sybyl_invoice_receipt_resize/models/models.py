@@ -42,7 +42,7 @@ class AccountMove(models.Model):
             AND m.state='posted' AND l.full_reconcile_id IS NULL GROUP BY l.date, \
             l.name, l.ref, l.date_maturity, l.partner_id, aa.account_type, l.blocked, \
             l.amount_currency, l.currency_id, l.move_id, m.name",
-            ((fields.date.today(),) + (tuple(partner_ids),)),
+            ((fields.Date.today(),) + (tuple(partner_ids),)),
         )
         result = self.env.cr.dictfetchall()
         return result

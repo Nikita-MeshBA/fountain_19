@@ -93,7 +93,7 @@ class AccountMove(models.Model):
             AND m.state='posted' AND l.full_reconcile_id IS NULL GROUP BY l.date, \
             l.name, l.ref, l.date_maturity, l.partner_id, aa.account_type, l.blocked, \
             l.amount_currency, l.currency_id, l.move_id, m.name",
-            ((fields.date.today(),) + (tuple(partner_ids),)),
+            ((fields.Date.today(),) + (tuple(partner_ids),)),
         )
         result = self.env.cr.dictfetchall()
         return result
@@ -264,17 +264,18 @@ class AccountMove(models.Model):
             res.append(modified_dict)
         return res
 
-    @api.model
-    def create(self, vals):
-        if vals.get("partner_id") and not vals.get("roll_number"):
-            student = self.env["xe.student"].search(
-                [("partner_id", "=", vals.get("partner_id"))]
-            )
-            if student:
-                vals["course_id"] = student.course_id.id or False
-                vals["roll_number"] = student.roll_number or False
-                vals["class_room_id"] = student.classroom_id.id or False
-        return super(AccountMove, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get("partner_id") and not vals.get("roll_number"):
+                student = self.env["xe.student"].search(
+                    [("partner_id", "=", vals.get("partner_id"))]
+                )
+                if student:
+                    vals["course_id"] = student.course_id.id or False
+                    vals["roll_number"] = student.roll_number or False
+                    vals["class_room_id"] = student.classroom_id.id or False
+        return super(AccountMove, self).create(vals_list)
 
     @api.depends("partner_id")
     def _compute_total_balance_partner(self):

@@ -273,7 +273,7 @@ class EmployeeDependencies(models.Model):
 class EntitleEmployeeDays(models.Model):
     _name = "entitle.employee.days"
     _description = "Entitle Employee Days"
-    _rec_name = "display_name"
+    _rec_name = "name"
 
     def _get_default_end_date(self):
         last_day = calendar.monthrange(
@@ -281,7 +281,6 @@ class EntitleEmployeeDays(models.Model):
         )[1]
         return fields.Date.today().replace(day=last_day)
 
-    display_name = fields.Char("Name", default="/")
     name = fields.Selection(
         [
             ("january", "January"),
@@ -305,16 +304,18 @@ class EntitleEmployeeDays(models.Model):
         [("draft", "Draft"), ("confirmed", "Confirmed")], default="draft"
     )
 
-    @api.onchange("start_date", "end_date")
-    def _set_name(self):
+    @api.depends("start_date", "end_date")
+    def _compute_display_name(self):
         for line in self:
             if line.start_date and line.end_date:
                 line.display_name = (
                     "Entitled Employee Day's of "
-                    + self.start_date.strftime("%d %b %Y")
+                    + line.start_date.strftime("%d %b %Y")
                     + " to "
-                    + self.end_date.strftime("%d %b %Y")
+                    + line.end_date.strftime("%d %b %Y")
                 )
+            else:
+                line.display_name = "/"
 
     @api.constrains("start_date", "end_date")
     def _check_duplicated_records(self):

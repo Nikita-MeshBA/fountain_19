@@ -7,7 +7,7 @@
             <field name="name">Update Current Academic Year For Existing Students</field>
             <field name="model_id" ref="model_xe_student"/>
             <field name="state">code</field>
-            <field name="code">model.update_current_academic_year()</field>
+            <field name="code">model.update_current_academic_year_id()</field>
             <field eval="False" name="active"/>
             <field name="user_id" ref="base.user_root"/>
             <field name="interval_number">1</field>

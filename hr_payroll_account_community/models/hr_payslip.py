@@ -46,8 +46,13 @@ class HrPayslip(models.Model):
                               help="Accounting entry associated with "
                                    "this record")
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._hr_payroll_account_community_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _hr_payroll_account_community_create_single(self, vals):
         """Create a new payroll slip.This method is called when creating a
             new payroll slip.It checks if 'journal_id' is present in the
             context and, if so, sets the 'journal_id' field in the values."""

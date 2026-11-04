@@ -32,9 +32,7 @@ class RFIDCardConfiguration(models.Model):
         default='draft',
     )
 
-    _sql_constraints = [
-        ('badge_number_uniq', 'unique (badge_number)', "BadgeNumber already exists!"),
-    ]
+    _badge_number_uniq = models.Constraint('unique (badge_number)', 'BadgeNumber already exists!')
         
     def check_rfid_configuration(self):
         

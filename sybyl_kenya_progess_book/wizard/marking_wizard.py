@@ -82,7 +82,7 @@ class XeMarkingWizard(models.TransientModel):
         return {
             "name": "Marking Summary",
             "view_type": "form",
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "res_model": "xe.marking.wizard.line",
             "type": "ir.actions.act_window",
             "target": "current",

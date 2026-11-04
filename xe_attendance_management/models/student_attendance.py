@@ -154,8 +154,13 @@ class AttendanceManagement(models.Model):
                     )
                 )
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_attendance_management_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xe_attendance_management_create_single(self, vals):
         register = self.env["xe.attendance.register"].browse(
             vals.get("attendance_register_id")
         )

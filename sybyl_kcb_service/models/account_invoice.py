@@ -11,7 +11,7 @@ class AccountInvoice(models.Model):
         return {
             "name": _("KCB Transaction"),
             "view_type": "form",
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "res_model": "kcb.transaction",
             "view_id": False,
             "type": "ir.actions.act_window",

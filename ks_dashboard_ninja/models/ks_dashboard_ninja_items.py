@@ -138,10 +138,11 @@ def ks_read(self, records):
     comodel = records.env[self.comodel_name]
 
     domain = self.domain if isinstance(self.domain, list) else []
-    wquery = comodel._where_calc(domain)
-    comodel._apply_ir_rules(wquery, 'read')
-
-    from_c, where_c, where_params = wquery.get_sql()
+    # _where_calc / _apply_ir_rules / get_sql are gone in Odoo 19: _search applies the read rules
+    wquery = comodel._search(domain)
+    from_c = wquery.from_clause.code
+    where_c = wquery.where_clause.code
+    where_params = list(wquery.from_clause.params) + list(wquery.where_clause.params)
 
     query = """
         SELECT {rel}.{id1}, {rel}.{id2}
@@ -1732,15 +1733,13 @@ class KsDashboardNinjaItems(models.Model):
                         self.env['ks_to.do.description'].create(ks_task_line)
         return res
 
-    def name_get(self):
-        res = []
+    @api.depends('name', 'ks_model_id')
+    def _compute_display_name(self):
         for rec in self:
             name = rec.name
             if not name:
                 name = rec.ks_model_id.name
-            res.append((rec.id, name))
-
-        return res
+            rec.display_name = name
 
     @api.model_create_multi
     def create(self, values):
@@ -2102,30 +2101,30 @@ class KsDashboardNinjaItems(models.Model):
                         date_field_name = rec.ks_date_filter_field.name
 
                         ks_date_domain = ['&', (date_field_name, ">=",
-                                                fields.datetime.strftime(selected_start_date,
+                                                datetime.strftime(selected_start_date,
                                                                          DEFAULT_SERVER_DATETIME_FORMAT)),
                                           (date_field_name, "<=",
-                                           fields.datetime.strftime(selected_end_date, DEFAULT_SERVER_DATETIME_FORMAT))]
+                                           datetime.strftime(selected_end_date, DEFAULT_SERVER_DATETIME_FORMAT))]
 
                         for p in range(1, abs_year_period + 1):
                             ks_date_domain.insert(0, '|')
-                            ks_date_domain.extend(['&', (date_field_name, ">=", fields.datetime.strftime(
+                            ks_date_domain.extend(['&', (date_field_name, ">=", datetime.strftime(
                                 selected_start_date - relativedelta.relativedelta(years=p) * sign_yp,
                                 DEFAULT_SERVER_DATETIME_FORMAT)),
-                                                   (date_field_name, "<=", fields.datetime.strftime(
+                                                   (date_field_name, "<=", datetime.strftime(
                                                        selected_end_date - relativedelta.relativedelta(years=p)
                                                        * sign_yp, DEFAULT_SERVER_DATETIME_FORMAT))])
                     else:
-                        selected_start_date = fields.datetime.strftime(selected_start_date,
+                        selected_start_date = datetime.strftime(selected_start_date,
                                                                        DEFAULT_SERVER_DATETIME_FORMAT)
-                        selected_end_date = fields.datetime.strftime(selected_end_date, DEFAULT_SERVER_DATETIME_FORMAT)
+                        selected_end_date = datetime.strftime(selected_end_date, DEFAULT_SERVER_DATETIME_FORMAT)
                         ks_date_domain = [(rec.ks_date_filter_field.name, ">=", selected_start_date),
                                           (rec.ks_date_filter_field.name, "<=", selected_end_date)]
                 elif selected_start_date and not selected_end_date:
-                    selected_start_date = fields.datetime.strftime(selected_start_date, DEFAULT_SERVER_DATETIME_FORMAT)
+                    selected_start_date = datetime.strftime(selected_start_date, DEFAULT_SERVER_DATETIME_FORMAT)
                     ks_date_domain = [(rec.ks_date_filter_field.name, ">=", selected_start_date)]
                 elif selected_end_date and not selected_start_date:
-                    selected_end_date = fields.datetime.strftime(selected_end_date, DEFAULT_SERVER_DATETIME_FORMAT)
+                    selected_end_date = datetime.strftime(selected_end_date, DEFAULT_SERVER_DATETIME_FORMAT)
                     ks_date_domain = [(rec.ks_date_filter_field.name, "<=", selected_end_date)]
         else:
             ks_date_domain = []
@@ -3400,7 +3399,7 @@ class KsDashboardNinjaItems(models.Model):
             counter = 0
             data_row = {'id': res['id'], 'data': [], 'ks_column_type': []}
             for field_rec in ks_list_view_fields:
-                if type(res[field_rec]) == fields.datetime or type(res[field_rec]) == fields.date:
+                if type(res[field_rec]) == datetime or type(res[field_rec]) == dt.date:
                     res[field_rec] = res[field_rec].strftime("%D %T")
                 elif ks_list_view_field_type[counter] == "many2one":
                     if res[field_rec]:
@@ -3726,35 +3725,35 @@ class KsDashboardNinjaItems(models.Model):
                         date_field_name = rec.ks_date_filter_field_2.name
 
                         ks_date_domain = ['&', (date_field_name, ">=",
-                                                fields.datetime.strftime(selected_start_date,
+                                                datetime.strftime(selected_start_date,
                                                                          DEFAULT_SERVER_DATETIME_FORMAT)),
                                           (date_field_name, "<=",
-                                           fields.datetime.strftime(selected_end_date, DEFAULT_SERVER_DATETIME_FORMAT))]
+                                           datetime.strftime(selected_end_date, DEFAULT_SERVER_DATETIME_FORMAT))]
 
                         for p in range(1, abs_year_period_2 + 1):
                             ks_date_domain.insert(0, '|')
-                            ks_date_domain.extend(['&', (date_field_name, ">=", fields.datetime.strftime(
+                            ks_date_domain.extend(['&', (date_field_name, ">=", datetime.strftime(
                                 selected_start_date - relativedelta.relativedelta(years=p) * sign_yp,
                                 DEFAULT_SERVER_DATETIME_FORMAT)),
-                                                   (date_field_name, "<=", fields.datetime.strftime(
+                                                   (date_field_name, "<=", datetime.strftime(
                                                        selected_end_date - relativedelta.relativedelta(
                                                            years=p) * sign_yp,
                                                        DEFAULT_SERVER_DATETIME_FORMAT))])
                     else:
                         if rec.ks_date_filter_field_2:
-                            selected_start_date = fields.datetime.strftime(selected_start_date,
+                            selected_start_date = datetime.strftime(selected_start_date,
                                                                            DEFAULT_SERVER_DATETIME_FORMAT)
-                            selected_end_date = fields.datetime.strftime(selected_end_date,
+                            selected_end_date = datetime.strftime(selected_end_date,
                                                                          DEFAULT_SERVER_DATETIME_FORMAT)
                             ks_date_domain = [(rec.ks_date_filter_field_2.name, ">=", selected_start_date),
                                               (rec.ks_date_filter_field_2.name, "<=", selected_end_date)]
                         else:
                             ks_date_domain = []
                 elif selected_start_date and rec.ks_date_filter_field_2:
-                    selected_start_date = fields.datetime.strftime(selected_start_date, DEFAULT_SERVER_DATETIME_FORMAT)
+                    selected_start_date = datetime.strftime(selected_start_date, DEFAULT_SERVER_DATETIME_FORMAT)
                     ks_date_domain = [(rec.ks_date_filter_field_2.name, ">=", selected_start_date)]
                 elif selected_end_date and rec.ks_date_filter_field_2:
-                    selected_end_date = fields.datetime.strftime(selected_end_date, DEFAULT_SERVER_DATETIME_FORMAT)
+                    selected_end_date = datetime.strftime(selected_end_date, DEFAULT_SERVER_DATETIME_FORMAT)
                     ks_date_domain = [(rec.ks_date_filter_field_2.name, "<=", selected_end_date)]
         else:
             ks_date_domain = []

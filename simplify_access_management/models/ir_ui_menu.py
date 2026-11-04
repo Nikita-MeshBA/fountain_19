@@ -20,7 +20,7 @@ class ir_ui_menu(models.Model):
             cids = None
 
         company_id = (
-            int(cids.split(',')[0])
+            int(cids.replace('-', ',').split(',')[0])
             if cids
             else self.env.company.id
         )

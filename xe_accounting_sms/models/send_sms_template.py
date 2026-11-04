@@ -67,11 +67,11 @@ class SmsTemplate(models.Model):
     msg_to = fields.Char(string="To Mobile")
     # old field
     sms_account_gateway = fields.Many2one(
-        "sms.gateway", string="Account", domain=[("active", "=", True)]
+        "sms.gateway.config", string="Account", domain=[("active", "=", True)]
     )
     # new field
     sms_account_gateway_id = fields.Many2one(
-        "sms.gateway", string="Account", domain=[("active", "=", True)]
+        "sms.gateway.config", string="Account", domain=[("active", "=", True)]
     )
     model_id = fields.Many2one(
         "ir.model",

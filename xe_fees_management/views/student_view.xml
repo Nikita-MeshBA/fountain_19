@@ -26,7 +26,7 @@
                     </group>
                     <!-- <group>
                         <field name="invoice_ids" domain="[('partner_id','=',partner_id)]" string="Invoices">
-                            <tree string="Journal Entries" sample="1" decoration-info="state == 'draft'"
+                            <list string="Journal Entries" sample="1" decoration-info="state == 'draft'"
                                   options="{'no_create': True}">
                                 <field name="invoice_date"/>
                                 <field name="invoice_date_due"/>
@@ -38,7 +38,7 @@
                                        decoration-info="state == 'draft'"
                                        decoration-success="state == 'posted'"/>
                                 <field name="payment_state"/>
-                            </tree>
+                            </list>
                         </field>
                     </group> -->
                 </page>
@@ -52,7 +52,7 @@
                     </group>
                     <group>
                         <field name="fee_line_details_ids" string="Transportation Details">
-                            <tree editable="bottom" create="0" readonly="1">
+                            <list editable="bottom" create="0" readonly="1">
                                 <field name="fee_type"/>
                                 <field name="term"/>
                                 <field name="invoice_date"/>
@@ -62,15 +62,15 @@
                                 <field name="currency_id" invisible="1"/>
                                 <field name="receipt_name_id"/>
                                 <field name="amount"/>
-                            </tree>
+                            </list>
                         </field>
                         <field name="transport_history_ids" string="Transport Change History">
-                            <tree create="0">
+                            <list create="0">
                                 <field name="from_zone_id"/>
                                 <field name="to_zone_id" invisible="1"/>
                                 <field name="previous_amt" string="Previous Amount" invisible="1"/>
                                 <field name="current_amt" string="Current Amount"/>
-                            </tree>
+                            </list>
                         </field>
                     </group>
                 </page> -->

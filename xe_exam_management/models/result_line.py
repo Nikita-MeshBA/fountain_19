@@ -56,8 +56,13 @@ class XeResultLine(models.Model):
         if self.marks < 0.0:
             raise ValidationError(_("Enter proper Marks or Percentage!"))
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_exam_management_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, values):
+    def _xe_exam_management_create_single(self, values):
         result = super(XeResultLine, self).create(values)
         exam_id = result.exam_id and result.exam_id.id
         student_id = result.student_id and result.student_id.id

@@ -8,10 +8,11 @@ import {Todoeditdialog,addtododialog} from "@ks_dashboard_ninja/components/ks_da
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
 
+import { rpc } from "@web/core/network/rpc";
 export class Ksdashboardtodo extends Component{
     setup(){
         super.setup();
-        this._rpc = useService("rpc");
+        this._rpc = rpc;
         this.dialogService = useService("dialog");
         this.state = useState({to_do_view_data : ""})
         this.item = this.props.item

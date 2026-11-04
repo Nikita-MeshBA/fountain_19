@@ -9,7 +9,7 @@ class MailActivity(models.Model):
     @api.model
     def default_get(self, fields):
         result = super(MailActivity, self).default_get(fields)
-        is_staff = self.user_has_groups("xenesis_school_base.group_xe_staff")
+        is_staff = self.env.user.has_group("xenesis_school_base.group_xe_staff")
         if (
             "res_model" in result
             and result["res_model"] == "account.move"

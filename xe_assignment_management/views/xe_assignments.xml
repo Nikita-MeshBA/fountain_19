@@ -206,7 +206,7 @@
                 <progressbar field="state"
                              colors='{"done": "success","assigned": "info", "cancel": "danger", "draft": "muted"}'/>
                 <templates>
-                    <t t-name="kanban-box">
+                    <t t-name="card">
                         <div class="o_kanban_card_content mw-100 oe_kanban_global_click">
                             <div class="o_kanban_primary_left">
                                 <div class="o_primary">

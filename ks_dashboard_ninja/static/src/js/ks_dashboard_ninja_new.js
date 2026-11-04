@@ -3,7 +3,7 @@
 import { _t } from "@web/core/l10n/translation";
 import { Component, onWillStart, useState ,onMounted, onWillRender, useRef, onWillPatch, onRendered, useEffect, onWillUpdateProps  } from "@odoo/owl";
 import { registry } from "@web/core/registry";
-import { jsonrpc } from "@web/core/network/rpc_service";
+import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
 import { localization } from "@web/core/l10n/localization";
 import { session } from "@web/session";
@@ -34,7 +34,7 @@ export class KsDashboardNinja extends Component {
         this.actionService = useService("action");
         this.dialogService = useService("dialog");
         this.notification = useService("notification");
-        this._rpc = useService("rpc");
+        this._rpc = rpc;
         this.dialogService = useService("dialog");
         this.header =  useRef("ks_dashboard_header");
         this.main_body = useRef("ks_main_body");
@@ -234,7 +234,7 @@ export class KsDashboardNinja extends Component {
 
     ks_fetch_data(){
         var self = this;
-        return jsonrpc("/web/dataset/call_kw",{
+        return rpc("/web/dataset/call_kw",{
             model: 'ks_dashboard_ninja.board',
             method: 'ks_fetch_dashboard_data',
             args: [self.ks_dashboard_id],
@@ -275,7 +275,7 @@ export class KsDashboardNinja extends Component {
         var items_promises = []
 
         self.ks_dashboard_data.ks_dashboard_items_ids.forEach(function(item_id){
-            items_promises.push(jsonrpc("/web/dataset/call_kw",{
+            items_promises.push(rpc("/web/dataset/call_kw",{
                 model: "ks_dashboard_ninja.board",
                 method: "ks_fetch_item",
                 args : [[item_id], self.ks_dashboard_id, self.ksGetParamsForItemFetch(item_id)],

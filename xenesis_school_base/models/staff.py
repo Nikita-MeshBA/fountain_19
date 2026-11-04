@@ -53,8 +53,13 @@ class StaffProfile(models.Model):
         }
         return action
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xenesis_school_base_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xenesis_school_base_create_single(self, vals):
         result = super(StaffProfile, self).create(vals)
         partner_id = result.partner_id
         category_obj = self.env["res.partner.category"].search(
@@ -129,10 +134,13 @@ class Employee(models.Model):
             )
         self.user_id = res_users.id
 
-    @api.model
-    def create(self, vals):
-        # self.clear_caches()
-        return super(Employee, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        employees = super(Employee, self).create(vals_list)
+        # partner_id is required: default it to the work contact hr creates for each employee
+        for employee in employees.filtered(lambda e: not e.partner_id and e.work_contact_id):
+            employee.partner_id = employee.work_contact_id
+        return employees
 
     def write(self, vals):
         # self.clear_caches()

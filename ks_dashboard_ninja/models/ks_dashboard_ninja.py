@@ -126,7 +126,7 @@ class KsDashboardNinjaBoard(models.Model):
                     'active': record.ks_dashboard_active,
                     'parent_id': record.ks_dashboard_top_menu_id.id,
                     'action': "ir.actions.client," + str(record.ks_dashboard_client_action_id.id),
-                    'groups_id': record.ks_dashboard_group_access.ids if record.ks_dashboard_group_access else False,
+                    'group_ids': record.ks_dashboard_group_access.ids if record.ks_dashboard_group_access else False,
                     'sequence': record.ks_dashboard_menu_sequence if record.ks_dashboard_menu_sequence else 10
                 })
 
@@ -170,9 +170,9 @@ class KsDashboardNinjaBoard(models.Model):
             if 'ks_dashboard_group_access' in vals:
                 if self.env.ref('ks_dashboard_ninja.ks_my_default_dashboard_board').id == rec.id:
                     if self.env.ref('ks_dashboard_ninja.board_menu_root', False):
-                        self.env.ref('ks_dashboard_ninja.board_menu_root').groups_id = vals['ks_dashboard_group_access']
+                        self.env.ref('ks_dashboard_ninja.board_menu_root').group_ids = vals['ks_dashboard_group_access']
                 else:
-                    rec.ks_dashboard_menu_id.sudo().groups_id = vals['ks_dashboard_group_access']
+                    rec.ks_dashboard_menu_id.sudo().group_ids = vals['ks_dashboard_group_access']
             if 'ks_dashboard_active' in vals and rec.ks_dashboard_menu_id:
                 rec.ks_dashboard_menu_id.sudo().active = vals['ks_dashboard_active']
 
@@ -498,10 +498,10 @@ class KsDashboardNinjaBoard(models.Model):
                 ks_start_dt_parse = parse(self._context['ksDateFilterStartDate'])
                 ks_end_dt_parse = parse(self._context['ksDateFilterEndDate'])
                 self = self.with_context(
-                    ksDateFilterStartDate=fields.datetime.strptime(ks_start_dt_parse.strftime("%Y-%m-%d %H:%M:%S"),
+                    ksDateFilterStartDate=datetime.datetime.strptime(ks_start_dt_parse.strftime("%Y-%m-%d %H:%M:%S"),
                                                                    "%Y-%m-%d %H:%M:%S"))
                 self = self.with_context(
-                    ksDateFilterEndDate=fields.datetime.strptime(ks_end_dt_parse.strftime("%Y-%m-%d %H:%M:%S"),
+                    ksDateFilterEndDate=datetime.datetime.strptime(ks_end_dt_parse.strftime("%Y-%m-%d %H:%M:%S"),
                                                                  "%Y-%m-%d %H:%M:%S"))
                 self = self.with_context(ksIsDefultCustomDateFilter=False)
 
@@ -532,9 +532,9 @@ class KsDashboardNinjaBoard(models.Model):
         return {
             'name': _("Dashboard Items"),
             'res_model': 'ks_dashboard_ninja.item',
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'view_type': 'form',
-            'views': [(False, 'tree'), (False, 'form')],
+            'views': [(False, 'list'), (False, 'form')],
             'type': 'ir.actions.act_window',
             'domain': [('ks_dashboard_ninja_board_id', '!=', False)],
             'search_view_id': self.env.ref('ks_dashboard_ninja.ks_item_search_view').id,

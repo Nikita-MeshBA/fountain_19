@@ -477,8 +477,13 @@ class StudentProfile(models.Model):
         # self.clear_caches()
         return result
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_fees_management_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xe_fees_management_create_single(self, vals):
         result = super(StudentProfile, self).create(vals)
         if vals.get("fees_to_zone_id"):
             latest_fee = vals.get("fees_to_zone_id")
@@ -510,7 +515,7 @@ class StudentProfile(models.Model):
                 [("partner_id", "=", self._origin.partner_id.id)]
             )
             result.invoice_ids = [(6, 0, account_move_rec.ids)]
-        self.clear_caches()
+        self.env.registry.clear_cache()
         return result
 
 
@@ -570,7 +575,7 @@ class XeStudentFeesDetails(models.Model):
                 "view_id": False,
                 "views": [
                     (form_view and form_view.id or False, "form"),
-                    (tree_view and tree_view.id or False, "tree"),
+                    (tree_view and tree_view.id or False, "list"),
                 ],
                 "type": "ir.actions.act_window",
                 "res_id": self.invoice_id.id,

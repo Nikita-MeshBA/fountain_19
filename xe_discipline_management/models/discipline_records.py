@@ -118,8 +118,13 @@ class DisciplineRecords(models.Model):
             "target": "new",
         }
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_discipline_management_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xe_discipline_management_create_single(self, vals):
         vals["name"] = self.env["ir.sequence"].next_by_code(
             "xe.discipline.records.seq"
         ) or _("New")

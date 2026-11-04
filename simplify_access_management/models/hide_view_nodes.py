@@ -219,13 +219,12 @@ class store_model_nodes(models.Model):
     button_type = fields.Selection([('object', 'Object'), ('action', 'Action')], string="Button Type")
     is_smart_button = fields.Boolean('Smart Button')
 
-    def name_get(self):
-        result = []
+    @api.depends('attribute_string', 'attribute_name', 'is_smart_button', 'node_option')
+    def _compute_display_name(self):
         for rec in self:
             name = rec.attribute_string
             if rec.attribute_name:
                 name = name + ' (' + rec.attribute_name + ')'
                 if rec.is_smart_button and rec.node_option == 'button':
                     name = name + ' (Smart Button)'
-            result.append((rec.id, name))
-        return result
+            rec.display_name = name

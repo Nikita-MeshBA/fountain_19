@@ -6,6 +6,22 @@ from odoo import api, fields, models
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
+    # Odoo 19 dropped res.partner.mobile; the upgrade merged it into phone as "phone // mobile".
+    # The school modules (SMS to parents, clearance and student reports) still read .mobile.
+    mobile = fields.Char(compute="_compute_mobile", inverse="_inverse_mobile", search="_search_mobile")
+
+    @api.depends("phone")
+    def _compute_mobile(self):
+        for partner in self:
+            partner.mobile = (partner.phone or "").split(" // ")[-1].strip() or False
+
+    def _inverse_mobile(self):
+        for partner in self:
+            partner.phone = partner.mobile
+
+    def _search_mobile(self, operator, value):
+        return [("phone", operator, value)]
+
     user_type = fields.Selection(
         [
             ("student", "Student"),
@@ -42,7 +58,7 @@ class ResPartner(models.Model):
         #     AND m.state='posted' AND l.full_reconcile_id IS NULL GROUP BY l.date, \
         #     l.name, l.ref, l.date_maturity, l.partner_id, at.type, l.blocked, \
         #     l.amount_currency, l.currency_id, l.move_id, m.name",
-        #     ((fields.date.today(),) + (tuple(partner_ids),)),
+        #     ((fields.Date.today(),) + (tuple(partner_ids),)),
         # )
         # result = self.env.cr.dictfetchall()
         # return result
@@ -68,7 +84,7 @@ class ResPartner(models.Model):
             AND m.state='posted' AND l.full_reconcile_id IS NULL GROUP BY l.date, \
             l.name, l.ref, l.date_maturity, l.partner_id, aa.account_type, l.blocked, \
             l.amount_currency, l.currency_id, l.move_id, m.name",
-            ((fields.date.today(),) + (tuple(partner_ids),)),
+            ((fields.Date.today(),) + (tuple(partner_ids),)),
         )
         result = self.env.cr.dictfetchall()
         return result
@@ -158,8 +174,13 @@ class ResUsers(models.Model):
             if single_user.has_group('xenesis_school_base.group_xe_parent'):
                 single_user.write({"action_id": self.env.ref("xenesis_school_base.act_student").id})
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xenesis_school_base_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, values):
+    def _xenesis_school_base_create_single(self, values):
         res = super(ResUsers, self).create(values)
         if not res.action_id:
             if res.has_group('xenesis_school_base.group_xe_parent'):

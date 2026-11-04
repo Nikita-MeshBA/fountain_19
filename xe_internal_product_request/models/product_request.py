@@ -31,8 +31,13 @@ class ProductRequest(models.Model):
     )
     request_lines_ids = fields.One2many("xe.product.request.line", "pdt_request_id")
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_internal_product_request_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, values):
+    def _xe_internal_product_request_create_single(self, values):
         values["name"] = (
             self.env["ir.sequence"].next_by_code("xe.product.req.seq") or "/"
         )

@@ -19,7 +19,7 @@ class EnquiryController(http.Controller):
 
         if request.session.uid and request.env["res.users"].browse(
             request.session.uid
-        ).user_has_groups("base.group_user"):
+        ).has_group("base.group_user"):
             return werkzeug.utils.redirect(
                 "/web?db=%s#id=%s&view_type=form&model=xe.admission.enquiry"
                 % (request.env.cr.dbname, id)

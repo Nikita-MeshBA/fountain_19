@@ -22,13 +22,7 @@ class XeExamSession(models.Model):
         )
         return is_auto_session_name
 
-    _sql_constraints = [
-        (
-            "exam_code_unique",
-            "unique (exam_code)",
-            "Code should be unique per exam session!",
-        )
-    ]
+    _exam_code_unique = models.Constraint('unique (exam_code)', 'Code should be unique per exam session!')
 
     name = fields.Char("Exam Session", size=256, required=True, tracking=True)
     course_id = fields.Many2one("xe.course", "Class", required=True, tracking=True)
@@ -149,7 +143,7 @@ class XeExamSession(models.Model):
             return {
                 "name": _("Results"),
                 "type": "ir.actions.act_window",
-                "view_mode": "tree,form",
+                "view_mode": "list,form",
                 "res_model": "xe.result.template",
                 "target": "current",
                 "domain": [("exam_session_id", "=", self.id)],

@@ -60,7 +60,7 @@ class ParentUser(models.TransientModel):
                     str(its) for its in sorted(school_category_ids.ids)
                 )
 
-                for i in self.env.user.groups_id.category_id:
+                for i in self.env.user.group_ids.category_id:
                     groups = (
                         self.env["res.groups"]
                         .sudo()
@@ -80,4 +80,4 @@ class ParentUser(models.TransientModel):
                     vals[disable_popup] = popup_group.id
                 user_id = self.env["res.users"].create(vals)
                 parent.user_id = user_id
-                parent_user_group.users = parent_user_group.users + user_id
+                parent_user_group.user_ids = parent_user_group.user_ids + user_id

@@ -23,7 +23,7 @@ class ReportCBCMarksheetReport(models.AbstractModel):
     def _get_data(self, docs):
         data_lines = []
         for obj in docs:
-            for marksheet_line in obj.marksheet_line:
+            for marksheet_line in obj.marksheet_line_ids:
                 vals = {
                     "student_name": marksheet_line.student_id.name,
                     "course_name": marksheet_line.course_id.name,

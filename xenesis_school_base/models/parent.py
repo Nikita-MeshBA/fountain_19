@@ -53,8 +53,13 @@ class ParentProfile(models.Model):
     )
     student_ids = fields.Many2many("xe.student", string="Student(s)")
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xenesis_school_base_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xenesis_school_base_create_single(self, vals):
         result = super(ParentProfile, self).create(vals)
         partner_id = result.partner_id
         category_obj = self.env["res.partner.category"].search(
@@ -144,7 +149,7 @@ class ParentProfile(models.Model):
             'name': self.name,
             'login': self.email,
             'partner_id': self.partner_id.id,
-            'groups_id': [(6, 0, list(group_ids))],
+            'group_ids': [(6, 0, list(group_ids))],
         }
         user = self.env['res.users'].sudo().with_context(
             no_reset_password=True
@@ -209,8 +214,13 @@ class StudentParentDetails(models.Model):
             vals["term_ids"] = [(6, 0, term_values)]
         return vals
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xenesis_school_base_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xenesis_school_base_create_single(self, vals):
         if vals.get("student_id"):
             stud_obj = self.env["xe.student"].browse(vals.get("student_id"))
             vals = self._add_term_course(stud_obj, vals)

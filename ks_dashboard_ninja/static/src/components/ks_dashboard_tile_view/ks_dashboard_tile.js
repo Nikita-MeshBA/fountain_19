@@ -3,13 +3,13 @@ import { Component, useState ,useEffect,onWillUpdateProps,useRef} from "@odoo/ow
 import {globalfunction } from '@ks_dashboard_ninja/js/ks_global_functions';
 import { loadBundle } from "@web/core/assets";
 import { useService } from "@web/core/utils/hooks";
-import { jsonrpc } from "@web/core/network/rpc_service";
+import { rpc } from "@web/core/network/rpc";
 import { _t } from "@web/core/l10n/translation";
 
 export class Ksdashboardtile extends Component{
     setup(){
         var self = this;
-        this._rpc = useService("rpc");
+        this._rpc = rpc;
         this.actionService = useService("action");
         this.ks_container_class = 'grid-stack-item';
         this.ks_inner_container_class = 'grid-stack-item-content';
@@ -43,7 +43,7 @@ export class Ksdashboardtile extends Component{
      ksFetchUpdateItem(item_id) {
 
             var self = this;
-            return jsonrpc("/web/dataset/call_kw/",{
+            return rpc("/web/dataset/call_kw/",{
                 model: 'ks_dashboard_ninja.board',
                 method: 'ks_fetch_item',
                 args: [

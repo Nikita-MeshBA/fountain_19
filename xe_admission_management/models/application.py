@@ -252,8 +252,13 @@ class ApplicationForm(models.Model):
     )
     admission_number = fields.Char()
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_admission_management_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xe_admission_management_create_single(self, vals):
         class_admission_no_automatic = (
             self.env["ir.config_parameter"]
             .sudo()
@@ -321,11 +326,11 @@ class ApplicationForm(models.Model):
         value = {
             "domain": str([("id", "=", stud_rec)]),
             "view_type": "form",
-            "view_mode": "tree, form",
+            "view_mode": "list,form",
             "res_model": "xe.student",
             "view_id": False,
             "views": [
-                (tree_view and tree_view.id or False, "tree"),
+                (tree_view and tree_view.id or False, "list"),
                 (form_view and form_view.id or False, "form"),
             ],
             "type": "ir.actions.act_window",

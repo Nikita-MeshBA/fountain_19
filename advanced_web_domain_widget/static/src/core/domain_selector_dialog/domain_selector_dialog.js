@@ -8,10 +8,11 @@ import { DomainSelector } from "../domain_selector/domain_selector";
 import { useService } from "@web/core/utils/hooks";
 import { user } from "@web/core/user";
 
+import { rpc } from "@web/core/network/rpc";
 export class DomainSelectorDialog extends Component {
   setup() {
     this.notification = useService("notification");
-    this.rpc = useService("rpc");
+    this.rpc = rpc;
     this.orm = useService("orm");
     this.state = useState({ domain: this.props.domain });
     this.confirmButtonRef = useRef("confirm");

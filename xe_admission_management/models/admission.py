@@ -227,12 +227,12 @@ class AdmissionEnquiryForm(models.Model):
         value = {
             "domain": str([("enquiry_id", "=", self.id)]),
             "view_type": "form",
-            "view_mode": "tree, form",
+            "view_mode": "list,form",
             "res_model": "xe.application",
             "view_id": False,
             "views": [
                 (form_view and form_view.id or False, "form"),
-                (tree_view and tree_view.id or False, "tree"),
+                (tree_view and tree_view.id or False, "list"),
             ],
             "type": "ir.actions.act_window",
             "res_id": application_id,
@@ -248,11 +248,11 @@ class AdmissionEnquiryForm(models.Model):
         value = {
             "domain": str([("id", "=", stud_rec)]),
             "view_type": "form",
-            "view_mode": "tree, form",
+            "view_mode": "list,form",
             "res_model": "xe.student",
             "view_id": False,
             "views": [
-                (tree_view and tree_view.id or False, "tree"),
+                (tree_view and tree_view.id or False, "list"),
                 (form_view and form_view.id or False, "form"),
             ],
             "type": "ir.actions.act_window",

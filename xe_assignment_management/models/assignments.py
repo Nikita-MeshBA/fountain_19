@@ -85,7 +85,7 @@ class Assignments(models.Model):
         store=True,
     )
 
-    issue_date = fields.Datetime(default=lambda self: fields.datetime.now())
+    issue_date = fields.Datetime(default=lambda self: fields.Datetime.now())
     color = fields.Integer("Color Index")
     company_id = fields.Many2one("res.company", default=lambda self: self.env.company)
 
@@ -255,8 +255,13 @@ class Assignments(models.Model):
     def assignment_as_done(self):
         self.write({"state": "done"})
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_assignment_management_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, values):
+    def _xe_assignment_management_create_single(self, values):
         if not values.get("teacher_id"):
             values["teacher_id"] = (
                 self.env["hr.employee"].search([("user_id", "=", self.env.user.id)]).id
@@ -281,7 +286,7 @@ class Assignments(models.Model):
             )
             .ids
         )
-        action["view_mode"] = "tree,form"
+        action["view_mode"] = "list,form"
         action["domain"] = [("id", "in", s_records)]
         return action
 

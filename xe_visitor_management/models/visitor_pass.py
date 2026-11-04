@@ -54,8 +54,13 @@ class VisitorPass(models.Model):
         tracking=True,
     )
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xe_visitor_management_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xe_visitor_management_create_single(self, vals):
         x = self.env["ir.sequence"].next_by_code("visitor.pass") or "/"
         vals["pass_number"] = x
         return super(VisitorPass, self).create(vals)

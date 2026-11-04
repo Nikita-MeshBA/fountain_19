@@ -7,7 +7,10 @@
 <!--        </template>-->
            <template id="external_layout_standard_header_inherit"
                      inherit_id="web.external_layout_standard">
-            <xpath expr="//div[@name='company_address']" position="replace"/>
+            <!-- hide rather than remove: account_edi_ubl_cii's layout_invoices_generated_by_odoo (primary view) xpaths this div -->
+            <xpath expr="//div[@name='company_address']" position="attributes">
+                <attribute name="t-if">False</attribute>
+            </xpath>
         </template>
         <template id="invoice_inherit_core_xenesis" inherit_id="account.report_invoice_document">
             <xpath expr="//div[@class='page mb-4']/div[1]" position="after">

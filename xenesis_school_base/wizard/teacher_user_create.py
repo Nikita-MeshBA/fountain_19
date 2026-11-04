@@ -15,7 +15,7 @@ class TeacherUser(models.TransientModel):
         res = super(TeacherUser, self).default_get(fields)
         active_ids = self.env.context.get("active_ids", []) or []
         teachers_lines = [(5, 0, 0)]
-        teacher_objects = self.env["hr.employee"].browse(active_ids)
+        teacher_objects = self.env["xe.staff"].browse(active_ids)
         for teacher in teacher_objects:
             line = (
                 0,
@@ -97,7 +97,7 @@ class TeacherUser(models.TransientModel):
                     }
                     user_id = self.env["res.users"].create(vals)
                     line.teacher_id.user_id = user_id
-                    teacher_user_group.users = teacher_user_group.users + user_id
+                    teacher_user_group.user_ids = teacher_user_group.user_ids + user_id
                     line.teacher_id.employee_id.user_id = user_id
 
 
@@ -106,7 +106,7 @@ class TeacherUserLineDetails(models.TransientModel):
     _description = "Teacher line Details"
 
     wizard_id = fields.Many2one("xe.teacher.user", "Wizard", ondelete="cascade")
-    teacher_id = fields.Many2one("hr.employee", "Name", required=True)
+    teacher_id = fields.Many2one("xe.staff", "Name", required=True)
     nationality_id = fields.Many2one("res.country")
     mobile = fields.Char()
     email = fields.Char()

@@ -24,12 +24,13 @@ import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 import { MultiRecordSelector } from "@web/core/record_selectors/multi_record_selector";
 
 
+import { rpc } from "@web/core/network/rpc";
 class ksDynamicReportsWidget extends Component {
 
     setup() {
         this.orm = useService("orm");
         this.action = useService("action");
-        this.rpc = useService("rpc");
+        this.rpc = rpc;
         this.dialogService = useService('dialog');
         this.notificationService = useService("notification");
         onWillStart(async () => {

@@ -82,8 +82,13 @@ class ClassTeacherAllocation(models.Model):
     term_id = fields.Many2one("xe.term")
     teacher_id = fields.Many2one("hr.employee")
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Odoo 19 always passes a list; run the per-record logic below for each one
+        return self.browse().concat(*(self._xenesis_school_base_create_single(vals) for vals in vals_list))
+
     @api.model
-    def create(self, vals):
+    def _xenesis_school_base_create_single(self, vals):
         teacher = self.env["hr.employee"].browse(vals.get("teacher_id"))
         course_id = teacher.assigned_course_id and teacher.assigned_course_id.id
         term_id = teacher.assigned_term_id and teacher.assigned_term_id.id

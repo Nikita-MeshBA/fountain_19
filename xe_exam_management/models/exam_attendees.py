@@ -36,13 +36,7 @@ class XeExamAttendees(models.Model):
         readonly=True,
     )
 
-    _sql_constraints = [
-        (
-            "unique_attendees",
-            "unique(student_id,exam_id)",
-            "Attendee must be unique per exam.",
-        )
-    ]
+    _unique_attendees = models.Constraint('unique(student_id,exam_id)', 'Attendee must be unique per exam.')
 
     def write(self, values):
         if values:
