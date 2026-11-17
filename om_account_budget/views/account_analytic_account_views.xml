@@ -10,7 +10,7 @@
             <xpath expr="//group[@name='main']" position='after'>
                 <notebook groups="account.group_account_user">
                     <page string="Budget Items">
-                        <field name="crossovered_budget_line" widget="one2many_list" colspan="4" nolabel="1"
+                        <field name="crossovered_budget_line" colspan="4" nolabel="1"
                                mode="list">
                             <list string="Budget Items" editable="top">
                                 <field name="crossovered_budget_id"/>

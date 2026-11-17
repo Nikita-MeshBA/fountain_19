@@ -436,19 +436,13 @@
                 </t>
             </xpath> -->
             <xpath expr="//form" position="attributes">
-                <t groups="xenesis_school_base.group_xe_admin, xenesis_school_base.group_xe_staff">
+                <t groups="xenesis_school_base.group_xe_admin,xenesis_school_base.group_xe_staff">
                     <attribute name="create">1</attribute>
                     <attribute name="edit">1</attribute>
                 </t>
             </xpath>
             <xpath expr="//sheet" position='after'>
-                <t groups="xenesis_school_base.group_xe_admin, xenesis_school_base.group_xe_staff">
-                    <div class="oe_chatter">
-                        <field name="message_follower_ids"/>
-                        <field name="activity_ids"/>
-                        <field name="message_ids"/>
-                    </div>
-                </t>
+                <chatter groups="xenesis_school_base.group_xe_admin,xenesis_school_base.group_xe_staff"/>
             </xpath>
         </field>
     </record>

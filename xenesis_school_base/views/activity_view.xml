@@ -33,10 +33,7 @@
                     <field name="description" nolabel="1" placeholder="Description..."/>
 
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids"/>
-                    <field name="message_ids"/>
-                </div>
+                <chatter/>
             </form>
         </field>
     </record>

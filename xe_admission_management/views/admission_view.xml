@@ -211,10 +211,7 @@
                     <field name="remarks" nolabel="1" placeholder="Notes..."
                            readonly="state != 'draft'"/>
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids"/>
-                    <field name="message_ids"/>
-                </div>
+                <chatter/>
             </form>
         </field>
     </record>
